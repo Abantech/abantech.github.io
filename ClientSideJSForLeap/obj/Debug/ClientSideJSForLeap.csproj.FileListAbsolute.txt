@@ -1,0 +1,6 @@
+D:\Dev-Workspace\AbantechProjects\NI-3DModeling\ClientSideJSForLeap\bin\ClientSideJSForLeap.dll.config
+D:\Dev-Workspace\AbantechProjects\NI-3DModeling\ClientSideJSForLeap\bin\ClientSideJSForLeap.dll
+D:\Dev-Workspace\AbantechProjects\NI-3DModeling\ClientSideJSForLeap\bin\ClientSideJSForLeap.pdb
+D:\Dev-Workspace\AbantechProjects\NI-3DModeling\ClientSideJSForLeap\obj\Debug\ClientSideJSForLeap.csprojResolveAssemblyReference.cache
+D:\Dev-Workspace\AbantechProjects\NI-3DModeling\ClientSideJSForLeap\obj\Debug\ClientSideJSForLeap.dll
+D:\Dev-Workspace\AbantechProjects\NI-3DModeling\ClientSideJSForLeap\obj\Debug\ClientSideJSForLeap.pdb
