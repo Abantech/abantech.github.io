@@ -9,9 +9,6 @@
 
             if (frameActions)
                 frameActions.RunAllActions(frame);
-            //if (fadingSpheres) {
-            //    fadingSpheres.forEach(removeDeadSpheres);
-            //}
         }
     )
 // note that transform must be _before_ rigged hand
@@ -20,7 +17,6 @@
     position: new THREE.Vector3,
     scale: 0.7
 })
-//.use('playback', { recording: 'finger-tap-54fps.json.lz' })
 .use('riggedHand', {
     dotsMode: false,
     parent: scene,

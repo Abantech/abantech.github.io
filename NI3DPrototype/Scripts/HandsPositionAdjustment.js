@@ -1,4 +1,5 @@
 ﻿//This creates sliders that allow adjustment of the hand mesh wtihin the scene
+//This should be generalized to craete the other 2-d controls like the pinwheel button
 
 var xTranslation, yTranslation, zTranslation
 
@@ -21,6 +22,7 @@ function createAdjuster(dimension, minValue, maxValue, initialValue, setterCallb
 
     var newDiv = document.createElement("div");
     newDiv.style = "float: left;"
+    newDiv.style.zIndex = "-1";
     var newLabel = document.createElement("label");
     newLabel.innerHTML = dimension + " offset: "
 
