@@ -57,6 +57,31 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Libs\jquery-2.1.3.min.js" />
+    <Content Include="Libs\Leap\leap-0.6.4.js" />
+    <Content Include="Libs\Leap\leap-0.6.4.min.js" />
+    <Content Include="Libs\Leap\leap-plugins-0.1.10-utils.js" />
+    <Content Include="Libs\Leap\leap-plugins-0.1.10-utils.min.js" />
+    <Content Include="Libs\Leap\leap-plugins-0.1.10.js" />
+    <Content Include="Libs\Leap\leap-plugins-0.1.10.min.js" />
+    <Content Include="Libs\Leap\leap-widgets-0.1.0.js" />
+    <Content Include="Libs\Leap\leap-widgets-0.1.0.min.js" />
+    <Content Include="Libs\Leap\leap.rigged-hand-0.1.5.js" />
+    <Content Include="Libs\Leap\leap.rigged-hand-0.1.5.min.js" />
+    <Content Include="Libs\Leap\leap.rigged-hand-0.1.6.js" />
+    <Content Include="Libs\THREEJS\Detector.js" />
+    <Content Include="Libs\THREEJS\OrbitControls.js" />
+    <Content Include="Libs\THREEJS\stats.min.js" />
+    <Content Include="Libs\THREEJS\three.js" />
+    <Content Include="main.html" />
+    <Content Include="Scripts\AssetManager.js" />
+    <Content Include="Scripts\FadingSpheres.js" />
+    <Content Include="Scripts\FrameActions.js" />
+    <Content Include="Scripts\HandController.js" />
+    <Content Include="Scripts\HandsPositionAdjustment.js" />
+    <Content Include="Scripts\LeapLoopSetup.js" />
+    <Content Include="Scripts\references.js" />
+    <Content Include="Scripts\SceneSetup.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +95,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
