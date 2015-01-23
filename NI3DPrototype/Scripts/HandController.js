@@ -24,5 +24,8 @@ function HandController() {
 //HandAction expects to take a 'hand' as a parameter
 function HandAction(actionName, handAction) {
     this.name = actionName;
-    this.DoAction = handAction;
+    this.DoAction = function (hand) {
+        if (handAction)
+            handAction(hand);
+    }
 }

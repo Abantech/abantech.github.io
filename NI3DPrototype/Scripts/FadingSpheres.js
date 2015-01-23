@@ -1,6 +1,8 @@
 ﻿var fadingSpheres = [];
 var sphereTTL = 7;
 
+
+
 if (frameActions)
     frameActions.RegisterAction("RemoveDeadSpheres", function (frame) { fadingSpheres.forEach(removeDeadSpheres) });
 

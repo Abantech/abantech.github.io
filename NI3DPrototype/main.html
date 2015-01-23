@@ -60,19 +60,25 @@
     <script src="Libs/Leap/leap-plugins-0.1.10.js"></script>
     <script src="Libs/Leap/leap.rigged-hand-0.1.6.js"></script>-->
 
-    <script src="Libs/jquery-2.1.3.min.js"></script>
-    <script src="Libs/THREEJS/three.js"></script>
+    <!-- BEGIN internal references -->
+    <script src="Libs/THREEJS/three.min.js"></script>
     <script src="Libs/THREEJS/OrbitControls.js"></script>
     <script src="Libs/THREEJS/Detector.js"></script>
     <script src="Libs/THREEJS/stats.min.js"></script>
-
+    
+    <script src="Libs/Leap/leap-0.6.4.min.js"></script>
+    <script src="Libs/Leap/leap-plugins-0.1.10.min.js"></script>
+    <script src="Libs/Leap/leap-plugins-0.1.10-utils.min.js"></script>
+    <script src="Libs/Leap/leap-widgets-0.1.0.min.js"></script>
+    <script src="Libs/Leap/leap.rigged-hand-0.1.6.js"></script>
+    <!-- END internal references -->
+    <script src="http://leapmotion.github.io/leapjs-widgets/src/leap.proximity.js"></script>
+    
+    <!-- BEGIN external references  ->-
     <script src="http://js.leapmotion.com/leap-0.6.4.js"></script>
     <script src="http://js.leapmotion.com/leap-plugins-0.1.10.js"></script>
     <script src="http://js.leapmotion.com/leap.rigged-hand-0.1.6.js"></script>
-
-
-    
-
+    !<-- END external references-->
 </head>
 <body>
 
@@ -80,11 +86,64 @@
     <script src="Scripts/FrameActions.js"></script>
     <script src="Scripts/HandController.js"></script>
     <script src="Scripts/HandsPositionAdjustment.js"></script>
+    
     <script src="Scripts/FadingSpheres.js"></script>
+    <script src="Scripts/HandBasedActions/PinchLine.js"></script>
     <script src="Scripts/LeapLoopSetup.js"></script>
 
     <script>
         handController.RegisterAction("DrawfadingSpheres", createFadingSpheresAtFingerTips);
+        //TODO: the line drawn between fingers for the pinch below but is not working yet...
+        handController.RegisterAction("DrawPinchLine", drawPinchLine);
+        
+        var newShapesButton = new THREE.Mesh(
+          //new THREE.PlaneGeometry(100, 100),
+          new THREE.CircleGeometry(window.innerWidth / 100, 32),
+          new THREE.MeshPhongMaterial({ wireframe: false })
+        );
+
+        //  plane.scale.set(2,2,2);
+        newShapesButton.position.set(-100, 70, -100);
+
+        window.scene.add(newShapesButton);
+
+        //var proximity = Leap.loopController.watch(newShapesButton,
+        //    function () {
+        //        return [pinchLineGeometry.vertices]
+        //   }
+        // );
+
+        //proximity.in(function () {
+        //    console.log('in');
+        //    //TODO: check the clock do do this only after it's held "inside" for more than 300ms 
+        //    //ShowPinwheelMenu(); 
+        //    material.color.setHex(0xff0000)
+        //});
+
+        //proximity.out(function () {
+        //    console.log('out');
+        //    material.color.setHex(0xf0f0f0)
+        //});
+
+        var changeButtonColorToRed = function (hand) { 
+            if (isButtonPressed(hand, newShapesButton))
+                newShapesButton.material.color.setHex(0xff0000); 
+        };
+
+        handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorToRed);
+
+        function isButtonPressed(hand, button) {
+            var p1 = hand.indexFinger.tipPosition;;
+            var p2 = hand.indexFinger.pipPosition;;
+
+            var dir = new THREE.Vector3();
+            dir.sub(p1, p2).normalize();
+
+            var raycaster = new THREE.Raycaster(p2, dir, 0, 200);
+
+            var intersection = raycaster.intersectObject(button, true);
+            return intersection.length > 0;
+        }
 
         createAdjuster("x", -250, 250, 0, function (value) { xTranslation = value });
         createAdjuster("y", -300, 300, -75, function (value) { yTranslation = value });

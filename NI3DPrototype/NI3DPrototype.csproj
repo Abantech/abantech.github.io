@@ -73,10 +73,12 @@
     <Content Include="Libs\THREEJS\OrbitControls.js" />
     <Content Include="Libs\THREEJS\stats.min.js" />
     <Content Include="Libs\THREEJS\three.js" />
+    <Content Include="Libs\THREEJS\three.min.js" />
     <Content Include="main.html" />
     <Content Include="Scripts\AssetManager.js" />
     <Content Include="Scripts\FadingSpheres.js" />
     <Content Include="Scripts\FrameActions.js" />
+    <Content Include="Scripts\HandBasedActions\PinchLine.js" />
     <Content Include="Scripts\HandController.js" />
     <Content Include="Scripts\HandsPositionAdjustment.js" />
     <Content Include="Scripts\LeapLoopSetup.js" />
