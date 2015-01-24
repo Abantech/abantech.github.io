@@ -1,26 +1,19 @@
-﻿
-
-//if (frameActions) {
-//    frameActions.RegisterAction("RemoveDeadSpheres",
-//        function (frame) {
-//            if (pinchLine) {
-//                window.scene.remove(pinchLine);
-//                pinchLine = null;
-//            }
-//        });
-//}
-
-var pinchLine, pinchLineGeometry;
+﻿var pinchLine, pinchLineGeometry;
 
 var drawPinchLine = function (hand) {
+
+    var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+    var thumbTipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+
     //if right hand only?
     if (!pinchLine) {
-        pinchLine = createLineBetweenPoints(hand.indexFinger.tipPosition, hand.thumb.tipPosition);
+
+        pinchLine = createLineBetweenPoints(indexTipVector, thumbTipVector);
         window.scene.add(pinchLine);
     }
     else {
-        pinchLine.geometry.vertices[0] = hand.indexFinger.tipPosition;
-        pinchLine.geometry.vertices[1] = hand.thumb.tipPosition;
+        pinchLine.geometry.vertices[0] = indexTipVector;
+        pinchLine.geometry.vertices[1] = thumbTipVector;
 
         pinchLine.geometry.verticesNeedUpdate = true;
     }

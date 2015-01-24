@@ -96,32 +96,34 @@
         //TODO: the line drawn between fingers for the pinch below but is not working yet...
         handController.RegisterAction("DrawPinchLine", drawPinchLine);
         
+        window.widgets
+
         var newShapesButton = new THREE.Mesh(
-          //new THREE.PlaneGeometry(100, 100),
-          new THREE.CircleGeometry(window.innerWidth / 100, 32),
+          new THREE.SphereGeometry(window.innerWidth / 200, 16, 16),
           new THREE.MeshPhongMaterial({ wireframe: false })
         );
 
-        newShapesButton.position.set(-100, 70, -100);
+        newShapesButton.position.set(window.innerWidth / 12, window.innerHeight / 16, 10);
 
         window.scene.add(newShapesButton);
 
         var changeButtonColorToRed = function (hand) { 
-            if (isButtonPressed(hand, newShapesButton))
-                newShapesButton.material.color.setHex(0xff0000); 
+            //if (isButtonPressed(hand, newShapesButton))
+            newShapesButton.material.color.setHex(isButtonPressed(hand, newShapesButton) ? 0xff0000 : 0x0000ff);
         };
 
         handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorToRed);
 
         function isButtonPressed(hand, button) {
-            var p1 = hand.indexFinger.tipPosition;;
-            var p2 = hand.indexFinger.pipPosition;;
+            var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+            //!?! Have to use the thumb as the other end of the ray, do not know why it's not working with the pipPosition or mcpPosition
+            var indexPipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
 
-            var dir = new THREE.Vector3(p2[0], p2[1], p2[2]);
-            dir.sub(new THREE.Vector3(p1[0], p1[1], p1[2])).normalize();
+            var dir = new THREE.Vector3();
+            dir.subVectors(indexTipVector, indexPipVector).normalize();
 
-            var raycaster = new THREE.Raycaster(p2, dir, 0, 200);
-
+            var raycaster = new THREE.Raycaster(indexPipVector, dir, 0, 200);
+            
             var intersection = raycaster.intersectObject(button, true);
             if (intersection.length > 0) {
                 return true;
@@ -131,6 +133,7 @@
             }
         }
 
+        //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work
         createAdjuster("x", -250, 250, 0, function (value) { xTranslation = value });
         createAdjuster("y", -300, 300, -75, function (value) { yTranslation = value });
         createAdjuster("z", -1000, 150, 0, function (value) { zTranslation = value });
