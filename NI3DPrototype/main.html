@@ -81,7 +81,7 @@
     !<-- END external references-->
 </head>
 <body>
-
+    <h2>Move the line between the index and thumb through the sphere, hold for three quarters of a second and see a cube get created. Hold longer to make the cube rotate.</h2>
     <script src="Scripts/SceneSetup.js"></script>
     <script src="Scripts/FrameActions.js"></script>
     <script src="Scripts/HandController.js"></script>
@@ -90,48 +90,13 @@
     <script src="Scripts/FadingSpheres.js"></script>
     <script src="Scripts/HandBasedActions/PinchLine.js"></script>
     <script src="Scripts/LeapLoopSetup.js"></script>
+    <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
 
     <script>
         handController.RegisterAction("DrawfadingSpheres", createFadingSpheresAtFingerTips);
-        //TODO: the line drawn between fingers for the pinch below but is not working yet...
         handController.RegisterAction("DrawPinchLine", drawPinchLine);
-        
-        window.widgets
-
-        var newShapesButton = new THREE.Mesh(
-          new THREE.SphereGeometry(window.innerWidth / 200, 16, 16),
-          new THREE.MeshPhongMaterial({ wireframe: false })
-        );
-
-        newShapesButton.position.set(window.innerWidth / 12, window.innerHeight / 16, 10);
-
-        window.scene.add(newShapesButton);
-
-        var changeButtonColorToRed = function (hand) { 
-            //if (isButtonPressed(hand, newShapesButton))
-            newShapesButton.material.color.setHex(isButtonPressed(hand, newShapesButton) ? 0xff0000 : 0x0000ff);
-        };
-
         handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorToRed);
-
-        function isButtonPressed(hand, button) {
-            var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-            //!?! Have to use the thumb as the other end of the ray, do not know why it's not working with the pipPosition or mcpPosition
-            var indexPipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-
-            var dir = new THREE.Vector3();
-            dir.subVectors(indexTipVector, indexPipVector).normalize();
-
-            var raycaster = new THREE.Raycaster(indexPipVector, dir, 0, 200);
-            
-            var intersection = raycaster.intersectObject(button, true);
-            if (intersection.length > 0) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
+        handController.RegisterAction("CreateBoxAfterDelay", createBoxAfterDelay);
 
         //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work
         createAdjuster("x", -250, 250, 0, function (value) { xTranslation = value });
