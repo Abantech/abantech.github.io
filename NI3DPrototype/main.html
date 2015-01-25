@@ -108,43 +108,83 @@
 
         pinchGesture.options.distance = 30;
 
+        var pinchedObject = null;
+        //pinchGesture.registerOnGestureBegin()
+
+        function getPinchedObject(hand)
+        {
+            var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+            //!?! Have to use the thumb as the other end of the ray, do not know why it's not working with the pipPosition or mcpPosition
+            var indexPipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+
+            var dir = new THREE.Vector3();
+            dir.subVectors(indexTipVector, indexPipVector).normalize();
+
+            var raycaster = new THREE.Raycaster(indexPipVector, dir, 0, 200);
+
+            for (var i = 0; i < window.scene.children.length; i++) {
+                var sceneObject = window.scene.children[i];
+                if (sceneObject.isAsset)
+                {
+                    var intersection = raycaster.intersectObject(sceneObject, true);
+
+                    if (intersection.length > 0) {
+                        return sceneObject;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        pinchGesture.registerOnFullGestureEnd = function (hand)
+        {
+            pinchedObject = null;
+            console.log("Gesture Ended!")
+        }
+
         pinchGesture.registerOnFullGesture(
             {
                 func: function (hand)
                 {
-                    var closestObject
-                    var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-
-                    for (var i = 0; i < window.scene.children.length; i++)
+                    if (!pinchedObject) {
+                        pinchedObject = getPinchedObject(hand);
+                        console.log("Pinching something!")
+                    } 
+                    else
                     {
-                        var sceneObject = window.scene.children[i];
-
-                        if (sceneObject.isAsset)
-                        {
-                            var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
-                            if (distance < 50)
-                            {
-                                if (closestObject)
-                                {
-                                    if (distance < closestObject.distance)
-                                    {
-                                        closestObject = sceneObject;
-                                        closestObject.distance = distance;
-                                    }
-                                }
-                                else
-                                {
-                                    closestObject = sceneObject;
-                                    closestObject.distance = distance;
-                                }
-                            }
-                        }
+                        pinchedObject.position.set((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition));
                     }
 
-                    if (closestObject)
-                    {
-                        window.scene.remove(closestObject);
-                    }
+                    //for (var i = 0; i < window.scene.children.length; i++)
+                    //{
+                    //    var sceneObject = window.scene.children[i];
+                    //    if (sceneObject.isAsset)
+                    //    {
+                    //        var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
+                    //        if (distance < 50)
+                    //        {
+                    //            if (closestObject)
+                    //            {
+                    //                if (distance < closestObject.distance)
+                    //                {
+                    //                    closestObject = sceneObject;
+                    //                    closestObject.distance = distance;
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                closestObject = sceneObject;
+                    //                closestObject.distance = distance;
+                    //            }
+                    //        }
+                    //    }
+                    //}
+
+                    //if (closestObject)
+                    //{
+                    //    window.scene.remove(closestObject);
+                    //}
                 },
 
                 condition: function ()
@@ -153,7 +193,8 @@
                     return (date.getSeconds() % 2) === 0;
                 }
             });
-        
+
+        //pinchGesture.reg
         handController.RegisterAction("PinchGesture", pinchGesture);
 
         //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work

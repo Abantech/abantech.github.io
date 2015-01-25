@@ -10,10 +10,10 @@
         options:
         {
             // Minimum distance between the two fingers to determine if pinch has been achieved
-            distance: 15,
+            distance: 80,
 
             // Minimum time of gesture for full gesture to be achieved
-            delay: 1.750,
+            delay: 0.3,
 
             // Indicates whether or not to scale the gesture distance with the zoom of the camera
             scaleWithScene: true
@@ -49,9 +49,14 @@
                 pinchDistance = pinchDistance * transformPlugin.getScale().x;
             }
 
+            //if (!)
+
             // Checks if the distance between the thumb and index meets the minimum requirement for the gesture.
-            if (mathHelper.DistanceBetweenPoints(indexTipVector, thumbTipVector) < pinchDistance)
+            if (hand.pinchStrength > 0.3 && indexTipVector.distanceTo(thumbTipVector) < pinchDistance)
             {
+                //console.log("James distance: " + mathHelper.DistanceBetweenPoints(indexTipVector, thumbTipVector));
+                //console.log("ThreeJS distance" + indexTipVector.distanceTo(thumbTipVector));
+
                 // Fires the onBeginGesture registered events
                 if (!pinchGesture.gestureHasBegun)
                 {

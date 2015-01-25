@@ -7,7 +7,9 @@ var newShapesButton = new THREE.Mesh(
   new THREE.MeshPhongMaterial({ wireframe: false })
 );
 
-newShapesButton.position.set(0, 0, 10);
+newShapesButton.position.set(window.innerWidth / 16, window.innerHeight / 24, 10);
+newShapesButton.isAsset = false;
+
 window.scene.add(newShapesButton);
 
 var changeButtonColorToRed = {
