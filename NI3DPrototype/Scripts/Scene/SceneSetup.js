@@ -39,18 +39,18 @@ var initScene = function () {
 };
 
 var createRandomCones = function(coneCount) {
-    //var geometry = new THREE.CylinderGeometry(0, 10, 30, 4, 1);
-    //var material = new THREE.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading });
+    var geometry = new THREE.CylinderGeometry(0, 10, 30, 4, 1);
+    var material = new THREE.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading });
 
-    //for (var i = 0; i < coneCount; i++) {
-    //    var mesh = new THREE.Mesh(geometry, material);
-    //    mesh.position.x = (Math.random() - 0.5) * 1000;
-    //    mesh.position.y = (Math.random() - 0.5) * 1000;
-    //    mesh.position.z = (Math.random() - 0.5) * 1000;
-    //    mesh.updateMatrix();
-    //    mesh.matrixAutoUpdate = false;
-    //    window.scene.add(mesh);
-    //}
+    for (var i = 0; i < coneCount; i++) {
+        var mesh = new THREE.Mesh(geometry, material);
+        mesh.position.x = (Math.random() - 0.5) * 1000;
+        mesh.position.y = (Math.random() - 0.5) * 1000;
+        mesh.position.z = (Math.random() - 0.5) * 1000;
+        mesh.updateMatrix();
+        mesh.matrixAutoUpdate = false;
+        window.scene.add(mesh);
+    }
 }
 
 var createSceneLighting = function() {
