@@ -82,14 +82,20 @@
 </head>
 <body>
     <h2>Move the line between the index and thumb through the sphere, hold for three quarters of a second and see a cube get created. Hold longer to make the cube rotate.</h2>
-    <script src="Scripts/SceneSetup.js"></script>
+    <script src="Scripts/Utils/MathHelper.js"></script>
+    <script src="Scripts/Scene/SceneSetup.js"></script>
+    <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
+    <script src="Scripts/LeapLoopSetup.js"></script>
+    <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
+    
+
+
     <script src="Scripts/FrameActions.js"></script>
     <script src="Scripts/HandController.js"></script>
     <script src="Scripts/HandsPositionAdjustment.js"></script>
     
     <script src="Scripts/FadingSpheres.js"></script>
     <script src="Scripts/HandBasedActions/PinchLine.js"></script>
-    <script src="Scripts/LeapLoopSetup.js"></script>
     <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
 
     <script>
@@ -99,9 +105,9 @@
         handController.RegisterAction("CreateBoxAfterDelay", createBoxAfterDelay);
 
         //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work
-        createAdjuster("x", -250, 250, 0, function (value) { xTranslation = value });
+        createAdjuster("x", -250, 250, -15, function (value) { xTranslation = value });
         createAdjuster("y", -300, 300, -75, function (value) { yTranslation = value });
-        createAdjuster("z", -1000, 150, 0, function (value) { zTranslation = value });
+        createAdjuster("z", -1000, 150, -15, function (value) { zTranslation = value });
     </script>
 </body>
 </html>
