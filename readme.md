@@ -17,7 +17,7 @@ Updated: Greg ~ 2015-01-24 - Fixed issues with intersection with new shape menu 
 
 Demo: [Three.js Leap-Enabled Template]( http://abantech.github.io/threejs-leap-enabled-template/r1/threejs-leap-enabled-template.html )  
 Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-enabled-template/ )
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js playing together
+Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
 
 Demo: [Three.js Mouseover]( http://abantech.github.io/threejs-mouseover/r1/threejs-mouseover.html )  
 Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover/ )
@@ -27,16 +27,8 @@ Demo: [Three.js Object to Object Raycasting]( http://abantech.github.io/threejs-
 Source code: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-object-to-object-raycasting/ )
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going from any two object in a scene
 
-Demo: [Three.js Object to Object Raycasting]( http://abantech.github.io/threejs-object-to-object-raycasting/r1/threejs-object-to-object-raycasting.html )  
-Source code: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-object-to-object-raycasting/ )
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going from any two object in a scene
-
-Demo: [Three.js Object to Object Raycasting]( http://abantech.github.io/threejs-object-to-object-raycasting/r1/threejs-object-to-object-raycasting.html )  
-Source code: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-object-to-object-raycasting/ )
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going from any two object in a scene
-
-Demo: [Three.js Fingerover Leap-Enabled]( http://abantech.github.io/threejs-mouseover-leap-enabled/r1/threejs-mouseover-leap-enabled.html )  
-Source code: [Three.js Fingerover Leap-Enabled]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover-leap-enabled/ )
+Demo: [Three.js FingerOver Leap-Enabled]( http://abantech.github.io/threejs-mouseover-leap-enabled/r1/threejs-mouseover-leap-enabled.html )  
+Source code: [Three.js FingerOver Leap-Enabled]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover-leap-enabled/ )
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get object a Leap finger is pointing at. *WIP/Placeholder*
 
 ***
