@@ -108,7 +108,7 @@
 
         pinchGesture.options.distance = 30;
 
-        pinchGesture.onGesture = function (hand)
+        pinchGesture.registerOnFullGesture(function (hand)
         {
             var closestObject
             var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
@@ -120,7 +120,7 @@
                 if (sceneObject.isAsset)
                 {
                     var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
-                    if (distance < pinchGesture.options.range)
+                    if (distance < 50)
                     {
                         if (closestObject)
                         {
@@ -143,7 +143,7 @@
             {
                 window.scene.remove(closestObject);
             }
-        }
+        });
         
         handController.RegisterAction("PinchGesture", pinchGesture);
 
