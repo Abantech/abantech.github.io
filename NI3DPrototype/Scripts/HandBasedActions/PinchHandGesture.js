@@ -67,7 +67,7 @@
                                 {
                                     if (pinchGesture.onGestureBegin[i].func && typeof pinchGesture.onGestureBegin[i].func === "function")
                                     {
-                                        pinchGesture.onGestureBegin[i](hand);
+                                        pinchGesture.onGestureBegin[i].func(hand);
 
                                     }
                                 }
@@ -76,7 +76,7 @@
                             {
                                 if (pinchGesture.onGestureBegin[i].func && typeof pinchGesture.onGestureBegin[i].func === "function")
                                 {
-                                    pinchGesture.onGestureBegin[i](hand);
+                                    pinchGesture.onGestureBegin[i].func(hand);
 
                                 }
                             }
@@ -97,7 +97,7 @@
                             {
                                 if (pinchGesture.onFullGesture[i].func && typeof pinchGesture.onFullGesture[i].func === "function")
                                 {
-                                    pinchGesture.onFullGesture[i](hand);
+                                    pinchGesture.onFullGesture[i].func(hand);
                                 }
                             }
                         }
@@ -105,7 +105,7 @@
                         {
                             if (pinchGesture.onFullGesture[i].func && typeof pinchGesture.onFullGesture[i].func === "function")
                             {
-                                pinchGesture.onFullGesture[i](hand);
+                                pinchGesture.onFullGesture[i].func(hand);
                             }
                         }
                     }
@@ -128,7 +128,7 @@
                                 {
                                     if (pinchGesture.onFullGestureEnd[i].func && typeof pinchGesture.onFullGestureEnd[i].func === "function")
                                     {
-                                        pinchGesture.onFullGestureEnd[i](hand);
+                                        pinchGesture.onFullGestureEnd[i].func(hand);
                                     }
                                 }
                             }
@@ -136,7 +136,7 @@
                             {
                                 if (pinchGesture.onFullGestureEnd[i].func && typeof pinchGesture.onFullGestureEnd[i].func === "function")
                                 {
-                                    pinchGesture.onFullGestureEnd[i](hand);
+                                    pinchGesture.onFullGestureEnd[i].func(hand);
                                 }
                             }
                         }
@@ -151,7 +151,7 @@
                             {
                                 if (pinchGesture.onGestureEnd[i].func && typeof pinchGesture.onGestureEnd[i].func === "function")
                                 {
-                                    pinchGesture.onGestureEnd[i](hand);
+                                    pinchGesture.onGestureEnd[i].func(hand);
                                 }
                             }
                         }
@@ -159,7 +159,7 @@
                         {
                             if (pinchGesture.onGestureEnd[i].func && typeof pinchGesture.onGestureEnd[i].func === "function")
                             {
-                                pinchGesture.onGestureEnd[i](hand);
+                                pinchGesture.onGestureEnd[i].func(hand);
                             }
                         }
                     }
