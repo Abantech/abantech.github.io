@@ -6,18 +6,23 @@ var sphereTTL = 7;
 if (frameActions)
     frameActions.RegisterAction("RemoveDeadSpheres", function (frame) { fadingSpheres.forEach(removeDeadSpheres) });
 
-var createFadingSpheresAtFingerTips = function(hand) {
-    function createSphereAtFingerTip(fingerIndex, colorHex) {
-        pos = (new THREE.Vector3()).fromArray(hand.fingers[fingerIndex].tipPosition);
-        new FadingSphere(pos, 3, colorHex);
-    }
+var createFadingSpheresAtFingerTips =
+    {
+        action: function (hand)
+        {
+            function createSphereAtFingerTip(fingerIndex, colorHex)
+            {
+                pos = (new THREE.Vector3()).fromArray(hand.fingers[fingerIndex].tipPosition);
+                new FadingSphere(pos, 3, colorHex);
+            }
 
-    createSphereAtFingerTip(0, 0xF57E20) //Thumb
-    createSphereAtFingerTip(1, 0xFFCC00) //Index
-    createSphereAtFingerTip(2, 0xCCCC51) //Middle
-    createSphereAtFingerTip(3, 0x8FB258) //Ring
-    createSphereAtFingerTip(4, 0x336699) //pinky
-}
+            createSphereAtFingerTip(0, 0xF57E20) //Thumb
+            createSphereAtFingerTip(1, 0xFFCC00) //Index
+            createSphereAtFingerTip(2, 0xCCCC51) //Middle
+            createSphereAtFingerTip(3, 0x8FB258) //Ring
+            createSphereAtFingerTip(4, 0x336699) //pinky
+        }
+    }
 
 function FadingSphere(position, size, meshColor) {
     //Draw the sphere at the position of the indexfinger tip position

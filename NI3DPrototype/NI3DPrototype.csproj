@@ -79,6 +79,7 @@
     <Content Include="Scripts\FadingSpheres.js" />
     <Content Include="Scripts\FrameActions.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtons.js" />
+    <Content Include="Scripts\HandBasedActions\PinchHandGesture.js" />
     <Content Include="Scripts\HandBasedActions\PinchLine.js" />
     <Content Include="Scripts\HandController.js" />
     <Content Include="Scripts\HandsPositionAdjustment.js" />
@@ -87,6 +88,7 @@
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
     <Content Include="Scripts\Scene\SceneSetup.js" />
+    <Content Include="Scripts\Utils\GestureTimer.js" />
     <Content Include="Scripts\Utils\MathHelper.js" />
     <Content Include="Web.config" />
   </ItemGroup>

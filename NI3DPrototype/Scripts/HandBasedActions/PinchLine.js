@@ -1,25 +1,31 @@
 ﻿var pinchLine, pinchLineGeometry;
 
-var drawPinchLine = function (hand) {
+var drawPinchLine = {
+    action: function (hand)
+    {
 
-    var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-    var thumbTipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+        var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+        var thumbTipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
 
-    //if right hand only?
-    if (!pinchLine) {
+        //if right hand only?
+        if (!pinchLine)
+        {
 
-        pinchLine = createLineBetweenPoints(indexTipVector, thumbTipVector);
-        window.scene.add(pinchLine);
-    }
-    else {
-        pinchLine.geometry.vertices[0] = indexTipVector;
-        pinchLine.geometry.vertices[1] = thumbTipVector;
+            pinchLine = createLineBetweenPoints(indexTipVector, thumbTipVector);
+            window.scene.add(pinchLine);
+        }
+        else
+        {
+            pinchLine.geometry.vertices[0] = indexTipVector;
+            pinchLine.geometry.vertices[1] = thumbTipVector;
 
-        pinchLine.geometry.verticesNeedUpdate = true;
+            pinchLine.geometry.verticesNeedUpdate = true;
+        }
     }
 }
 
-function createLineBetweenPoints(startVect, endVect) {
+function createLineBetweenPoints(startVect, endVect)
+{
 
     pinchLineGeometry = new THREE.Geometry();
     pinchLineGeometry.vertices.push(startVect);

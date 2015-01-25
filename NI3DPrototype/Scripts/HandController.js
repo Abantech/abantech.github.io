@@ -2,7 +2,8 @@
 
 function HandController() {
     var handActions = []
-    this.RegisterAction = function (name, handAction) {
+    this.RegisterAction = function (name, handAction)
+    {
         handActions.push(new HandAction(name, handAction));
     }
 
@@ -25,7 +26,7 @@ function HandController() {
 function HandAction(actionName, handAction) {
     this.name = actionName;
     this.DoAction = function (hand) {
-        if (handAction)
-            handAction(hand);
+        if (handAction.action)
+            handAction.action(hand);
     }
 }

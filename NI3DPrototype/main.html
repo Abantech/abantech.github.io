@@ -83,6 +83,7 @@
 <body>
     <h2>Move the line between the index and thumb through the sphere, hold for three quarters of a second and see a cube get created. Hold longer to make the cube rotate.</h2>
     <script src="Scripts/Utils/MathHelper.js"></script>
+    <script src="Scripts/Utils/GestureTimer.js"></script>
     <script src="Scripts/Scene/SceneSetup.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
     <script src="Scripts/LeapLoopSetup.js"></script>
@@ -97,12 +98,54 @@
     <script src="Scripts/FadingSpheres.js"></script>
     <script src="Scripts/HandBasedActions/PinchLine.js"></script>
     <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
+    <script src="Scripts/HandBasedActions/PinchHandGesture.js"></script>
 
     <script>
         handController.RegisterAction("DrawfadingSpheres", createFadingSpheresAtFingerTips);
         handController.RegisterAction("DrawPinchLine", drawPinchLine);
         handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorToRed);
         handController.RegisterAction("CreateBoxAfterDelay", createBoxAfterDelay);
+
+        pinchGesture.options.distance = 30;
+
+        pinchGesture.onGesture = function (hand)
+        {
+            var closestObject
+            var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+
+            for (var i = 0; i < window.scene.children.length; i++)
+            {
+                var sceneObject = window.scene.children[i];
+
+                if (sceneObject.isAsset)
+                {
+                    var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
+                    if (distance < pinchGesture.options.range)
+                    {
+                        if (closestObject)
+                        {
+                            if (distance < closestObject.distance)
+                            {
+                                closestObject = sceneObject;
+                                closestObject.distance = distance;
+                            }
+                        }
+                        else
+                        {
+                            closestObject = sceneObject;
+                            closestObject.distance = distance;
+                        }
+                    }
+                }
+            }
+
+            if (closestObject)
+            {
+                window.scene.remove(closestObject);
+            }
+        }
+        
+        handController.RegisterAction("PinchGesture", pinchGesture);
 
         //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work
         createAdjuster("x", -250, 250, -15, function (value) { xTranslation = value });
