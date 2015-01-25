@@ -90,7 +90,7 @@
                 }
 
                 // After the time constraint has been satisfied for the full gesture, the registered full gesture functions are fired.
-                if (pinchGesture.gestureTimer.timeGesture(pinchGesture.options.delay))
+                if (pinchGesture.fullGestureAchieved || pinchGesture.gestureTimer.timeGesture(pinchGesture.options.delay))
                 {
                     pinchGesture.fullGestureAchieved = true;
 

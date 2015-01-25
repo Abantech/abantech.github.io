@@ -82,6 +82,7 @@
     <Content Include="Scripts\HandBasedActions\MenuButtons.js" />
     <Content Include="Scripts\HandBasedActions\PinchHandGesture.js" />
     <Content Include="Scripts\HandBasedActions\PinchLine.js" />
+    <Content Include="Scripts\HandBasedActions\PinchToGrab.js" />
     <Content Include="Scripts\HandController.js" />
     <Content Include="Scripts\HandsPositionAdjustment.js" />
     <Content Include="Scripts\LeapLoopSetup.js" />

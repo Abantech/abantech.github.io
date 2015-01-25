@@ -98,7 +98,9 @@
     <script src="Scripts/FadingSpheres.js"></script>
     <script src="Scripts/HandBasedActions/PinchLine.js"></script>
     <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
+
     <script src="Scripts/HandBasedActions/PinchHandGesture.js"></script>
+    <script src="Scripts/HandBasedActions/PinchToGrab.js"></script>
 
     <script src="Scripts/TranslationAction.js"></script>
     <script src="Scripts/ActionManager.js"></script>
@@ -137,84 +139,17 @@
 
         var pinchedObject;
         var action;
+
         pinchGesture.options.distance = 40;
-
-        function getPinchedObject(hand)
-        {
-            var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-
-            var closestObject = null;
-
-            for (var i = 0; i < window.scene.children.length; i++)
-            {
-                var sceneObject = window.scene.children[i];
-                if (sceneObject.isAsset)
-                {
-                    var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
-                    if (distance < 50)
-                    {
-                        if (closestObject)
-                        {
-                            if (distance < closestObject.distance)
-                            {
-                                closestObject = sceneObject;
-                                closestObject.distance = distance;
-                            }
-                        }
-                        else
-                        {
-                            closestObject = sceneObject;
-                            closestObject.distance = distance;
-                        }
-                    }
-                }
-            }
-
-            return closestObject;
-        }
 
         pinchGesture.registerOnFullGestureEnd(
             {
-                func: function (hand)
-                {
-                    if (action)
-                    {
-                        action.RegisterTranslation(pinchedObject)
-                        actionManager.ActionPerformed(action);
-                    }
-
-                    pinchedObject = null;
-                    action = null;
-                    console.log("Gesture Ended!")
-                }
+                func: EndGrabPinchedObject
             });
 
         pinchGesture.registerOnFullGesture(
             {
-                func: function (hand)
-                {
-                    if (!pinchedObject)
-                    {
-                        pinchedObject = getPinchedObject(hand);
-
-                        if (pinchedObject)
-                        {
-                            if (!action)
-                            {
-                                action = new TranslationAction();
-
-                                action.Initialize(pinchedObject);
-                            }
-
-                            console.log("Pinching something!")
-                        }
-                    }
-                    else
-                    {
-                        var tipPos = hand.fingers[0].tipPosition;
-                        pinchedObject.position.set(tipPos[0], tipPos[1], tipPos[2]);
-                    }
-                }
+                func: GrabPinchedObject
             });
 
         //pinchGesture.reg
