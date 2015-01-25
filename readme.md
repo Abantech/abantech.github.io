@@ -11,7 +11,13 @@ Source code: [Sphere Drawing Simulator]( https://github.com/Abantech/abantech.gi
 
 Demo: [NI 3D prototype workspace]( http://abantech.github.io/NI3DPrototype/main.html )  
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )
-Updated: Greg ~ 2015-01-24 - Fixed issues with intersection with new shape menu button, now showing simple create of cube (and rotation) after 750ms delay. Still some issues (not a *real* button press yet, see comments under isButtonPressed function)
+Updated: 
+Greg ~ 2015-01-24 - Fixed issues with intersection with new shape menu button, now showing simple create of cube (and rotation) after 750ms delay. Still some issues (not a *real* button press yet, see comments under isButtonPressed function)
+James ~ 2015-01-25 - 
+- Added LEAPToSceneConverter that reorients the leap hand tracking based on where the camera is looking so that, even if the camera moved, rotated, or zoomed (in or out) within the scene (say by using orbitcontrols), the hand is still in the right location, direction, and scale. 
+- Added MathHelper and GestureTimer utilities
+- Updated how HandActions work so that they now have both an 'action' and 'options' which can be used to set up how a specific gesture works
+- Added a PinchHandGesture that implements that selectively fires off the onBeginGesture, onGesture, or onEndGesture depending on what state the pinch is in
 
 ***
 
