@@ -49,7 +49,7 @@
             margin: 10px;
         }
     </style>
-    
+
     <!--<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
     <script src="http://threejs.org/build/three.js"></script>
     <script src="http://threejs.org/examples/js/controls/orbitcontrols.js"></script>
@@ -59,13 +59,12 @@
     <script src="Libs/Leap/leap-0.6.4.js"></script>
     <script src="Libs/Leap/leap-plugins-0.1.10.js"></script>
     <script src="Libs/Leap/leap.rigged-hand-0.1.6.js"></script>-->
-
     <!-- BEGIN internal references -->
     <script src="Libs/THREEJS/three.min.js"></script>
     <script src="Libs/THREEJS/OrbitControls.js"></script>
     <script src="Libs/THREEJS/Detector.js"></script>
     <script src="Libs/THREEJS/stats.min.js"></script>
-    
+
     <script src="Libs/Leap/leap-0.6.4.min.js"></script>
     <script src="Libs/Leap/leap-plugins-0.1.10.min.js"></script>
     <script src="Libs/Leap/leap-plugins-0.1.10-utils.min.js"></script>
@@ -73,7 +72,7 @@
     <script src="Libs/Leap/leap.rigged-hand-0.1.6.js"></script>
     <!-- END internal references -->
     <script src="http://leapmotion.github.io/leapjs-widgets/src/leap.proximity.js"></script>
-    
+
     <!-- BEGIN external references  ->-
     <script src="http://js.leapmotion.com/leap-0.6.4.js"></script>
     <script src="http://js.leapmotion.com/leap-plugins-0.1.10.js"></script>
@@ -88,13 +87,13 @@
     <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
     <script src="Scripts/LeapLoopSetup.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
-    
+
 
 
     <script src="Scripts/FrameActions.js"></script>
     <script src="Scripts/HandController.js"></script>
     <script src="Scripts/HandsPositionAdjustment.js"></script>
-    
+
     <script src="Scripts/FadingSpheres.js"></script>
     <script src="Scripts/HandBasedActions/PinchLine.js"></script>
     <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
@@ -106,91 +105,83 @@
         handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorToRed);
         handController.RegisterAction("CreateBoxAfterDelay", createBoxAfterDelay);
 
-        pinchGesture.options.distance = 30;
-
-        var pinchedObject = null;
-        //pinchGesture.registerOnGestureBegin()
+        var pinchedObject
+        pinchGesture.options.distance = 40;
 
         function getPinchedObject(hand)
         {
             var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-            //!?! Have to use the thumb as the other end of the ray, do not know why it's not working with the pipPosition or mcpPosition
-            var indexPipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
 
-            var dir = new THREE.Vector3();
-            dir.subVectors(indexTipVector, indexPipVector).normalize();
+            var closestObject = null;
 
-            var raycaster = new THREE.Raycaster(indexPipVector, dir, 0, 200);
-
-            for (var i = 0; i < window.scene.children.length; i++) {
+            for (var i = 0; i < window.scene.children.length; i++)
+            {
                 var sceneObject = window.scene.children[i];
                 if (sceneObject.isAsset)
                 {
-                    var intersection = raycaster.intersectObject(sceneObject, true);
-
-                    if (intersection.length > 0) {
-                        return sceneObject;
+                    var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
+                    if (distance < 50)
+                    {
+                        if (closestObject)
+                        {
+                            if (distance < closestObject.distance)
+                            {
+                                closestObject = sceneObject;
+                                closestObject.distance = distance;
+                            }
+                        }
+                        else
+                        {
+                            closestObject = sceneObject;
+                            closestObject.distance = distance;
+                        }
                     }
                 }
             }
 
-            return null;
+            return closestObject;
         }
 
-        pinchGesture.registerOnFullGestureEnd = function (hand)
-        {
-            pinchedObject = null;
-            console.log("Gesture Ended!")
-        }
+        pinchGesture.registerOnFullGestureEnd(
+            {
+                func: function (hand)
+                {
+                    pinchedObject = null;
+                    console.log("Gesture Ended!")
+                }
+            });
 
         pinchGesture.registerOnFullGesture(
             {
                 func: function (hand)
                 {
-                    if (!pinchedObject) {
+                    if (!pinchedObject)
+                    {
                         pinchedObject = getPinchedObject(hand);
                         console.log("Pinching something!")
-                    } 
+                    }
                     else
                     {
-                        pinchedObject.position.set((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition));
+                        var tipPos = hand.fingers[0].tipPosition;
+                        pinchedObject.position.set(tipPos[0], tipPos[1], tipPos[2]);
                     }
+                }
+            });
 
-                    //for (var i = 0; i < window.scene.children.length; i++)
-                    //{
-                    //    var sceneObject = window.scene.children[i];
-                    //    if (sceneObject.isAsset)
-                    //    {
-                    //        var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
-                    //        if (distance < 50)
-                    //        {
-                    //            if (closestObject)
-                    //            {
-                    //                if (distance < closestObject.distance)
-                    //                {
-                    //                    closestObject = sceneObject;
-                    //                    closestObject.distance = distance;
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                closestObject = sceneObject;
-                    //                closestObject.distance = distance;
-                    //            }
-                    //        }
-                    //    }
-                    //}
-
-                    //if (closestObject)
-                    //{
-                    //    window.scene.remove(closestObject);
-                    //}
-                },
-
-                condition: function ()
+        pinchGesture.registerOnFullGesture(
+            {
+                func: function (hand)
                 {
-                    var date = new Date();
-                    return (date.getSeconds() % 2) === 0;
+                    if (!pinchedObject)
+                    {
+                        pinchedObject = getPinchedObject(hand);
+                        console.log("Pinching something!")
+                    }
+                    else
+                    {
+
+                    }
+                }
                 }
             });
 
