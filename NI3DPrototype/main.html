@@ -108,42 +108,51 @@
 
         pinchGesture.options.distance = 30;
 
-        pinchGesture.registerOnFullGesture(function (hand)
-        {
-            var closestObject
-            var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-
-            for (var i = 0; i < window.scene.children.length; i++)
+        pinchGesture.registerOnFullGesture(
             {
-                var sceneObject = window.scene.children[i];
-
-                if (sceneObject.isAsset)
+                func: function (hand)
                 {
-                    var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
-                    if (distance < 50)
+                    var closestObject
+                    var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+
+                    for (var i = 0; i < window.scene.children.length; i++)
                     {
-                        if (closestObject)
+                        var sceneObject = window.scene.children[i];
+
+                        if (sceneObject.isAsset)
                         {
-                            if (distance < closestObject.distance)
+                            var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
+                            if (distance < 50)
                             {
-                                closestObject = sceneObject;
-                                closestObject.distance = distance;
+                                if (closestObject)
+                                {
+                                    if (distance < closestObject.distance)
+                                    {
+                                        closestObject = sceneObject;
+                                        closestObject.distance = distance;
+                                    }
+                                }
+                                else
+                                {
+                                    closestObject = sceneObject;
+                                    closestObject.distance = distance;
+                                }
                             }
                         }
-                        else
-                        {
-                            closestObject = sceneObject;
-                            closestObject.distance = distance;
-                        }
                     }
-                }
-            }
 
-            if (closestObject)
-            {
-                window.scene.remove(closestObject);
-            }
-        });
+                    if (closestObject)
+                    {
+                        window.scene.remove(closestObject);
+                    }
+                },
+
+                condition: function ()
+                {
+                    var date = new Date();
+                    return (date.getSeconds() % 2) === 0;
+                }
+            });
         
         handController.RegisterAction("PinchGesture", pinchGesture);
 

@@ -61,9 +61,24 @@
                     {
                         for (var i = 0; i < pinchGesture.onGestureBegin.length; i++)
                         {
-                            if (pinchGesture.onGestureBegin[i] && typeof pinchGesture.onGestureBegin[i] === "function")
+                            if (pinchGesture.onGestureBegin[i] && pinchGesture.onGestureBegin[i].condition && typeof pinchGesture.onGestureBegin[i].condition === "function")
                             {
-                                pinchGesture.onGestureBegin[i](hand);
+                                if (pinchGesture.onGestureBegin[i].condition())
+                                {
+                                    if (pinchGesture.onGestureBegin[i].func && typeof pinchGesture.onGestureBegin[i].func === "function")
+                                    {
+                                        pinchGesture.onGestureBegin[i](hand);
+
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (pinchGesture.onGestureBegin[i].func && typeof pinchGesture.onGestureBegin[i].func === "function")
+                                {
+                                    pinchGesture.onGestureBegin[i](hand);
+
+                                }
                             }
                         }
                     }
@@ -76,9 +91,22 @@
 
                     for (var i = 0; i < pinchGesture.onFullGesture.length; i++)
                     {
-                        if (pinchGesture.onFullGesture[i] && typeof pinchGesture.onFullGesture[i] === "function")
+                        if (pinchGesture.onFullGesture[i] && pinchGesture.onFullGesture[i].condition && typeof pinchGesture.onFullGesture[i].condition === "function")
                         {
-                            pinchGesture.onFullGesture[i](hand);
+                            if (pinchGesture.onFullGesture[i].condition())
+                            {
+                                if (pinchGesture.onFullGesture[i].func && typeof pinchGesture.onFullGesture[i].func === "function")
+                                {
+                                    pinchGesture.onFullGesture[i](hand);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (pinchGesture.onFullGesture[i].func && typeof pinchGesture.onFullGesture[i].func === "function")
+                            {
+                                pinchGesture.onFullGesture[i](hand);
+                            }
                         }
                     }
                 }
@@ -94,9 +122,22 @@
                         // Once the gesture has been ceased, if full gesture was achieved, the registered onFullGestureEnd functions are called.
                         for (var i = 0; i < pinchGesture.onFullGestureEnd.length; i++)
                         {
-                            if (pinchGesture.onFullGestureEnd[i] && typeof pinchGesture.onFullGestureEnd[i] === "function")
+                            if (pinchGesture.onFullGestureEnd[i] && pinchGesture.onFullGestureEnd[i].condition && typeof pinchGesture.onFullGestureEnd[i].condition === "function")
                             {
-                                pinchGesture.onFullGestureEnd[i](hand);
+                                if (pinchGesture.onFullGestureEnd[i].condition())
+                                {
+                                    if (pinchGesture.onFullGestureEnd[i].func && typeof pinchGesture.onFullGestureEnd[i].func === "function")
+                                    {
+                                        pinchGesture.onFullGestureEnd[i](hand);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (pinchGesture.onFullGestureEnd[i].func && typeof pinchGesture.onFullGestureEnd[i].func === "function")
+                                {
+                                    pinchGesture.onFullGestureEnd[i](hand);
+                                }
                             }
                         }
                     }
@@ -104,36 +145,48 @@
                     // Once the gesture has been ceased, the registered onEndGesture functions are called.
                     for (var i = 0; i < pinchGesture.onGestureEnd.length; i++)
                     {
-                        if (pinchGesture.onGestureEnd[i] && typeof pinchGesture.onGestureEnd[i] === "function")
+                        if (pinchGesture.onGestureEnd[i] && pinchGesture.onGestureEnd[i].condition && typeof pinchGesture.onGestureEnd[i].condition === "function")
                         {
-                            pinchGesture.onGestureEnd[i](hand);
+                            if (pinchGesture.onGestureEnd[i].condition())
+                            {
+                                if (pinchGesture.onGestureEnd[i].func && typeof pinchGesture.onGestureEnd[i].func === "function")
+                                {
+                                    pinchGesture.onGestureEnd[i](hand);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (pinchGesture.onGestureEnd[i].func && typeof pinchGesture.onGestureEnd[i].func === "function")
+                            {
+                                pinchGesture.onGestureEnd[i](hand);
+                            }
                         }
                     }
                 }
-
 
                 pinchGesture.gestureHasBegun = false;
                 pinchGesture.fullGestureAchieved = false;
             }
         },
 
-        registerOnGestureBegin: function (func)
-        {
-            pinchGesture.onGestureBegin.push(func);
-        },
+            registerOnGestureBegin: function (func)
+            {
+                pinchGesture.onGestureBegin.push(func);
+            },
 
-        registerOnFullGesture: function (func)
-        {
-            pinchGesture.onFullGesture.push(func);
-        },
+            registerOnFullGesture: function (func)
+            {
+                pinchGesture.onFullGesture.push(func);
+            },
 
-        registerOnFullGestureEnd: function (func)
-        {
-            pinchGesture.onFullGestureEnd.push(func);
-        },
+            registerOnFullGestureEnd: function (func)
+            {
+                pinchGesture.onFullGestureEnd.push(func);
+            },
 
-        registerOnGestureEnd: function (func)
-        {
-            pinchGesture.onGestureEnd.push(func);
+            registerOnGestureEnd: function (func)
+            {
+                pinchGesture.onGestureEnd.push(func);
+            }
         }
-    }
