@@ -10,7 +10,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=http://js.leapmotion.com/leap-0.6.3.js ></script>
-<script src=http://js.leapmotion.com/leap-plugins-0.1.8.js ></script>
+
 <script>
 //See
 // http://mrdoob.github.io/three.js/examples/#webgl_interactive_raycasting_pointcloud
@@ -18,15 +18,14 @@
 	var info, renderer, scene, camera, controls, stats, light;
 
 	var cubes = [];
-	var raycaster;
-	var mouse = new THREE.Vector2();
+	var raycaster = new THREE.Raycaster();
+	var points = 0;
+
 	var intersection;
 
 	var fingerlings = {};
 	var handies = {};
 	var loop = {};
-
-var pointer;
 
 	init();
 //	animate();
@@ -39,7 +38,7 @@ var pointer;
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'left: 20px; position: absolute; top: 0px; width: 100% ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
-			'<div id=msg>Move the cursor to ID the cubes...</div>' +
+			'<div id=msg>Touch the cubes and sphere to win points!</div>' +
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +
 		'';
@@ -57,13 +56,14 @@ var pointer;
 		scene = new THREE.Scene();
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
-		camera.position.set( 0, 500, 500 );
+		camera.position.set( 0, 800, 500 );
 		scene.add( camera ); // for light to follow
 
 // controls
 		controls = new THREE.OrbitControls( camera );
 		controls.minDistance = 10;
 		controls.maxDistance = 1000;
+		controls.target.y = 250;
 
 // Lights
 		light = new THREE.AmbientLight( 0xffffff );
@@ -96,21 +96,19 @@ var pointer;
 		camera.add( light );
 
 // ground box
-		var geometry = new THREE.BoxGeometry( 500, 2, 500 );
+		var geometry = new THREE.BoxGeometry( 600, 6, 300 );
 		material = new THREE.MeshNormalMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -1, 0 );
+		mesh.position.set( 0, 3, 0 );
 		scene.add( mesh );
 
-		mesh = new THREE.GridHelper( 250, 10 );
-		scene.add( mesh );
+		helper = new THREE.BoxHelper( mesh );
+		helper.material.color.setRGB( 1, 0, 1 );
+		scene.add( helper );
 
 // axes
 		var axis = new THREE.AxisHelper( 250 );
 		scene.add( axis );
-
-		renderer.render( scene, camera );
-
 
 		helper = new THREE.BoxHelper( mesh );
 		helper.material.color.setRGB( 1, 0, 1 );
@@ -122,23 +120,11 @@ var pointer;
 // Sphere
 		geometry = new THREE.SphereGeometry( 50, 50, 50 );
 
-//		material = new THREE.MeshNormalMaterial();
 		material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
-			specular: 0xffffff * Math.random(),
-			shininess: 50,
-			side: THREE.DoubleSide
-		} );
-//		material = new THREE.MeshBasicMaterial( { color: 0x888888, opacity: 0.7, side: THREE.DoubleSide, transparent: true });
-//		material = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xffffff * Math.random() } );
-//		material = new THREE.MeshPhongMaterial( { ambient: 0x030303, color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } )
-		material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
-			specular: 0xffffff * Math.random(),
-//			shading: THREE.FlatShading,
-			shininess: 0.001
+			color: 0xffffff, 
+			ambient: 0xffffff,
+			shininess: 0.001,
+			side: 2
 		} );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( -280, 100, 0 );
@@ -150,17 +136,13 @@ var pointer;
 		geometry = new THREE.BoxGeometry( 50, 50, 60 );
 		for (var i = 0; i < 50; i++) {
 			material = new THREE.MeshPhongMaterial( {
-				color: 0xffffff * Math.random(), 
-				ambient: 0xffffff * Math.random(),
-				opacity: Math.random(),
-				specular: 0xffffff * Math.random(),
-				shading: THREE.FlatShading,
-				shininess: 10,
-				transparent: true
+				color: 0xffffff, 
+				ambient: 666666,
+				side: 2
 			} );
 
 			mesh = new THREE.Mesh( geometry, material );
-			mesh.position.set( 500 * Math.random() - 250, 500 * Math.random(), 500 * Math.random() - 250 );
+			mesh.position.set( 600 * Math.random() - 300, 500 * Math.random(), 300 * Math.random() - 150 );
 			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
 			mesh.castShadow = true;
 			mesh.receiveShadow = true;
@@ -173,92 +155,68 @@ var pointer;
 
 		}
 
-		raycaster = new THREE.Raycaster();
-
-		document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-
 	}
-
-	function onDocumentMouseMove( event ) {
-
-		event.preventDefault();
-
-		mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-		mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-
-	}
-
-	function findIntersectionsxx() {
-
-			raycaster.setFromCamera( mouse, camera );
-
-			var intersections = raycaster.intersectObjects( cubes );
-
-			if ( intersections.length > 0 ) {
-
-				if ( intersection != intersections[ 0 ].object ) {
-
-					intersection = intersections[ 0 ].object;
-
-					msg.innerHTML = 'Selected cube ID: ' + intersection.id ;
-
-				}
-
-			} else {
-
-				intersection = null;
-
-				msg.innerHTML = 'No cube selected' ;
-
-			}
-
-	}
-
 
 	function findIntersections( ) {
 
-// bring in object to object raycasting
+		var index = fingerlings[1].finger
+		var tip = v( index.tipPosition[0], index.tipPosition[1], index.tipPosition[2] );
+		var pip = v( index.pipPosition[0], index.pipPosition[1], index.pipPosition[2] );
+		var directionVector = tip.sub( pip );
+
+		raycaster.set( pip, directionVector.normalize() );
+
+		var intersects = raycaster.intersectObjects( scene.children );
+
+		for ( var i = 0; i < intersects.length; i ++ ) {
+
+			intersects[i].object.material.color = new THREE.Color( 0xff0000 );
+
+		}
+
+//console.log( index );
+//console.log( raycaster, intersects );
+
+		points++;
+
+		if ( points < 100 ) {
+
+			msg.innerHTML = 'You now have ' + points + ' points'
+
+		} else {
+
+			msg.innerHTML = '<h1>Bingo! You win!</h1>';
+
+		}
 
 	}
-
-/*
-
-	function animate( timestamp ) {
-		renderer.render( scene, camera );
-		findIntersections()
-		controls.update();
-		stats.update();
-		requestAnimationFrame( animate );
-
-	}
-
-*/
 
 	loop.animate = function( frame ) {
 
-		frame.hands.forEach( function( hand, index ) {
+		frame.hands.forEach( function( hand, id ) {
 
-			var handy = ( handies[index] || ( handies[index] = new Handy()) );    
-			handy.outputData( index, hand );
+			var handy = ( handies[id] || ( handies[id] = new Handy()) );    
+			handy.outputData( id, hand );
 
-			hand.fingers.forEach( function( finger, index ) {
+			hand.fingers.forEach( function( finger, id ) {
 
-				var fingerling = ( fingerlings[index] || ( fingerlings[index] = new Fingerling() ) );  
-				fingerling.outputData( index, finger );
+				var fingerling = ( fingerlings[id] || ( fingerlings[id] = new Fingerling() ) );  
+				fingerling.outputData( id, finger );
 
 			});
+
+		findIntersections();
 
 		});
 
 		renderer.render( scene, camera );
 		controls.update();
 		stats.update();
-//		findIntersections();
+
 
 	}
 
 	loop = Leap.loop( loop.animate );
-	loop.use( 'screenPosition', { scale: 0.25 } ); // use = plugin
 
 	var Handy = function() {
 		var handy = this;
@@ -269,9 +227,9 @@ var pointer;
 		var box = new THREE.Mesh( geometry, material );
 		scene.add( box );
 
-		handy.outputData = function( index, hand  ) {
+		handy.outputData = function( id, hand  ) {
 
-			msg.innerHTML = 'Hand id:' + index + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) + 
+			msg.innerHTML = 'Hand id:' + id + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) + 
 				' y:' + hand.stabilizedPalmPosition[1].toFixed(0) + ' z:' + hand.stabilizedPalmPosition[2].toFixed(0);
 
 			box.position.set( hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2] );
@@ -282,6 +240,7 @@ var pointer;
 
 	};
 
+/*
 // Finger Method
 	var Fingerling = function() {
 
@@ -294,10 +253,10 @@ var pointer;
 		var mcp = addPhalange();
 		var carp = addPhalange();
 
-		fingerling.outputData = function( index, finger ) {
+		fingerling.outputData = function( id, finger ) {
 
 			msg.innerHTML = 'Finger Method: ' +
-				'finger id:' + index + ' tip x:' + finger.tipPosition[0].toFixed(0) + 
+				'finger id:' + id + ' tip x:' + finger.tipPosition[0].toFixed(0) + 
 				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
 			tip.position.set( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2] );
@@ -320,26 +279,43 @@ var pointer;
 
 	};
 
+	function updatePhalange( phalange, nextPhalange ) {
+
+			phalange.lookAt( nextPhalange.position );
+			length = phalange.position.distanceTo( nextPhalange.position );
+			phalange.translateZ( 0.5 * length );
+			phalange.scale.set( 1, 1, length );
+
+	}
+
+*/
+
 // Bone Method
 	var Fingerling = function() {
 
 		var fingerling = this;
-		var msg = fingerData.appendChild( document.createElement( 'div' ) );
-
-		var phalanges = [];
+		var phalanges = [], phalange;
 
 		for (var i = 0; i < 4; i++) {
+
 			phalange = addPhalange();
 			phalanges.push( phalange )
+
 		}
 
-		fingerling.outputData = function( index, finger ) {
+		fingerling.phalanges = phalanges;
+
+		var msg = fingerData.appendChild( document.createElement( 'div' ) );
+
+		fingerling.outputData = function( id, finger ) {
 
 			msg.innerHTML = 'Bone Method ~ ' +
-				'finger tip: ' + index + ' x:' + finger.tipPosition[0].toFixed(0) + 
+				'finger tip: ' + id + ' x:' + finger.tipPosition[0].toFixed(0) + 
 				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
-console.log( finger );
+//console.log( finger );
+
+			var bone, cen, len;
 
 			for (var i = 0; i < 4; i++) {
 
@@ -349,25 +325,28 @@ console.log( finger );
 
 				phalange = phalanges[ i ];
 				phalange.position.set( cen[0], cen[1], cen[2] );
-				if ( index > 0 || i > 0 ) {
+
+				if ( id > 0 || i > 0 ) {
+
 					phalange.scale.z = len;
-				}
-
-				if ( index === 1 && i === 0) {
-
-					pointer = phalange.clone();
 
 				}
+
 			}
 
 // Eventually will look at using bone.basis XYZ-axis data; Will it produce more concise code?
   
-			phalanges[3].lookAt( v( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2]  ) );
+			phalanges[3].lookAt( v( finger.staipPosition[0], finger.tipPosition[1], finger.tipPosition[2]  ) );
 			phalanges[2].lookAt( v( finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2]  ) );
 			phalanges[1].lookAt( v( finger.pipPosition[0], finger.pipPosition[1], finger.pipPosition[2]  ) );
-			if ( index > 0 ) {
+
+			if ( id > 0 ) {
+
 				phalanges[0].lookAt( v( finger.mcpPosition[0], finger.mcpPosition[1], finger.mcpPosition[2]  ) );
+
 			}
+
+			fingerling.finger = finger;
 
 		};
 
@@ -383,21 +362,12 @@ console.log( finger );
 
 	}
 
-	function updatePhalange( phalange, nextPhalange ) {
 
-			phalange.lookAt( nextPhalange.position );
-			length = phalange.position.distanceTo( nextPhalange.position );
-			phalange.translateZ( 0.5 * length );
-			phalange.scale.set( 1, 1, length );
-
-	}
 
 	function v(  x, y, z){ return new THREE.Vector3( x, y, z ); }
 
 // This allows us to move even while in an iFrame.
 	Leap.loopController.setBackground(true)
-
-
 
 </script>
 </body>
