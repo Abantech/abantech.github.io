@@ -35,7 +35,7 @@ Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going f
 
 Demo: [Three.js FingerOver Leap-Enabled]( http://abantech.github.io/threejs-mouseover-leap-enabled/r1/threejs-mouseover-leap-enabled.html )  
 Source code: [Three.js FingerOver Leap-Enabled]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover-leap-enabled/ )
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get object a Leap finger is pointing at. *WIP/Placeholder*
+Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to highlight object a Leap finger is pointing at. Also begins to be a game for Leo. 
 
 ***
 
@@ -43,5 +43,11 @@ Demo: [Item Touched Add Handles]( http://abantech.github.io/item-touched-add-han
 Source code: [Item Touched Add Handles]( https://github.com/Abantech/abantech.github.io/blob/master/item-touched-add-handles/r1/item-touched-add-handles-r1.html )  
 Added: Theo ~ 2015-01-22
 
+
+***
+
+See Also
+
+[UI Functions Google Spreadsheet]( https://docs.google.com/a/abantech.net/spreadsheets/d/1skBOHfMX3LZ_gv2S56IFMq_Ht_X6t1KnvRIzo_ihxXQ/edit#gid=1786159030 )
 
 
