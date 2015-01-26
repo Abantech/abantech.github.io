@@ -21,6 +21,10 @@ James ~ 2015-01-25 -
 
 ***
 
+Demo: [Three.js Leap Wearable]( http://abantech.github.io/threejs-leap-wearable/r1/threejs-leap-wearable.html )  
+Source code: [Three.js Leap Wearable( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-wearable )
+Added: Theo ~ 2015-01-25 ~ First pass at a Leap Wearable. Left arm only.
+
 Demo: [Three.js Leap-Enabled Template]( http://abantech.github.io/threejs-leap-enabled-template/r1/threejs-leap-enabled-template.html )  
 Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-enabled-template/ )
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
@@ -35,7 +39,7 @@ Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going f
 
 Demo: [Three.js FingerOver Leap-Enabled]( http://abantech.github.io/threejs-mouseover-leap-enabled/r1/threejs-mouseover-leap-enabled.html )  
 Source code: [Three.js FingerOver Leap-Enabled]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover-leap-enabled/ )
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to highlight object a Leap finger is pointing at. Also begins to be a game for Leo. 
+Updated: Theo ~ 2015-01-25 ~ Minimum rig to get Three.js to highlight object a Leap finger is pointing at. Also begins to be a game for Leo. 
 
 ***
 
