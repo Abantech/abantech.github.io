@@ -62,6 +62,8 @@
 
     this.RedoAction = function myfunction()
     {
-        window.scene.add(this.getCreatedObject());
+        var createdObject = this.getCreatedObject();
+        createdObject.isAsset = true;
+        window.scene.add(createdObject);
     }
 }
