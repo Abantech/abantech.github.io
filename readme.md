@@ -34,6 +34,10 @@ Source code: [Three.js FingerOver Leap-Enabled]( https://github.com/Abantech/aba
 Added: Theo ~ 2015-01-24  
 Updated: Theo ~ 2015-01-25 ~ Minimum rig to get Three.js to highlight object a Leap finger is pointing at. Also begins to be a game for Leo. 
 
+Demo: [Three.js Camera Object Child]( http://abantech.github.io/threejs-camera-object-child/r1/threejs-camera-object-child.html )  
+Source code: [Three.js Camera Object Child]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-camera-object-child )  
+Added: Theo ~ 2015-01-25 ~ Three.js example of an object that remains at fixed position in relation to a camera.
+
 Demo: [Three.js Leap-Enabled Template]( http://abantech.github.io/threejs-leap-enabled-template/r1/threejs-leap-enabled-template.html )  
 Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-enabled-template/ )  
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
