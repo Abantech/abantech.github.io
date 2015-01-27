@@ -10,10 +10,10 @@ Demo: [NI 3D prototype workspace]( http://abantech.github.io/NI3DPrototype/main.
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
 
 Updated Greg ~ 2015-01-27
- - Updated to add NewShapeMenu button that actually works. No images yet and lots of refactoring needed to do. Not the best code I've written but had to make a lot of simplifications to resolve issues. 
- - Still having issues with the raycaster (please someone help) - isButtonPressed and isHoveringOverControls in Scripts/HandBasedActions/MenuButtons.js
- - Need to work together with theo to show handles upon creation
 
+ - Updated to add NewShapeMenu button that actually works. No images yet and lots of refactoring needed to do. Not the best code I've written but had to make a lot of simplifications to resolve issues. 
+ - Still having issues with the raycaster (please someone help) - isButtonPressed and isHoveringOverControls in Scripts/HandBasedActions/MenuButtons.js  
+ - Need to work together with theo to show handles upon creation
 
 ***
 
