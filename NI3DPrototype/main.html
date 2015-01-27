@@ -81,15 +81,13 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 </head>
 <body>
-    <h2>Move the line between the index and thumb through the sphere, hold for three quarters of a second and see a cube get created. Hold longer to make the cube rotate.</h2>
+    <h3>Point and hold index finger (with thumb tucked underhand) at sphere to expand menu, press on each of the boxes to will create a new shape. (clockwise from top left: cube, cylinder, cone, sphere)</h3>
     <script src="Scripts/Utils/MathHelper.js"></script>
     <script src="Scripts/Utils/GestureTimer.js"></script>
     <script src="Scripts/Scene/SceneSetup.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
     <script src="Scripts/LeapLoopSetup.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
-
-
 
     <script src="Scripts/FrameActions.js"></script>
     <script src="Scripts/HandController.js"></script>
@@ -109,8 +107,8 @@
     <script>
         handController.RegisterAction("DrawfadingSpheres", createFadingSpheresAtFingerTips);
         handController.RegisterAction("DrawPinchLine", drawPinchLine);
-        handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorToRed);
-        handController.RegisterAction("CreateBoxAfterDelay", createBoxAfterDelay);
+        handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorOnHoverAndPress);
+        handController.RegisterAction("ExpandMenuSectionsOnHover", expandMenuSectionsOnHover);
 
 
 
