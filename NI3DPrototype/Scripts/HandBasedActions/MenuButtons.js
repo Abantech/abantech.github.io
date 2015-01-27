@@ -240,105 +240,38 @@ var expandMenuSectionsOnHover = {
     }
 }
 
+var raycaster = new THREE.Raycaster();
+
 function isButtonPressed(hand, button)
 {
-    var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-    var indexTipDirection = (new THREE.Vector3()).fromArray(hand.fingers[0].direction);
-    indexTipDirection.normalize();
-    //!?! Have to use the thumb as the other end of the ray, do not know why it's not working with the pipPosition or mcpPosition
-    var indexPipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+    var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+    var directionVector = (new THREE.Vector3()).fromArray(hand.fingers[1].direction);
 
-    var dir = new THREE.Vector3();
-    dir.subVectors(indexTipPosition, indexPipVector).normalize();
-
-    var raycaster = new THREE.Raycaster(indexPipVector, indexTipDirection, 0, 50);
-
+    raycaster.set(indexTipPosition, directionVector.normalize());
+    raycaster.near = 0;
+    raycaster.far = 80;
     var intersection = raycaster.intersectObject(button, true);
     return intersection.length > 0;
 }
 
-function isHoveringOverControls(hand, controls) {
-    var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-    var indexTipDirection = (new THREE.Vector3()).fromArray(hand.fingers[0].direction);
-    indexTipDirection.normalize();
-    //!?! Have to use the thumb as the other end of the ray, do not know why it's not working with the pipPosition or mcpPosition
-    var indexPipVector = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-
-    var dir = new THREE.Vector3();
-    dir.subVectors(indexTipPosition, indexPipVector).normalize();
-
-    var raycaster = new THREE.Raycaster(indexPipVector, indexTipDirection, 0, 400);
+function isHoveringOverControls(hand, controls)
+{
+    var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+    var directionVector = (new THREE.Vector3()).fromArray(hand.fingers[1].direction);
+    raycaster.set(indexTipPosition, directionVector.normalize());
+    raycaster.near = 0;
+    raycaster.far = 400;
 
     var intersection = raycaster.intersectObjects(controls, true);
     return intersection.length > 0;
 }
 
+
 frameActions.RegisterAction("CloseMenuAfterDelay", closeMenuAfterDelay);
 
 
 /////// DEAD CODE BELOW ///////
-
-
-var menuActionInProgress = null
-var menuresizeItterationsCount = 0;
-var maxMenuResizeItterations = 20;
-var expansionFactor = 1 / maxMenuResizeItterations;
-//var shrinkFactor = 0.9;
-
-var shrinkMenuBoxesAndExpandButton = function (frame) {
-    if (!menuActionInProgress) {
-        menuActionInProgress = "shrinkMenuBoxesAndExpandButton";
-        menuresizeItterationsCount = 0;
-    }
-    else if (menuActionInProgress == "shrinkMenuBoxesAndExpandButton") {
-        console.log("newShapesMenuButton.scale = " + newShapesButton.scale.x)
-        if (menuresizeItterationsCount < maxMenuResizeItterations) {
-            menuresizeItterationsCount++;
-            for (var i = 0; i < menuControls.length; i++) {
-                menuControls[i].scale.x -= expansionFactor;
-                menuControls[i].scale.y -= expansionFactor;
-            }
-
-            if (newShapesButton.scale.x < 1) {
-                newShapesButton.scale.x += expansionFactor;
-                newShapesButton.scale.y += expansionFactor;
-                newShapesButton.scale.z += expansionFactor;
-            }
-        }
-        else {
-            newShapesButton.menuIsExpanded = false;
-            console.log("UnRegistering FrameAction: ShrinkMenuBoxes")
-            frameActions.UnregisterAction("ShrinkMenuBoxes");
-            menuActionInProgress = null;
-        }
-    }
-}
-
-var expandMenuBoxesAndShrinkButton = function (frame) {
-    if (!menuActionInProgress) {
-        menuActionInProgress = "expandMenuBoxesAndShrinkButton";
-        menuresizeItterationsCount = 0;
-    }
-    else if (menuActionInProgress == "expandMenuBoxesAndShrinkButton") {
-        if (menuresizeItterationsCount < maxMenuResizeItterations) {
-            menuresizeItterationsCount++;
-            for (var i = 0; i < menuControls.length; i++) {
-                menuControls[i].scale.x += expansionFactor;
-                menuControls[i].scale.y += expansionFactor;
-            }
-
-            newShapesButton.scale.x -= expansionFactor;
-            newShapesButton.scale.y -= expansionFactor;
-            newShapesButton.scale.z -= expansionFactor;
-        }
-        else {
-            newShapesButton.menuIsExpanded = true;
-            console.log("UnRegistering FrameAction: ExpandMenuBoxes")
-            frameActions.UnregisterAction("ExpandMenuBoxes");
-            menuActionInProgress = null;
-        }
-    }
-}
+//Not useing this but leaving this here in case James is using it
 
 var createBoxAfterDelay = {
     action: function (hand) {
