@@ -1,10 +1,11 @@
-﻿var sceneArea = 200;
+﻿/// <reference path="../../Libs/THREEJS/three.js" />
+var sceneArea = 200;
 var sceneLights;
 
 var initScene = function () {
     window.scene = new THREE.Scene();
     window.renderer = new THREE.WebGLRenderer({
-        alpha: true,
+        alpha: 1,
         antialias: false
     });
 
@@ -39,8 +40,9 @@ var initScene = function () {
 };
 
 var createRandomCones = function(coneCount) {
-    var geometry = new THREE.CylinderGeometry(0, 10, 30, 4, 1);
-    var material = new THREE.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading });
+    var geometry = new THREE.CylinderGeometry(0, 10, 30, 24, 0);
+    var material = new THREE.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading })
+    //.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading });
 
     for (var i = 0; i < coneCount; i++) {
         var mesh = new THREE.Mesh(geometry, material);
@@ -62,7 +64,7 @@ var createSceneLighting = function() {
     window.scene.add(light);
     sceneLights.push(light);
 
-    light = new THREE.DirectionalLight(0x002288);
+    light = new THREE.DirectionalLight(0x989898);
     light.position.set(-1, -1, -1);
     window.scene.add(light);
     sceneLights.push(light);
@@ -74,4 +76,4 @@ var createSceneLighting = function() {
 
 initScene();
 createSceneLighting();
-createRandomCones(30);
+createRandomCones(20);
