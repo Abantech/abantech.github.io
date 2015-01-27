@@ -14,8 +14,6 @@ Updated Greg ~ 2015-01-27
  - Still having issues with the raycaster (please someone help) - isButtonPressed and isHoveringOverControls in Scripts/HandBasedActions/MenuButtons.js
  - Need to work together with theo to show handles upon creation
 
-Demo: [Sphere Drawing Simulator]( http://abantech.github.io/sphere-drawing-simulator.html )  
-Source code: [Sphere Drawing Simulator]( https://github.com/Abantech/abantech.github.io/tree/master/ClientSideJSForLeap )
 
 ***
 
