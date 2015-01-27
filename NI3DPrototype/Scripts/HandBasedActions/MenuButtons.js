@@ -6,6 +6,7 @@ var buttonSize = 16;
 var buttonPositionX = (window.innerWidth / 14);
 var buttonPositionY = (window.innerHeight / 12);
 var buttonPositionZ = -300;
+var menuHoverToOpenDelayMills = 250;
 var menuOpenGracePeriodMills = 900;
 var menuOptionVsLastTimeUsed = {};
 
@@ -215,7 +216,7 @@ var expandMenuSectionsOnHover = {
                 if (!newShapesButton.beginHoverTime)
                     newShapesButton.beginHoverTime = new Date();
 
-                if (new Date() - newShapesButton.beginHoverTime > 750)
+                if ((new Date() - newShapesButton.beginHoverTime) > menuHoverToOpenDelayMills)
                 {
                     menuControls.forEach(function (item, index, arr) { item.visible = true });
                     newShapesButton.visible = false;
