@@ -78,6 +78,7 @@
     <script src="http://js.leapmotion.com/leap-plugins-0.1.10.js"></script>
     <script src="http://js.leapmotion.com/leap.rigged-hand-0.1.6.js"></script>
     !<-- END external references-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 </head>
 <body>
     <h2>Move the line between the index and thumb through the sphere, hold for three quarters of a second and see a cube get created. Hold longer to make the cube rotate.</h2>
@@ -97,7 +98,13 @@
     <script src="Scripts/FadingSpheres.js"></script>
     <script src="Scripts/HandBasedActions/PinchLine.js"></script>
     <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
+
     <script src="Scripts/HandBasedActions/PinchHandGesture.js"></script>
+    <script src="Scripts/HandBasedActions/PinchToGrab.js"></script>
+
+    <script src="Scripts/ActionTracking/TranslationAction.js"></script>
+    <script src="Scripts/ActionTracking/CreateAction.js"></script>
+    <script src="Scripts/ActionTracking/ActionManager.js"></script>
 
     <script>
         handController.RegisterAction("DrawfadingSpheres", createFadingSpheresAtFingerTips);
@@ -105,83 +112,59 @@
         handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorToRed);
         handController.RegisterAction("CreateBoxAfterDelay", createBoxAfterDelay);
 
-        var pinchedObject
-        pinchGesture.options.distance = 40;
 
-        function getPinchedObject(hand)
+
+        $(document).keypress(function (event)
         {
-            var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var keyChar = String.fromCharCode(keycode);
 
-            var closestObject = null;
-
-            for (var i = 0; i < window.scene.children.length; i++)
+            if (keycode == '13')
             {
-                var sceneObject = window.scene.children[i];
-                if (sceneObject.isAsset)
+                box = createBox(40, new THREE.Vector3(0, 0, 0), 0xabcdef);
+                box.isAsset = true;
+                box.name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
                 {
-                    var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
-                    if (distance < 50)
-                    {
-                        if (closestObject)
-                        {
-                            if (distance < closestObject.distance)
-                            {
-                                closestObject = sceneObject;
-                                closestObject.distance = distance;
-                            }
-                        }
-                        else
-                        {
-                            closestObject = sceneObject;
-                            closestObject.distance = distance;
-                        }
-                    }
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+                window.scene.add(box);
+
+                if (!action)
+                {
+                    action = new CreateAction();
+                    action.Initialize(box);
+
+                    actionManager.ActionPerformed(action);
+
+                    action = null;
                 }
             }
 
-            return closestObject;
-        }
+            if (keyChar === 'u')
+            {
+                actionManager.Undo();
+            }
+
+            if (keyChar === 'r')
+            {
+                actionManager.Redo();
+            }
+        });
+
+        var pinchedObject;
+        var action;
+
+        pinchGesture.options.distance = 40;
 
         pinchGesture.registerOnFullGestureEnd(
             {
-                func: function (hand)
-                {
-                    pinchedObject = null;
-                    console.log("Gesture Ended!")
-                }
+                func: EndGrabPinchedObject
             });
 
         pinchGesture.registerOnFullGesture(
             {
-                func: function (hand)
-                {
-                    if (!pinchedObject)
-                    {
-                        pinchedObject = getPinchedObject(hand);
-                        console.log("Pinching something!")
-                    }
-                    else
-                    {
-                        var tipPos = hand.fingers[0].tipPosition;
-                        pinchedObject.position.set(tipPos[0], tipPos[1], tipPos[2]);
-                    }
-                }
-            });
-
-        pinchGesture.registerOnFullGesture(
-            {
-                func: function (hand)
-                {
-                    if (!pinchedObject)
-                    {
-                        pinchedObject = getPinchedObject(hand);
-                        console.log("Pinching something!")
-                    }
-                    else
-                    {
-
-                    }
-                }
+                func: GrabPinchedObject
             });
 
         //pinchGesture.reg

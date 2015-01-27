@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>threejs-mouseover-leap-enabled.html</title>
+<title>Three.js Leap Wearable R1</title>
 <meta charset=utf-8 />
 <meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 />
 </head>
@@ -17,10 +17,9 @@
 
 	var info, renderer, scene, camera, controls, stats, light;
 
-	var cubes = [];
+	var sphere, cubes = [];
 	var raycaster = new THREE.Raycaster();
-	var points = 0;
-
+	var currentColor= 0xff0000;
 	var intersection;
 
 	var fingerlings = {};
@@ -28,7 +27,6 @@
 	var loop = {};
 
 	init();
-//	animate();
 
 	function init() {
 		var geometry, material, mesh, helper;
@@ -38,7 +36,12 @@
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'left: 20px; position: absolute; top: 0px; width: 100% ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
-			'<div id=msg>Touch the cubes and sphere to win points!</div>' +
+			'<div id=msg>Touch the cubes with your index finger. Watch the colors change.<br>' +
+			'Touch the buttons on the left hand wearable to update the current color.<br>' +
+			'The color of the sphere indicates the current color.<br>' +
+			'Right hand wearable plus object move, rotate & scale coming soon.<br>' +
+			'Use your pointing device to zoom, pan and rotate the scene.<br>' +
+			'</div><br>' +
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +
 		'';
@@ -121,22 +124,22 @@
 		geometry = new THREE.SphereGeometry( 50, 50, 50 );
 
 		material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff, 
-			ambient: 0xffffff,
+			color: currentColor,
+			ambient: 0x333333,
 			shininess: 0.001,
 			side: 2
 		} );
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( -280, 100, 0 );
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
-		scene.add( mesh );
+		sphere = new THREE.Mesh( geometry, material );
+		sphere.position.set( -280, 100, 0 );
+		sphere.castShadow = true;
+		sphere.receiveShadow = true;
+		scene.add( sphere );
 
 // Cubes
 		geometry = new THREE.BoxGeometry( 50, 50, 60 );
 		for (var i = 0; i < 50; i++) {
 			material = new THREE.MeshPhongMaterial( {
-				color: 0xffffff, 
+				color: 0xffffff,
 				ambient: 666666,
 				side: 2
 			} );
@@ -155,6 +158,84 @@
 
 		}
 
+		var wearable = Wearable();
+		scene.add( wearable );
+	}
+
+	function Wearable() {
+
+		wearable = new THREE.Object3D();
+
+		material = new THREE.MeshNormalMaterial();
+
+		geometry = new THREE.CylinderGeometry( 40, 60, 400, 80 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, 230 ) );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.scale.set( 1, 0.8, 1 );
+		wearable.add( mesh );
+
+		geometry = new THREE.CylinderGeometry( 40, 48, 30, 4);
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.25 * Math.PI ) );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 30, 0, 140 );
+		mesh.scale.z = 3;
+		wearable.add( mesh );
+
+
+		for ( var i = 0; i < 3; i++ ) {
+
+			geometry = new THREE.BoxGeometry( 25, 40, 50 );
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 55, 0, 80 + i * 60 );
+			mesh.rotation.z = 0.3;
+			wearable.add( mesh );
+
+		}
+
+
+
+		geometry = new THREE.BoxGeometry( 15, 15, 15 );
+		geometry2 = new THREE.BoxGeometry( 15, 15, 15 );
+		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 5, -25 ) );
+		geometry.merge( geometry2 );
+		material = new THREE.MeshPhongMaterial( { color: 0xff0000, ambient: 666666, side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 70, 0, 90 );
+		mesh.rotation.z = 0.3;
+		mesh.name = 'button';
+		wearable.add( mesh );
+		cubes.push( mesh );
+
+		geometry = new THREE.BoxGeometry( 15, 15, 15  );
+		geometry2 = new THREE.BoxGeometry( 15, 15, 15 );
+		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( -02, 5, -25 ) );
+		geometry2.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 ) );
+		geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( -0.25 ) );
+		geometry.merge( geometry2 );
+		material = new THREE.MeshPhongMaterial( { color: 0x00ff00, ambient: 666666, side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 70, 5, 150 );
+		mesh.rotation.z = 0.3;
+		mesh.name = 'button';
+		wearable.add( mesh );
+		cubes.push( mesh );
+
+		geometry = new THREE.BoxGeometry( 15, 15, 15 );
+		geometry2 = new THREE.BoxGeometry( 10, 10, 10 );
+		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -25 ) );
+		geometry.merge( geometry2 );
+		material = new THREE.MeshPhongMaterial( { color: 0x0000ff, ambient: 666666, side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 70, 5, 210 );
+		mesh.rotation.z = 0.2;
+		mesh.name = 'button';
+		wearable.add( mesh );
+		cubes.push( mesh );
+
+		return wearable;
+
 	}
 
 	function findIntersections( ) {
@@ -166,28 +247,27 @@
 
 		raycaster.set( pip, directionVector.normalize() );
 
-		var intersects = raycaster.intersectObjects( scene.children );
+		var intersects = raycaster.intersectObjects( cubes );
 
 		for ( var i = 0; i < intersects.length; i ++ ) {
 
-			intersects[i].object.material.color = new THREE.Color( 0xff0000 );
+			intersection = intersects[i].object;
+
+			if ( intersection.name === 'button' ) {
+
+				currentColor = intersection.material.color;
+
+			} else {
+
+				sphere.material.color = intersection.material.color = new THREE.Color( currentColor );
+
+			}
 
 		}
 
 //console.log( index );
 //console.log( raycaster, intersects );
 
-		points++;
-
-		if ( points < 100 ) {
-
-			msg.innerHTML = 'You now have ' + points + ' points'
-
-		} else {
-
-			msg.innerHTML = '<h1>Bingo! You win!</h1>';
-
-		}
 
 	}
 
@@ -195,24 +275,23 @@
 
 		frame.hands.forEach( function( hand, id ) {
 
-			var handy = ( handies[id] || ( handies[id] = new Handy()) );    
+			var handy = ( handies[id] || ( handies[id] = new Handy()) );
 			handy.outputData( id, hand );
 
 			hand.fingers.forEach( function( finger, id ) {
 
-				var fingerling = ( fingerlings[id] || ( fingerlings[id] = new Fingerling() ) );  
+				var fingerling = ( fingerlings[id] || ( fingerlings[id] = new Fingerling() ) );
 				fingerling.outputData( id, finger );
 
 			});
 
-		findIntersections();
+			findIntersections();
 
 		});
 
 		renderer.render( scene, camera );
 		controls.update();
 		stats.update();
-
 
 	}
 
@@ -229,12 +308,18 @@
 
 		handy.outputData = function( id, hand  ) {
 
-			msg.innerHTML = 'Hand id:' + id + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) + 
+			msg.innerHTML = 'Hand id:' + id + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) +
 				' y:' + hand.stabilizedPalmPosition[1].toFixed(0) + ' z:' + hand.stabilizedPalmPosition[2].toFixed(0);
 
-			box.position.set( hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2] );
+			if ( hand.type === 'left' ) {
 
-			box.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
+				wearable.position.set( hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2] );
+
+				wearable.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
+
+			}
+
+			handy.hand = hand;
 
 		};
 
@@ -256,7 +341,7 @@
 		fingerling.outputData = function( id, finger ) {
 
 			msg.innerHTML = 'Finger Method: ' +
-				'finger id:' + id + ' tip x:' + finger.tipPosition[0].toFixed(0) + 
+				'finger id:' + id + ' tip x:' + finger.tipPosition[0].toFixed(0) +
 				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
 			tip.position.set( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2] );
@@ -310,7 +395,7 @@
 		fingerling.outputData = function( id, finger ) {
 
 			msg.innerHTML = 'Bone Method ~ ' +
-				'finger tip: ' + id + ' x:' + finger.tipPosition[0].toFixed(0) + 
+				'finger tip: ' + id + ' x:' + finger.tipPosition[0].toFixed(0) +
 				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
 //console.log( finger );
@@ -335,7 +420,7 @@
 			}
 
 // Eventually will look at using bone.basis XYZ-axis data; Will it produce more concise code?
-  
+
 			phalanges[3].lookAt( v( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2]  ) );
 			phalanges[2].lookAt( v( finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2]  ) );
 			phalanges[1].lookAt( v( finger.pipPosition[0], finger.pipPosition[1], finger.pipPosition[2]  ) );
