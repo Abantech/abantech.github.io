@@ -4,7 +4,7 @@ Abantech Read Me
 [Source Code View]( https://github.com/abantech/abantech.github.io/ )
 
 Mission:  
-All about natural interaction in 3D...
+All about natural interaction in 3D. To be able to give people the ability to do whatever they can do in Google Sketchup (or maya or blender, or Solidworks, etc) , but to do it with the Leap controller (or similar equipment) in order to allow this interaction to be intuitive (NUI). With the mouse and keyboard, you aren't "in there" with the medium, but with our first project, we want to allow people to create their 3D models in a small fraction of the time, and with far more ease than can be done today.
 
 Demo: [NI 3D prototype workspace]( http://abantech.github.io/NI3DPrototype/main.html )  
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
