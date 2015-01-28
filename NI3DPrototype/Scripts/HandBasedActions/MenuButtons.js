@@ -22,41 +22,48 @@ newShapesButton.isAsset = false;
 newShapesButton.material.color.setHex(0x8A2908);
 newShapesButton.menuIsExpanded = false;
 newShapesButton.lastExpandedOrHoveredTime = null;
+var menuOptionLastUsedTime = null;
 
 window.camera.add(newShapesButton);
 
-function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorHex)
+function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorResetAction)
 {
     this.button = optionButton;
     this.actionToFire = actionToFire;
     this.functionName = optionFunctionName;
-    this.defaultColor = colorHex;
+    //this.setToDefaultColor = colorResetAction;
     this.action = function (hand) {
         //console.log("Executing menuOption : " + this.functionName)
 
         if (newShapesButton.menuIsExpanded)
         {
+            //console.log("Setting " + optionFunctionName + " color to: " + this.defaultColor);
+            this.button.material.color.setHex(this.button.defaultColor);
+            //this.setToDefaultColor()
             //console.log("Executing menuOption " + this.functionName + " - Menu is expanded")
             if (isHoveringOverControls(hand, [this.button]))
             {
+                //Hovering: Yellow = 0xAEB404
+                //Pressed: Green =  0x04B431
                 //console.log("Executing menuOption " + this.functionName + " - Menu button is hovered")
-                this.button.material.color.setHex(0x04B431);
+                this.button.material.color.setHex(0xAEB404);
                 if (isButtonPressed(hand, this.button))
                 {
+                    this.button.material.color.setHex(0x04B431);
                     //.log("Executing menuOption " + this.functionName + " - Menu button is pressed")
 
-                    if (!menuOptionVsLastTimeUsed[this.functionName])
+                    if (!menuOptionLastUsedTime)
                     {
-                        menuOptionVsLastTimeUsed[this.functionName] = new Date();
+                        menuOptionLastUsedTime = new Date();
                         console.log("Executing menuOption " + this.functionName + " - RUN MENU BUTTON ACTION")
                         this.actionToFire(hand)
                     }
                     else
                     {
-                        var lastExecuted = (new Date() - menuOptionVsLastTimeUsed[this.functionName]);
-                        if ((new Date() - menuOptionVsLastTimeUsed[this.functionName]) > 2000)
+                        var lastExecuted = new Date() - menuOptionLastUsedTime;
+                        if (lastExecuted > 2000)
                         {
-                            menuOptionVsLastTimeUsed[this.functionName] = new Date();
+                            menuOptionLastUsedTime = new Date();
                             console.log("Executing menuOption " + this.functionName + " - RUN MENU BUTTON ACTION")
                             this.actionToFire(hand)
                         }
@@ -66,15 +73,16 @@ function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorH
                         }
                     }
                 }
-                else
-                {
-                    //console.log("Executing menuOption " + this.functionName + " - Button not pressed")
-                }
+                //else
+                //{
+                //    //console.log("Executing menuOption " + this.functionName + " - Button not pressed")
+                //    this.button.material.color.setHex(this.defaultColor);
+                //}
             }
             else
             {
                 //console.log("Executing menuOption " + this.functionName + " - No hover detected")
-                this.button.material.color.setHex(this.defaultColor);
+//                this.button.material.color.setHex(this.defaultColor);
             }
         }
     }
@@ -88,10 +96,11 @@ var registerMenuOptionAction = function (button, functionName, actionToFire) {
 
 var boxGeo1 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo1.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
-var otherButton1 = new THREE.Mesh(boxGeo1, new THREE.MeshPhongMaterial({ wireframe: false }));
+var otherButton1 = new THREE.Mesh(boxGeo1, new THREE.MeshPhongMaterial({ wireframe: false, color: 0x2E9AFE}));
 window.camera.add(otherButton1);
 otherButton1.visible = false;
 menuControls.push(otherButton1);
+otherButton1.defaultColor = 0x2E9AFE;
 var createBoxOnMenuOptionPressed = function (hand) {
     var mesh = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
@@ -99,14 +108,15 @@ var createBoxOnMenuOptionPressed = function (hand) {
     mesh.isAsset = true;
     window.scene.add(mesh);
 }
-registerMenuOptionAction(otherButton1, "CreateBoxOnMenuOptionPressed", createBoxOnMenuOptionPressed, 0x2E9AFE);
+registerMenuOptionAction(otherButton1, "CreateBoxOnMenuOptionPressed", createBoxOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x2E9AFE) });
 
 var boxGeo2 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo2.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY - buttonSize, buttonPositionZ))
-var otherButton2 = new THREE.Mesh(boxGeo2, new THREE.MeshPhongMaterial({ wireframe: false }));
+var otherButton2 = new THREE.Mesh(boxGeo2, new THREE.MeshPhongMaterial({ wireframe: false, color: 0x7401DF }));
 window.camera.add(otherButton2);
 otherButton2.visible = false;
 menuControls.push(otherButton2);
+otherButton2.defaultColor = 0x7401DF;
 var createSphereOnMenuOptionPressed = function (hand) {
     //var geometry = new THREE.SphereGeometry(16, 32, 32);
     var mesh = new THREE.Mesh(new THREE.SphereGeometry(12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
@@ -115,14 +125,15 @@ var createSphereOnMenuOptionPressed = function (hand) {
     mesh.isAsset = true;
     window.scene.add(mesh);
 }
-registerMenuOptionAction(otherButton2, "CreateSphereOnMenuOptionPressed", createSphereOnMenuOptionPressed, 0x7401DF);
+registerMenuOptionAction(otherButton2, "CreateSphereOnMenuOptionPressed", createSphereOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x7401DF) });
 
 var boxGeo3 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo3.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX + buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
-var otherButton3 = new THREE.Mesh(boxGeo3, new THREE.MeshPhongMaterial({ wireframe: false }));
+var otherButton3 = new THREE.Mesh(boxGeo3, new THREE.MeshPhongMaterial({ wireframe: false, color: 0x0B4C5F }));
 window.camera.add(otherButton3);
 otherButton3.visible = false;
 menuControls.push(otherButton3);
+otherButton3.defaultColor = 0x0B4C5F;
 var createCylinderOnMenuOptionPressed = function (hand) {
     var mesh = new THREE.Mesh(new THREE.CylinderGeometry(8, 8, 12), new THREE.MeshPhongMaterial({ wireframe: false }))
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
@@ -130,14 +141,15 @@ var createCylinderOnMenuOptionPressed = function (hand) {
     mesh.isAsset = true;
     window.scene.add(mesh);
 }
-registerMenuOptionAction(otherButton3, "CreateCylinderOnMenuOptionPressed", createCylinderOnMenuOptionPressed, 0x0B4C5F);
+registerMenuOptionAction(otherButton3, "CreateCylinderOnMenuOptionPressed", createCylinderOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x0B4C5F) });
 
 var boxGeo4 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo4.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX + buttonSize, buttonPositionY - buttonSize, buttonPositionZ))
-var otherButton4 = new THREE.Mesh(boxGeo4, new THREE.MeshPhongMaterial({ wireframe: false }));
+var otherButton4 = new THREE.Mesh(boxGeo4, new THREE.MeshPhongMaterial({ wireframe: false, color: 0xFE642E }))
 window.camera.add(otherButton4);
 otherButton4.visible = false;
 menuControls.push(otherButton4);
+otherButton4.defaultColor = 0xFE642E;
 var createConeOnMenuOptionPressed = function (hand) {
     //var geometry = new THREE.SphereGeometry(16, 32, 32);
     var mesh = new THREE.Mesh(new THREE.CylinderGeometry(8, 0.1, 12), new THREE.MeshPhongMaterial({ wireframe: false }))
@@ -146,7 +158,7 @@ var createConeOnMenuOptionPressed = function (hand) {
     mesh.isAsset = true;
     window.scene.add(mesh);
 }
-registerMenuOptionAction(otherButton4, "CreateConeOnMenuOptionPressed", createConeOnMenuOptionPressed, 0xFE642E);
+registerMenuOptionAction(otherButton4, "CreateConeOnMenuOptionPressed", createConeOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0xFE642E) });
 
 var changeButtonColorOnHoverAndPress = {
     action: function (hand)
@@ -161,31 +173,6 @@ var changeButtonColorOnHoverAndPress = {
         else
         {
             newShapesButton.material.color.setHex(0x8A2908);
-        }
-    }
-};
-
-
-var menuButton1Clicked = {
-    action: function (hand) {
-        if (newShapesButton.menuIsExpanded)
-        {
-            if (isHoveringOverControls(hand, [otherButton1]))
-            {
-                console.log("Hover detected by menuButton1Clicked")
-                
-                otherButton1.material.color.setHex(0xAEB404);
-                if (isButtonPressed(hand, otherButton1))
-                {
-                    otherButton1.material.color.setHex(0x04B431);
-                    createBoxOnMenuOptionPressed(hand);
-                }//? 0x00cc00 : 0x0000ff
-                //otherButton1.material.color.setHex(isButtonPressed(hand, otherButton1) ? 0x00cc00 : 0x0000ff);
-            }
-            else
-            {
-                otherButton1.material.color.setHex(0x8A2908);
-            }
         }
     }
 };
@@ -218,6 +205,7 @@ var expandMenuSectionsOnHover = {
 
                 if ((new Date() - newShapesButton.beginHoverTime) > menuHoverToOpenDelayMills)
                 {
+                    menuOptionLastUsedTime = new Date();
                     menuControls.forEach(function (item, index, arr) { item.visible = true });
                     newShapesButton.visible = false;
                     newShapesButton.menuIsExpanded = true;
