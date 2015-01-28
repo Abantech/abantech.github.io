@@ -161,29 +161,29 @@
         var pinchedObject;
         var action;
 
-        pinchGesture.options.distance = 40;
+        options.distance = 40;
 
-        pinchGesture.registerOnFullGestureEnd(
+        registerOnFullGestureEnd(
             {
                 func: EndTranslatePinchedObject
             });
 
-        pinchGesture.registerOnFullGesture(
+        registerOnFullGesture(
             {
                 func: TranslatePinchedObject
             });
 
-        pinchGesture.registerOnFullGesture(
+        registerOnFullGesture(
             {
                 func: RotatePinchedObject
             });
 
-        pinchGesture.registerOnFullGestureEnd(
+        registerOnFullGestureEnd(
         {
             func: EndRotatePinchedObject
         });
 
-        //pinchGesture.reg
+        //reg
         handController.RegisterAction("PinchGesture", pinchGesture);
 
         //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work

@@ -38,7 +38,7 @@ var EndRotatePinchedObject = function (hand)
 {
     if (action)
     {
-        action.RegisterTranslation(pinchedObject)
+        action.RegisterRotation(pinchedObject)
         actionManager.ActionPerformed(action);
     }
 
