@@ -3,7 +3,7 @@
     this.Initialize = function (object)
     {
         this.setActionName(object.name);
-        this.setObjectName(object.name);
+        this.setObjectName(object.id);
         this.setPositionBeforeTranslation(object.position);
     }
 
@@ -39,7 +39,7 @@
 
     this.setObjectName = function (objectID)
     {
-        this.objectName = objectID.toString();
+        this.objectName = objectID;
     }
 
 
@@ -75,7 +75,7 @@
 
     this.UndoAction = function ()
     {
-        var sceneObject = window.scene.getObjectByName(this.getObjectName());
+        var sceneObject = window.scene.getObjectById(this.getObjectName());
         var x = this.getPositionBeforeTranslation().x;
         var y = this.getPositionBeforeTranslation().y;
         var z = this.getPositionBeforeTranslation().z;
@@ -84,7 +84,7 @@
 
     this.RedoAction = function myfunction()
     {
-        var sceneObject = window.scene.getObjectByName(this.getObjectName());
+        var sceneObject = window.scene.getObjectById(this.getObjectName());
         var x = this.getPositionAfterTranslation().x;
         var y = this.getPositionAfterTranslation().y;
         var z = this.getPositionAfterTranslation().z;

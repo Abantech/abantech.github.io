@@ -102,6 +102,7 @@
 
     <script src="Scripts/ActionTracking/TranslationAction.js"></script>
     <script src="Scripts/ActionTracking/CreateAction.js"></script>
+    <script src="Scripts/ActionTracking/RotationAction.js"></script>
     <script src="Scripts/ActionTracking/ActionManager.js"></script>
 
     <script>
@@ -123,11 +124,6 @@
                 box.position.set(0, 0, 0);
 
                 box.isAsset = true;
-                box.name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
-                {
-                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-                    return v.toString(16);
-                });
                 window.scene.add(box);
 
                 if (!action)

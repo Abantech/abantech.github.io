@@ -77,6 +77,7 @@
     <Content Include="main.html" />
     <Content Include="Scripts\ActionTracking\ActionManager.js" />
     <Content Include="Scripts\ActionTracking\CreateAction.js" />
+    <Content Include="Scripts\ActionTracking\RotationAction.js" />
     <Content Include="Scripts\AssetManager.js" />
     <Content Include="Scripts\FadingSpheres.js" />
     <Content Include="Scripts\FrameActions.js" />

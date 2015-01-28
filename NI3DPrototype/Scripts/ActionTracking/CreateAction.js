@@ -3,7 +3,7 @@
     this.Initialize = function (object)
     {
         this.setActionName(object.name);
-        this.setObjectName(object.name);
+        this.setObjectName(object.id);
         this.setCreatedObject(object);
     }
 
@@ -33,7 +33,7 @@
 
     this.setObjectName = function (objectID)
     {
-        this.objectName = objectID.toString();
+        this.objectName = objectID;
     }
     
 
@@ -56,7 +56,7 @@
 
     this.UndoAction = function ()
     {
-        var sceneObject = window.scene.getObjectByName(this.getObjectName());
+        var sceneObject = window.scene.getObjectById(this.getObjectName());
         window.scene.remove(sceneObject);
     }
 

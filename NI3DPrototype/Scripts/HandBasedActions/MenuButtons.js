@@ -106,8 +106,10 @@ var createBoxOnMenuOptionPressed = function (hand) {
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
-    mesh.name = createAssetName();
+    mesh.name = "Cube " + mesh.id;
     window.scene.add(mesh);
+
+    registerAssetCreation(mesh);
 }
 registerMenuOptionAction(otherButton1, "CreateBoxOnMenuOptionPressed", createBoxOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x2E9AFE) });
 
@@ -124,8 +126,10 @@ var createSphereOnMenuOptionPressed = function (hand) {
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
-    mesh.name = createAssetName();
+    mesh.name = "Sphere " + mesh.id;
     window.scene.add(mesh);
+
+    registerAssetCreation(mesh);
 }
 registerMenuOptionAction(otherButton2, "CreateSphereOnMenuOptionPressed", createSphereOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x7401DF) });
 
@@ -141,8 +145,10 @@ var createCylinderOnMenuOptionPressed = function (hand) {
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
-    mesh.name = createAssetName();
+    mesh.name = "Cylinder " + mesh.id;
     window.scene.add(mesh);
+
+    registerAssetCreation(mesh);
 }
 registerMenuOptionAction(otherButton3, "CreateCylinderOnMenuOptionPressed", createCylinderOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x0B4C5F) });
 
@@ -159,8 +165,10 @@ var createConeOnMenuOptionPressed = function (hand) {
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
-    mesh.name = createAssetName();
+    mesh.name = "Cone " + mesh.id;
     window.scene.add(mesh);
+
+    registerAssetCreation(mesh);
 }
 registerMenuOptionAction(otherButton4, "CreateConeOnMenuOptionPressed", createConeOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0xFE642E) });
 
@@ -298,4 +306,17 @@ function createAssetName()
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
+}
+
+function registerAssetCreation(asset)
+{
+    if (!action)
+    {
+        action = new CreateAction();
+        action.Initialize(asset);
+
+        actionManager.ActionPerformed(action);
+
+        action = null;
+    }
 }
