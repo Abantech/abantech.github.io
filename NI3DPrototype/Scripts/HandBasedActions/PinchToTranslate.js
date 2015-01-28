@@ -1,4 +1,6 @@
-﻿var TranslatePinchedObject = function (hand)
+﻿// <reference path="../../Libs/THREEJS/three.js" />
+
+var TranslatePinchedObject = function (hand)
 {
     if (!pinchedObject)
     {
@@ -18,8 +20,12 @@
     }
     else
     {
-        var tipPos = hand.fingers[0].tipPosition;
-        pinchedObject.position.set(tipPos[0], tipPos[1], tipPos[2]);
+        var indexTipPos = hand.fingers[1].tipPosition;
+        var thumbTipPos = hand.fingers[0].tipPosition;
+        //var midPoint = new THREE.Vector3();
+        //midPoint.addVectors(indexTipPos, thumbTipPos);
+        //midPoint.divideScalar(2);
+        pinchedObject.position.set((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
     }
 }
 
@@ -56,7 +62,9 @@ var EndTranslatePinchedObject = function (hand)
 
 function getPinchedObject(hand)
 {
-    var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+    var indexTipPos = hand.fingers[1].tipPosition;
+    var thumbTipPos = hand.fingers[0].tipPosition;
+    var pinchMidPos = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
 
     var closestObject = null;
 
@@ -65,7 +73,7 @@ function getPinchedObject(hand)
         var sceneObject = window.scene.children[i];
         if (sceneObject.isAsset)
         {
-            var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
+            var distance = mathHelper.DistanceBetweenPoints(pinchMidPos, sceneObject.position);
             if (distance < 50)
             {
                 if (closestObject)
