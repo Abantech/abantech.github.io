@@ -16,13 +16,20 @@ var menuOptionVsLastTimeUsed = {};
 //img.onload = function () { texture.needsUpdate = true; };
 //img.src = "Images/3D-shapes.jpg";
 //texture.needsUpdate = true;
+//var location = window.location.href.substring(7, 15);
+var url = window.location.href;
+var texture = new THREE.Texture();
 
-var image = document.createElement('img');
-image.src = 'Images/3D-shapes.jpg';
-var texture = new THREE.Texture(image);
-image.onload = function () {
-    texture.needsUpdate = true;
-};
+//console.log("window.location : " + window.location.href);
+if (url.substring(0, 4) != "file")
+{
+    var image = document.createElement('img');
+    image.src = 'Images/NewShapeMenu.jpg';
+    texture = new THREE.Texture(image);
+    image.onload = function () {
+        texture.needsUpdate = true;
+    };
+}
 
 //var texture = new THREE.Texture(img);
 var geometry = new THREE.SphereGeometry(16, 32, 32);
@@ -43,7 +50,6 @@ newShapesButton.material.color.setHex(0x8A2908);
 newShapesButton.menuIsExpanded = false;
 newShapesButton.lastExpandedOrHoveredTime = null;
 
-//http://www.graphicsfuel.com/wp-content/uploads/2010/12/3D-shapes.jpg
 var menuOptionLastUsedTime = null;
 
 window.camera.add(newShapesButton);
@@ -125,7 +131,7 @@ menuControls.push(otherButton1);
 otherButton1.defaultColor = 0x2E9AFE;
 var createBoxOnMenuOptionPressed = function (hand) {
     var mesh = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
-    //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
+    mesh.material.color.setHex(otherButton1.defaultColor);
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
     mesh.name = "Cube " + mesh.id;
@@ -145,8 +151,8 @@ otherButton2.defaultColor = 0x7401DF;
 var createSphereOnMenuOptionPressed = function (hand) {
     //var geometry = new THREE.SphereGeometry(16, 32, 32);
     var mesh = new THREE.Mesh(new THREE.SphereGeometry(12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
-    //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
+    mesh.material.color.setHex(otherButton2.defaultColor);
     mesh.isAsset = true;
     mesh.name = "Sphere " + mesh.id;
     window.scene.add(mesh);
@@ -163,9 +169,9 @@ otherButton3.visible = false;
 menuControls.push(otherButton3);
 otherButton3.defaultColor = 0x0B4C5F;
 var createCylinderOnMenuOptionPressed = function (hand) {
-    var mesh = new THREE.Mesh(new THREE.CylinderGeometry(8, 8, 12), new THREE.MeshPhongMaterial({ wireframe: false }))
-    //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
+    var mesh = new THREE.Mesh(new THREE.CylinderGeometry(12, 12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.position.set(0, 0, 0);
+    mesh.material.color.setHex(otherButton3.defaultColor);
     mesh.isAsset = true;
     mesh.name = "Cylinder " + mesh.id;
     window.scene.add(mesh);
@@ -183,9 +189,9 @@ menuControls.push(otherButton4);
 otherButton4.defaultColor = 0xFE642E;
 var createConeOnMenuOptionPressed = function (hand) {
     //var geometry = new THREE.SphereGeometry(16, 32, 32);
-    var mesh = new THREE.Mesh(new THREE.CylinderGeometry(8, 0.1, 12), new THREE.MeshPhongMaterial({ wireframe: false }))
-    //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
+    var mesh = new THREE.Mesh(new THREE.CylinderGeometry(12, 0, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.position.set(0, 0, 0);
+    mesh.material.color.setHex(otherButton4.defaultColor);
     mesh.isAsset = true;
     mesh.name = "Cone " + mesh.id;
     window.scene.add(mesh);
