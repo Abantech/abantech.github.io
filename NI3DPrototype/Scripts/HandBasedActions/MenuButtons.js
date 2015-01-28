@@ -66,7 +66,7 @@ function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorR
         if (newShapesButton.menuIsExpanded)
         {
             //console.log("Setting " + optionFunctionName + " color to: " + this.defaultColor);
-            this.button.material.color.setHex(this.button.defaultColor);
+            this.button.material.color.setHex(null);
             //this.setToDefaultColor()
             //console.log("Executing menuOption " + this.functionName + " - Menu is expanded")
             if (isHoveringOverControls(hand, [this.button]))
@@ -101,16 +101,6 @@ function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorR
                         }
                     }
                 }
-                //else
-                //{
-                //    //console.log("Executing menuOption " + this.functionName + " - Button not pressed")
-                //    this.button.material.color.setHex(this.defaultColor);
-                //}
-            }
-            else
-            {
-                //console.log("Executing menuOption " + this.functionName + " - No hover detected")
-//                this.button.material.color.setHex(this.defaultColor);
             }
         }
     }
@@ -122,6 +112,8 @@ var registerMenuOptionAction = function (button, functionName, actionToFire) {
     handController.RegisterAction(functionName, menuOptionAction);
 }
 
+var mesh = null
+
 var boxGeo1 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo1.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
 var otherButton1 = new THREE.Mesh(boxGeo1, new THREE.MeshPhongMaterial({ wireframe: false, color: 0x2E9AFE}));
@@ -129,8 +121,14 @@ window.camera.add(otherButton1);
 otherButton1.visible = false;
 menuControls.push(otherButton1);
 otherButton1.defaultColor = 0x2E9AFE;
+mesh = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
+mesh.material.color.setHex(otherButton1.defaultColor);
+mesh.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
+otherButton1.children.push(mesh);
+window.camera.add(mesh);
+mesh.visible = false;
 var createBoxOnMenuOptionPressed = function (hand) {
-    var mesh = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
+    var mesh = new THREE.Mesh(new THREE.BoxGeometry(18, 18, 18), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.material.color.setHex(otherButton1.defaultColor);
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
@@ -148,6 +146,12 @@ window.camera.add(otherButton2);
 otherButton2.visible = false;
 menuControls.push(otherButton2);
 otherButton2.defaultColor = 0x7401DF;
+mesh = new THREE.Mesh(new THREE.SphereGeometry(10, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
+mesh.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY - buttonSize, buttonPositionZ))
+mesh.material.color.setHex(otherButton2.defaultColor);
+otherButton2.children.push(mesh);
+window.camera.add(mesh);
+mesh.visible = false;
 var createSphereOnMenuOptionPressed = function (hand) {
     //var geometry = new THREE.SphereGeometry(16, 32, 32);
     var mesh = new THREE.Mesh(new THREE.SphereGeometry(12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
@@ -163,11 +167,17 @@ registerMenuOptionAction(otherButton2, "CreateSphereOnMenuOptionPressed", create
 
 var boxGeo3 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo3.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX + buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
-var otherButton3 = new THREE.Mesh(boxGeo3, new THREE.MeshPhongMaterial({ wireframe: false, color: 0x0B4C5F }));
+var otherButton3 = new THREE.Mesh(boxGeo3, new THREE.MeshPhongMaterial({ wireframe: false, color: 0xFE642E }));
 window.camera.add(otherButton3);
 otherButton3.visible = false;
 menuControls.push(otherButton3);
-otherButton3.defaultColor = 0x0B4C5F;
+otherButton3.defaultColor = 0xFE642E;
+mesh = new THREE.Mesh(new THREE.CylinderGeometry(8, 8, 16, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
+mesh.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX + buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
+mesh.material.color.setHex(otherButton3.defaultColor);
+otherButton3.children.push(mesh);
+window.camera.add(mesh);
+mesh.visible = false;
 var createCylinderOnMenuOptionPressed = function (hand) {
     var mesh = new THREE.Mesh(new THREE.CylinderGeometry(12, 12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.position.set(0, 0, 0);
@@ -182,14 +192,20 @@ registerMenuOptionAction(otherButton3, "CreateCylinderOnMenuOptionPressed", crea
 
 var boxGeo4 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo4.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX + buttonSize, buttonPositionY - buttonSize, buttonPositionZ))
-var otherButton4 = new THREE.Mesh(boxGeo4, new THREE.MeshPhongMaterial({ wireframe: false, color: 0xFE642E }))
+var otherButton4 = new THREE.Mesh(boxGeo4, new THREE.MeshPhongMaterial({ wireframe: false, color: 0x0B4C5F }))
 window.camera.add(otherButton4);
 otherButton4.visible = false;
 menuControls.push(otherButton4);
-otherButton4.defaultColor = 0xFE642E;
+otherButton4.defaultColor = 0x0B4C5F;
+mesh = new THREE.Mesh(new THREE.CylinderGeometry(0, 8, 22, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
+mesh.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX + buttonSize, buttonPositionY - buttonSize, buttonPositionZ))
+mesh.material.color.setHex(otherButton4.defaultColor);
+otherButton4.children.push(mesh);
+window.camera.add(mesh);
+mesh.visible = false;
 var createConeOnMenuOptionPressed = function (hand) {
     //var geometry = new THREE.SphereGeometry(16, 32, 32);
-    var mesh = new THREE.Mesh(new THREE.CylinderGeometry(12, 0, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
+    var mesh = new THREE.Mesh(new THREE.CylinderGeometry(0, 12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.position.set(0, 0, 0);
     mesh.material.color.setHex(otherButton4.defaultColor);
     mesh.isAsset = true;
@@ -226,12 +242,23 @@ var closeMenuAfterDelay = function (frame) {
         //Close the menu only after the sufficient graceperiod has passed
         if (expandedElapsedTime > menuOpenGracePeriodMills) {
             //console.log("closing because expanded elapsedTime was: " + expandedElapsedTime);
-            menuControls.forEach(function (item, index, arr) { item.visible = false });
+            menuControls.forEach(
+                function (item, index, arr) {
+                    item.visible = false
+                    item.children.forEach(
+                        function (child, childIndex, arr1)
+                        {
+                            child.visible = false
+                        })
+                }
+                );
             newShapesButton.visible = true;
             newShapesButton.menuIsExpanded = false;
         }
     }
 }
+
+
 
 var expandMenuSectionsOnHover = {
     action: function (hand)
@@ -246,7 +273,17 @@ var expandMenuSectionsOnHover = {
                 if ((new Date() - newShapesButton.beginHoverTime) > menuHoverToOpenDelayMills)
                 {
                     menuOptionLastUsedTime = new Date();
-                    menuControls.forEach(function (item, index, arr) { item.visible = true });
+                    menuControls.forEach(
+                        function (item, index, arr)
+                        {
+                            item.visible = true
+                            item.children.forEach(
+                                function (child, childIndex, arr1)
+                                {
+                                    child.visible = true;
+                                })
+                        }
+                        );
                     newShapesButton.visible = false;
                     newShapesButton.menuIsExpanded = true;
                     newShapesButton.lastExpandedOrHoveredTime = new Date();
