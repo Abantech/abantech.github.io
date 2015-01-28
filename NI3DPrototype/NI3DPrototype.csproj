@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\3D-shapes.jpg" />
     <Content Include="Libs\jquery-2.1.3.min.js" />
     <Content Include="Libs\Leap\leap-0.6.4.js" />
     <Content Include="Libs\Leap\leap-0.6.4.min.js" />
