@@ -98,7 +98,7 @@
     <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
 
     <script src="Scripts/HandBasedActions/PinchHandGesture.js"></script>
-    <script src="Scripts/HandBasedActions/PinchToGrab.js"></script>
+    <script src="Scripts/HandBasedActions/PinchToTranslate.js"></script>
 
     <script src="Scripts/ActionTracking/TranslationAction.js"></script>
     <script src="Scripts/ActionTracking/CreateAction.js"></script>
@@ -119,7 +119,9 @@
 
             if (keycode == '13')
             {
-                box = createBox(40, new THREE.Vector3(0, 0, 0), 0xabcdef);
+                var box = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
+                box.position.set(0, 0, 0);
+
                 box.isAsset = true;
                 box.name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
                 {
@@ -157,12 +159,12 @@
 
         pinchGesture.registerOnFullGestureEnd(
             {
-                func: EndGrabPinchedObject
+                func: EndTranslatePinchedObject
             });
 
         pinchGesture.registerOnFullGesture(
             {
-                func: GrabPinchedObject
+                func: TranslatePinchedObject
             });
 
         //pinchGesture.reg

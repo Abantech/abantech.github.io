@@ -106,6 +106,7 @@ var createBoxOnMenuOptionPressed = function (hand) {
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
+    mesh.name = createAssetName();
     window.scene.add(mesh);
 }
 registerMenuOptionAction(otherButton1, "CreateBoxOnMenuOptionPressed", createBoxOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x2E9AFE) });
@@ -123,6 +124,7 @@ var createSphereOnMenuOptionPressed = function (hand) {
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
+    mesh.name = createAssetName();
     window.scene.add(mesh);
 }
 registerMenuOptionAction(otherButton2, "CreateSphereOnMenuOptionPressed", createSphereOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x7401DF) });
@@ -139,6 +141,7 @@ var createCylinderOnMenuOptionPressed = function (hand) {
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
+    mesh.name = createAssetName();
     window.scene.add(mesh);
 }
 registerMenuOptionAction(otherButton3, "CreateCylinderOnMenuOptionPressed", createCylinderOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x0B4C5F) });
@@ -156,6 +159,7 @@ var createConeOnMenuOptionPressed = function (hand) {
     //mesh.position.copy((new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition))
     mesh.position.set(0, 0, 0);
     mesh.isAsset = true;
+    mesh.name = createAssetName();
     window.scene.add(mesh);
 }
 registerMenuOptionAction(otherButton4, "CreateConeOnMenuOptionPressed", createConeOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0xFE642E) });
@@ -285,4 +289,13 @@ var createBoxAfterDelay = {
             clock = null;
         }
     }
+}
+
+function createAssetName()
+{
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
+    {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }

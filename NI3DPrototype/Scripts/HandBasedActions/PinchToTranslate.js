@@ -1,4 +1,4 @@
-﻿var GrabPinchedObject = function (hand)
+﻿var TranslatePinchedObject = function (hand)
 {
     if (!pinchedObject)
     {
@@ -23,12 +23,23 @@
     }
 }
 
-var EndGrabPinchedObject = function (hand)
+var EndTranslatePinchedObject = function (hand)
 {
     if (action)
     {
         action.RegisterTranslation(pinchedObject)
         actionManager.ActionPerformed(action);
+
+        //var vector = pinchedObject.position.clone().normalize();
+        //var camera = window.camera.position.clone().normalize();
+
+        //var axis = new THREE.Vector3(vector.x - camera.x, vector.y - camera.y, vector.z - camera.z);
+        //var angle = Math.PI / 4;
+
+        //var quaternion = new THREE.Quaternion();
+        //quaternion.setFromAxisAngle(axis, angle);
+
+        //pinchedObject.quaternion.setFromAxisAngle(axis, angle);
     }
 
     pinchedObject = null;
