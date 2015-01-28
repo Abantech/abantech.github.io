@@ -100,6 +100,7 @@
     <script src="Scripts/HandBasedActions/PinchHandGesture.js"></script>
     <script src="Scripts/HandBasedActions/PinchToTranslate.js"></script>
     <script src="Scripts/HandBasedActions/PinchToRotate.js"></script>
+    <script src="Scripts/HandBasedActions/RotateCamera.js"></script>
 
     <script src="Scripts/ActionTracking/TranslationAction.js"></script>
     <script src="Scripts/ActionTracking/RotationAction.js"></script>
@@ -169,21 +170,21 @@
                 func: TranslatePinchedObject
             });
 
-        leftHandPinchGesture.options.distance = 40;
+        rightHandPinchGesture.options.distance = 40;
 
-        leftHandPinchGesture.registerOnFullGestureEnd(
+        rightHandPinchGesture.registerOnFullGestureEnd(
             {
                 func: EndRotatePinchedObject
             });
 
-        leftHandPinchGesture.registerOnFullGesture(
+        rightHandPinchGesture.registerOnFullGesture(
             {
                 func: RotatePinchedObject
             });
 
         //reg
         handController.RegisterAction("PinchGesture", eitherHandPinchGesutre);
-        handController.RegisterAction("PinchGesture", leftHandPinchGesture);
+        handController.RegisterAction("PinchGesture", rightHandPinchGesture);
 
         //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work
         createAdjuster("x", -250, 250, -15, function (value) { xTranslation = value });

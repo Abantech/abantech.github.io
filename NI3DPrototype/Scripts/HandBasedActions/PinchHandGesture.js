@@ -209,7 +209,7 @@
     };
 }
 
-var rightHandPinchGesutre = new PinchGesture();
+var rightHandPinchGesture = new PinchGesture();
 
 var leftHandPinchGesture = new PinchGesture();
 leftHandPinchGesture.options.type = "left";
