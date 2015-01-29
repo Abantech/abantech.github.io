@@ -1,4 +1,6 @@
-﻿var selectAssetOnHover = {
+﻿var assetHoveredTimeDictionary = {};
+
+var selectAssetOnHover = {
     action: function (hand)
     {
         var assets = assetManager.GetAssets();
@@ -6,9 +8,22 @@
 
         if (intersectedAsset)
         {
+            if (!assetHoveredTimeDictionary[intersectedAsset.object.uuid])
+            {
+                console.log("ASSET NOT PREVIOUSLY IN DICTIONARY - ASSIGNING TIME NOW")
+                assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
+            }
+            else
+            {
+                console.log("TODO: CLEAR THE DICTIONARY OF THE OTHER SELECTED ASSETS")
+            }
+
+            intersectedAsset.beginHoverTime = assetHoveredTimeDictionary[intersectedAsset.object.uuid];
+
             if (!intersectedAsset.beginHoverTime)
             {
                 intersectedAsset.beginHoverTime = new Date();
+                //This should no longer happen
                 console.log("ASSET NOT PREVIOUSLY HOVERED - ASSIGNING NOW")
             }
                 
