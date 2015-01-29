@@ -131,11 +131,8 @@ var createBoxOnMenuOptionPressed = function (hand) {
     var mesh = new THREE.Mesh(new THREE.BoxGeometry(18, 18, 18), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.material.color.setHex(otherButton1.defaultColor);
     mesh.position.set(0, 0, 0);
-    mesh.isAsset = true;
-    mesh.name = "Cube " + mesh.id;
-    window.scene.add(mesh);
 
-    registerAssetCreation(mesh);
+    assetManager.CreateAsset("Cube", mesh);
 }
 registerMenuOptionAction(otherButton1, "CreateBoxOnMenuOptionPressed", createBoxOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x2E9AFE) });
 
@@ -157,11 +154,8 @@ var createSphereOnMenuOptionPressed = function (hand) {
     var mesh = new THREE.Mesh(new THREE.SphereGeometry(12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.position.set(0, 0, 0);
     mesh.material.color.setHex(otherButton2.defaultColor);
-    mesh.isAsset = true;
-    mesh.name = "Sphere " + mesh.id;
-    window.scene.add(mesh);
 
-    registerAssetCreation(mesh);
+    assetManager.CreateAsset("Sphere", mesh);
 }
 registerMenuOptionAction(otherButton2, "CreateSphereOnMenuOptionPressed", createSphereOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x7401DF) });
 
@@ -182,11 +176,8 @@ var createCylinderOnMenuOptionPressed = function (hand) {
     var mesh = new THREE.Mesh(new THREE.CylinderGeometry(12, 12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.position.set(0, 0, 0);
     mesh.material.color.setHex(otherButton3.defaultColor);
-    mesh.isAsset = true;
-    mesh.name = "Cylinder " + mesh.id;
-    window.scene.add(mesh);
 
-    registerAssetCreation(mesh);
+    assetManager.CreateAsset("Cylinder", mesh);
 }
 registerMenuOptionAction(otherButton3, "CreateCylinderOnMenuOptionPressed", createCylinderOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x0B4C5F) });
 
@@ -208,11 +199,8 @@ var createConeOnMenuOptionPressed = function (hand) {
     var mesh = new THREE.Mesh(new THREE.CylinderGeometry(0, 12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.position.set(0, 0, 0);
     mesh.material.color.setHex(otherButton4.defaultColor);
-    mesh.isAsset = true;
-    mesh.name = "Cone " + mesh.id;
-    window.scene.add(mesh);
 
-    registerAssetCreation(mesh);
+    assetManager.CreateAsset("Cone", mesh);
 }
 registerMenuOptionAction(otherButton4, "CreateConeOnMenuOptionPressed", createConeOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0xFE642E) });
 
@@ -333,55 +321,3 @@ function isHoveringOverControls(hand, controls)
 
 
 frameActions.RegisterAction("CloseMenuAfterDelay", closeMenuAfterDelay);
-
-
-/////// DEAD CODE BELOW ///////
-//Not useing this but leaving this here in case James is using it
-
-var createBoxAfterDelay = {
-    action: function (hand) {
-        if (isButtonPressed(hand, newShapesButton)) {
-            if (!clock) {
-                clock = new THREE.Clock(true);
-                clock.start();
-            } else {
-                if (clock.getElapsedTime() > 0.2) {
-                    if (box) {
-                        box.rotation.x += 0.001;
-                        box.rotation.y += 0.03;
-                    } else {
-                        box = createBox(40, 40, 40, new THREE.Vector3(0, 0, 0), 0xabcdef);
-                        box.isAsset = true;
-                        box.name = "box";
-                        window.scene.add(box);
-                        clock = null;
-                    }
-                }
-            }
-        } else {
-            clock = null;
-        }
-    }
-}
-
-function createAssetName()
-{
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
-    {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
-
-function registerAssetCreation(asset)
-{
-    if (!action)
-    {
-        action = new CreateAction();
-        action.Initialize(asset);
-
-        actionManager.ActionPerformed(action);
-
-        action = null;
-    }
-}

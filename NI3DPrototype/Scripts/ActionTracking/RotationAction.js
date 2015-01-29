@@ -3,7 +3,7 @@
     this.Initialize = function (object)
     {
         this.setActionName(object.name);
-        this.setObjectName(object.id);
+        this.setObjectName(object.name);
         this.setRotationBeforeRotated(object.rotation);
     }
 
@@ -75,7 +75,7 @@
 
     this.UndoAction = function ()
     {
-        var sceneObject = window.scene.getObjectById(this.getObjectName());
+        var sceneObject = window.scene.getObjectByName(this.getObjectName());
         var order = this.getRotationBeforeRotated().order;
         var x = this.getRotationBeforeRotated().x;
         var y = this.getRotationBeforeRotated().y;
@@ -85,7 +85,7 @@
 
     this.RedoAction = function myfunction()
     {
-        var sceneObject = window.scene.getObjectById(this.getObjectName());
+        var sceneObject = window.scene.getObjectByName(this.getObjectName());
         var order = this.getRotationAfterRotated().order;
         var x = this.getRotationAfterRotated().x;
         var y = this.getRotationAfterRotated().y;

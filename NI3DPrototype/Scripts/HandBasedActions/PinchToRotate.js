@@ -1,4 +1,5 @@
 ﻿var axis = null;
+var rotationAction = null;
 
 var RotatePinchedObject = function (hand)
 {
@@ -8,11 +9,11 @@ var RotatePinchedObject = function (hand)
 
         if (pinchedObject)
         {
-            if (!action)
+            if (!rotationAction)
             {
-                action = new RotationAction();
+                rotationAction = new RotationAction();
 
-                action.Initialize(pinchedObject);
+                rotationAction.Initialize(pinchedObject);
             }
         }
     }
@@ -30,21 +31,22 @@ var RotatePinchedObject = function (hand)
         }
 
         var angle = hand.roll();
+
         pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
     }
 }
 
 var EndRotatePinchedObject = function (hand)
 {
-    if (action)
+    if (rotationAction)
     {
-        action.RegisterRotation(pinchedObject)
-        actionManager.ActionPerformed(action);
+        rotationAction.RegisterRotation(pinchedObject)
+        actionManager.ActionPerformed(rotationAction);
     }
 
     axis = null;
     pinchedObject = null;
-    action = null;
+    rotationAction = null;
 }
 
 function getPinchedObject(hand)

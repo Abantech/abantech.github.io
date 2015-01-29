@@ -1,64 +1,80 @@
 ﻿//These classes area meant to help with introducting/manipulating assets
 //Create, Cut, Copy, Paste, Undo, Redo, etc
-function AssetManager() {
-    var managedAssets = {};
-    var modifiedAssets = [];
-    var revertedAssets = [];
+function AssetManager()
+{
+    var assets = [];
+    var selectedAssets = [];
 
-    this.CreateAsset = function (asset) {
+    var createAssetAction;
+
+    this.CreateAsset = function (assetType, asset)
+    {
         window.scene.add(asset);
-        var managedAsset = new ManagedAsset(asset);
-        managedAssets[asset.uuid] = managedAsset;
-        modifiedAssets.push(managedAsset);
-    }
 
-    //this should get triggered as any asset changes occur to an asset
-    this.OnBeforeAlterAsset = function (asset) {
-        managedAssets[asset.uuid].SaveCurrentState(asset);
+        asset.isAsset = true;
+        asset.name = assetType + " " + mesh.id;
 
-        //Same asset being modified again (a 2nd or subsequent time)
-        if (modifiedAssets.length > 0 && modifiedAssets[modifiedAssets.length - 1] == managedAssets[asset.uuid] ) {
-            //TODO: do we need to do anything here?
-        }
-        else
+        if (!createAssetAction)
         {
-            modifiedAssets.push(managedAssets[asset.uuid]);
+            createAssetAction = new CreateAction();
+            createAssetAction.Initialize(asset);
+
+            actionManager.ActionPerformed(createAssetAction);
+
+            createAssetAction = null;
+        }
+
+        assets.push(asset);
+    }
+
+    this.GetAssets = function ()
+    {
+        return assets;
+    }
+
+    this.SelectAsset = function (asset)
+    {
+        selectedAssets.push(asset);
+    }
+
+    this.SelectAllAssets = function ()
+    {
+        selectedAssets = assets;
+    }
+
+    this.GetSelectedAssets = function ()
+    {
+        return selectedAssets;
+    }
+
+    this.IsSelectedAsset = function (asset)
+    {
+        for (var i = 0; i < selectedAssets.length; i++)
+        {
+            if (asset.name === selectedAssets[i].name)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    this.DeselectAsset = function (asset)
+    {
+        for (var i = 0; i < selectedAssets.length; i++)
+        {
+            if (asset.name === selectedAssets[i].name)
+            {
+                selectedAssets.splice(i, 1);
+            }
         }
     }
 
-    this.UndoLast = function () {
-        if (modifiedAssets.length > 0) {
-            var modifiedAsset = modifiedAssets.pop();
-            //Add it to the other array so that we can "redo"
-            revertedAssets.push(modifiedAsset);
-            var previousStateOfAsset = modifiedAsset.GetPreviousState();
-            if (previousStateOfAsset)
-            {
-                previousStateOfAsset.visible = true;
-            }
-            else
-            {
-                window.scene.remove(modifiedAsset);
-            }
-        }
+    this.DeselectAllAssets = function ()
+    {
+        selectedAssets = [];
     }
 }
 
-function ManagedAsset(asset) {
-    var previousAssetStates = [];
-
-    this.Asset = asset;
-
-    this.SaveCurrentState = function(asset) {
-        //TODO: Capture the current state of the asset so that we can revert back to it if needed
-
-        //HACK: just clone and hide the old one for now
-        var oldAsset = asset.clone();
-        oldAsset.visible = false; 
-        previousAssetStates.push(oldAsset);
-    }
-
-    this.GetPreviousState = function () {
-        return previousAssetStates.length > 0 ? previousAssetStates.pop() : null;
-    }
-}
+var assetManager = new AssetManager();

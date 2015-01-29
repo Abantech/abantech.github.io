@@ -83,12 +83,14 @@
     <Content Include="Scripts\AssetManager.js" />
     <Content Include="Scripts\FadingSpheres.js" />
     <Content Include="Scripts\FrameActions.js" />
+    <Content Include="Scripts\FrameActions\AddHandlesToSelectedAssets.js" />
+    <Content Include="Scripts\HandBasedActions\SelectHoveredAsset.js" />
+    <Content Include="Scripts\Gestures\FingerHovere.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtons.js" />
-    <Content Include="Scripts\HandBasedActions\PinchHandGesture.js" />
+    <Content Include="Scripts\Gestures\Pinch.js" />
     <Content Include="Scripts\HandBasedActions\PinchLine.js" />
     <Content Include="Scripts\HandBasedActions\PinchToRotate.js" />
     <Content Include="Scripts\HandBasedActions\PinchToTranslate.js" />
-    <Content Include="Scripts\HandBasedActions\RotateCamera.js" />
     <Content Include="Scripts\HandController.js" />
     <Content Include="Scripts\HandsPositionAdjustment.js" />
     <Content Include="Scripts\LeapLoopSetup.js" />
