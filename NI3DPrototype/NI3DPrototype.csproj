@@ -91,6 +91,7 @@
     <Content Include="Scripts\HandBasedActions\PinchLine.js" />
     <Content Include="Scripts\HandBasedActions\PinchToRotate.js" />
     <Content Include="Scripts\HandBasedActions\PinchToTranslate.js" />
+    <None Include="Scripts\HandBasedActions\_references.js" />
     <Content Include="Scripts\HandController.js" />
     <Content Include="Scripts\HandsPositionAdjustment.js" />
     <Content Include="Scripts\LeapLoopSetup.js" />
