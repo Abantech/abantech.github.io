@@ -106,6 +106,52 @@ function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorR
     }
 }
 
+var changeButtonColorOnHover = function (button) { buttonmaterial.color.setHex(0xAEB404); }
+var revertButtonColorOnNotHovered = function (button) { buttonmaterial.color.setHex(0xcccccc); }
+
+var conditionForShowingNewShapeButtons = function (frame) {
+    return newShapesButton.menuIsExpanded;
+}
+
+var conditionForHidingNewShapeButtons = function (frame) {
+    return (new Date() - newShapesButton.lastExpandedOrHoveredTime) > 1500 && !newShapesButton.menuIsExpanded;
+}
+
+var actionNotPerfomredWithinThresholdTime = function (button) {
+    return !menuOptionLastUsedTime || (new Date() - menuOptionLastUsedTime) > 2000
+}
+
+var initShapeCreateButton = function (menuButtonChildOption, translationMatrix, iconMesh) {
+    menuButtonChildOption.buttonMesh.applyMatrix(translationMatrix)
+    window.camera.add(menuButtonChildOption.buttonMesh);
+
+    //inner mesh that will be displayed on the button
+    iconMesh.applyMatrix(translationMatrix)
+    menuButtonChildOption.buttonMesh.children.push(iconMesh);
+    window.camera.add(iconMesh);
+    iconMesh.visible = false;
+}
+
+var initBoxCreateButton = function (menuButtonChildOption) {
+    var translationMatrix = new THREE.Matrix4().makeTranslation(buttonPositionX - menuButtonChildOption.size, buttonPositionY + menuButtonChildOption.size, buttonPositionZ);
+    var mesh = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
+    initShapeCreateButton(menuButtonChildOption, translationMatrix, mesh);
+}
+
+var createBoxOnMenuOptionPressed = function (button) {
+    button.material.color.setHex(0xAEB404);
+    var mesh = new THREE.Mesh(new THREE.BoxGeometry(18, 18, 18), new THREE.MeshPhongMaterial({ wireframe: false }))
+    mesh.material.color.setHex(button.material.color);
+    mesh.position.set(0, 0, 0);
+
+    assetManager.CreateAsset("Cube", mesh);
+    menuOptionLastUsedTime = new Date();
+}
+
+//Commented out this line - 
+//JAMES/THEO - Help needed: can you comment out this line and comment out 162 to 183 and see if you cvan get it to work?
+//var newBoxOption = new menuButtonChildOption("CreateCubeButton", 28, { wireframe: false }, initBoxCreateButton, conditionForShowingNewShapeButtons, conditionForHidingNewShapeButtons, createBoxOnMenuOptionPressed, null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
+
 //Register a menu option action, the action fires only once every 2 seconds
 var registerMenuOptionAction = function (button, functionName, actionToFire) {
     var menuOptionAction = new MenuOptionAction(button, functionName, actionToFire);
@@ -120,6 +166,7 @@ var otherButton1 = new THREE.Mesh(boxGeo1, new THREE.MeshPhongMaterial({ wirefra
 window.camera.add(otherButton1);
 otherButton1.visible = false;
 menuControls.push(otherButton1);
+
 otherButton1.defaultColor = 0x2E9AFE;
 mesh = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
 mesh.material.color.setHex(otherButton1.defaultColor);
@@ -135,6 +182,7 @@ var createBoxOnMenuOptionPressed = function (hand) {
     assetManager.CreateAsset("Cube", mesh);
 }
 registerMenuOptionAction(otherButton1, "CreateBoxOnMenuOptionPressed", createBoxOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x2E9AFE) });
+
 
 var boxGeo2 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo2.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY - buttonSize, buttonPositionZ))
@@ -157,7 +205,7 @@ var createSphereOnMenuOptionPressed = function (hand) {
 
     assetManager.CreateAsset("Sphere", mesh);
 }
-registerMenuOptionAction(otherButton2, "CreateSphereOnMenuOptionPressed", createSphereOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x7401DF) });
+registerMenuOptionAction(otherButton2, "CreateSphereOnMenuOptionPressed", createSphereOnMenuOptionPressed, function () { otherButton2.button.material.color.setHex(0x7401DF) });
 
 var boxGeo3 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo3.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX + buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
@@ -179,7 +227,7 @@ var createCylinderOnMenuOptionPressed = function (hand) {
 
     assetManager.CreateAsset("Cylinder", mesh);
 }
-registerMenuOptionAction(otherButton3, "CreateCylinderOnMenuOptionPressed", createCylinderOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x0B4C5F) });
+registerMenuOptionAction(otherButton3, "CreateCylinderOnMenuOptionPressed", createCylinderOnMenuOptionPressed, function () { otherButton2.button.material.color.setHex(0x0B4C5F) });
 
 var boxGeo4 = new THREE.BoxGeometry(28, 28, 2);
 boxGeo4.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX + buttonSize, buttonPositionY - buttonSize, buttonPositionZ))
@@ -202,7 +250,7 @@ var createConeOnMenuOptionPressed = function (hand) {
 
     assetManager.CreateAsset("Cone", mesh);
 }
-registerMenuOptionAction(otherButton4, "CreateConeOnMenuOptionPressed", createConeOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0xFE642E) });
+registerMenuOptionAction(otherButton4, "CreateConeOnMenuOptionPressed", createConeOnMenuOptionPressed, function () { otherButton2.button.material.color.setHex(0xFE642E) });
 
 var changeButtonColorOnHoverAndPress = {
     action: function (hand)
@@ -295,29 +343,7 @@ var expandMenuSectionsOnHover = {
 
 var raycaster = new THREE.Raycaster();
 
-function isButtonPressed(hand, button)
-{
-    var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-    var directionVector = (new THREE.Vector3()).fromArray(hand.fingers[1].direction);
 
-    raycaster.set(indexTipPosition, directionVector.normalize());
-    raycaster.near = 0;
-    raycaster.far = 80;
-    var intersection = raycaster.intersectObject(button, true);
-    return intersection.length > 0;
-}
-
-function isHoveringOverControls(hand, controls)
-{
-    var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-    var directionVector = (new THREE.Vector3()).fromArray(hand.fingers[1].direction);
-    raycaster.set(indexTipPosition, directionVector.normalize());
-    raycaster.near = 0;
-    raycaster.far = 400;
-
-    var intersection = raycaster.intersectObjects(controls, true);
-    return intersection.length > 0;
-}
 
 
 frameActions.RegisterAction("CloseMenuAfterDelay", closeMenuAfterDelay);

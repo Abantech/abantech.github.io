@@ -84,6 +84,7 @@
     <Content Include="Scripts\FadingSpheres.js" />
     <Content Include="Scripts\FrameActions.js" />
     <Content Include="Scripts\FrameActions\AddHandlesToSelectedAssets.js" />
+    <Content Include="Scripts\HandBasedActions\MenuButtonChildOption.js" />
     <Content Include="Scripts\HandBasedActions\SelectHoveredAsset.js" />
     <Content Include="Scripts\Gestures\FingerHovere.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtons.js" />
@@ -101,6 +102,7 @@
     <Content Include="Scripts\Scene\SceneSetup.js" />
     <Content Include="Scripts\ActionTracking\TranslationAction.js" />
     <Content Include="Scripts\Utils\GestureTimer.js" />
+    <Content Include="Scripts\Utils\HoveredAndPressedDetection.js" />
     <Content Include="Scripts\Utils\MathHelper.js" />
     <Content Include="Web.config" />
   </ItemGroup>
