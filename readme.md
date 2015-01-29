@@ -9,12 +9,13 @@ All about natural interaction in 3D. To be able to give people the ability to do
 Demo: [NI 3D prototype workspace]( http://abantech.github.io/NI3DPrototype/main.html )  
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
 
-Updated Greg ~ 2015-01-27
+Updated Greg and James ~ 2015-01-28
  
- - Finally fixed the finger pointing issue!
- - Updated to add NewShapeMenu button that actually works. No images yet and lots of refactoring needed to do. Not the best code I've written but had to make a lot of simplifications to resolve issues. 
- - Still having issues with the raycaster (please someone help) - isButtonPressed and isHoveringOverControls in Scripts/HandBasedActions/MenuButtons.js  
- - Need to work together with theo to show handles upon creation
+ - Added rotation to the pinch gesture - held object rotates around where the pinched location
+ - Added hand-specific registering of the hand actions (objects can be rotated with right hand only, only moved with left)
+ - Fixed finger-pointing issue
+ - Added shapes and images to new shape menu 
+ - Simple workaround to problem of loading images as textures (due to CORS); does not load image if using "file:///"
 
 ***
 
