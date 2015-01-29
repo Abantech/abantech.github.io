@@ -7,16 +7,23 @@
         if (intersectedAsset)
         {
             if (!intersectedAsset.beginHoverTime)
+            {
                 intersectedAsset.beginHoverTime = new Date();
+                console.log("ASSET NOT PREVIOUSLY HOVERED - ASSIGNING NOW")
+            }
+                
 
             if ((new Date() - intersectedAsset.beginHoverTime) > 500)
             {
+                console.log("ASSET IS HOVERED")
                 if (assetManager.IsSelectedAsset(intersectedAsset.object))
                 {
+                    console.log("ASSET IS DESELECTED")
                     assetManager.DeselectAsset(intersectedAsset.object);
                 }
                 else
                 {
+                    console.log("ASSET IS NOW SELECTED")
                     assetManager.SelectAsset(intersectedAsset.object);
                 }
             }
@@ -25,6 +32,7 @@
         {
             if (intersectedAsset)
             {
+                console.log("THIS SHOULD NEVER HAPPEN")
                 intersectedAsset.beginHoverTime = null;
             }
         }
