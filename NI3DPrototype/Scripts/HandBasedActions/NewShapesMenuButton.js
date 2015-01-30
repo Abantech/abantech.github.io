@@ -1,38 +1,42 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 /// <reference path="../FrameActions.js" />
-var clock;
-var menuControls = [];
+
 var buttonSize = 28;
 var buttonPositionX = (window.innerWidth / 14);
 var buttonPositionY = (window.innerHeight / 12);
 var buttonPositionZ = -300;
 var menuHoverToOpenDelayMills = 250;
 var menuOpenGracePeriodMills = 900;
-var menuOptionVsLastTimeUsed = {};
 var url = window.location.href;
-var texture = new THREE.Texture();
-
-//console.log("window.location : " + window.location.href);
-if (url.substring(0, 4) != "file") {
-    var image = document.createElement('img');
-    image.src = 'Images/NewShapeMenu.jpg';
-    texture = new THREE.Texture(image);
-    image.onload = function () {
-        texture.needsUpdate = true;
-    };
-}
 
 //var texture = new THREE.Texture(img);
 var geometry = new THREE.SphereGeometry(16, 32, 32);
 geometry.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX, buttonPositionY, buttonPositionZ));
-console.log("window.innerWidth:" + window.innerWidth)
-console.log("window.innerHeight:" + window.innerHeight)
-var material = new THREE.MeshPhongMaterial({
-    wireframe: false,
-    map: texture,//THREE.ImageUtils.loadTexture('Images/3D-shapes.jpg')
-    needsUpdate: true
-});
-//material.needsUpdate = true;
+
+var material = new THREE.MeshPhongMaterial({wireframe: false});
+
+if (url.substring(0, 4) != "file")
+{
+    var texture = new THREE.Texture();
+
+    //console.log("window.location : " + window.location.href);
+    if (url.substring(0, 4) != "file") {
+        var image = document.createElement('img');
+        image.src = 'Images/NewShapeMenu.jpg';
+        texture = new THREE.Texture(image);
+        image.onload = function () {
+            texture.needsUpdate = true;
+        };
+    }
+
+    material.map = texture;
+    material.needsUpdate = true;
+}
+else
+{
+    material.color.setHex(0x8A2908);
+}
+
 var newShapesButton = new THREE.Mesh(geometry, material);
 
 //newShapesButton.material.opacity = 0.2;
