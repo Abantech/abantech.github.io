@@ -152,6 +152,8 @@ function addHandlesToAsset(asset)
 
             sprite.scale.set(2, 2, 2);
 
+            sprite.isHandle = true;
+
             sprites.add(sprite);
 
         };

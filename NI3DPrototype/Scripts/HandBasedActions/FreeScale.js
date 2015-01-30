@@ -22,6 +22,60 @@
     }
 }
 
+var OnEndScaledObject = function (hand)
+{
+    if (pinchedObject && pinchedObject.isHandle)
+    {
+        var parent = pinchedObject.parent.parent;
+        parent.geometry.computeBoundingBox();
+        parent.remove(pinchedObject.parent);
+
+        var boundingBox = parent.geometry.boundingBox;
+        var min = boundingBox.min;
+        var max = boundingBox.max;
+
+        verts = new Array();
+        verts.push(new THREE.Vector3(min.x, min.y, min.z));
+        verts.push(new THREE.Vector3(min.x, max.y, min.z));
+        verts.push(new THREE.Vector3(min.x, min.y, max.z));
+        verts.push(new THREE.Vector3(min.x, max.y, max.z));
+        verts.push(new THREE.Vector3(max.x, min.y, max.z));
+        verts.push(new THREE.Vector3(max.x, max.y, min.z));
+        verts.push(new THREE.Vector3(max.x, min.y, min.z));
+        verts.push(new THREE.Vector3(max.x, max.y, max.z));
+
+        // Uncomment if you want the individual verticies of the shape (Could be used for warping)
+        //verts = asset.geometry.vertices;
+
+        var map = THREE.ImageUtils.loadTexture("Images/ball.png");
+        var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff });
+        handle = new THREE.Sprite(material);
+        sprites = new THREE.Object3D();
+        sprites.isHandles = true;
+
+        parent.add(sprites);
+
+        if (verts.length)
+        {
+            for (var i = 0, v, sprite; i < verts.length; i++)
+            {
+                v = verts[i].clone();
+
+                sprite = handle.clone();
+
+                sprite.position.set(v.x, v.y, v.z);
+
+                sprite.scale.set(2, 2, 2);
+
+                sprite.isHandle = true;
+
+                sprites.add(sprite);
+
+            }
+        }
+    }
+}
+
 function getPinchedObject(hand)
 {
     var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
@@ -71,3 +125,8 @@ rightHandPinchGesture.registerOnFullGesture(
             {
                 func: ScaleObject
             });
+
+rightHandPinchGesture.registerOnFullGestureEnd(
+        {
+            func: OnEndScaledObject
+        });
