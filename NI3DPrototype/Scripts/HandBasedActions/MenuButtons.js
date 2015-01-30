@@ -107,11 +107,11 @@ function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorR
 }
 
 var changeButtonColorOnHover = function (button) {
-    console.log("menuButtonChildOption - Setting button color on HOVERED...")
+    //console.log("menuButtonChildOption - Setting button color on HOVERED...")
     button.material.color.setHex(0xAEB404);
 }
 var revertButtonColorOnNotHovered = function (button) {
-    console.log("menuButtonChildOption - resetting button color on NOT HOVERED...")
+    //console.log("menuButtonChildOption - resetting button color on NOT HOVERED...")
     button.material.color.setHex(0xcccccc);
 }
 
@@ -120,11 +120,11 @@ var conditionForShowingNewShapeButtons = function (frame) {
 }
 
 var conditionForHidingNewShapeButtons = function (frame) {
-    return (new Date() - newShapesButton.lastExpandedOrHoveredTime) > 1500 && !newShapesButton.menuIsExpanded;
+    return (new Date() - newShapesButton.lastExpandedOrHoveredTime) > 2000 && !newShapesButton.menuIsExpanded;
 }
 
 var actionNotPerfomredWithinThresholdTime = function (button) {
-    return !menuOptionLastUsedTime || (new Date() - menuOptionLastUsedTime) > 2000
+    return (!menuOptionLastUsedTime || (new Date() - menuOptionLastUsedTime) > 1500)
 }
 
 var initShapeCreateButton = function (menuButtonChildOption, translationMatrix, iconMesh) {
@@ -145,12 +145,13 @@ var initBoxCreateButton = function (menuButtonChildOption) {
 }
 
 var createBoxOnMenuOptionPressed = function (button) {
-    button.material.color.setHex(0xAEB404);
+    button.material.color.setHex(0x04B431);
     var mesh = new THREE.Mesh(new THREE.BoxGeometry(18, 18, 18), new THREE.MeshPhongMaterial({ wireframe: false }))
     mesh.material.color.setHex(0x2E9AFE);
     mesh.position.set(0, 0, 0);
 
     assetManager.CreateAsset("Cube", mesh);
+    console.log("BOX Created due to button pressed!")
     menuOptionLastUsedTime = new Date();
 }
 

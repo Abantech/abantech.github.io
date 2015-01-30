@@ -31,10 +31,10 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
     this.onButtonHovered = {
         action: function (hand)
         {
-            if (!self.buttonMesh.visible)
+            if (!self.buttonHoveredAction)
                 return;
 
-            if (!self.buttonHoveredAction)
+            if (!self.buttonMesh.visible)
                 return;
 
             if (isHoveringOverControls(hand, [self.buttonMesh])) {
@@ -54,7 +54,7 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
             if (!self.lastHoveredTime)
                 return;
             
-            if (self.buttonMesh.visible && (new Date() - self.lastHoveredTime) > 500)
+            if (self.buttonMesh.visible && (new Date() - self.lastHoveredTime) > 750)
                 buttonNotHoveredCallback(self.buttonMesh);
         }
 
@@ -66,7 +66,10 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
                 return;
 
             if (isButtonPressed(hand, self.buttonMesh)) {
-                if ((!self.conditionForHover) || self.conditionForPressed(self.buttonMesh)) 
+                if (!self.conditionForPressed)
+                    console.warn("ConditionForPressed not defined on button " + self.buttonMesh.name)
+
+                if (!self.conditionForPressed || self.conditionForPressed(self.buttonMesh))
                     self.buttonPressedAction(self.buttonMesh);
             }
         }
