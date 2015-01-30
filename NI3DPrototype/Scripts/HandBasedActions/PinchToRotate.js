@@ -48,6 +48,7 @@ var EndRotatePinchedObject = function (hand)
 
     if (pinchedObject)
     {
+        pinchedObject.geometry.computeBoundingBox();
         pinchedObject.isPinched = false;
         pinchedObject = null;
     }

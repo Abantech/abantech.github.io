@@ -6,7 +6,6 @@ var lastHoveredObjectUUID = null;
 var lastSelectedObjectUUID = null;
 var assetMaterialOriginalColors = {};
 var selectedAssetColor = 0xcc0000
-var sprites;
 
 var selectAssetOnHover = {
     action: function (hand)
@@ -79,6 +78,8 @@ var selectAssetOnHover = {
     }
 }
 
+
+
 function getIntersectedAssets(hand, assets)
 {
     var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
@@ -107,6 +108,7 @@ function getIntersectedAssets(hand, assets)
 
 function addHandlesToAsset(asset)
 {
+    var sprites;
     var handle;
 
     THREE.ImageUtils.crossOrigin = '';
@@ -134,6 +136,7 @@ function addHandlesToAsset(asset)
     //verts = asset.geometry.vertices;
 
     sprites = new THREE.Object3D();
+    sprites.isHandles = true;
 
     asset.add(sprites);
 
@@ -141,7 +144,6 @@ function addHandlesToAsset(asset)
     {
         for (var i = 0, v, sprite; i < verts.length; i++)
         {
-
             v = verts[i].clone();
 
             sprite = handle.clone();
@@ -164,11 +166,30 @@ function addHandlesToAsset(asset)
 
 function removeHandles(asset)
 {
-    asset.remove(sprites);
+    for (var i = 0; i < asset.children.length; i++)
+    {
+        if (asset.children[i].isHandles)
+        {
+            asset.remove(asset.children[i]);
+        }
+    }
 
     var HSL = asset.material.color.getHSL();
 
     asset.material.color.setHSL(HSL.h, HSL.s, HSL.l - .2);
 
     asset.isSelected = false;
+}
+
+var updateBoundingBoxesOfSelectedAssets = function (frame)
+{
+    var selectedAssets = assetManager.GetSelectedAssets();
+
+    for (var i = 0; i < selectedAssets.length; i++)
+    {
+        if (selectedAssets[i].hasBeenMoved)
+        {
+            selectedAssets[i].geometry.computeBoundingBox();
+        }
+    }
 }

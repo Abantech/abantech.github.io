@@ -122,7 +122,7 @@
         handController.RegisterAction("ExpandMenuSectionsOnHover", expandMenuSectionsOnHover);
         handController.RegisterAction("SelectAssetOnHover", selectAssetOnHover);
 
-        //frameAction.RegisterAction("AddHandlesToSelectedAssets", addHandlesToSelectedAssets)
+        frameActions.RegisterAction("UpdateBoundingBoxesOfSelectedAssets", updateBoundingBoxesOfSelectedAssets);
 
         $(document).keypress(function (event)
         {
