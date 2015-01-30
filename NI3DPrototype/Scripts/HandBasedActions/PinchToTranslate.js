@@ -21,6 +21,7 @@ var TranslatePinchedObject = function (hand)
         var indexTipPos = hand.fingers[1].tipPosition;
         var thumbTipPos = hand.fingers[0].tipPosition;
         pinchedObject.position.set((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
+        pinchedObject.isPinched = true;
     }
 }
 
@@ -30,10 +31,14 @@ var EndTranslatePinchedObject = function (hand)
     {
         action.RegisterTranslation(pinchedObject)
         actionManager.ActionPerformed(action);
+        action = null;
     }
 
-    pinchedObject = null;
-    action = null;
+    if (pinchedObject)
+    {
+        pinchedObject.isPinched = false;
+        pinchedObject = null;
+    }
 }
 
 function getPinchedObject(hand)

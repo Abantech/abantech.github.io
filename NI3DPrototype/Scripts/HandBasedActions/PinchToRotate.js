@@ -14,6 +14,7 @@ var RotatePinchedObject = function (hand)
                 rotationAction = new RotationAction();
 
                 rotationAction.Initialize(pinchedObject);
+                pinchedObject.isPinched = true;
             }
         }
     }
@@ -42,11 +43,16 @@ var EndRotatePinchedObject = function (hand)
     {
         rotationAction.RegisterRotation(pinchedObject)
         actionManager.ActionPerformed(rotationAction);
+        rotationAction = null;
+    }
+
+    if (pinchedObject)
+    {
+        pinchedObject.isPinched = false;
+        pinchedObject = null;
     }
 
     axis = null;
-    pinchedObject = null;
-    rotationAction = null;
 }
 
 function getPinchedObject(hand)

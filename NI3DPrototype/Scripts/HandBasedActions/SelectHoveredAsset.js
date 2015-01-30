@@ -6,6 +6,7 @@ var lastHoveredObjectUUID = null;
 var lastSelectedObjectUUID = null;
 var assetMaterialOriginalColors = {};
 var selectedAssetColor = 0xcc0000
+var sprites;
 
 var selectAssetOnHover = {
     action: function (hand)
@@ -15,59 +16,65 @@ var selectAssetOnHover = {
 
         if (intersectedAsset)
         {
-            if (!assetHoveredTimeDictionary[intersectedAsset.object.uuid])
+            if (!intersectedAsset.object.isPinched)
             {
-                console.log("Asset not previously in dictionary - Assigning hoveredTime now")
-                assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
-                lastHoveredObjectUUID = intersectedAsset.object.uuid;
-            }
-            else
-            {
-                //TODO: Move this to a frameAction
-                for(var i = 0; i < window.scene.children.length; i++)
+                if (!assetHoveredTimeDictionary[intersectedAsset.object.uuid])
                 {
-                    if (window.scene.children[i].uuid != lastHoveredObjectUUID && assetHoveredTimeDictionary[window.scene.children[i].uuid])
-                    {
-                        console.log("Removing unselected object from dictionary")
-                        assetHoveredTimeDictionary[window.scene.children[i].uuid] = null;
-                    }
-                }
-            }
-            
-            intersectedAsset.beginHoverTime = assetHoveredTimeDictionary[intersectedAsset.object.uuid];
-
-            if ((new Date() - intersectedAsset.beginHoverTime) > assetSelectHoverTimeRequiredMills)
-            {
-                console.log("Asset '" + intersectedAsset.object.uuid + "' hovered for more than threshold time of " + assetSelectHoverTimeRequiredMills + "ms")
-                if (lastSelectedObjectUUID == intersectedAsset.object.uuid)
-                {
-                    if (!assetLastSelectedTimeDictionary[intersectedAsset.object.uuid])
-                        assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date()
-
-                    if ((new Date() - assetLastSelectedTimeDictionary[intersectedAsset.object.uuid]) > selectedAssetGracePeriodToDeselectTimeRequiredMills)
-                    {
-                        console.log("Asset was previously selected over threshold time of (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms). Delecting...");
-                        assetManager.DeselectAsset(intersectedAsset.object);
-                        assetHoveredTimeDictionary[intersectedAsset.object.uuid] = null;
-                        lastSelectedObjectUUID = null;
-                        
-                    }
-                    else
-                    {
-                        console.log("Preventing Asset delection because asset was last selected under selection threshold time (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms).");
-                    }
+                    console.log("Asset not previously in dictionary - Assigning hoveredTime now")
+                    assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
+                    lastHoveredObjectUUID = intersectedAsset.object.uuid;
                 }
                 else
                 {
-                    console.log("Hovered Asset was not previously selected. Selecting...");
-                    assetManager.SelectAsset(intersectedAsset.object);
-                    lastSelectedObjectUUID = intersectedAsset.object.uuid;
-                    lastHoveredObjectUUID = intersectedAsset.object.uuid;
-                    assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
-                    assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date();
-                    intersectedAsset.object.material.color.setHex(selectedAssetColor);
+                    //TODO: Move this to a frameAction
+                    for (var i = 0; i < window.scene.children.length; i++)
+                    {
+                        if (window.scene.children[i].uuid != lastHoveredObjectUUID && assetHoveredTimeDictionary[window.scene.children[i].uuid])
+                        {
+                            console.log("Removing unselected object from dictionary")
+                            assetHoveredTimeDictionary[window.scene.children[i].uuid] = null;
+                        }
+                    }
+                }
+
+                intersectedAsset.beginHoverTime = assetHoveredTimeDictionary[intersectedAsset.object.uuid];
+
+                if ((new Date() - intersectedAsset.beginHoverTime) > assetSelectHoverTimeRequiredMills)
+                {
+                    console.log("Asset '" + intersectedAsset.object.uuid + "' hovered for more than threshold time of " + assetSelectHoverTimeRequiredMills + "ms")
+                    if (window.scene.getObjectById(intersectedAsset.object.id).isSelected)
+                    {
+                        if (!assetLastSelectedTimeDictionary[intersectedAsset.object.uuid])
+                            assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date()
+
+                        if ((new Date() - assetLastSelectedTimeDictionary[intersectedAsset.object.uuid]) > selectedAssetGracePeriodToDeselectTimeRequiredMills)
+                        {
+                            console.log("Asset was previously selected over threshold time of (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms). Delecting...");
+                            assetManager.DeselectAsset(intersectedAsset.object);
+                            removeHandles(intersectedAsset.object);
+                            assetHoveredTimeDictionary[intersectedAsset.object.uuid] = null;
+                            lastSelectedObjectUUID = null;
+
+                        }
+                        else
+                        {
+                            console.log("Preventing Asset delection because asset was last selected under selection threshold time (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms).");
+                        }
+                    }
+                    else
+                    {
+                        console.log("Hovered Asset was not previously selected. Selecting...");
+                        assetManager.SelectAsset(intersectedAsset.object);
+                        lastSelectedObjectUUID = intersectedAsset.object.uuid;
+                        lastHoveredObjectUUID = intersectedAsset.object.uuid;
+                        assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
+                        assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date();
+
+                        addHandlesToAsset(intersectedAsset.object);
+                    }
                 }
             }
+
         }
     }
 }
@@ -80,25 +87,88 @@ function getIntersectedAssets(hand, assets)
     raycaster.near = 0;
     raycaster.far = 400;
 
+    var intersectedAssets = new Array();
+
     var intersection = raycaster.intersectObjects(assets, true);
-    return intersection;
-}
 
-var restoreUnselectedAssetToOrignalColor = function (frame) {
-    for (var i = 0; i < window.scene.children.length; i++) {
-        if (window.scene.children[i].isAsset)
+    if (intersection)
+    {
+        for (var i = 0; i < intersection.length; i++)
         {
-            //Save asset original color if not already saved
-            if (!assetMaterialOriginalColors[window.scene.children[i].uuid])
-                assetMaterialOriginalColors[window.scene.children[i].uuid] = window.scene.children[i].material.color.getHex();
-
-            if (!assetManager.IsSelectedAsset(window.scene.children[i]) && window.scene.children[i].material.color.getHex() != assetMaterialOriginalColors[window.scene.children[i].uuid])
+            if (intersection[i].object.isAsset)
             {
-                console.log("Resetting Asset to original color...")
-                window.scene.children[i].material.color.setHex(assetMaterialOriginalColors[window.scene.children[i].uuid]);
+                intersectedAssets.push(intersection[i]);
             }
         }
     }
+
+    return intersectedAssets;
 }
 
-frameActions.RegisterAction("RestoreUnselectedAssetToOrignalColor", restoreUnselectedAssetToOrignalColor);
+function addHandlesToAsset(asset)
+{
+    var handle;
+
+    THREE.ImageUtils.crossOrigin = '';
+    var map = THREE.ImageUtils.loadTexture("Images/ball.png");
+    var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff });
+    handle = new THREE.Sprite(material);
+
+    asset.geometry.computeBoundingBox();
+
+    var boundingBox = asset.geometry.boundingBox;
+    var min = boundingBox.min;
+    var max = boundingBox.max;
+
+    verts = new Array();
+    verts.push(new THREE.Vector3(min.x, min.y, min.z));
+    verts.push(new THREE.Vector3(min.x, max.y, min.z));
+    verts.push(new THREE.Vector3(min.x, min.y, max.z));
+    verts.push(new THREE.Vector3(min.x, max.y, max.z));
+    verts.push(new THREE.Vector3(max.x, min.y, max.z));
+    verts.push(new THREE.Vector3(max.x, max.y, min.z));
+    verts.push(new THREE.Vector3(max.x, min.y, min.z));
+    verts.push(new THREE.Vector3(max.x, max.y, max.z));
+
+    // Uncomment if you want the individual verticies of the shape (Could be used for warping)
+    //verts = asset.geometry.vertices;
+
+    sprites = new THREE.Object3D();
+
+    asset.add(sprites);
+
+    if (verts.length)
+    {
+        for (var i = 0, v, sprite; i < verts.length; i++)
+        {
+
+            v = verts[i].clone();
+
+            sprite = handle.clone();
+
+            sprite.position.set(v.x, v.y, v.z);
+
+            sprite.scale.set(2, 2, 2);
+
+            sprites.add(sprite);
+
+        };
+
+        var HSL = asset.material.color.getHSL();
+
+        asset.material.color.setHSL(HSL.h, HSL.s, HSL.l + .2);
+
+        asset.isSelected = true;
+    }
+}
+
+function removeHandles(asset)
+{
+    asset.remove(sprites);
+
+    var HSL = asset.material.color.getHSL();
+
+    asset.material.color.setHSL(HSL.h, HSL.s, HSL.l - .2);
+
+    asset.isSelected = false;
+}
