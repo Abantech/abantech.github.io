@@ -83,7 +83,7 @@ function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorR
                     if (!menuOptionLastUsedTime)
                     {
                         menuOptionLastUsedTime = new Date();
-                        console.log("Executing menuOption " + this.functionName + " - RUN MENU BUTTON ACTION")
+                        //console.log("Executing menuOption " + this.functionName + " - RUN MENU BUTTON ACTION")
                         this.actionToFire(hand)
                     }
                     else
@@ -92,12 +92,12 @@ function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorR
                         if (lastExecuted > 2000)
                         {
                             menuOptionLastUsedTime = new Date();
-                            console.log("Executing menuOption " + this.functionName + " - RUN MENU BUTTON ACTION")
+                            //console.log("Executing menuOption " + this.functionName + " - RUN MENU BUTTON ACTION")
                             this.actionToFire(hand)
                         }
                         else
                         {
-                            console.log("Executing menuOption " + this.functionName + " - ACTION PREVENTED DUE TO DELAY, " + lastExecuted)
+                            //console.log("Executing menuOption " + this.functionName + " - ACTION PREVENTED DUE TO DELAY, " + lastExecuted)
                         }
                     }
                 }
@@ -106,8 +106,14 @@ function MenuOptionAction(optionButton, optionFunctionName, actionToFire, colorR
     }
 }
 
-var changeButtonColorOnHover = function (button) { buttonmaterial.color.setHex(0xAEB404); }
-var revertButtonColorOnNotHovered = function (button) { buttonmaterial.color.setHex(0xcccccc); }
+var changeButtonColorOnHover = function (button) {
+    console.log("menuButtonChildOption - Setting button color on HOVERED...")
+    button.material.color.setHex(0xAEB404);
+}
+var revertButtonColorOnNotHovered = function (button) {
+    console.log("menuButtonChildOption - resetting button color on NOT HOVERED...")
+    button.material.color.setHex(0xcccccc);
+}
 
 var conditionForShowingNewShapeButtons = function (frame) {
     return newShapesButton.menuIsExpanded;
@@ -141,7 +147,7 @@ var initBoxCreateButton = function (menuButtonChildOption) {
 var createBoxOnMenuOptionPressed = function (button) {
     button.material.color.setHex(0xAEB404);
     var mesh = new THREE.Mesh(new THREE.BoxGeometry(18, 18, 18), new THREE.MeshPhongMaterial({ wireframe: false }))
-    mesh.material.color.setHex(button.material.color);
+    mesh.material.color.setHex(0x2E9AFE);
     mesh.position.set(0, 0, 0);
 
     assetManager.CreateAsset("Cube", mesh);
@@ -150,7 +156,7 @@ var createBoxOnMenuOptionPressed = function (button) {
 
 //Commented out this line - 
 //JAMES/THEO - Help needed: can you comment out this line and comment out 162 to 183 and see if you cvan get it to work?
-//var newBoxOption = new menuButtonChildOption("CreateCubeButton", 28, { wireframe: false }, initBoxCreateButton, conditionForShowingNewShapeButtons, conditionForHidingNewShapeButtons, createBoxOnMenuOptionPressed, null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
+var newBoxOption = new menuButtonChildOption("CreateCubeButton", 28, { wireframe: false }, initBoxCreateButton, conditionForShowingNewShapeButtons, conditionForHidingNewShapeButtons, createBoxOnMenuOptionPressed, null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
 
 //Register a menu option action, the action fires only once every 2 seconds
 var registerMenuOptionAction = function (button, functionName, actionToFire) {
@@ -160,28 +166,28 @@ var registerMenuOptionAction = function (button, functionName, actionToFire) {
 
 var mesh = null
 
-var boxGeo1 = new THREE.BoxGeometry(28, 28, 2);
-boxGeo1.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
-var otherButton1 = new THREE.Mesh(boxGeo1, new THREE.MeshPhongMaterial({ wireframe: false, color: 0x2E9AFE}));
-window.camera.add(otherButton1);
-otherButton1.visible = false;
-menuControls.push(otherButton1);
+//var boxGeo1 = new THREE.BoxGeometry(28, 28, 2);
+//boxGeo1.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
+//var otherButton1 = new THREE.Mesh(boxGeo1, new THREE.MeshPhongMaterial({ wireframe: false, color: 0x2E9AFE}));
+//window.camera.add(otherButton1);
+//otherButton1.visible = false;
+//menuControls.push(otherButton1);
 
-otherButton1.defaultColor = 0x2E9AFE;
-mesh = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
-mesh.material.color.setHex(otherButton1.defaultColor);
-mesh.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
-otherButton1.children.push(mesh);
-window.camera.add(mesh);
-mesh.visible = false;
-var createBoxOnMenuOptionPressed = function (hand) {
-    var mesh = new THREE.Mesh(new THREE.BoxGeometry(18, 18, 18), new THREE.MeshPhongMaterial({ wireframe: false }))
-    mesh.material.color.setHex(otherButton1.defaultColor);
-    mesh.position.set(0, 0, 0);
+//otherButton1.defaultColor = 0x2E9AFE;
+//mesh = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
+//mesh.material.color.setHex(otherButton1.defaultColor);
+//mesh.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX - buttonSize, buttonPositionY + buttonSize, buttonPositionZ))
+//otherButton1.children.push(mesh);
+//window.camera.add(mesh);
+//mesh.visible = false;
+//var createBoxOnMenuOptionPressed = function (hand) {
+//    var mesh = new THREE.Mesh(new THREE.BoxGeometry(18, 18, 18), new THREE.MeshPhongMaterial({ wireframe: false }))
+//    mesh.material.color.setHex(otherButton1.defaultColor);
+//    mesh.position.set(0, 0, 0);
 
-    assetManager.CreateAsset("Cube", mesh);
-}
-registerMenuOptionAction(otherButton1, "CreateBoxOnMenuOptionPressed", createBoxOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x2E9AFE) });
+//    assetManager.CreateAsset("Cube", mesh);
+//}
+//registerMenuOptionAction(otherButton1, "CreateBoxOnMenuOptionPressed", createBoxOnMenuOptionPressed, function () { otherButton1.button.material.color.setHex(0x2E9AFE) });
 
 
 var boxGeo2 = new THREE.BoxGeometry(28, 28, 2);
@@ -340,10 +346,5 @@ var expandMenuSectionsOnHover = {
         }
     }
 }
-
-var raycaster = new THREE.Raycaster();
-
-
-
 
 frameActions.RegisterAction("CloseMenuAfterDelay", closeMenuAfterDelay);

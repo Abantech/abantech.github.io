@@ -12,6 +12,7 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
     buttonPressedCallback, buttonNotPressedCallback, conditionForPressed,
     buttonHoveredCallback, buttonNotHoveredCallback, conditionForHover)
 {
+    
     this.size = buttonSize;
     this.geometry = new THREE.BoxGeometry(buttonSize, buttonSize, 2);
     this.conditionForShow = conditionForShow;
@@ -21,61 +22,73 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
     this.meshParameters = meshParameters;
     this.buttonMesh = new THREE.Mesh(this.geometry, new THREE.MeshPhongMaterial(meshParameters));
     this.buttonMesh.name = buttonName;
+    this.lastHoveredTime = null;
     initializeAction(this);
 
+    var self = this;
+
     this.buttonHoveredAction = buttonHoveredCallback;
-    this.onButtonHovered = function (hand) {
-        if (!this.buttonMesh.visible)
-            return;
-
-        if (!this.buttonHoveredAction)
-            return;
-
-        if (isHoveringOverControls(hand, [button]))
+    this.onButtonHovered = {
+        action: function (hand)
         {
-            if ((!this.conditionForHover) || this.conditionForHover(this.buttonMesh))
-            {
-                this.buttonHoveredAction(this.buttonMesh);
+            if (!self.buttonMesh.visible)
+                return;
+
+            if (!self.buttonHoveredAction)
+                return;
+
+            if (isHoveringOverControls(hand, [self.buttonMesh])) {
+                self.lastHoveredTime = new Date()
+                if ((!self.conditionForHover) || self.conditionForHover(self.buttonMesh))
+                    self.buttonHoveredAction(self.buttonMesh);
             }
         }
     }
-    this.onButtonNotHovered = function (frame) {
-        if (!buttonNotPressedCallback)
-            return;
 
-        if (this.buttonMesh.visible)
-            buttonNotHoveredCallback(frame);
-    }
+    this.onButtonNotHovered =
+        function (frame)
+        {
+            if (!buttonNotHoveredCallback)
+                return;
+
+            if (!self.lastHoveredTime)
+                return;
+            
+            if (self.buttonMesh.visible && (new Date() - self.lastHoveredTime) > 500)
+                buttonNotHoveredCallback(self.buttonMesh);
+        }
 
     this.buttonPressedAction = buttonPressedCallback;
-    this.onButtonPressed = function (hand) {
-        if (!this.buttonMesh.visible)
-            return;
-
-        if (isButtonPressed(hand, button))
+    this.onButtonPressed = {
+        action: function (hand)
         {
-            if ((!this.conditionForHover) || this.conditionForPressed(this.buttonMesh)) {
-                this.buttonPressedAction(this.buttonMesh);
+            if (!self.buttonMesh.visible)
+                return;
+
+            if (isButtonPressed(hand, self.buttonMesh)) {
+                if ((!self.conditionForHover) || self.conditionForPressed(self.buttonMesh)) 
+                    self.buttonPressedAction(self.buttonMesh);
             }
         }
-    }
+    };
+
     this.onButtonNotPressed = function (frame) {
         if (!buttonNotPressedCallback)
             return;
 
-        if (this.buttonMesh.visible)
-            buttonNotPressedCallback(frame);
+        if (self.buttonMesh.visible)
+            buttonNotPressedCallback(self.buttonMesh);
     }
         
 
     this.tryShowButton = function (frame) {
-        if (this.conditionForShow(frame))
-            this.buttonMesh.traverse(function (object) { object.visible = true; })
+        if (self.conditionForShow(frame))
+            self.buttonMesh.traverse(function (object) { object.visible = true; })
     }
 
     this.tryHideButton = function (frame) {
-        if (this.conditionForHide(frame))
-            this.buttonMesh.traverse(function (object) { object.visible = false; })
+        if (self.conditionForHide(frame))
+            self.buttonMesh.traverse(function (object) { object.visible = false; })
     }
 
     handController.RegisterAction(this.buttonMesh.name + "_onButtonHovered", this.onButtonHovered);
