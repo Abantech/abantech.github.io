@@ -19,6 +19,10 @@ Updated Greg and James ~ 2015-01-28
 
 ***
 
+Demo: [Three.js Scale Sliders Leap]( http://abantech.github.io/threejs-scale-sliders-leap/r1/threejs-scale-sliders-leap.html )  
+Source code: [Three.js Scale Sliders Leap]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-scale-sliders-leap )  
+Added: Theo ~ 2015-01-30 ~ X-axis 'knobs' follow camera. Right knob enlarges. Left knob shrinks.
+
 Demo: [Three.js Leap Wearable]( http://abantech.github.io/threejs-leap-wearable/r1/threejs-leap-wearable.html )  
 Source code: [Three.js Leap Wearable]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-wearable )  
 Added: Theo ~ 2015-01-25 ~ First pass at a Leap Wearable. Left arm only.

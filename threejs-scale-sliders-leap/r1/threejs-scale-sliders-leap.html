@@ -23,8 +23,6 @@
 	var intersected;
 	var intersection;
 
-
-
 	var fingerlings = {};
 	var handies = {};
 	var loop = {};
@@ -40,7 +38,12 @@
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'left: 20px; position: absolute; top: 0px; width: 100% ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
-			'<div id=msg>Touch the cubes and sphere to win points!</div>' +
+			'<div id=msg>Instructions<br>' +
+				'Touch cube with index finger tip to move and rotate.<br>' +
+				'Extend thumb to exit cube editing - and move tip freely.<br>' +
+				'Then touch index finger tip to right or left \'knobs\' to change X-axis scale.<br>' +
+				'To be addded: touch sphere to stop editing/stop scale from going negative etc' +
+			'</div>' +
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +
 		'';
