@@ -12,7 +12,7 @@ function AssetManager()
         window.scene.add(asset);
 
         asset.isAsset = true;
-        asset.name = assetType + " " + mesh.id;
+        asset.name = assetType + " " + asset.id;
 
         if (!createAssetAction)
         {

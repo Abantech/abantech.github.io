@@ -89,6 +89,7 @@
     <Content Include="Scripts\Gestures\SingleHandGesture.js" />
     <Content Include="Scripts\HandBasedActions\FreeScale.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtonChildOption.js" />
+    <Content Include="Scripts\HandBasedActions\NewShapesMenuButton.js" />
     <Content Include="Scripts\HandBasedActions\SelectHoveredAsset.js" />
     <Content Include="Scripts\Gestures\FingerHovere.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtons.js" />

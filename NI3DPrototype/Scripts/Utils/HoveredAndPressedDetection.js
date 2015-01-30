@@ -18,7 +18,6 @@ var isHoveringOverControls = function (hand, controls) {
     var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
     var directionVector = (new THREE.Vector3()).fromArray(hand.fingers[1].direction);
     raycaster.set(indexTipPosition, directionVector.normalize());
-    raycaster.near = minHoverDistance;
     raycaster.far = 400;
 
     var intersection = raycaster.intersectObjects(controls, true);
