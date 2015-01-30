@@ -6,7 +6,7 @@ var TranslatePinchedObject = function (hand)
     {
         pinchedObject = getPinchedObject(hand);
 
-        if (pinchedObject)
+        if (pinchedObject && pinchedObject.isAsset)
         {
             if (!action)
             {

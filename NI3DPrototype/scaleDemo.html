@@ -84,7 +84,7 @@
     <h3>Point and hold index finger (with thumb tucked underhand) at sphere to expand menu, press on each of the boxes to will create a new shape. (clockwise from top left: cube, cylinder, cone, sphere)</h3>
     <script src="Scripts/Utils/MathHelper.js"></script>
     <script src="Scripts/Utils/GestureTimer.js"></script>
-    <script src="Scripts/Utils/HoveredAndPressedDetection.js"></script>
+    <!--<script src="Scripts/Utils/HoveredAndPressedDetection.js"></script>-->
     <script src="Scripts/Scene/SceneSetup.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
     <script src="Scripts/LeapLoopSetup.js"></script>
@@ -102,12 +102,13 @@
 
     <script src="Scripts/HandBasedActions/PinchLine.js"></script>
     <script src="Scripts/HandBasedActions/MenuButtonChildOption.js"></script>
-    <script src="Scripts/HandBasedActions/NewShapesMenuButton.js"></script>
+    <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
 
     <!--Gesture Actions-->
     <script src="Scripts/HandBasedActions/PinchToTranslate.js"></script>
     <script src="Scripts/HandBasedActions/PinchToRotate.js"></script>
     <script src="Scripts/HandBasedActions/SelectHoveredAsset.js"></script>
+    <script src="Scripts/HandBasedActions/FreeScale.js"></script>
 
     <script src="Scripts/ActionTracking/TranslationAction.js"></script>
     <script src="Scripts/ActionTracking/RotationAction.js"></script>
@@ -119,7 +120,8 @@
     <script>
         //handController.RegisterAction("DrawfadingSpheres", createFadingSpheresAtFingerTips);
         //handController.RegisterAction("DrawPinchLine", drawPinchLine);
-
+        handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorOnHoverAndPress);
+        handController.RegisterAction("ExpandMenuSectionsOnHover", expandMenuSectionsOnHover);
         handController.RegisterAction("SelectAssetOnHover", selectAssetOnHover);
 
         frameActions.RegisterAction("UpdateBoundingBoxesOfSelectedAssets", updateBoundingBoxesOfSelectedAssets);
