@@ -7,7 +7,7 @@ var RotatePinchedObject = function (hand)
     {
         pinchedObject = getPinchedObject(hand);
 
-        if (pinchedObject)
+        if (pinchedObject && pinchedObject.isAsset)
         {
             if (!rotationAction)
             {
@@ -20,20 +20,23 @@ var RotatePinchedObject = function (hand)
     }
     else
     {
-        var indexTipPos = hand.fingers[1].tipPosition;
-        var thumbTipPos = hand.fingers[0].tipPosition;
-
-        var midPoint = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
-        var camera = window.camera.position.clone();
-
-        if (!axis)
+        if (pinchedObject && pinchedObject.isAsset)
         {
-            axis = new THREE.Vector3(midPoint.x - camera.x, midPoint.y - camera.y, midPoint.z - camera.z).normalize();
+            var indexTipPos = hand.fingers[1].tipPosition;
+            var thumbTipPos = hand.fingers[0].tipPosition;
+
+            var midPoint = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
+            var camera = window.camera.position.clone();
+
+            if (!axis)
+            {
+                axis = new THREE.Vector3(midPoint.x - camera.x, midPoint.y - camera.y, midPoint.z - camera.z).normalize();
+            }
+
+            var angle = hand.roll();
+
+            pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
         }
-
-        var angle = hand.roll();
-
-        pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
     }
 }
 
@@ -44,13 +47,13 @@ var EndRotatePinchedObject = function (hand)
         rotationAction.RegisterRotation(pinchedObject)
         actionManager.ActionPerformed(rotationAction);
         rotationAction = null;
-    }
 
-    if (pinchedObject)
-    {
-        pinchedObject.geometry.computeBoundingBox();
-        pinchedObject.isPinched = false;
-        pinchedObject = null;
+        if (pinchedObject)
+        {
+            pinchedObject.geometry.computeBoundingBox();
+            pinchedObject.isPinched = false;
+            pinchedObject = null;
+        }
     }
 
     axis = null;
