@@ -2,23 +2,26 @@
 {
     if (!pinchedObject)
     {
-        pinchedObject = getPinchedObject(hand);
+        pinchedObject = getPinchedObjectForScale(hand);
     }
     else
     {
-        var indexTipPos = hand.fingers[1].tipPosition;
-        var thumbTipPos = hand.fingers[0].tipPosition;
+        if (pinchedObject.isHandle)
+        {
+            var indexTipPos = hand.fingers[1].tipPosition;
+            var thumbTipPos = hand.fingers[0].tipPosition;
 
-        var midPoint = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
+            var midPoint = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
 
-        var startPoition = pinchedObject.position.clone();
+            var startPoition = pinchedObject.position.clone();
 
-        var xScale = midPoint.x / startPoition.x;
-        var yScale = midPoint.y / startPoition.y;
-        var zScale = midPoint.z / startPoition.z;
+            var xScale = midPoint.x / startPoition.x;
+            var yScale = midPoint.y / startPoition.y;
+            var zScale = midPoint.z / startPoition.z;
 
             // Set the scalar to the new value
-        pinchedObject.parent.parent.scale.set(pinchedObject.parent.parent.scale.x * xScale, pinchedObject.parent.parent.scale.y * yScale, pinchedObject.parent.parent.scale.z * zScale);
+            pinchedObject.parent.parent.scale.set(pinchedObject.parent.parent.scale.x * xScale, pinchedObject.parent.parent.scale.y * yScale, pinchedObject.parent.parent.scale.z * zScale);
+        }
     }
 }
 
@@ -76,7 +79,7 @@ var OnEndScaledObject = function (hand)
     }
 }
 
-function getPinchedObject(hand)
+function getPinchedObjectForScale(hand)
 {
     var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
 
