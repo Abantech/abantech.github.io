@@ -52,17 +52,14 @@ var RotatePinchedObject = function (hand)
 
             if (snapRotation)
             {
-                if (hand.roll() % snapAngle > -.025 && hand.roll() % snapAngle < .025)
-                {
-                    angle = hand.roll();
-                }
+                angle = hand.roll() - hand.roll() % snapAngle;
             }
             else
             {
                 angle = hand.roll();
             }
 
-            if (angle)
+            if (angle != null)
             {
                 pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
             }
