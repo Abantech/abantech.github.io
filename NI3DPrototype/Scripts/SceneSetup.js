@@ -1,7 +1,13 @@
-﻿var sceneArea = 200;
+﻿// this script is bogus. Use the one in ./scene
+
+var sceneArea = 200;
 var sceneLights;
 
+
+
 var initScene = function () {
+// Theo: 'window.' prefix not required. better to just declare as globals.. 
+ 
     window.scene = new THREE.Scene();
     window.renderer = new THREE.WebGLRenderer({
         alpha: true,
@@ -25,22 +31,36 @@ var initScene = function () {
 
     controls = new THREE.OrbitControls(window.camera);
     controls.damping = 0.2;
+	
+// Theo: lt's consider using renderAnimationFrame intead of listening to an event.	
     controls.addEventListener('change', renderer.render);
 
     window.addEventListener('resize', function () {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
+        window.camera.aspect = window.innerWidth / window.innerHeight;
+        window.camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.render(scene, camera);
+        renderer.render( window.scene, window.camera);
     }, false);
 
-    scene.add(camera);
-    renderer.render(scene, camera);
+    window.scene.add( window.camera);
+    window.renderer.render( window.scene, window.camera);
 };
+
+	var createGroundPlane() = function() {
+console.log( 'createGroundPlane' );
+
+		var geometry = new THREE.BoxGeometry( 300, 5, 200 );
+		var material = new THREE.MeshLambertMaterial({ color: 0x888888, shading: THREE.FlatShading });
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -2.5, 0 );
+		window.scene.add( mesh );
+			
+	}
 
 var createRandomCones = function(coneCount) {
     var geometry = new THREE.CylinderGeometry(0, 10, 30, 4, 1);
-    var material = new THREE.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading });
+    var material = new THREE.MeshLambertMaterial({ color: 0xff0000, shading: THREE.FlatShading });
 
     for (var i = 0; i < coneCount; i++) {
         var mesh = new THREE.Mesh(geometry, material);
@@ -75,3 +95,4 @@ var createSceneLighting = function() {
 initScene();
 createSceneLighting();
 createRandomCones(30);
+createGroundPlane();
