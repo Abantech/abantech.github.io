@@ -61,7 +61,7 @@ var RotatePinchedObject = function (hand)
 
             if (angle != null)
             {
-                pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+                pinchedObject.quaternion.setFromAxisAngle(axis,  angle);
             }
         }
     }
