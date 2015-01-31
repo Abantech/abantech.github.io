@@ -147,9 +147,9 @@ var createSceneLighting = function() {
 
 	var createBackgroundGradient = function() {
 
-		var col1 = "#" + Math.random().toString(16).slice(2, 8);
-		var col2 = "#" + Math.random().toString(16).slice(2, 8);
-		var col3 = "#" + Math.random().toString(16).slice(2, 8);
+		var col1 = "#ffffff";
+		var col2 = "#ffffff";
+		var col3 = "#ffffff";
 		var X = ( Math.random() * window.innerWidth ).toFixed(0);
 		var Y = ( Math.random() * window.innerHeight ).toFixed(0);
 		var center =  20 + ( Math.random() * 60 ).toFixed(0);
