@@ -133,6 +133,11 @@ function addHandlesToAsset(asset) {
     asset.add(arrows);
 }
 
+function changeAssetColor(asset) {
+    var HSL = asset.material.color.getHSL();
+    asset.material.color.setHSL(HSL.h, HSL.s, HSL.l + .2);
+}
+
 function removeHandles(asset) {
     asset.remove(asset.getObjectByName("Arrows"));
 
