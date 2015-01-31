@@ -1,5 +1,12 @@
 ﻿var axis = null;
-var rotationAction = null;
+var rotationAction = null
+var snapRotation = false;
+var snapAngle;
+
+function setSnapAngle(degrees)
+{
+    snapAngle = degrees * (Math.PI / 180)
+}
 
 var RotatePinchedObject = function (hand)
 {
@@ -41,9 +48,24 @@ var RotatePinchedObject = function (hand)
                 axis = new THREE.Vector3(midPoint.x - camera.x, midPoint.y - camera.y, midPoint.z - camera.z).normalize();
             }
 
-            var angle = hand.roll();
+            var angle = null;
 
-            pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+            if (snapRotation)
+            {
+                if (hand.roll() % snapAngle > -.025 && hand.roll() % snapAngle < .025)
+                {
+                    angle = hand.roll();
+                }
+            }
+            else
+            {
+                angle = hand.roll();
+            }
+
+            if (angle)
+            {
+                pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+            }
         }
     }
 }
@@ -59,11 +81,6 @@ var EndRotatePinchedObject = function (hand)
         if (pinchedObject)
         {
             pinchedObject.geometry.computeBoundingBox();
-
-            if (pinchedObject.isSelected)
-            {
-                pinchedObject.getObjectByName("Arrows").rotation.set(-pinchedObject.rotation.x, -pinchedObject.rotation.y, -pinchedObject.rotation.z, pinchedObject.order);
-            }
 
             pinchedObject.isPinched = false;
         }
@@ -105,3 +122,28 @@ function getPinchedObject(hand)
 
     return closestObject;
 }
+
+snapRotation = true;
+setSnapAngle(30);
+
+rightHandPinchGesture.registerOnFullGesture(
+    {
+        func: RotatePinchedObject
+    });
+
+rightHandPinchGesture.registerOnFullGestureEnd(
+{
+    func: EndRotatePinchedObject
+});
+
+leftHandPinchGesture.options.distance = 40;
+
+leftHandPinchGesture.registerOnFullGesture(
+{
+    func: RotatePinchedObject
+});
+
+leftHandPinchGesture.registerOnFullGestureEnd(
+    {
+        func: EndRotatePinchedObject
+    });

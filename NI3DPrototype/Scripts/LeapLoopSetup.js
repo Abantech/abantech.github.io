@@ -15,7 +15,7 @@
 .use('transform', {
     quaternion: new THREE.Quaternion,
     position: new THREE.Vector3,
-    scale: 0.8
+    scale: .55
 })
 .use('riggedHand', {
     dotsMode: false,

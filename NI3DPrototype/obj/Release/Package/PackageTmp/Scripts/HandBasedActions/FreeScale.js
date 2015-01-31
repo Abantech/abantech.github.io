@@ -53,56 +53,31 @@ var ScaleObject = function (hand)
             }
 
             // Set the scalar to the new value
-            try{
-                pinchedObject.parent.parent.scale.set(originalScale.x * xScale, originalScale.y * yScale, originalScale.z * zScale);
-
+            if (xScale > 0 && yScale > 0 && zScale > 0)
+            {
+                if (pinchedObject.parent.parent)
+                {
+                    pinchedObject.parent.parent.scale.set(originalScale.x * xScale, originalScale.y * yScale, originalScale.z * zScale);
+                }
             }
-            catch (e){
 
-            }
         }
     }
 }
 
 var OnEndScaledObject = function (hand)
 {
-    //if (pinchedObject && pinchedObject.isArrow)
-    //{
-    //    var parent = pinchedObject.parent.parent;
-    //    parent.geometry.computeBoundingBox();
-    //    parent.remove(pinchedObject.parent);
+    if (pinchedObject && pinchedObject.isArrow)
+    {
+        var parent = pinchedObject.parent.parent;
 
-    //    var boundingBox = parent.geometry.boundingBox;
-    //    var min = boundingBox.min;
-    //    var max = boundingBox.max;
+        if (parent)
+        {
+            parent.remove(pinchedObject.parent);
 
-    //    xLength = boundingBox.max.x - boundingBox.min.x;
-    //    yLength = boundingBox.max.y - boundingBox.min.y;
-    //    zLength = boundingBox.max.z - boundingBox.min.z;
-
-
-    //    var arrows = new THREE.Object3D();
-    //    arrows.name = "Arrows";
-
-    //    var xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), 5 + xLength, 0xff0000);
-    //    xArrow.name = "XArrow";
-    //    xArrow.isArrow = true;
-
-    //    var yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 5 + yLength, 0x0000ff);
-    //    yArrow.name = "YArrow";
-    //    yArrow.isArrow = true;
-
-    //    var zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), 5 + zLength, 0x00ff00);
-    //    zArrow.name = "ZArrow";
-    //    zArrow.isArrow = true;
-
-    //    arrows.add(xArrow);
-    //    arrows.add(yArrow);
-    //    arrows.add(zArrow);
-    //    arrows.rotation.set(-pinchedObject.rotation.x, -pinchedObject.rotation.y, -pinchedObject.rotation.z, pinchedObject.order);
-
-    //    pinchedObject.add(arrows)
-    //}
+            addHandlesToAsset(parent);
+        }
+    }
 }
 
 function getPinchedObjectForScale(hand)
@@ -124,7 +99,7 @@ function getPinchedObjectForScale(hand)
                     for (var k = 0; k < sceneObject.children[j].children.length; k++)
                     {
                         var position = new THREE.Vector3();
-                        position.getPositionFromMatrix(sceneObject.children[j].children[k].cone.matrixWorld);
+                        position.setFromMatrixPosition(sceneObject.children[j].children[k].cone.matrixWorld);
                         var distance = mathHelper.DistanceBetweenPoints(indexTipVector, position);
 
                         if (distance < 50)

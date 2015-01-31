@@ -1,11 +1,8 @@
-﻿var assetSelectHoverTimeRequiredMills = 1000
+﻿var assetSelectHoverTimeRequiredMills = 2000
 var selectedAssetGracePeriodToDeselectTimeRequiredMills = 3500
 var assetHoveredTimeDictionary = {};
 var assetLastSelectedTimeDictionary = {};
 var lastHoveredObjectUUID = null;
-var lastSelectedObjectUUID = null;
-var assetMaterialOriginalColors = {};
-var selectedAssetColor = 0xcc0000
 
 var selectAssetOnHover = {
     action: function (hand)
@@ -40,6 +37,7 @@ var selectAssetOnHover = {
 
                 if ((new Date() - intersectedAsset.beginHoverTime) > assetSelectHoverTimeRequiredMills)
                 {
+                    console.log(new Date() - intersectedAsset.beginHoverTime);
                     console.log("Asset '" + intersectedAsset.object.uuid + "' hovered for more than threshold time of " + assetSelectHoverTimeRequiredMills + "ms")
                     if (window.scene.getObjectById(intersectedAsset.object.id).isSelected)
                     {
@@ -52,7 +50,6 @@ var selectAssetOnHover = {
                             assetManager.DeselectAsset(intersectedAsset.object);
                             removeHandles(intersectedAsset.object);
                             assetHoveredTimeDictionary[intersectedAsset.object.uuid] = null;
-                            lastSelectedObjectUUID = null;
 
                         }
                         else
@@ -64,12 +61,14 @@ var selectAssetOnHover = {
                     {
                         console.log("Hovered Asset was not previously selected. Selecting...");
                         assetManager.SelectAsset(intersectedAsset.object);
-                        lastSelectedObjectUUID = intersectedAsset.object.uuid;
                         lastHoveredObjectUUID = intersectedAsset.object.uuid;
-                        assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
+                        assetHoveredTimeDictionary[intersectedAsset.object.uuid] = null;
                         assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date();
 
                         addHandlesToAsset(intersectedAsset.object);
+                        changeAssetColor(intersectedAsset.object);
+
+                        intersectedAsset.object.isSelected = true;
                     }
                 }
             }
@@ -108,58 +107,11 @@ function getIntersectedAssets(hand, assets)
 
 function addHandlesToAsset(asset)
 {
-    //var sprites;
-    //var handle;
-
-    //THREE.ImageUtils.crossOrigin = '';
-    //var map = THREE.ImageUtils.loadTexture("Images/ball.png");
-    //var material = new THREE.SpriteMaterial({ map: map, color: 0xffffff });
-    //handle = new THREE.Sprite(material);
-
     asset.geometry.computeBoundingBox();
 
     var boundingbox = asset.geometry.boundingBox;
     var min = boundingbox.min;
     var max = boundingbox.max;
-
-    //verts = new Array();
-    //verts.push(new THREE.Vector3(min.x, min.y, min.z));
-    //verts.push(new THREE.Vector3(min.x, max.y, min.z));
-    //verts.push(new THREE.Vector3(min.x, min.y, max.z));
-    //verts.push(new THREE.Vector3(min.x, max.y, max.z));
-    //verts.push(new THREE.Vector3(max.x, min.y, max.z));
-    //verts.push(new THREE.Vector3(max.x, max.y, min.z));
-    //verts.push(new THREE.Vector3(max.x, min.y, min.z));
-    //verts.push(new THREE.Vector3(max.x, max.y, max.z));
-
-    //// Uncomment if you want the individual verticies of the shape (Could be used for warping)
-    ////verts = asset.geometry.vertices;
-
-    //sprites = new THREE.Object3D();
-    //sprites.isHandles = true;
-
-    //asset.add(sprites);
-
-    //if (verts.length)
-    //{
-    //    for (var i = 0, v, sprite; i < verts.length; i++)
-    //    {
-    //        v = verts[i].clone();
-
-    //        sprite = handle.clone();
-
-    //        sprite.position.set(v.x, v.y, v.z);
-
-    //        sprite.scale.set(2, 2, 2);
-
-    //        sprite.isHandle = true;
-
-    //        sprites.add(sprite);
-
-    //    };
-
-
-    var HSL = asset.material.color.getHSL();
 
     xLength = boundingbox.max.x - boundingbox.min.x;
     yLength = boundingbox.max.y - boundingbox.min.y;
@@ -169,28 +121,32 @@ function addHandlesToAsset(asset)
     var arrows = new THREE.Object3D();
     arrows.name = "Arrows";
 
-    var xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), 5 + xLength, 0xff0000);
+    var xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), 15 + xLength * asset.scale.x / 2, 0xff0000);
     xArrow.name = "XArrow";
     xArrow.isArrow = true;
 
-    var yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 5 + yLength, 0x0000ff);
+    var yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 15 + yLength * asset.scale.y / 2, 0x0000ff);
     yArrow.name = "YArrow";
     yArrow.isArrow = true;
     
-    var zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), 5 + zLength, 0x00ff00);
+    var zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), 15 + zLength * asset.scale.z / 2, 0x00ff00);
     zArrow.name = "ZArrow";
     zArrow.isArrow = true;
         
     arrows.add(xArrow);
     arrows.add(yArrow);
     arrows.add(zArrow);
-    arrows.rotation.set(-asset.rotation.x, -asset.rotation.y, -asset.rotation.z, asset.order);
+
+    arrows.scale.set(1 / asset.scale.x, 1 / asset.scale.y, 1 / asset.scale.z);
     arrows.isArrows = true;
 
-    asset.material.color.setHSL(HSL.h, HSL.s, HSL.l + .2);
     asset.add(arrows)
-    asset.isSelected = true;
+}
 
+function changeAssetColor(asset)
+{
+    var HSL = asset.material.color.getHSL();
+    asset.material.color.setHSL(HSL.h, HSL.s, HSL.l + .2);
 }
 
 function removeHandles(asset)

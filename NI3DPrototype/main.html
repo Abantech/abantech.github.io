@@ -174,43 +174,13 @@
 
         rightHandPinchGesture.setDistance(40);
 
-        rightHandPinchGesture.registerOnFullGestureEnd(
-            {
-                func: EndTranslatePinchedObject
-            });
-
-        rightHandPinchGesture.registerOnFullGesture(
-            {
-                func: TranslatePinchedObject
-            });
-
-        rightHandPinchGesture.registerOnFullGestureEnd(
-        {
-            func: EndRotatePinchedObject
-        });
 
         rightHandPinchGesture.registerOnFullGestureEnd(
 {
     func: ClearActionVariables
 });
 
-        rightHandPinchGesture.registerOnFullGesture(
-            {
-                func: RotatePinchedObject
-            });
 
-
-        leftHandPinchGesture.options.distance = 40;
-
-        leftHandPinchGesture.registerOnFullGestureEnd(
-            {
-                func: EndRotatePinchedObject
-            });
-
-        leftHandPinchGesture.registerOnFullGesture(
-            {
-                func: RotatePinchedObject
-            });
 
         //reg
         handController.RegisterAction("PinchGesture", rightHandPinchGesture);

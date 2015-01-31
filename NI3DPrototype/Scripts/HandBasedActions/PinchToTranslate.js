@@ -80,3 +80,13 @@ function getPinchedObject(hand)
 
     return closestObject;
 }
+
+rightHandPinchGesture.registerOnFullGestureEnd(
+    {
+        func: EndTranslatePinchedObject
+    });
+
+rightHandPinchGesture.registerOnFullGesture(
+    {
+        func: TranslatePinchedObject
+    });
