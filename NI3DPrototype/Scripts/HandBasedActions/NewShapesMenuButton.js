@@ -12,7 +12,7 @@ var url = window.location.href;
 var geometry = new THREE.CubeGeometry(32, 32, 32);
 geometry.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX, buttonPositionY, buttonPositionZ));
 
-var material = new THREE.MeshPhongMaterial({wireframe: false});
+var material = new THREE.MeshFaceMaterial({wireframe: false});
 
 if (url.substring(0, 4) != "file")
 {
