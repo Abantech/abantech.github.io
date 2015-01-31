@@ -9,10 +9,10 @@ var menuOpenGracePeriodMills = 900;
 var url = window.location.href;
 
 //var texture = new THREE.Texture(img);
-var geometry = new THREE.CubeGeometry(32, 32, 32);
+var geometry = new THREE.SphereGeometry(16, 32, 32);
 geometry.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX, buttonPositionY, buttonPositionZ));
 
-var material = new THREE.MeshFaceMaterial({wireframe: false});
+var material = new THREE.MeshPhongMaterial({wireframe: false});
 
 if (url.substring(0, 4) != "file")
 {
@@ -20,7 +20,12 @@ if (url.substring(0, 4) != "file")
 
     //console.log("window.location : " + window.location.href);
     if (url.substring(0, 4) != "file") {
-        texture = THREE.ImageUtils.loadTexture('Images/NewShapeMenu.jpg')
+        var image = document.createElement('img');
+        image.src = 'Images/NewShapeMenu.jpg';
+        texture = new THREE.Texture(image);
+        image.onload = function () {
+            texture.needsUpdate = true;
+        };
     }
 
     material.map = texture;
