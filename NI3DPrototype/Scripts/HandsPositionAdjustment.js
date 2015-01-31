@@ -42,8 +42,9 @@ function createAdjuster(dimension, minValue, maxValue, initialValue, setterCallb
     newSlider.step = 1;
     newSlider.value = initialValue;
     newDiv.appendChild(newSlider);
+    newDiv.style.visibility = "hidden";
 
-    //document.body.appendChild(newDiv);
+    document.body.appendChild(newDiv);
 
     initializeAdjustmentHandlers(inputElementID, outputElementID, setterCallback);
 }
