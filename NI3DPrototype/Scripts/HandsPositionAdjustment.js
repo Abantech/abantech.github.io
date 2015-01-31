@@ -43,7 +43,7 @@ function createAdjuster(dimension, minValue, maxValue, initialValue, setterCallb
     newSlider.value = initialValue;
     newDiv.appendChild(newSlider);
 
-    document.body.appendChild(newDiv);
+    //document.body.appendChild(newDiv);
 
     initializeAdjustmentHandlers(inputElementID, outputElementID, setterCallback);
 }
