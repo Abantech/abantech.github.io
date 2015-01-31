@@ -9,13 +9,11 @@ All about natural interaction in 3D. To be able to give people the ability to do
 Demo: [NI 3D prototype workspace]( http://abantech.github.io/NI3DPrototype/main.html )  
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
 
-Updated Greg and James ~ 2015-01-28
+Updated Greg and James ~ 2015-01-30
  
- - Added rotation to the pinch gesture - held object rotates around where the pinched location
- - Added hand-specific registering of the hand actions (objects can be rotated with right hand only, only moved with left)
- - Fixed finger-pointing issue
- - Added shapes and images to new shape menu 
- - Simple workaround to problem of loading images as textures (due to CORS); does not load image if using "file:///"
+ - Added the Wearable for the cut, copy, paste functions
+ - Added the scaling sliders/handles to the selected assets
+ - Made the menu child-buttons generic functions so that menu buttons can be used/registered anywhere that it makes sense
 
 ***
 
