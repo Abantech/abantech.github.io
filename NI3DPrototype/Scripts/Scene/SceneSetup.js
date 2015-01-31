@@ -27,7 +27,7 @@ var initScene = function () {
 
     controls = new THREE.OrbitControls(window.camera);
     controls.damping = 0.2;
-    controls.addEventListener('change', renderer.render);
+ //   controls.addEventListener('change', renderer.render);
 
     window.addEventListener('resize', function () {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -37,7 +37,8 @@ var initScene = function () {
     }, false);
 
     scene.add(camera);
-    renderer.render(scene, camera);
+//   renderer.render(scene, camera);
+
 };
 
 	var createRandomCones = function(coneCount) {
@@ -168,3 +169,13 @@ createSceneLighting();
 //createRandomCones(20);
 createGroundPlane();
 createBackgroundGradient();
+animate();
+
+
+	function animate( timestamp ) {
+		renderer.render( scene, camera );
+		controls.update();
+//		stats.update();
+		requestAnimationFrame( animate );
+
+	}
