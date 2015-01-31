@@ -98,6 +98,7 @@
     <Content Include="Scripts\HandBasedActions\PinchToRotate.js" />
     <Content Include="Scripts\HandBasedActions\PinchToTranslate.js" />
     <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\HandBasedActions\WearableMenu.js" />
     <Content Include="Scripts\HandController.js" />
     <Content Include="Scripts\HandsPositionAdjustment.js" />
     <Content Include="Scripts\LeapLoopSetup.js" />

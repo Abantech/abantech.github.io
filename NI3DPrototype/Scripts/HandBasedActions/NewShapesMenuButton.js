@@ -1,6 +1,5 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 /// <reference path="../FrameActions.js" />
-
 var buttonSize = 28;
 var buttonPositionX = (window.innerWidth / 14);
 var buttonPositionY = (window.innerHeight / 12);

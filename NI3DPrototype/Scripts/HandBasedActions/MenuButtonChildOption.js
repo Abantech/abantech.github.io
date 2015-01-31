@@ -12,7 +12,6 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
     buttonPressedCallback, buttonNotPressedCallback, conditionForPressed,
     buttonHoveredCallback, buttonNotHoveredCallback, conditionForHover)
 {
-    
     this.size = buttonSize;
     this.geometry = new THREE.BoxGeometry(buttonSize, buttonSize, 2);
     this.conditionForShow = conditionForShow;
