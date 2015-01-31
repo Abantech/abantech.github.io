@@ -19,7 +19,7 @@ Updated Greg and James ~ 2015-01-28
 
 ***
 
-Demo: [Three.js Physijs Basic]( http://abantech.github.io/threejs-physijs-basic/r1/threejs--physijs-basic.html )  
+Demo: [Three.js Physijs Basic]( http://abantech.github.io/threejs-physijs-basic/r1/threejs-physijs-basic.html )  
 Source code: [Three.js Physijs Basic]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-physijs-basic )  
 Added: Theo ~ 2015-01-30 ~ Very basic demo/template for Three.js with the Physijs/Ammo physics engine
 
