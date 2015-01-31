@@ -60,6 +60,10 @@ var selectAssetOnHover = {
                         assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date();
 
                         addHandlesToAsset(intersectedAsset.object);
+
+                        changeAssetColor(intersectedAsset.object);
+
+                        intersectedAsset.object.isSelected = true;
                     }
                 }
             }
