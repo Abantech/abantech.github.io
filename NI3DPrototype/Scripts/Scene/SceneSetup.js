@@ -165,6 +165,6 @@ var createSceneLighting = function() {
 
 initScene();
 createSceneLighting();
-createRandomCones(20);
+//createRandomCones(20);
 createGroundPlane();
 createBackgroundGradient();
