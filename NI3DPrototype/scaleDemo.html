@@ -135,7 +135,8 @@
             {
                 var box = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
                 box.position.set(0, 0, 0);
-
+				box.castShadow = true;
+				box.receiveShadow = true;
                 box.isAsset = true;
                 box.name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
                 {
