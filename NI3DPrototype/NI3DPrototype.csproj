@@ -87,6 +87,7 @@
     <Content Include="Scripts\FrameActions.js" />
     <Content Include="Scripts\FrameActions\AddHandlesToSelectedAssets.js" />
     <Content Include="Scripts\Gestures\SingleHandGesture.js" />
+    <Content Include="Scripts\HandBasedActions\ClearActionVariables.js" />
     <Content Include="Scripts\HandBasedActions\FreeScale.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtonChildOption.js" />
     <Content Include="Scripts\HandBasedActions\NewShapesMenuButton.js" />
