@@ -108,6 +108,8 @@
     <script src="Scripts/HandBasedActions/PinchToTranslate.js"></script>
     <script src="Scripts/HandBasedActions/PinchToRotate.js"></script>
     <script src="Scripts/HandBasedActions/SelectHoveredAsset.js"></script>
+    <script src="Scripts/HandBasedActions/ClearActionVariables.js"></script>
+    <script src="Scripts/HandBasedActions/FreeScale.js"></script>
 
     <script src="Scripts/ActionTracking/TranslationAction.js"></script>
     <script src="Scripts/ActionTracking/RotationAction.js"></script>
@@ -184,10 +186,16 @@
             func: EndRotatePinchedObject
         });
 
+        rightHandPinchGesture.registerOnFullGestureEnd(
+{
+    func: ClearActionVariables
+});
+
         rightHandPinchGesture.registerOnFullGesture(
             {
                 func: RotatePinchedObject
             });
+
 
         leftHandPinchGesture.options.distance = 40;
 

@@ -22,6 +22,14 @@ var RotatePinchedObject = function (hand)
     {
         if (pinchedObject && pinchedObject.isAsset)
         {
+            if (!rotationAction)
+            {
+                rotationAction = new RotationAction();
+
+                rotationAction.Initialize(pinchedObject);
+                pinchedObject.isPinched = true;
+            }
+
             var indexTipPos = hand.fingers[1].tipPosition;
             var thumbTipPos = hand.fingers[0].tipPosition;
 
@@ -51,8 +59,13 @@ var EndRotatePinchedObject = function (hand)
         if (pinchedObject)
         {
             pinchedObject.geometry.computeBoundingBox();
+
+            if (pinchedObject.isSelected)
+            {
+                pinchedObject.getObjectByName("Arrows").rotation.set(-pinchedObject.rotation.x, -pinchedObject.rotation.y, -pinchedObject.rotation.z, pinchedObject.order);
+            }
+
             pinchedObject.isPinched = false;
-            pinchedObject = null;
         }
     }
 
@@ -68,7 +81,7 @@ function getPinchedObject(hand)
     for (var i = 0; i < window.scene.children.length; i++)
     {
         var sceneObject = window.scene.children[i];
-        if (sceneObject.isAsset)
+        if (sceneObject.isAsset && !sceneObject.isSelected)
         {
             var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
             if (distance < 50)

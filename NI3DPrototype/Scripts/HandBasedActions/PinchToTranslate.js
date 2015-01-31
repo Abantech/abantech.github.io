@@ -18,11 +18,14 @@ var TranslatePinchedObject = function (hand)
     }
     else
     {
-        var indexTipPos = hand.fingers[1].tipPosition;
-        var thumbTipPos = hand.fingers[0].tipPosition;
-        pinchedObject.position.set((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
-        pinchedObject.isPinched = true;
-        pinchedObject.hasBeenMoved = true;
+        if (pinchedObject.isAsset)
+        {
+            var indexTipPos = hand.fingers[1].tipPosition;
+            var thumbTipPos = hand.fingers[0].tipPosition;
+            pinchedObject.position.set((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
+            pinchedObject.isPinched = true;
+            pinchedObject.hasBeenMoved = true;
+        }
     }
 }
 
@@ -39,7 +42,6 @@ var EndTranslatePinchedObject = function (hand)
     {
         pinchedObject.isPinched = false;
         pinchedObject.hasBeenMoved = false;
-        pinchedObject = null;
     }
 }
 
@@ -54,7 +56,7 @@ function getPinchedObject(hand)
     for (var i = 0; i < window.scene.children.length; i++)
     {
         var sceneObject = window.scene.children[i];
-        if (sceneObject.isAsset)
+        if (sceneObject.isAsset && !sceneObject.isSelected)
         {
             var distance = mathHelper.DistanceBetweenPoints(pinchMidPos, sceneObject.position);
             if (distance < 50)
