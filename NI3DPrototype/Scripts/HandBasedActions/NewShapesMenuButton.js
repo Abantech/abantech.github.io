@@ -95,6 +95,9 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
             var mesh = new THREE.Mesh(createdShapeGeometry, new THREE.MeshPhongMaterial({ wireframe: false }))
             mesh.material.color.setHex(iconColor);
             mesh.position.set(0, 0, 0);
+			
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
 
             assetManager.CreateAsset(shapeName, mesh);
             console.log(shapeName + " Created due to button pressed!")
