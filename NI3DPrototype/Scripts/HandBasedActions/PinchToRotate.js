@@ -120,7 +120,6 @@ function getPinchedObject(hand)
     return closestObject;
 }
 
-snapRotation = true;
 setSnapAngle(30);
 
 rightHandPinchGesture.registerOnFullGesture(
