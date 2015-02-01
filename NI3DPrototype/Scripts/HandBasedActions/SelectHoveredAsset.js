@@ -1,4 +1,6 @@
-﻿/// <reference path="../AssetManager.js" />
+﻿/// <reference path="../../Libs/Leap/leap-0.6.4.js" />
+/// <reference path="../../Libs/Leap/leap.rigged-hand-0.1.6.js" />
+/// <reference path="../AssetManager.js" />
 
 var assetSelectHoverTimeRequiredMills = 1000
 var selectedAssetGracePeriodToDeselectTimeRequiredMills = 3500
@@ -11,68 +13,79 @@ var selectedAssetColor = 0xcc0000
 
 var selectAssetOnHover = {
     action: function (hand) {
-        var assets = assetManager.GetAssets();
-        var intersectedAsset = getIntersectedAssets(hand, assets)[0];
+        
+        if (hand.type === 'right' && getExtendedFingers(hand).length == 2 && hand.indexFinger.extended && hand.middleFinger.extended) {
+            var assets = assetManager.GetAssets();
+            var intersectedAsset = getIntersectedAssets(hand, assets)[0];
 
-        if (intersectedAsset) {
-            if (!intersectedAsset.object.isPinched) {
-                if (!assetHoveredTimeDictionary[intersectedAsset.object.uuid]) {
-                    console.log("Asset not previously in dictionary - Assigning hoveredTime now")
-                    assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
-                    lastHoveredObjectUUID = intersectedAsset.object.uuid;
-                }
-                else {
-                    //TODO: Move this to a frameAction
-                    for (var i = 0; i < window.scene.children.length; i++) {
-                        if (window.scene.children[i].uuid != lastHoveredObjectUUID && assetHoveredTimeDictionary[window.scene.children[i].uuid]) {
-                            console.log("Removing unselected object from dictionary")
-                            assetHoveredTimeDictionary[window.scene.children[i].uuid] = null;
-                        }
-                    }
-                }
-
-                intersectedAsset.beginHoverTime = assetHoveredTimeDictionary[intersectedAsset.object.uuid];
-
-                if ((new Date() - intersectedAsset.beginHoverTime) > assetSelectHoverTimeRequiredMills) {
-                    console.log("Asset '" + intersectedAsset.object.uuid + "' hovered for more than threshold time of " + assetSelectHoverTimeRequiredMills + "ms")
-                    if (assetManager.IsSelectedAsset(window.scene.getObjectById(intersectedAsset.object.id))) {
-                        if (!assetLastSelectedTimeDictionary[intersectedAsset.object.uuid])
-                            assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date()
-
-                        if ((new Date() - assetLastSelectedTimeDictionary[intersectedAsset.object.uuid]) > selectedAssetGracePeriodToDeselectTimeRequiredMills) {
-                            console.log("Asset was previously selected over threshold time of (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms). Delecting...");
-                            assetManager.DeselectAsset(intersectedAsset.object);
-                            removeHandles(intersectedAsset.object);
-                            assetHoveredTimeDictionary[intersectedAsset.object.uuid] = null;
-                            lastSelectedObjectUUID = null;
-
-                        }
-                        else {
-                            console.log("Preventing Asset delection because asset was last selected under selection threshold time (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms).");
-                        }
+            if (intersectedAsset) {
+                if (!intersectedAsset.object.isPinched) {
+                    if (!assetHoveredTimeDictionary[intersectedAsset.object.uuid]) {
+                        console.log("Asset not previously in dictionary - Assigning hoveredTime now")
+                        assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
+                        lastHoveredObjectUUID = intersectedAsset.object.uuid;
                     }
                     else {
-                        console.log("Hovered Asset was not previously selected. Selecting...");
-                        assetManager.SelectAsset(intersectedAsset.object);
-                        lastSelectedObjectUUID = intersectedAsset.object.uuid;
-                        lastHoveredObjectUUID = intersectedAsset.object.uuid;
-                        assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
-                        assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date();
+                        //TODO: Move this to a frameAction
+                        for (var i = 0; i < window.scene.children.length; i++) {
+                            if (window.scene.children[i].uuid != lastHoveredObjectUUID && assetHoveredTimeDictionary[window.scene.children[i].uuid]) {
+                                console.log("Removing unselected object from dictionary")
+                                assetHoveredTimeDictionary[window.scene.children[i].uuid] = null;
+                            }
+                        }
+                    }
 
-                        addHandlesToAsset(intersectedAsset.object);
+                    intersectedAsset.beginHoverTime = assetHoveredTimeDictionary[intersectedAsset.object.uuid];
 
-                        changeAssetColor(intersectedAsset.object);
+                    if ((new Date() - intersectedAsset.beginHoverTime) > assetSelectHoverTimeRequiredMills) {
+                        console.log("Asset '" + intersectedAsset.object.uuid + "' hovered for more than threshold time of " + assetSelectHoverTimeRequiredMills + "ms")
+                        if (assetManager.IsSelectedAsset(window.scene.getObjectById(intersectedAsset.object.id))) {
+                            if (!assetLastSelectedTimeDictionary[intersectedAsset.object.uuid])
+                                assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date()
 
-                        intersectedAsset.object.isSelected = true;
+                            if ((new Date() - assetLastSelectedTimeDictionary[intersectedAsset.object.uuid]) > selectedAssetGracePeriodToDeselectTimeRequiredMills) {
+                                console.log("Asset was previously selected over threshold time of (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms). Delecting...");
+                                assetManager.DeselectAsset(intersectedAsset.object);
+                                removeHandles(intersectedAsset.object);
+                                assetHoveredTimeDictionary[intersectedAsset.object.uuid] = null;
+                                lastSelectedObjectUUID = null;
+
+                            }
+                            else {
+                                console.log("Preventing Asset delection because asset was last selected under selection threshold time (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms).");
+                            }
+                        }
+                        else {
+                            console.log("Hovered Asset was not previously selected. Selecting...");
+                            assetManager.SelectAsset(intersectedAsset.object);
+                            lastSelectedObjectUUID = intersectedAsset.object.uuid;
+                            lastHoveredObjectUUID = intersectedAsset.object.uuid;
+                            assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
+                            assetLastSelectedTimeDictionary[intersectedAsset.object.uuid] = new Date();
+
+                            addHandlesToAsset(intersectedAsset.object);
+
+                            changeAssetColor(intersectedAsset.object);
+
+                            intersectedAsset.object.isSelected = true;
+                        }
                     }
                 }
-            }
 
+            }
         }
     }
 }
 
+function getExtendedFingers(hand) {
+    var extendedFingers = [];
+    hand.fingers.forEach(function (finger) {
+        if (finger.extended)
+            extendedFingers.push(finger);
+    });
 
+    return extendedFingers;
+}
 
 function getIntersectedAssets(hand, assets) {
     var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
