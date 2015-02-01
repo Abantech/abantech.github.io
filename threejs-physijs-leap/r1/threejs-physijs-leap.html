@@ -1,26 +1,36 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>threejs-mouseover-leap-enabled.html</title>
+<title>threejs-physijs-leap</title>
 <meta charset=utf-8 />
 <meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 />
 </head>
 <body>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/TrackballControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://chandlerprall.github.io/Physijs/physi.js ></script>
 <script src=http://js.leapmotion.com/leap-0.6.3.js ></script>
 
 <script>
-//See
-// http://mrdoob.github.io/three.js/examples/#webgl_interactive_raycasting_pointcloud
+// From: https://github.com/chandlerprall/Physijs
+// Docs here: https://github.com/chandlerprall/Physijs/wiki
 
-	var info, renderer, scene, camera, controls, stats, light;
+	var info, stats, renderer, scene, camera, controls;
+		var geometry, material, mesh;
 
+	Physijs.scripts.worker = '../physijs_worker.js';
+	Physijs.scripts.ammo = './ammo.js'; // relative to physijs_worker.js
+	
 	var cubes = [];
 	var raycaster = new THREE.Raycaster();
 	var points = 0;
 
+	var intersection;
+		var selections = [];
+	var selected;
+	var raycaster = new THREE.Raycaster();
+	var intersected;
 	var intersection;
 
 	var fingerlings = {};
@@ -31,14 +41,19 @@
 //	animate();
 
 	function init() {
-		var geometry, material, mesh, helper;
 
-		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden' ;
+		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;' ;
 
-		info = document.body.appendChild( document.createElement( 'div' ) );
-		info.style.cssText = 'left: 20px; position: absolute; top: 0px; width: 100% ';
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'margin: 20px; position: absolute; ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
-			'<div id=msg>Touch the cubes and sphere to win points!</div>' +
+			'<div id=msg>Instructions<br>' +
+				'Make fist and the just extend index finger<br>' +
+				'Touch cube with index finger tip to move up into the air and rotate.<br>' +
+				'Extend thumb to exit cube editing - and move tip freely.<br>' +
+				'Note that as you \'let go\' cube drops to table.<br>' +
+				'WIP. /many things need to be adjusted...<br>' +
+			'<div>' +	
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +
 		'';
@@ -50,36 +65,33 @@
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.shadowMapEnabled = true;
-		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 
-		scene = new THREE.Scene();
-
-		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 8000 );
 		camera.position.set( 0, 800, 500 );
-		scene.add( camera ); // for light to follow
 
-// controls
-		controls = new THREE.OrbitControls( camera );
-		controls.minDistance = 10;
-		controls.maxDistance = 1000;
-		controls.target.y = 250;
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
 
-// Lights
-		light = new THREE.AmbientLight( 0xffffff );
+		scene = new Physijs.Scene( { reportsize: 50, fixedTimeStep: 1 / 180 } );   // defaults
+		scene.setGravity( new THREE.Vector3( 0, -30.0, 0 ));
+		scene.addEventListener( 'update', function() {
+			scene.simulate( undefined, 1 );
+		} );
+
+		light = new THREE.AmbientLight( 0x888888 );
 		scene.add( light );
 
-		light = new THREE.DirectionalLight( 0xffffff, 1 );
+		light = new THREE.DirectionalLight( 0xffffff, 0.5 );
 		light.position.set( -500, 500, 500 );
 
-		var d = 100;
+		var d = 200;
 		light.shadowCameraLeft = -d;
 		light.shadowCameraRight = d;
 		light.shadowCameraTop = d;
 		light.shadowCameraBottom = -d;
 
-		light.shadowCameraNear = 200;
-		light.shadowCameraFar = 500;
+		light.shadowCameraNear = 500;
+		light.shadowCameraFar = 1200;
 
 // can help stop appearance of gridlines in objects with opacity < 1
 		light.shadowBias = -0.0002; // default 0 ~ distance fron corners?
@@ -88,73 +100,95 @@
 		light.shadowMapHeight = 2048;
 
 		light.castShadow = true;
-//		light.shadowCameraVisible = true;
+		light.shadowCameraVisible = true;
 		scene.add( light );
 
-		light = new THREE.PointLight( 0xffffff, 1 );
+		light = new THREE.PointLight( 0xffffff, 0.5 );
 		light.position = camera.position;
 		camera.add( light );
+		
+// Table
 
-// ground box
-		var geometry = new THREE.BoxGeometry( 600, 6, 300 );
-		material = new THREE.MeshNormalMaterial();
-		var mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, 3, 0 );
-		scene.add( mesh );
+		var friction = .8; // high friction
+		var restitution = .3; // low restitution
 
-		helper = new THREE.BoxHelper( mesh );
+		table_material = Physijs.createMaterial(
+		
+			new THREE.MeshLambertMaterial({ color: 0xff0000, ambient: 0x888888 }),
+			friction,
+			restitution
+
+		);
+		
+		// Table
+		
+		friction = 1; // 0.8 high friction
+		restitution = 1; // 0.2 low restitution		
+		table = new Physijs.BoxMesh(
+			new THREE.BoxGeometry( 600, 5, 300 ),
+			table_material,
+			0, // mass
+			{ friction: friction, restitution: restitution }
+		);
+		
+		
+		table.position.y = -2.5;
+		table.castShadow = true;
+		table.receiveShadow = true;
+		scene.add( table );
+		
+		
+		helper = new THREE.BoxHelper( table );
 		helper.material.color.setRGB( 1, 0, 1 );
 		scene.add( helper );
+		
+// Blocks
 
-// axes
-		var axis = new THREE.AxisHelper( 250 );
-		scene.add( axis );
+		friction = 1; // 0.8 high friction
+		restitution = 1; // 0.2 low restitution	
+		block_material = Physijs.createMaterial(
+			new THREE.MeshLambertMaterial({ color: 0xff0000, ambient: 0xFFFFFF }),
+			friction, // medium friction
+			restitution // medium restitution
+		);
 
-		helper = new THREE.BoxHelper( mesh );
-		helper.material.color.setRGB( 1, 0, 1 );
-		scene.add( helper );
+		friction = 0; // 0.8 high friction
+		restitution = 1; // 0.2 low restitution	
+		
+		for (var i = 0; i < 5; i++) {
 
+			var mesh = new Physijs.BoxMesh(
+			geometry = new THREE.BoxGeometry( 50, 50, 50 ),
+				block_material, 0
+			);
 
-// Sphere
-		geometry = new THREE.SphereGeometry( 50, 50, 50 );
+			mesh.position.set( 60 * i - 100, 27 , 0 );
+//			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
 
-		material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff, 
-			ambient: 0xffffff,
-			shininess: 0.001,
-			side: 2
-		} );
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( -280, 100, 0 );
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
-		scene.add( mesh );
-
-// Cubes
-		geometry = new THREE.BoxGeometry( 50, 50, 60 );
-		for (var i = 0; i < 50; i++) {
-			material = new THREE.MeshPhongMaterial( {
-				color: 0xffffff, 
-				ambient: 666666,
-				side: 2
-			} );
-
-			mesh = new THREE.Mesh( geometry, material );
-			mesh.position.set( 600 * Math.random() - 300, 500 * Math.random(), 300 * Math.random() - 150 );
-			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
 			mesh.castShadow = true;
 			mesh.receiveShadow = true;
+			
 			scene.add( mesh );
 			cubes.push( mesh );
 
 			helper = new THREE.BoxHelper( mesh );
-			helper.material.color.setRGB( 1, 0, 0 );
 			scene.add( helper );
 
 		}
 
 	}
+/*
+	function animate() {
+	
+		scene.simulate();
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+		requestAnimationFrame( animate );
 
+	}
+*/
+	
 	function findIntersections( ) {
 
 		var index = fingerlings[1].finger;
@@ -165,11 +199,11 @@
 		var directionVector = tip.sub( pip );
 		raycaster.set( pip, directionVector.normalize() );
 
-		var intersects = raycaster.intersectObjects( scene.children );
+		var intersects = raycaster.intersectObjects( cubes );
 
 		for ( var i = 0; i < intersects.length; i ++ ) {
 
-			intersects[i].object.material.color = new THREE.Color( 0xff0000 );
+			intersects[i].object.material.color = new THREE.Color( 0xff00ff );
 
 		}
 
@@ -185,6 +219,85 @@
 		} else {
 
 			msg.innerHTML = '<h1>Bingo! You win!</h1>';
+
+		}
+
+	}
+	
+	
+	function findIntersections( ) {
+
+		var index = fingerlings[1].finger
+		var tip = v( index.tipPosition[0], index.tipPosition[1], index.tipPosition[2] );
+		var pip = v( index.pipPosition[0], index.pipPosition[1], index.pipPosition[2] );
+		var directionVector = tip.sub( pip );
+
+		raycaster.set( pip, directionVector.normalize() );
+
+		var intersects = raycaster.intersectObjects( cubes );
+
+		if ( intersects.length > 0 ) {
+
+			if ( intersected != intersects[ 0 ].object ) {
+
+				if ( intersected && intersected.material.emissive ) {
+
+					intersected.material.emissive.setHex( intersected.currentHex );
+
+				}
+
+				intersected = intersects[ 0 ].object;
+
+				if ( intersected.material.emissive ) {
+
+					intersected.currentHex = intersected.material.emissive.getHex();
+					intersected.material.emissive.setHex( 0xff0000 );
+
+				}
+
+			}
+
+//console.log( handies, handies[0].hand.fingers[0].extended );
+
+			switch( intersected.name ) {
+
+
+				case 'scaleXplus':
+
+					selected.scale.x += 0.1;
+console.log( intersected.name );
+
+
+					break;
+
+				case 'scaleXminus':
+
+					selected.scale.x -= 0.1;
+console.log( intersected.name );
+
+
+					break;
+
+				default: 
+
+					if ( handies[0].hand.fingers[0].extended === false ) {
+						pos = fingerlings[1].phalanges[3].position;
+						intersected.position.copy( pos );
+
+						rot = fingerlings[1].phalanges[3].rotation;
+						intersected.rotation.copy( rot );
+						
+						intersected.__dirtyPosition = true;
+						
+						intersected.mass = 1;
+					}
+			}
+
+		} else {
+
+			if ( intersected && intersected.material.emissive ) intersected.material.emissive.setHex( intersected.currentHex );
+
+			intersected = null;
 
 		}
 
@@ -211,7 +324,7 @@
 		renderer.render( scene, camera );
 		controls.update();
 		stats.update();
-
+		scene.simulate();
 
 	}
 
@@ -235,59 +348,11 @@
 
 			box.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
 
+			handy.hand = hand;
+						
 		};
 
 	};
-
-/*
-// Finger Method
-	var Fingerling = function() {
-
-		var fingerling = this;
-		var msg = fingerData.appendChild( document.createElement( 'div' ) );
-
-		var tip = addPhalange();
-		var dip = addPhalange();
-		var pip = addPhalange();
-		var mcp = addPhalange();
-		var carp = addPhalange();
-
-		fingerling.outputData = function( id, finger ) {
-
-			msg.innerHTML = 'Finger Method: ' +
-				'finger id:' + id + ' tip x:' + finger.tipPosition[0].toFixed(0) + 
-				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
-
-			tip.position.set( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2] );
-			dip.position.set( finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2] );
-			pip.position.set( finger.pipPosition[0], finger.pipPosition[1], finger.pipPosition[2] );
-			mcp.position.set( finger.mcpPosition[0], finger.mcpPosition[1], finger.mcpPosition[2] );
-			carp.position.set( finger.carpPosition[0], finger.carpPosition[1], finger.carpPosition[2] );
-
-			updatePhalange( tip, dip );
-			updatePhalange( dip, pip );
-			updatePhalange( pip, mcp );
-
-			if ( finger.type > 0 ) {
-
-				updatePhalange( mcp, carp );
-
-			}
-
-		};
-
-	};
-
-	function updatePhalange( phalange, nextPhalange ) {
-
-			phalange.lookAt( nextPhalange.position );
-			length = phalange.position.distanceTo( nextPhalange.position );
-			phalange.translateZ( 0.5 * length );
-			phalange.scale.set( 1, 1, length );
-
-	}
-
-*/
 
 // Bone Method
 	var Fingerling = function() {
@@ -330,6 +395,8 @@
 					phalange.scale.z = len;
 
 				}
+				
+				fingerling.finger = finger;
 
 			}
 
@@ -367,6 +434,7 @@
 
 // This allows us to move even while in an iFrame.
 	Leap.loopController.setBackground(true)
+
 
 </script>
 </body>

@@ -47,43 +47,58 @@
 
 		controls = new THREE.TrackballControls( camera, renderer.domElement );
 
-		scene = new Physijs.Scene();
+		scene = new Physijs.Scene( { reportsize: 50, fixedTimeStep: 1 / 60 } );   // defaults
 		scene.setGravity( new THREE.Vector3( 0, -10.0, 0 ));
 		scene.addEventListener( 'update', function() {
 			scene.simulate( undefined, 1 );
 		} );
 
 // Table
+
+		var friction = .8; // high friction
+		var restitution = .3; // low restitution
+
 		table_material = Physijs.createMaterial(
+		
 			new THREE.MeshNormalMaterial(),
-			1.0, // high friction
-			1.0 // low restitution
+			friction,
+			restitution
+
 		);
 		
 		// Table
+		
+		friction = 1; // 0.8 high friction
+		restitution = 1; // 0.2 low restitution		
 		table = new Physijs.BoxMesh(
-			new THREE.BoxGeometry( 100, 1, 100),
+			new THREE.BoxGeometry( 100, 1, 100 ),
 			table_material,
-			0//, // mass
-//			{ restitution: .2, friction: .8 }
+			0, // mass
+			{ friction: friction, restitution: restitution }
 		);
 		table.position.y = -.5;
 		scene.add( table );
-
+		
 // Blocks
 
+		friction = 1; // 0.8 high friction
+		restitution = 1; // 0.2 low restitution	
 		block_material = Physijs.createMaterial(
 			new THREE.MeshNormalMaterial({ color: 0xff0000, ambient: 0xFFFFFF }),
-			.4, // medium friction
-			.4 // medium restitution
+			friction, // medium friction
+			restitution // medium restitution
 		);
 
+		friction = 0; // 0.8 high friction
+		restitution = 1; // 0.2 low restitution	
+		
 		for (var i = 0; i < 50; i++) {
 
 			mesh = new Physijs.SphereMesh(
 			geometry = new THREE.BoxGeometry( 10, 10, 10 ),
 				block_material, 
-				1.0
+				1.0,
+				{ friction: friction, restitution: restitution }
 			);
 
 			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
@@ -98,6 +113,7 @@
 	}
 
 	function animate() {
+	
 		scene.simulate();
 		renderer.render( scene, camera );
 		controls.update();
