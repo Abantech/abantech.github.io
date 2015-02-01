@@ -21,8 +21,14 @@
 	Physijs.scripts.worker = '../physijs_worker.js';
 	Physijs.scripts.ammo = './ammo.js'; // relative to physijs_worker.js
 
+var date = new Date();
+
+while(true){
+	if((date - new Date() > 3000){
 	init();
 	animate();
+	date = new Date();
+}}
 
 	function init() {
 
