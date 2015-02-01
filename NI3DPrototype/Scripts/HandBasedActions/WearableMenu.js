@@ -96,7 +96,7 @@ var undoButton = createWearableButton("Undo", 0xcc0000, 0, 20, 75, 2.8,
         function (button)
         {
             lastTimeUndoRedoPressed = new Date()
-            lastTimeUndoPressedactionManager.Undo();
+            actionManager.Undo();
         },
         function (button)
         {
@@ -111,7 +111,7 @@ var redoButton = createWearableButton("Redo", 0x00cc00, 0, 22, 105, 2.8,
             function (button)
             {
                 lastTimeUndoRedoPressed = new Date()
-                lastTimeUndoPressedactionManager.Redo();
+                actionManager.Redo();
             },
             function (button)
             {
