@@ -6,14 +6,22 @@ Abantech Read Me
 Mission:  
 All about natural interaction in 3D. To be able to give people the ability to do whatever they can do in Google Sketchup (or maya or blender, or Solidworks, etc) , but to do it with the Leap controller (or similar equipment) in order to allow this interaction to be intuitive (NUI). With the mouse and keyboard, you aren't "in there" with the medium, but with our first project, we want to allow people to create their 3D models in a small fraction of the time, and with far more ease than can be done today.
 
-Demo: [NI 3D prototype workspace]( http://abantech.github.io/NI3DPrototype/main.html )  
+
+
+Demos: 
+
+- [NI 3D prototype (without Physics)]( http://abantech.github.io/NI3DPrototype/main.html )  
+- [NI 3D prototype with Physics]( http://abantech.github.io/NI3DPrototype/PhysicsEnabled.html )  
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
 
-Updated Greg and James ~ 2015-01-30
+Updated Greg, James, Theo ~ 2015-01-31
  
- - Added the Wearable for the cut, copy, paste functions
- - Added the scaling sliders/handles to the selected assets
- - Made the menu child-buttons generic functions so that menu buttons can be used/registered anywhere that it makes sense
+ - Added snap-to for Geometry  
+ - Added Undo and Redo NI buttons to wearable  
+ - Scene updates: Created ground plane and background, removed the orientation cones, and fixed the lighting issue!  
+ - Fixed the issue with selection throwing error  
+ - Added the scaling sliders/handles to the selected assets  
+ - Incorporated some of the Physics and created as separate page (not quite working yet)
 
 ***
 
