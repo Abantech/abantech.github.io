@@ -62,7 +62,7 @@ var initScene = function () {
 
 	var createGroundPlane = function() {
 
-		var geometry = new THREE.BoxGeometry( 200, 5, 200 );
+		var geometry = new THREE.BoxGeometry( 800, 5, 800 );
 		var material = new THREE.MeshPhongMaterial( {
 		    color: 0x008080,
 		    ambient: 0x008080,
@@ -82,7 +82,7 @@ var initScene = function () {
 		boxHelper.material.color.setRGB( 1, 0, 1 );
 		scene.add( boxHelper );
 		
-		var gridHelper = new THREE.GridHelper( 100, 10 );
+		var gridHelper = new THREE.GridHelper( 400, 10 );
 		gridHelper.position.set( 0, -47.5, 0 );
 		scene.add( gridHelper );
 		
@@ -90,28 +90,6 @@ var initScene = function () {
 		axisHelper.position.set( 0, -47.5, 0 );
 		scene.add( axisHelper );		
 	}
-
-/*	
-var XXXcreateSceneLighting = function() {
-
-    if (!sceneLights)
-        sceneLights = [];
-
-    light = new THREE.DirectionalLight(0xffffff);
-    light.position.set(1, 1, 1);
-    window.scene.add(light);
-    sceneLights.push(light);
-
-    light = new THREE.DirectionalLight(0x989898);
-    light.position.set(-1, -1, -1);
-    window.scene.add(light);
-    sceneLights.push(light);
-
-    light = new THREE.AmbientLight(0x222222);
-    window.scene.add(light);
-    sceneLights.push(light);
-}
-*/
 
 var createSceneLighting = function() {
 
