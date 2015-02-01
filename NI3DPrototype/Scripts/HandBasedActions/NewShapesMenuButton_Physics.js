@@ -106,6 +106,12 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
         , null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
 }
 
+var createdShapesMaterial = Physijs.createMaterial(
+			new THREE.MeshLambertMaterial({ ambient: 0xFFFFFF }),
+			0, //friction = 0; // 0.8 high friction
+			1 //restitution = 1; // 0.2 low restitution	
+	);
+
 createNewShapeChildOption("Cube", -1, 1, 0x2E9AFE, new THREE.BoxGeometry(15, 15, 15),
     new Physijs.BoxMesh(new THREE.BoxGeometry(25, 25, 25), createdShapesMaterial, 1)
     //new THREE.BoxGeometry(25, 25, 25)
