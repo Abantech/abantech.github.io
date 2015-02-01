@@ -73,12 +73,14 @@
     <Content Include="Libs\Leap\leap.rigged-hand-0.1.5.js" />
     <Content Include="Libs\Leap\leap.rigged-hand-0.1.5.min.js" />
     <Content Include="Libs\Leap\leap.rigged-hand-0.1.6.js" />
+    <Content Include="Libs\Physics\physi.js" />
     <Content Include="Libs\THREEJS\Detector.js" />
     <Content Include="Libs\THREEJS\OrbitControls.js" />
     <Content Include="Libs\THREEJS\stats.min.js" />
     <Content Include="Libs\THREEJS\three.js" />
     <Content Include="Libs\THREEJS\three.min.js" />
     <Content Include="main.html" />
+    <Content Include="PhysicsEnabled.html" />
     <Content Include="rotation.html" />
     <Content Include="scaleDemo.html" />
     <Content Include="Scripts\ActionTracking\ActionManager.js" />
@@ -105,9 +107,12 @@
     <Content Include="Scripts\HandController.js" />
     <Content Include="Scripts\HandsPositionAdjustment.js" />
     <Content Include="Scripts\LeapLoopSetup.js" />
+    <Content Include="Libs\Physics\ammo.js" />
+    <Content Include="Libs\Physics\physijs_worker.js" />
     <Content Include="Scripts\references.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
+    <Content Include="Scripts\Scene\PhysicsSceneSetup.js" />
     <Content Include="Scripts\Scene\SceneSetup.js" />
     <Content Include="Scripts\ActionTracking\TranslationAction.js" />
     <Content Include="Scripts\Utils\GestureTimer.js" />

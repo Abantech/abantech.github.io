@@ -1,5 +1,7 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 /// <reference path="../FrameActions.js" />
+/// <reference path="../../Libs/Physics/physi.js" />
+
 var buttonSize = 28;
 var buttonPositionX = (window.innerWidth / 14);
 var buttonPositionY = (window.innerHeight / 12);
@@ -71,7 +73,7 @@ var actionNotPerfomredWithinThresholdTime = function (button) {
     return (!menuOptionLastUsedTime || (new Date() - menuOptionLastUsedTime) > timeBetweenActionsMills)
 }
 
-var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactorY, iconColor, iconGeometry, createdShapeGeometry) {
+var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactorY, iconColor, iconGeometry, createdShapeMesh) {
     new menuButtonChildOption("Create" + shapeName + "Button", buttonSize, { wireframe: false },
         function (menuButtonChildOption) {
             var sizeOffset = (menuButtonChildOption.size / 2) + 2;
@@ -92,7 +94,9 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
         , conditionForShowingNewShapeButtons, conditionForHidingNewShapeButtons,
         function (button) {
             button.material.color.setHex(0x04B431);
-            var mesh = new THREE.Mesh(createdShapeGeometry, new THREE.MeshPhongMaterial({ wireframe: false }))
+            var mesh = createdShapeMesh
+                //new THREE.Mesh(createdShapeGeometry, new THREE.MeshPhongMaterial({ wireframe: false }))
+            
             mesh.material.color.setHex(iconColor);
             mesh.position.set(0, 0, 0);
 			
@@ -106,10 +110,52 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
         , null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
 }
 
-createNewShapeChildOption("Cube", -1, 1, 0x2E9AFE, new THREE.BoxGeometry(15, 15, 15), new THREE.BoxGeometry(18, 18, 18));
-createNewShapeChildOption("Sphere", 1, 1, 0x7401DF, new THREE.SphereGeometry(10, 32, 32), new THREE.SphereGeometry(12, 32, 32));
-createNewShapeChildOption("Cylinder", -1, -1, 0xFE642E, new THREE.CylinderGeometry(8, 8, 16, 32), new THREE.CylinderGeometry(12, 12, 32, 32));
-createNewShapeChildOption("Cone", 1, -1, 0x0B4C5F, new THREE.CylinderGeometry(0, 8, 22, 32), new THREE.CylinderGeometry(0, 12, 32, 32));
+var createdShapesMaterial = Physijs.createMaterial(
+			new THREE.MeshLambertMaterial({ ambient: 0xFFFFFF }),
+			0, //friction = 0; // 0.8 high friction
+			1 //restitution = 1; // 0.2 low restitution	
+	);
+
+if (isPhysicsEnabled)
+{
+    createNewShapeChildOption("Cube", -1, 1, 0x2E9AFE, new THREE.BoxGeometry(15, 15, 15),
+        new Physijs.BoxMesh(new THREE.BoxGeometry(25, 25, 25), createdShapesMaterial, 1)
+        //new THREE.BoxGeometry(25, 25, 25)
+    );
+    createNewShapeChildOption("Sphere", 1, 1, 0x7401DF, new THREE.SphereGeometry(10, 32, 32),
+            new Physijs.SphereMesh(new THREE.SphereGeometry(12, 32, 32), createdShapesMaterial, 1)
+            //new THREE.SphereGeometry(12, 32, 32)
+        );
+
+    createNewShapeChildOption("Cylinder", -1, -1, 0xFE642E,
+            new Physijs.CylinderMesh(new THREE.SphereGeometry(12, 12, 32, 32), createdShapesMaterial, 1)
+            //new THREE.CylinderGeometry(12, 12, 32, 32)
+        );
+    createNewShapeChildOption("Cone", 1, -1, 0x0B4C5F, new THREE.CylinderGeometry(0, 8, 22, 32),
+            new Physijs.ConeMesh(new THREE.CylinderGeometry(0, 12, 32, 32), createdShapesMaterial, 1)
+            //new THREE.CylinderGeometry(0, 12, 32, 32)
+        );
+}
+else
+{
+    createNewShapeChildOption("Cube", -1, 1, 0x2E9AFE, new THREE.BoxGeometry(15, 15, 15),
+            new THREE.Mesh(new THREE.BoxGeometry(25, 25, 25), new THREE.MeshPhongMaterial({ wireframe: false }))
+        );
+
+    createNewShapeChildOption("Sphere", 1, 1, 0x7401DF, new THREE.SphereGeometry(10, 32, 32),
+            new THREE.Mesh(new THREE.SphereGeometry(12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
+        );
+
+    createNewShapeChildOption("Cylinder", -1, -1, 0xFE642E,
+            //new Physijs.CylinderMesh(new THREE.SphereGeometry(12, 12, 32, 32), createdShapesMaterial, 1)
+            new THREE.Mesh(new THREE.CylinderGeometry(12, 12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
+        );
+    createNewShapeChildOption("Cone", 1, -1, 0x0B4C5F, new THREE.CylinderGeometry(0, 8, 22, 32),
+            //new Physijs.ConeMesh(new THREE.CylinderGeometry(0, 12, 32, 32), createdShapesMaterial, 1)
+            new THREE.Mesh(new THREE.CylinderGeometry(0, 12, 32, 32), new THREE.MeshPhongMaterial({ wireframe: false }))
+        );
+}
+
 
 
 var changeButtonColorOnHoverAndPress = {
