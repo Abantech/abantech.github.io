@@ -73,7 +73,7 @@
 
 		controls = new THREE.TrackballControls( camera, renderer.domElement );
 
-		scene = new Physijs.Scene( { reportsize: 50, fixedTimeStep: 1 / 180 } );   // defaults
+		scene = new Physijs.Scene( { reportsize: 50, fixedTimeStep: 1 / 60 } );   // defaults
 		scene.setGravity( new THREE.Vector3( 0, -10.0, 0 ));
 		scene.addEventListener( 'update', function() {
 			scene.simulate( undefined, 1 );
@@ -123,7 +123,7 @@
 		
 		// Table
 		
-		friction = 1; // 0.8 high friction
+		friction = 0.5; // 0.8 high friction
 		restitution = 0; // 0.2 low restitution		
 		table = new Physijs.BoxMesh(
 			new THREE.BoxGeometry( 600, 5, 300 ),
