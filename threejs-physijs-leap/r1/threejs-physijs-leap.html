@@ -46,16 +46,17 @@
 
 		var info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'color: #fff; margin: 20px; position: absolute; ';
-		info.innerHTML = '<a href="" style=color:#fff; ><h1>' + document.title + '</h1></a>' +
+
+		info.innerHTML = '<a href="" style=color:#fff;visibility:hidden ><h1>' + document.title + '</h1></a>' +
 			'<div id=msg>Instructions<br>' +
 				'Make fist and the just extend index finger<br>' +
 				'Touch cube with index finger tip to move up into the air and rotate.<br>' +
 				'Extend thumb to exit cube editing - and move tip freely.<br>' +
 				'Note that as you \'let go\' cube drops to table.<br>' +
 				'WIP. /many things need to be adjusted...<br>' +
-			'<div>' +	
-			'<div id=handData ></div>' +
-			'<div id=fingerData ></div>' +
+			'</div>' +	
+			'<div id=handData style=visibility:hidden></div>' +
+			'<div id=fingerData style=visibility:hidden></div>' +
 		'';
 
 		stats = new Stats();
