@@ -1,6 +1,6 @@
 ﻿var axis = null;
 var rotationAction = null
-var snapRotation = false;
+var snapRotation = true;
 var snapAngle;
 
 function setSnapAngle(degrees)
