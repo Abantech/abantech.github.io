@@ -14,14 +14,10 @@ Demos:
 - [NI 3D prototype with Physics]( http://abantech.github.io/NI3DPrototype/PhysicsEnabled.html )  
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
 
-Updated Greg, James, Theo ~ 2015-01-31
+Updated Greg ~ 2015-02-20
  
- - Added snap-to for Geometry  
- - Added Undo and Redo NI buttons to wearable  
- - Scene updates: Created ground plane and background, removed the orientation cones, and fixed the lighting issue!  
- - Fixed the issue with selection throwing error  
- - Added the scaling sliders/handles to the selected assets  
  - Incorporated some of the Physics and created as separate page (not quite working yet)
+ - Replacing the RiggedHand plugin with Theo's Handy to see if that will get the physics to work
 
 ***
 
