@@ -90,6 +90,7 @@
     <Content Include="Scripts\FadingSpheres.js" />
     <Content Include="Scripts\FrameActions.js" />
     <Content Include="Scripts\FrameActions\AddHandlesToSelectedAssets.js" />
+    <Content Include="Scripts\FrameActions\CustomHand.js" />
     <Content Include="Scripts\Gestures\SingleHandGesture.js" />
     <Content Include="Scripts\HandBasedActions\ClearActionVariables.js" />
     <Content Include="Scripts\HandBasedActions\FreeScale.js" />
@@ -110,6 +111,7 @@
     <Content Include="Scripts\LeapLoopSetup.js" />
     <Content Include="Libs\Physics\ammo.js" />
     <Content Include="Libs\Physics\physijs_worker.js" />
+    <Content Include="Scripts\LeapLoopSetup_Physics.js" />
     <Content Include="Scripts\references.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
