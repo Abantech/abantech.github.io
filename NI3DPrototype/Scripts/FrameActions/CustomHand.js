@@ -4,18 +4,18 @@
 
 var fingerlings = {};
 var handies = {};
+var handMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
 
 var Handy = function () {
     var handy = this;
     //var msg = handData.appendChild(document.createElement('div'));
-    var geometry = new THREE.BoxGeometry(50, 20, 50);
-    var material = new THREE.MeshNormalMaterial();
-    var box = new THREE.Mesh(geometry, material);
+    var geometry = new THREE.BoxGeometry(35, 10, 40);
+    var box = new THREE.Mesh(geometry, handMaterial);
     scene.add(box);
     handy.outputData = function (id, hand) {
         //msg.innerHTML = 'Hand id:' + id + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) +
         //    ' y:' + hand.stabilizedPalmPosition[1].toFixed(0) + ' z:' + hand.stabilizedPalmPosition[2].toFixed(0);
-        box.position.set(hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2]);
+        box.position.set(hand.palmPosition[0], hand.palmPosition[1], hand.palmPosition[2]);
         box.rotation.set(hand.pitch(), -hand.yaw(), hand.roll());
         handy.hand = hand;
 
@@ -67,9 +67,9 @@ var Fingerling = function () {
 };
 
 function addPhalange() {
-    geometry = new THREE.BoxGeometry(20, 20, 1);
-    material = new THREE.MeshNormalMaterial();
-    phalange = new THREE.Mesh(geometry, material);
+    geometry = new THREE.BoxGeometry(8, 8, 1);
+    //geometry = new THREE.CylinderGeometry(4, 4, 8);
+    phalange = new THREE.Mesh(geometry, handMaterial);
     scene.add(phalange);
     return phalange;
 }
@@ -82,8 +82,8 @@ var DisplayHand = function (frame) {
         var handy = (handies[id] || (handies[id] = new Handy()));
         handy.outputData(id, hand);
         hand.fingers.forEach(function (finger, id) {
-            var fingerling = (fingerlings[hand.type + id] || (fingerlings[hand.type + id] = new Fingerling()));
-            fingerling.outputData(hand.type + id, finger);
+            var fingerling = (fingerlings[id] || (fingerlings[id] = new Fingerling()));
+            fingerling.outputData(id, finger);
         });
     });
 }

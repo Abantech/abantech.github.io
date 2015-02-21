@@ -11,10 +11,12 @@ frameActions.RegisterAction("NavigateViaNUI",
         if (frame.hands.length >= 1 ||
             //TODO: make it so that it's either hand
             isHandInPlaneMode(frame.hand[0])) {
-            controls.freeze = false;
+            
             hand = frame.hands[0];
 
             if (hand) {
+                controls.freeze = false;
+
                 //if ( frame.pointables.length <= 1) {
                 yawAng = Math.atan2(hand.direction[0], -hand.direction[1]);
                 if (yawAng < 0) {
@@ -29,6 +31,15 @@ frameActions.RegisterAction("NavigateViaNUI",
 
                 pitchAng = -900 * Math.atan2(hand.direction[1], -hand.direction[2]);
                 controls.mouseY = pitchAng;
+
+                info.innerHTML = info.txt + 'freeze: <scan ' + tmp + '>' + controls.freeze + '</scan> lookSpeed: ' + controls.lookSpeed.toFixed(3) + ' movementSpeed:  ' + controls.movementSpeed
+                + '<br>' +
+                'hand.x: ' + hand.stabilizedPalmPosition[0].toFixed(0) + ' hand.y: ' + hand.stabilizedPalmPosition[1].toFixed(0) + ' hand.z: ' + hand.stabilizedPalmPosition[2].toFixed(0)
+                + '<br>' +
+                'pitchAng: ' + pitchAng.toFixed(2) + ' yawAng: ' + yawAng.toFixed(2) 
+                + '<br>' +
+                'pitchAng: ' + hand.pitch().toFixed(2) + ' yawAng: ' + hand.yaw().toFixed(2) + ' rollAng:' + hand.roll().toFixed(2);
+                /*
                 //} else {
                 // yawAng = 0;
                 //}
@@ -65,6 +76,8 @@ frameActions.RegisterAction("NavigateViaNUI",
                     controls.moveUp = false;
                     controls.moveDown = false;
                 }
+
+                */
                 var tmp = (controls.freeze) ? 'class=red' : '';
 
                 //info.innerHTML = info.txt + 'freeze: <scan ' + tmp + '>' + controls.freeze + '</scan> lookSpeed: ' + controls.lookSpeed.toFixed(3) + ' movementSpeed:  ' + controls.movementSpeed +
@@ -75,9 +88,11 @@ frameActions.RegisterAction("NavigateViaNUI",
         }
         else {
             controls.freeze = true;
+            //if (info)
+            //{
+            //    info.innerHTML = info.txt + 'CONTROLS FROZEN';
+            //}
+            
         }
     }
 );
-
-
-

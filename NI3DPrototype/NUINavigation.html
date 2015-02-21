@@ -90,19 +90,20 @@
     <script src="Scripts/Utils/GestureTimer.js"></script>
     <script src="Scripts/Utils/HoveredAndPressedDetection.js"></script>
     <script type="text/javascript">
-        var useNUIConrols = true;
+        var useNUIConrols = false;
     </script>
     <script src="Scripts/Scene/SceneSetup.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
-    <script src="Scripts/LeapLoopSetup.js"></script>
+    <script src="Scripts/LeapLoopSetup_Physics.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
 
     <script src="Scripts/FrameActions.js"></script>
     <script src="Scripts/HandController.js"></script>
     <script src="Scripts/HandsPositionAdjustment.js"></script>
 
-    <!--<script src="Scripts/FadingSpheres.js"></script>-->
-    <script src="Scripts/FrameActions/NUINavigation.js"></script>
+    <script src="Scripts/FrameActions/CustomHand.js"></script>
+    <script src="Scripts/FadingSpheres.js"></script>
+    <!--<script src="Scripts/FrameActions/NUINavigation.js"></script>-->
 
     <!--Gestures-->
     <script src="Scripts/Gestures/SingleHandGesture.js"></script>
@@ -127,8 +128,14 @@
     <script src="Scripts/AssetManager.js"></script>
 
     <script>
-        //handController.RegisterAction("DrawfadingSpheres", createFadingSpheresAtFingerTips);
-        //handController.RegisterAction("DrawPinchLine", drawPinchLine);
+        var info = document.body.appendChild(document.createElement('div'));
+        info.style.cssText = 'background-color: #eee; border-radius: 8px; color: #333; left: 0; ' +
+				'margin: -20px auto 0 auto; opacity: 0.85; padding: 10px;' +
+				'position: absolute; right: 0; text-align: left; top: 0 !important; min-width: 280px; max-width: 1000px; }';
+        info.txt = '<a href=""><h1>Leap-enabled hand navigation</h1></a>';
+        info.innerHTML = info.txt + 'With your Leap Motion controller:<br>Swipe side-to-side: Freeze/Unfreeze. Fist: stand in place and look around. ' +
+		'<br>Open hand: Move forward/backward, left/right, up/down<br><br>' +
+			'based on FlyingLeap3D built by Theo (2013-08-24) for Nico';
 
         handController.RegisterAction("SelectAssetOnHover", selectAssetOnHover);
 
