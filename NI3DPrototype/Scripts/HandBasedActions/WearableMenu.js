@@ -127,7 +127,7 @@ window.scene.add(wearable);
 var moveWearableWithHand = {
     action: function (hand) {
         if (hand.type === 'left') {
-            wearable.position.set(hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2]);
+            wearable.position.set(hand.palmPosition[0], hand.palmPosition[1], hand.palmPosition[2]);
             wearable.rotation.set(hand.pitch(), -hand.yaw(), hand.roll());
             leftHandLastVisible = new Date();
             leftHandPalmPosition = new THREE.Vector3().fromArray(hand.fingers[1].tipPosition)
