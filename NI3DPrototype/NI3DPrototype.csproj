@@ -80,6 +80,7 @@
     <Content Include="Libs\THREEJS\three.js" />
     <Content Include="Libs\THREEJS\three.min.js" />
     <Content Include="main.html" />
+    <Content Include="NUINavigation.html" />
     <Content Include="PhysicsEnabled.html" />
     <Content Include="rotation.html" />
     <Content Include="scaleDemo.html" />
@@ -91,9 +92,11 @@
     <Content Include="Scripts\FrameActions.js" />
     <Content Include="Scripts\FrameActions\AddHandlesToSelectedAssets.js" />
     <Content Include="Scripts\FrameActions\CustomHand.js" />
+    <Content Include="Scripts\FrameActions\NUINavigation.js" />
     <Content Include="Scripts\Gestures\SingleHandGesture.js" />
     <Content Include="Scripts\HandBasedActions\ClearActionVariables.js" />
     <Content Include="Scripts\HandBasedActions\FreeScale.js" />
+    <Content Include="Scripts\HandBasedActions\FirstPersonControls.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtonChildOption.js" />
     <Content Include="Scripts\HandBasedActions\NewShapesMenuButton_Physics.js" />
     <Content Include="Scripts\HandBasedActions\NewShapesMenuButton.js" />
