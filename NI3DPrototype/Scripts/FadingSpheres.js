@@ -1,11 +1,6 @@
 ﻿var fadingSpheres = [];
 var sphereTTL = 7;
 
-
-
-if (frameActions)
-    frameActions.RegisterAction("RemoveDeadSpheres", function (frame) { fadingSpheres.forEach(removeDeadSpheres) });
-
 var createFadingSpheresAtFingerTips =
     {
         action: function (hand)
@@ -56,3 +51,13 @@ function removeDeadSpheres(fadingSphere, number, array) {
         }
     }
 }
+
+if (frameActions)
+    frameActions.RegisterAction("CreateAndRemoveSpheres",
+        function (frame) {
+            frame.hands.forEach(
+                function (hand) {
+                    createFadingSpheresAtFingerTips.action(hand);
+                });
+            fadingSpheres.forEach(removeDeadSpheres)
+        });
