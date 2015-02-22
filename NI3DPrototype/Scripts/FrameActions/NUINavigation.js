@@ -1,6 +1,8 @@
 ﻿/// <reference path="../FrameActions.js" />
 
-function isHandInPlaneMode(hand) {
+function isHandInAirplaneMode(hand) {
+    //Airplane mode = if the index, middle, and ring are together while the thumb and pinky are stretched out
+    //TODO: use the tip, pip, and dip positions of the fingers to determine if sufficient angles formed between fingers
     return true;
 }
 
@@ -10,7 +12,7 @@ frameActions.RegisterAction("NavigateViaNUI",
 
         if (frame.hands.length >= 1 ||
             //TODO: make it so that it's either hand
-            isHandInPlaneMode(frame.hand[0])) {
+            isHandInAirplaneMode(frame.hand[0])) {
             
             hand = frame.hands[0];
 
@@ -32,6 +34,8 @@ frameActions.RegisterAction("NavigateViaNUI",
                 pitchAng = -900 * Math.atan2(hand.direction[1], -hand.direction[2]);
                 controls.mouseY = pitchAng;
 
+                var tmp = (controls.freeze) ? 'class=red' : '';
+
                 info.innerHTML = info.txt + 'freeze: <scan ' + tmp + '>' + controls.freeze + '</scan> lookSpeed: ' + controls.lookSpeed.toFixed(3) + ' movementSpeed:  ' + controls.movementSpeed
                 + '<br>' +
                 'hand.x: ' + hand.stabilizedPalmPosition[0].toFixed(0) + ' hand.y: ' + hand.stabilizedPalmPosition[1].toFixed(0) + ' hand.z: ' + hand.stabilizedPalmPosition[2].toFixed(0)
@@ -39,10 +43,14 @@ frameActions.RegisterAction("NavigateViaNUI",
                 'pitchAng: ' + pitchAng.toFixed(2) + ' yawAng: ' + yawAng.toFixed(2) 
                 + '<br>' +
                 'pitchAng: ' + hand.pitch().toFixed(2) + ' yawAng: ' + hand.yaw().toFixed(2) + ' rollAng:' + hand.roll().toFixed(2);
-                /*
+                
                 //} else {
                 // yawAng = 0;
                 //}
+
+                /*
+                //The code below is what makes it just sink through the floor...
+                //Removing this for now until I could figure out the other issues with the code above
 
                 if (frame.pointables.length > 1) {
                     if (hand.stabilizedPalmPosition[2] < 0) {
@@ -78,12 +86,6 @@ frameActions.RegisterAction("NavigateViaNUI",
                 }
 
                 */
-                var tmp = (controls.freeze) ? 'class=red' : '';
-
-                //info.innerHTML = info.txt + 'freeze: <scan ' + tmp + '>' + controls.freeze + '</scan> lookSpeed: ' + controls.lookSpeed.toFixed(3) + ' movementSpeed:  ' + controls.movementSpeed +
-                //' mouseX: ' + controls.mouseX.toFixed() + ' mouseY: ' + controls.mouseY.toFixed() + '<br>' +
-                //'hand.x: ' + hand.stabilizedPalmPosition[0].toFixed(0) + ' hand.y: ' + hand.stabilizedPalmPosition[1].toFixed(0) + ' hand.z: ' + hand.stabilizedPalmPosition[2].toFixed(0) + '<br>' +
-                //'pitchAng: ' + pitchAng.toFixed(2) + ' yawAng: ' + yawAng.toFixed(2) ;
             }
         }
         else {
