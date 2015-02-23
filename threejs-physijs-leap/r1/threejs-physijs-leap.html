@@ -46,16 +46,22 @@
 
 		var info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'color: #fff; margin: 20px; position: absolute; ';
+<<<<<<< HEAD
 		info.innerHTML = '<a href="" style=color:#fff; ><h1>' + document.title + '</h1></a>' +
 			'<div id=msg>Instructions<br>' +
+=======
+
+		info.innerHTML = '<a href="" style=color:#fff;visibility:hidden ><h1>' + document.title + '</h1></a>' +
+			'<div id=msg style=visibility:hidden>Instructions<br>' +
+>>>>>>> origin/master
 				'Make fist and the just extend index finger<br>' +
 				'Touch cube with index finger tip to move up into the air and rotate.<br>' +
 				'Extend thumb to exit cube editing - and move tip freely.<br>' +
 				'Note that as you \'let go\' cube drops to table.<br>' +
 				'WIP. /many things need to be adjusted...<br>' +
-			'<div>' +	
-			'<div id=handData ></div>' +
-			'<div id=fingerData ></div>' +
+			'</div>' +	
+			'<div id=handData style=visibility:hidden></div>' +
+			'<div id=fingerData style=visibility:hidden></div>' +
 		'';
 
 		stats = new Stats();
@@ -73,7 +79,11 @@
 		controls = new THREE.TrackballControls( camera, renderer.domElement );
 
 		scene = new Physijs.Scene( { reportsize: 50, fixedTimeStep: 1 / 60 } );   // defaults
+<<<<<<< HEAD
 		scene.setGravity( new THREE.Vector3( 0, -30.0, 0 ));
+=======
+		scene.setGravity( new THREE.Vector3( 0, -15.0, 0 ));
+>>>>>>> origin/master
 		scene.addEventListener( 'update', function() {
 			scene.simulate( undefined, 1 );
 		} );
@@ -109,8 +119,8 @@
 		
 // Table
 
-		var friction = .8; // high friction
-		var restitution = .3; // low restitution
+		var friction = 1; // high friction
+		var restitution = 0; // low restitution
 
 		table_material = Physijs.createMaterial(
 		
@@ -123,7 +133,7 @@
 		// Table
 		
 		friction = 1; // 0.8 high friction
-		restitution = 1; // 0.2 low restitution		
+		restitution = 0; // 0.2 low restitution		
 		table = new Physijs.BoxMesh(
 			new THREE.BoxGeometry( 600, 5, 300 ),
 			table_material,
@@ -145,21 +155,21 @@
 // Blocks
 
 		friction = 1; // 0.8 high friction
-		restitution = 1; // 0.2 low restitution	
+		restitution = 0; // 0.2 low restitution	
 		block_material = Physijs.createMaterial(
 			new THREE.MeshLambertMaterial({ color: 0xff0000, ambient: 0xFFFFFF }),
 			friction, // medium friction
 			restitution // medium restitution
 		);
 
-		friction = 0; // 0.8 high friction
-		restitution = 1; // 0.2 low restitution	
+		friction = 1; // 0.8 high friction
+		restitution = 0; // 0.2 low restitution	
 		
 		for (var i = 0; i < 5; i++) {
 
 			var mesh = new Physijs.BoxMesh(
 			geometry = new THREE.BoxGeometry( 50, 50, 50 ),
-				block_material, 0
+				block_material, 1
 			);
 
 			mesh.position.set( 60 * i - 100, 27 , 0 );

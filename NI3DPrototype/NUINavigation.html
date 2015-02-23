@@ -90,19 +90,20 @@
     <script src="Scripts/Utils/GestureTimer.js"></script>
     <script src="Scripts/Utils/HoveredAndPressedDetection.js"></script>
     <script type="text/javascript">
-        var useNUIConrols = false;
+        var useNUIConrols = true;
     </script>
     <script src="Scripts/Scene/SceneSetup.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
-    <script src="Scripts/LeapLoopSetup.js"></script>
+    <script src="Scripts/LeapLoopSetup_Physics.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
 
     <script src="Scripts/FrameActions.js"></script>
     <script src="Scripts/HandController.js"></script>
     <script src="Scripts/HandsPositionAdjustment.js"></script>
 
+    <script src="Scripts/FrameActions/CustomHand.js"></script>
     <!--<script src="Scripts/FadingSpheres.js"></script>-->
-    <!--<script src="Scripts/FrameActions/NUINavigation.js"></script>-->
+    <script src="Scripts/FrameActions/NUINavigation.js"></script>
 
     <!--Gestures-->
     <script src="Scripts/Gestures/SingleHandGesture.js"></script>
@@ -127,33 +128,36 @@
     <script src="Scripts/AssetManager.js"></script>
 
     <script>
-        //handController.RegisterAction("DrawPinchLine", drawPinchLine);
+        var info = document.body.appendChild(document.createElement('div'));
+        info.style.cssText = 'background-color: #eee; border-radius: 8px; color: #333; left: 0; ' +
+				'margin: -20px auto 0 auto; opacity: 0.85; padding: 10px;' +
+				'position: absolute; right: 0; text-align: left; top: 0 !important; min-width: 280px; max-width: 1000px; }';
+        info.txt = '<a href=""><h1>Leap-enabled hand navigation</h1></a>';
+        info.innerHTML = info.txt + 'With your Leap Motion controller:<br>Swipe side-to-side: Freeze/Unfreeze. Fist: stand in place and look around. ' +
+		'<br>Open hand: Move forward/backward, left/right, up/down<br><br>' +
+			'based on FlyingLeap3D built by Theo (2013-08-24) for Nico';
 
         handController.RegisterAction("SelectAssetOnHover", selectAssetOnHover);
 
         frameActions.RegisterAction("UpdateBoundingBoxesOfSelectedAssets", updateBoundingBoxesOfSelectedAssets);
 
-        $(document).keypress(function (event)
-        {
+        $(document).keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             var keyChar = String.fromCharCode(keycode);
 
-            if (keycode == '13')
-            {
+            if (keycode == '13') {
                 var box = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
                 box.position.set(0, 0, 0);
-				box.castShadow = true;
-				box.receiveShadow = true;
+                box.castShadow = true;
+                box.receiveShadow = true;
                 box.isAsset = true;
-                box.name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
-                {
+                box.name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                     return v.toString(16);
                 });
                 window.scene.add(box);
 
-                if (!action)
-                {
+                if (!action) {
                     action = new CreateAction();
                     action.Initialize(box);
 
@@ -163,13 +167,11 @@
                 }
             }
 
-            if (keyChar === 'u')
-            {
+            if (keyChar === 'u') {
                 actionManager.Undo();
             }
 
-            if (keyChar === 'r')
-            {
+            if (keyChar === 'r') {
                 actionManager.Redo();
             }
         });

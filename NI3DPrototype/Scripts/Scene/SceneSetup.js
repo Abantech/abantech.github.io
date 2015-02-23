@@ -1,6 +1,8 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 var sceneArea = 200;
 var sceneLights;
+var clock = new THREE.Clock();
+var updateControls;
 
 var initScene = function () {
     window.scene = new THREE.Scene();
@@ -25,9 +27,10 @@ var initScene = function () {
     window.camera.position.z = sceneArea;
     window.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-    controls = new THREE.OrbitControls(window.camera);
-    controls.damping = 0.2;
- //   controls.addEventListener('change', renderer.render);
+    if (useNUIConrols)
+        addFirstPersonControls();
+    else
+        addOrbitControls();
 
     window.addEventListener('resize', function () {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -41,55 +44,80 @@ var initScene = function () {
 
 };
 
-	var createRandomCones = function(coneCount) {
-	
-		var geometry = new THREE.CylinderGeometry(0, 10, 30, 24, 0);
-		var material = new THREE.MeshLambertMaterial({ color: 0xffffff })
-		//.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading });
+var addOrbitControls = function () {
+    controls = new THREE.OrbitControls(window.camera);
+    controls.damping = 0.2;
+    //   controls.addEventListener('change', renderer.render);
+    updateControls = function () { controls.update(); }
+}
 
-		for (var i = 0; i < coneCount; i++) {
-			var mesh = new THREE.Mesh(geometry, material);
-			mesh.position.x = (Math.random() - 0.5) * 300;
-			mesh.position.y = (Math.random() ) * 200;
-			mesh.position.z = (Math.random() - 0.5) * 300;
+var addFirstPersonControls = function () {
+    controls = new THREE.FirstPersonControls(window.camera);
+
+    controls.lookSpeed = 0.015; // 0.0125;
+    controls.lookSpeedMin = 0.005;
+    controls.lookSpeedMax = 0.5;
+    controls.movementSpeed = 50;
+    controls.movementSpeedMin = 20;
+    controls.movementSpeedMax = 300;
+    controls.noFly = false;
+    controls.lookVertical = true;
+    controls.constrainVertical = true;
+    controls.verticalMin = 1.5;
+    controls.verticalMax = 2.0;
+
+    updateControls = function () { controls.update(clock.getDelta()) }
+}
+
+var createRandomCones = function(coneCount) {
+	
+	var geometry = new THREE.CylinderGeometry(0, 10, 30, 24, 0);
+	var material = new THREE.MeshLambertMaterial({ color: 0xffffff })
+	//.MeshLambertMaterial({ color: 0xffffff, shading: THREE.FlatShading });
+
+	for (var i = 0; i < coneCount; i++) {
+		var mesh = new THREE.Mesh(geometry, material);
+		mesh.position.x = (Math.random() - 0.5) * 300;
+		mesh.position.y = (Math.random() ) * 200;
+		mesh.position.z = (Math.random() - 0.5) * 300;
 //			mesh.updateMatrix();
 //			mesh.matrixAutoUpdate = false;
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
-			window.scene.add(mesh);
-		}
-	};
-
-	var createGroundPlane = function() {
-
-		var geometry = new THREE.BoxGeometry( 800, 5, 800 );
-		var material = new THREE.MeshPhongMaterial( {
-		    color: 0x008080,
-		    ambient: 0x008080,
-		    specular: 0xee3344,
-			shininess: 50,
-			side: THREE.DoubleSide
-		} );
-
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -50.1, 0 );
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
-		window.scene.add( mesh );
-			
-			
-		var boxHelper = new THREE.BoxHelper( mesh );
-		boxHelper.material.color.setRGB( 1, 0, 1 );
-		scene.add( boxHelper );
-		
-		var gridHelper = new THREE.GridHelper( 400, 10 );
-		gridHelper.position.set( 0, -47.5, 0 );
-		scene.add( gridHelper );
-		
-		var axisHelper = new THREE.AxisHelper( 50 );
-		axisHelper.position.set( 0, -47.5, 0 );
-		scene.add( axisHelper );		
+		window.scene.add(mesh);
 	}
+};
+
+var createGroundPlane = function() {
+
+	var geometry = new THREE.BoxGeometry( 800, 5, 800 );
+	var material = new THREE.MeshPhongMaterial( {
+		color: 0x008080,
+		ambient: 0x008080,
+		specular: 0xee3344,
+		shininess: 50,
+		side: THREE.DoubleSide
+	} );
+
+	mesh = new THREE.Mesh( geometry, material );
+	mesh.position.set( 0, -50.1, 0 );
+	mesh.castShadow = true;
+	mesh.receiveShadow = true;
+	window.scene.add( mesh );
+			
+			
+	var boxHelper = new THREE.BoxHelper( mesh );
+	boxHelper.material.color.setRGB( 1, 0, 1 );
+	scene.add( boxHelper );
+		
+	var gridHelper = new THREE.GridHelper( 400, 10 );
+	gridHelper.position.set( 0, -47.5, 0 );
+	scene.add( gridHelper );
+		
+	var axisHelper = new THREE.AxisHelper( 50 );
+	axisHelper.position.set( 0, -47.5, 0 );
+	scene.add( axisHelper );		
+}
 
 var createSceneLighting = function() {
 
@@ -149,11 +177,11 @@ createGroundPlane();
 createBackgroundGradient();
 animate();
 
-
-	function animate( timestamp ) {
-		renderer.render( scene, camera );
-		controls.update();
+function animate( timestamp ) {
+	renderer.render( scene, camera );
+	updateControls();
+	//controls.update();
 //		stats.update();
-		requestAnimationFrame( animate );
+	requestAnimationFrame( animate );
 
-	}
+}

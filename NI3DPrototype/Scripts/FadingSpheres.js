@@ -1,14 +1,8 @@
 ﻿var fadingSpheres = [];
-var sphereTTL = 7;
+var sphereTTL = 14;
 
-
-
-if (frameActions)
-    frameActions.RegisterAction("RemoveDeadSpheres", function (frame) { fadingSpheres.forEach(removeDeadSpheres) });
-
-var createFadingSpheresAtFingerTips =
-    {
-        action: function (hand)
+var createFadingSpheresAtFingerTips = 
+        function (hand)
         {
             function createSphereAtFingerTip(fingerIndex, colorHex)
             {
@@ -22,12 +16,12 @@ var createFadingSpheresAtFingerTips =
             createSphereAtFingerTip(3, 0x8FB258) //Ring
             createSphereAtFingerTip(4, 0x336699) //pinky
         }
-    }
 
-function FadingSphere(position, size, meshColor) {
+function FadingSphere(position, size, meshColor)
+{
     //Draw the sphere at the position of the indexfinger tip position
     var geometry = new THREE.SphereGeometry(3, 8, 8);
-    var material = new THREE.MeshLambertMaterial({ color: meshColor });
+    var material = new THREE.MeshLambertMaterial({ color: meshColor, transparent: true });
 
     var mesh = new THREE.Mesh(geometry, material);
 
@@ -41,18 +35,36 @@ function FadingSphere(position, size, meshColor) {
     fadingSpheres.push(this);
 
     this.ttl = sphereTTL;
-    this.updateToRemove = function () {
-        this.ttl--;
-        return (this.ttl <= 0);
-    }
+    this.updateToRemove =
+        function ()
+        {
+            this.ttl--;
+            this.sphere.material.opacity = this.ttl / sphereTTL;
+            return (this.ttl <= 0);
+        }
 }
 
-function removeDeadSpheres(fadingSphere, number, array) {
-    if (fadingSphere) {
-        if (fadingSphere.updateToRemove()) {
+function removeDeadSpheres(fadingSphere, number, array)
+{
+    if (fadingSphere)
+    {
+        if (fadingSphere.updateToRemove())
+        {
             window.scene.remove(fadingSphere.sphere);
             var index = array.indexOf(fadingSphere);
             array.splice(index, 1);
         }
     }
+}
+
+if (frameActions)
+{
+    frameActions.RegisterAction("CreateAndRemoveSpheres",
+       function (frame) {
+           frame.hands.forEach(
+               function (hand) {
+                   createFadingSpheresAtFingerTips(hand);
+               });
+           fadingSpheres.forEach(removeDeadSpheres)
+       });
 }

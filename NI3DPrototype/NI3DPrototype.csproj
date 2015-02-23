@@ -80,6 +80,7 @@
     <Content Include="Libs\THREEJS\three.js" />
     <Content Include="Libs\THREEJS\three.min.js" />
     <Content Include="main.html" />
+    <Content Include="NUINavigation.html" />
     <Content Include="PhysicsEnabled.html" />
     <Content Include="rotation.html" />
     <Content Include="scaleDemo.html" />
@@ -90,10 +91,14 @@
     <Content Include="Scripts\FadingSpheres.js" />
     <Content Include="Scripts\FrameActions.js" />
     <Content Include="Scripts\FrameActions\AddHandlesToSelectedAssets.js" />
+    <Content Include="Scripts\FrameActions\CustomHand.js" />
+    <Content Include="Scripts\FrameActions\NUINavigation.js" />
     <Content Include="Scripts\Gestures\SingleHandGesture.js" />
     <Content Include="Scripts\HandBasedActions\ClearActionVariables.js" />
     <Content Include="Scripts\HandBasedActions\FreeScale.js" />
+    <Content Include="Scripts\HandBasedActions\FirstPersonControls.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtonChildOption.js" />
+    <Content Include="Scripts\HandBasedActions\NewShapesMenuButton_Physics.js" />
     <Content Include="Scripts\HandBasedActions\NewShapesMenuButton.js" />
     <Content Include="Scripts\HandBasedActions\SelectHoveredAsset.js" />
     <Content Include="Scripts\Gestures\FingerHovere.js" />
@@ -109,6 +114,7 @@
     <Content Include="Scripts\LeapLoopSetup.js" />
     <Content Include="Libs\Physics\ammo.js" />
     <Content Include="Libs\Physics\physijs_worker.js" />
+    <Content Include="Scripts\LeapLoopSetup_Physics.js" />
     <Content Include="Scripts\references.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
@@ -142,16 +148,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50944</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50944/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

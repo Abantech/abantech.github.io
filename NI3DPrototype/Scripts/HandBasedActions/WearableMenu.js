@@ -90,15 +90,33 @@ createWearableButton("Cut", 0x7401DF, 24, 0, 125, 1.8, function (button) { copyO
         function (button) { return assetManager.GetSelectedAssets().length > 0; }
     );
 
-var undoButton = createWearableButton("Undo", 0xcc0000, 0, 20, 75, 2.8, function (button) { actionManager.Undo(); },
-        function (button) { return true; }
+var lastTimeUndoRedoPressed = new Date()
+
+var undoButton = createWearableButton("Undo", 0xcc0000, 0, 20, 75, 2.8,
+        function (button)
+        {
+            lastTimeUndoRedoPressed = new Date()
+            actionManager.Undo();
+        },
+        function (button)
+        {
+            return (new Date() - lastTimeUndoRedoPressed > 1000);
+        }
     );
 
 undoButton.buttonMesh.rotation.x = 1.5;
 undoButton.buttonMesh.rotation.z = -1.5;
 
-var redoButton = createWearableButton("Redo", 0x00cc00, 0, 22, 105, 2.8, function (button) { actionManager.Redo(); },
-        function (button) { return true; }
+var redoButton = createWearableButton("Redo", 0x00cc00, 0, 22, 105, 2.8, 
+            function (button)
+            {
+                lastTimeUndoRedoPressed = new Date()
+                actionManager.Redo();
+            },
+            function (button)
+            {
+                return (new Date() - lastTimeUndoRedoPressed > 1000);
+            }
     );
 
 redoButton.buttonMesh.rotation.x = 1.5;
@@ -109,7 +127,7 @@ window.scene.add(wearable);
 var moveWearableWithHand = {
     action: function (hand) {
         if (hand.type === 'left') {
-            wearable.position.set(hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2]);
+            wearable.position.set(hand.palmPosition[0], hand.palmPosition[1], hand.palmPosition[2]);
             wearable.rotation.set(hand.pitch(), -hand.yaw(), hand.roll());
             leftHandLastVisible = new Date();
             leftHandPalmPosition = new THREE.Vector3().fromArray(hand.fingers[1].tipPosition)

@@ -1,6 +1,6 @@
 ﻿var axis = null;
 var rotationAction = null
-var snapRotation = false;
+var snapRotation = true;
 var snapAngle;
 
 function setSnapAngle(degrees)
@@ -120,7 +120,6 @@ function getPinchedObject(hand)
     return closestObject;
 }
 
-snapRotation = true;
 setSnapAngle(30);
 
 rightHandPinchGesture.registerOnFullGesture(
