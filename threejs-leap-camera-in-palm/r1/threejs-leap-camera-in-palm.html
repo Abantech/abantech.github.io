@@ -16,6 +16,8 @@
 	var handies = {};
 	var loop = {};
 
+	var cameraBot, cameraInPalm, cameraHelper;
+
 	var info, stats, renderer, scene, camera, controls;
 
 	init();
@@ -28,6 +30,10 @@
 
 		info.style.cssText = 'left: 20px; position: absolute; ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div>' +
+				'<button onclick=initCameraInPalm(); >Camera in Palm</button> ' +
+				'<button onclick=orbitControlsCamera(); >Orbit Controls Camera</button>' +
+			'</div>' +
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +
 		'';
@@ -65,16 +71,44 @@
 
 	}
 
+	function initCameraInPalm() {
+
+		actionCamera = camera;
+
+		if ( cameraBot ) { scene.remove( cameraBot ); }
+		cameraBot = new THREE.Object3D();
+		scene.add( cameraBot );
+
+		if ( cameraInPalm ) { cameraBot.remove( cameraInPalm ); }
+
+		cameraInPalm = new THREE.PerspectiveCamera( 84, window.innerWidth / window.innerHeight, 0.01, 5000 );
+		cameraInPalm.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 100, 150 ) );
+		cameraBot.add( cameraInPalm );
+
+		if ( cameraHelper ) { cameraBot.remove( cameraHelper ); }
+ 
+		cameraHelper = new THREE.CameraHelper( cameraInPalm );
+		cameraBot.add( cameraHelper );
+
+		camera = cameraInPalm;
+
+	}
+
+	function orbitControlsCamera() {
+		camera = actionCamera;
+	}
+
+
 	loop.animate = function( frame ) {
 
 		frame.hands.forEach( function( hand, index ) {
 
-			var handy = ( handies[index] || ( handies[index] = new Handy()) );
+			var handy = ( handies[index] || ( handies[index] = new Handy()) );    
 			handy.outputData( index, hand );
 
 			hand.fingers.forEach( function( finger, index ) {
 
-				var fingerling = ( fingerlings[index] || ( fingerlings[index] = new Fingerling() ) );
+				var fingerling = ( fingerlings[index] || ( fingerlings[index] = new Fingerling() ) );  
 				fingerling.outputData( index, finger );
 
 			});
@@ -101,13 +135,19 @@
 
 		handy.outputData = function( index, hand  ) {
 
-			msg.innerHTML = 'Hand id:' + index + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) +
+			msg.innerHTML = 'Hand id:' + index + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) + 
 				' y:' + hand.stabilizedPalmPosition[1].toFixed(0) + ' z:' + hand.stabilizedPalmPosition[2].toFixed(0);
 
 			box.position.set( hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2] );
 
 			box.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
 
+			if ( cameraBot ) {
+
+				cameraBot.position.set( box.position.x, box.position.y, box.position.z ); //.set( pos.x, pos.y, pos.z );
+				cameraBot.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
+
+			}
 		};
 
 	};
@@ -127,7 +167,7 @@
 		fingerling.outputData = function( index, finger ) {
 
 			msg.innerHTML = 'Finger Method: ' +
-				'finger id:' + index + ' tip x:' + finger.tipPosition[0].toFixed(0) +
+				'finger id:' + index + ' tip x:' + finger.tipPosition[0].toFixed(0) + 
 				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
 			tip.position.set( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2] );
@@ -166,7 +206,7 @@
 		fingerling.outputData = function( index, finger ) {
 
 			msg.innerHTML = 'Bone Method ~ ' +
-				'finger tip: ' + index + ' x:' + finger.tipPosition[0].toFixed(0) +
+				'finger tip: ' + index + ' x:' + finger.tipPosition[0].toFixed(0) + 
 				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
 //console.log( finger );
@@ -184,7 +224,7 @@
 			}
 
 // Eventually will look at using bone.basis XYZ-axis data; Will it produce more concise code?
-
+  
 			phalanges[3].lookAt( v( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2]  ) );
 			phalanges[2].lookAt( v( finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2]  ) );
 			phalanges[1].lookAt( v( finger.pipPosition[0], finger.pipPosition[1], finger.pipPosition[2]  ) );
@@ -215,10 +255,11 @@
 
 	}
 
-	function v(  x, y, z){ return new THREE.Vector3( x, y, z ); }
+	function v( x, y, z){ return new THREE.Vector3( x, y, z ); }
 
 // This allows us to move even while in an iFrame.
-	Leap.loopController.setBackground(true)
+	Leap.loopController.setBackground( true );
+
 
 
 </script>

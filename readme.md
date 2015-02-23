@@ -25,6 +25,10 @@ Updated Greg, James, Theo ~ 2015-01-31
 
 ***
 
+Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/threejs-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
+Source code: [Three.js Camera in Palm]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-camera-in-palm )  
+Added: Theo ~ 2015-02-23 ~ The camera as a Leap wearable.
+
 Demo: [Three.js Physijs Leap]( http://abantech.github.io/threejs-physijs-leap/r1/threejs-physijs-leap.html )  
 Source code: [Three.js Physijs Leap]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-physijs-leap )  
 Added: Theo ~ 2015-01-30 ~ WIP Three.js Physi.js Leap demo.
