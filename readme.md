@@ -22,7 +22,7 @@ Updated Greg ~ 2015-02-21
 
 ***
 
-Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/threejs-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
+Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/threejs-leap-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
 Source code: [Three.js Camera in Palm]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-camera-in-palm )  
 Added: Theo ~ 2015-02-23 ~ The camera as a Leap wearable.
 
