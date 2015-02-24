@@ -31,7 +31,7 @@ function LEAPToSceneConverter()
             var currentPosition = new THREE.Vector3(window.camera.position.x, window.camera.position.y, window.camera.position.z);
 
             // Get the ratio of the difference between the last position and the current position
-            var differenceRatio = mathHelper.FindScalar(lastPosition, currentPosition);
+            var differenceRatio = currentPosition.distanceTo(new THREE.Vector3(0, 0, 0)) / lastPosition.distanceTo(new THREE.Vector3(0, 0, 0));
 
             // Change the scalar by the ratio of the different distances
             var newScalar = scalar.x * differenceRatio;
