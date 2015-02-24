@@ -100,7 +100,7 @@ function getPinchedObjectForScale(hand)
                     {
                         var position = new THREE.Vector3();
                         position.setFromMatrixPosition(sceneObject.children[j].children[k].cone.matrixWorld);
-                        var distance = mathHelper.DistanceBetweenPoints(indexTipVector, position);
+                        var distance = indexTipVector.distanceTo(position);
 
                         if (distance < 50)
                         {

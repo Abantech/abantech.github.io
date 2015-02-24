@@ -97,7 +97,7 @@ function getPinchedObject(hand)
         var sceneObject = window.scene.children[i];
         if (sceneObject.isAsset && !sceneObject.isSelected)
         {
-            var distance = mathHelper.DistanceBetweenPoints(indexTipVector, sceneObject.position);
+            var distance = indexTipVector.distanceTo(sceneObject.position);
             if (distance < 50)
             {
                 if (closestObject)
