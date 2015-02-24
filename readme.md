@@ -28,6 +28,8 @@ Updated Greg ~ 2015-02-21
 Updated Greg - 2015-02-24
 
  - Created a simplified version of the prototype which still uses the same system for dependency injection
+ 
+ 
 ***
 
 Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/threejs-leap-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
