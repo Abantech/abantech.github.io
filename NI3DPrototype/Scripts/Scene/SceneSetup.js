@@ -27,9 +27,11 @@ var initScene = function () {
     window.camera.position.z = sceneArea;
     window.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-    if (useNUIConrols)
-        addFirstPersonControls();
-    else
+    if (typeof (useNUIConrols) != 'undefined')
+        if (useNUIConrols)
+            addFirstPersonControls();
+
+    if (!updateControls)
         addOrbitControls();
 
     window.addEventListener('resize', function () {
