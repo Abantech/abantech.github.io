@@ -22,6 +22,16 @@ Updated Greg ~ 2015-02-21
 
 ***
 
+ - [NI 3D prototype Beginner Sandbox] ( http://abantech.github.io/NI3DPrototype/BeginnerSandbox.html )
+ - Source Code: [NI 3D prototype Beginner Sandbox]( https://github.com/Abantech/abantech.github.io/blob/master/NI3DPrototype/BeginnerSandbox.html )
+
+Updated Greg - 2015-02-24
+
+ - Created a simplified version of the prototype which still uses the same system for dependency injection
+ 
+ 
+***
+
 Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/threejs-leap-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
 Source code: [Three.js Camera in Palm]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-camera-in-palm )  
 Added: Theo ~ 2015-02-23 ~ The camera as a Leap wearable.
