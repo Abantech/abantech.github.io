@@ -22,7 +22,7 @@ Updated Greg ~ 2015-02-21
 
 ***
 
- - [NI 3D prototype Beginner Sandbox] ( http://abantech.github.io/NI3DPrototype/BeginnerSandbox.html )
+ - [NI 3D prototype Beginner Sandbox]( http://abantech.github.io/NI3DPrototype/BeginnerSandbox.html )  
  - Source Code: [NI 3D prototype Beginner Sandbox]( https://github.com/Abantech/abantech.github.io/blob/master/NI3DPrototype/BeginnerSandbox.html )
 
 Updated Greg - 2015-02-24
