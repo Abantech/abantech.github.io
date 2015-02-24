@@ -11,30 +11,11 @@
     <script src="Libs/THREEJS/three.min.js"></script>
     <script src="Libs/THREEJS/OrbitControls.js"></script>
     <script src="Libs/THREEJS/Detector.js"></script>
-    <script src="Libs/THREEJS/stats.min.js"></script>
 
     <script src="Libs/Leap/leap-0.6.4.min.js"></script>
     <script src="Libs/Leap/leap-plugins-0.1.10.min.js"></script>
-    <script src="Libs/Leap/leap-plugins-0.1.10-utils.min.js"></script>
-    <script src="Libs/Leap/leap-widgets-0.1.0.min.js"></script>
-    <script src="Libs/Leap/leap.rigged-hand-0.1.6.js"></script>
     <!-- END internal references -->
-    <script src="http://leapmotion.github.io/leapjs-widgets/src/leap.proximity.js"></script>
 
-    <!-- BEGIN external references -->
-    <!--
-    <script src="http://code.jquery.com/jquery-2.1.1.js"></script>
-    <script src="http://threejs.org/build/three.js"></script>
-    <script src="http://threejs.org/examples/js/controls/orbitcontrols.js"></script>
-    <script src="http://threejs.org/examples/js/detector.js"></script>
-    <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
-
-    <script src="http://js.leapmotion.com/leap-0.6.4.js"></script>
-    <script src="http://js.leapmotion.com/leap-plugins-0.1.10.js"></script>
-    <script src="http://js.leapmotion.com/leap.rigged-hand-0.1.6.js"></script>
-    -->
-    <!-- END external references-->
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 </head>
 <body>
     <!-- BEGIN BOILERPLATE CODE -->
@@ -45,17 +26,17 @@
     <!--  This class attaches functions to the transform plugin to re-orient the hands after the camera moves -->
     <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
 
-    <!-- Simply the leap loop -->
+    <!-- Simply the leap loop and transform plugin -->
     <script src="Scripts/LeapLoopSetup-NoHandPlugins.js"></script>
 
     <!-- Not really sure why James needs here here but I think it's related to LEAPToSceneConverter 
-        needing to be called after the transform plugin is attached (not real sure - opportunity to help)... -->
+        needing to be called after the transform plugin is attached ... -->
     <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
 
-    <!-- A very simple struct that just holds an array of all the actions -->
+    <!-- A very simple struct that just holds an array of all the actions, THIS is the mechanism that allows our DI to work -->
     <script src="Scripts/FrameActions.js"></script>
 
-    <!-- Shortcut used specifically for the hand-based actions that are injected. -->
+    <!-- Shortcut used specifically for the hand-based actions that are injected (optional secondary DI mechanism) -->
     <script src="Scripts/HandController.js"></script>
     
     <!-- This is to adjust the hand position in the scene; should be made user adjustable later but for now just hard-coded to use -100 y-->
