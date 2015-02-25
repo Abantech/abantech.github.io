@@ -65,9 +65,6 @@
         // Checks if the distance between the thumb and index meets the minimum requirement for the gesture.
         if (this.singleHandGesture.gestureAction && this.singleHandGesture.gestureAction(hand))
         {
-            //console.log("James distance: " + mathHelper.DistanceBetweenPoints(indexTipVector, thumbTipVector));
-            //console.log("ThreeJS distance" + indexTipVector.distanceTo(thumbTipVector));
-
             // Fires the onBeginGesture registered events
             if (!this.singleHandGesture.gestureHasBegun)
             {

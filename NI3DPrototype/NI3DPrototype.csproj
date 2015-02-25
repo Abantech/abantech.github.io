@@ -57,6 +57,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BeginnerSandbox.html" />
+    <Content Include="CameraInHand.html" />
     <Content Include="fonts\helvetiker_bold.typeface.js" />
     <Content Include="fonts\helvetiker_regular.typeface.js" />
     <Content Include="Images\ball.png" />
@@ -82,6 +84,7 @@
     <Content Include="main.html" />
     <Content Include="NUINavigation.html" />
     <Content Include="PhysicsEnabled.html" />
+    <Content Include="PointerLockControls.html" />
     <Content Include="rotation.html" />
     <Content Include="scaleDemo.html" />
     <Content Include="Scripts\ActionTracking\ActionManager.js" />
@@ -96,10 +99,11 @@
     <Content Include="Scripts\Gestures\SingleHandGesture.js" />
     <Content Include="Scripts\HandBasedActions\ClearActionVariables.js" />
     <Content Include="Scripts\HandBasedActions\FreeScale.js" />
-    <Content Include="Scripts\HandBasedActions\FirstPersonControls.js" />
+    <Content Include="Scripts\Controls\FirstPersonControls.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtonChildOption.js" />
     <Content Include="Scripts\HandBasedActions\NewShapesMenuButton_Physics.js" />
     <Content Include="Scripts\HandBasedActions\NewShapesMenuButton.js" />
+    <Content Include="Scripts\Controls\PointerLockControls.js" />
     <Content Include="Scripts\HandBasedActions\SelectHoveredAsset.js" />
     <Content Include="Scripts\Gestures\FingerHovere.js" />
     <Content Include="Scripts\HandBasedActions\MenuButtons.js" />
@@ -114,7 +118,7 @@
     <Content Include="Scripts\LeapLoopSetup.js" />
     <Content Include="Libs\Physics\ammo.js" />
     <Content Include="Libs\Physics\physijs_worker.js" />
-    <Content Include="Scripts\LeapLoopSetup_Physics.js" />
+    <Content Include="Scripts\LeapLoopSetup-NoHandPlugins.js" />
     <Content Include="Scripts\references.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
@@ -124,6 +128,7 @@
     <Content Include="Scripts\Utils\GestureTimer.js" />
     <Content Include="Scripts\Utils\HoveredAndPressedDetection.js" />
     <Content Include="Scripts\Utils\MathHelper.js" />
+    <Content Include="Styles\style1.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
