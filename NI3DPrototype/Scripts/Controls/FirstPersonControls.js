@@ -8,6 +8,7 @@ THREE.FirstPersonControls = function (object, domElement) {
 
     this.object = object;
     this.target = new THREE.Vector3(0, 0, 0);
+    this.object.lookAt(this.target);
 
     this.domElement = (domElement !== undefined) ? domElement : document;
 
@@ -212,19 +213,19 @@ THREE.FirstPersonControls = function (object, domElement) {
         switch (event.keyCode) {
 
             case 38: /*up*/
-            case 87: /*W*/ this.moveForward = true; break;
+            case 87: /*W*/ this.moveForward = true; this.freeze = false; break;
 
             case 37: /*left*/
-            case 65: /*A*/ this.moveLeft = true; break;
+            case 65: /*A*/ this.moveLeft = true; this.freeze = false; break;
 
             case 40: /*down*/
-            case 83: /*S*/ this.moveBackward = true; break;
+            case 83: /*S*/ this.moveBackward = true; this.freeze = false; break;
 
             case 39: /*right*/
-            case 68: /*D*/ this.moveRight = true; break;
+            case 68: /*D*/ this.moveRight = true; this.freeze = false; break;
 
-            case 82: /*R*/ this.moveUp = true; break;
-            case 70: /*F*/ this.moveDown = true; break;
+            case 82: /*R*/ this.moveUp = true; this.freeze = false; break;
+            case 70: /*F*/ this.moveDown = true; this.freeze = false; break;
 
             case 81: /*Q*/ this.freeze = !this.freeze; break;
 
@@ -342,18 +343,18 @@ THREE.FirstPersonControls = function (object, domElement) {
     };
 
 
-    //this.domElement.addEventListener('contextmenu', function (event) { event.preventDefault(); }, false);
+    this.domElement.addEventListener('contextmenu', function (event) { event.preventDefault(); }, false);
 
-    //this.domElement.addEventListener('mousemove', bind(this, this.onMouseMove), false);
-    //this.domElement.addEventListener('mousedown', bind(this, this.onMouseDown), false);
-    //this.domElement.addEventListener('mouseup', bind(this, this.onMouseUp), false);
+    this.domElement.addEventListener('mousemove', bind(this, this.onMouseMove), false);
+    this.domElement.addEventListener('mousedown', bind(this, this.onMouseDown), false);
+    this.domElement.addEventListener('mouseup', bind(this, this.onMouseUp), false);
 
-    //// 2 new event listeners
-    //this.domElement.addEventListener('mousewheel', bind(this, this.onDocumentMouseWheel), false);
-    //this.domElement.addEventListener('DOMMouseScroll', bind(this, this.onDocumentMouseWheel), false);
+    // 2 new event listeners
+    this.domElement.addEventListener('mousewheel', bind(this, this.onDocumentMouseWheel), false);
+    this.domElement.addEventListener('DOMMouseScroll', bind(this, this.onDocumentMouseWheel), false);
 
-    //this.domElement.addEventListener('keydown', bind(this, this.onKeyDown), false);
-    //this.domElement.addEventListener('keyup', bind(this, this.onKeyUp), false);
+    this.domElement.addEventListener('keydown', bind(this, this.onKeyDown), false);
+    this.domElement.addEventListener('keyup', bind(this, this.onKeyUp), false);
 
     function bind(scope, fn) {
 
