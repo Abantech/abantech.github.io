@@ -103,7 +103,6 @@
 
     <!--<script src="Scripts/FadingSpheres.js"></script>-->
     <!--<script src="Scripts/FrameActions/NUINavigation.js"></script>-->
-
     <!--Gestures-->
     <script src="Scripts/Gestures/SingleHandGesture.js"></script>
     <script src="Scripts/Gestures/Pinch.js"></script>
@@ -125,9 +124,42 @@
     <script src="Scripts/ActionTracking/ActionManager.js"></script>
 
     <script src="Scripts/AssetManager.js"></script>
+    <script src="Scripts/Scene/SceneLoader.js"></script>
+    <script src="Scripts/Scene/SceneExporter.js"></script>
+    <script src="Scripts/Scene/STLLoader.js"></script>
+    <script src="Scripts/Scene/OBJLoader.js"></script>
+    <script src="Scripts/Gestures/GestureExtensionMethods.js"></script>
 
     <script>
         //handController.RegisterAction("DrawPinchLine", drawPinchLine);
+        var sceneExport;
+
+        function exportScene()
+        {
+            return JSON.stringify(new THREE.SceneExporter().parse(scene));
+        }
+
+        function importScene(json)
+        {
+            new THREE.SceneLoader().parse(JSON.parse(json),
+
+                // Function when resource is loaded
+                function (result)
+                {
+                    scene = result.scene;
+                }, ".");
+        }
+
+        handController.RegisterAction("Test",
+            {
+                action: function (hand)
+                {
+                    if (hand.fingers[1].angleTo(hand.fingers[2]) < 9)
+                    {
+                        alert("asdf");
+                    }
+                }
+            });
 
         handController.RegisterAction("SelectAssetOnHover", selectAssetOnHover);
 
@@ -142,8 +174,8 @@
             {
                 var box = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
                 box.position.set(0, 0, 0);
-				box.castShadow = true;
-				box.receiveShadow = true;
+                box.castShadow = true;
+                box.receiveShadow = true;
                 box.isAsset = true;
                 box.name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
                 {
@@ -171,6 +203,16 @@
             if (keyChar === 'r')
             {
                 actionManager.Redo();
+            }
+
+            if (keyChar === 's')
+            {
+                sceneExport = exportScene();
+            }
+
+            if (keyChar === 'l')
+            {
+                importScene(sceneExport);
             }
         });
 
