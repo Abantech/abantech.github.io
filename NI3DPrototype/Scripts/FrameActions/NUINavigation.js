@@ -6,7 +6,7 @@ function isHandInAirplaneMode(hand) {
     //Airplane mode = if the index, middle, and ring are together while the thumb and pinky are stretched out
     //TODO: use the tip, pip, and dip positions of the fingers to determine if sufficient angles formed between fingers
     if (typeof (hand) != 'undefined')
-        return (hand.indexFinger.extended && hand.middleFinger.extended && hand.ringFinger.extended && !hand.pinky.extended);
+        return (hand.indexFinger.extended && hand.middleFinger.extended && hand.ringFinger.extended && !hand.pinky.extended && !hand.thumb.extended);
     else
         return false;
 }
@@ -104,9 +104,32 @@ var firstPersonControlsNav = function (frame) {
 
 var targetPosition;
 
-var showNavigationPlate = function () {
-    var geometry = new THREE.CylinderGeometry()
+var navigationPlate;
+
+var initNavigationPlate = function(){
+    var geometry = new THREE.CylinderGeometry(100, 100, 2, 32);
+    var material = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+    navigationPlate = new THREE.Mesh(geometry, material);
+
+    window.scene.add(navigationPlate);
 }
+
+var updateNavigationPlate = function (originPosition) {
+    //if (typeof (navigationPlate) == 'undefined') {
+    //    var geometry = new THREE.CylinderGeometry(100, 100, 2, 32);
+    //    var material = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+    //    navigationPlate = new THREE.Mesh(geometry, material);
+
+    //    window.scene.add(navigationPlate);
+    //}
+    if (typeof (originPosition) != 'undefined') {
+        navigationPlate.position.copy(originPosition);
+        navigationPlate.translateY(-20);
+        navigationPlate.visible = true;
+    }
+}
+
+initNavigationPlate();
 
 var customNUINav = function(frame) {
     //TODO: make it so that it's either hand
@@ -134,8 +157,12 @@ var customNUINav = function(frame) {
         if (!controls.freeze) {
             message = message + "<br>AIRPLANE MODE DETECTED";
 
+            //set the start sphere here
 
-            cam.translateX(-1)
+            //cam.translateX(-1)
+            controls.moveLeft = true;
+            controls.moveBackward = true;
+            //controls.lon -= 0.5;
             //targetPosition = new THREE.Vector3(cam.position.x, cam.position.y + 50, cam.position.z + 50);
             //controls.freeze = false;
             //controls.moveLeft = true;
@@ -148,12 +175,15 @@ var customNUINav = function(frame) {
 
             //cam.rotation.x = cam.rotation.x + 1;
             //cam.
+
+            updateNavigationPlate(new THREE.Vector3().fromArray(hand.palmPosition));
         }
     }
     else
     {
         message = message + "<br>Not in airplane mode";
         controls.freeze = true;
+        navigationPlate.visible = false
     }
 
     info.innerHTML = message;
