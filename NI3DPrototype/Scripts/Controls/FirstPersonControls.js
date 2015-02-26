@@ -119,6 +119,8 @@ THREE.FirstPersonControls = function (object, domElement) {
 
         var actualLookSpeed = delta * this.lookSpeed;
 
+        console.log("Delta = " + delta.toFixed(2) + ", actualMoveSpeed = " + actualMoveSpeed.toFixed(2) + ", actualLookSpeed = " + actualLookSpeed.toFixed(2))
+
         if (!this.activeLook) {
 
             actualLookSpeed = 0;
@@ -147,16 +149,27 @@ THREE.FirstPersonControls = function (object, domElement) {
 
         }
 
+        console.log("lat = " + this.lat +  ", lon = " + this.lon + ", phi = " + this.phi + ", theta = " + this.theta)
+
         var targetPosition = this.target,
 			position = this.object.position;
+
+        console.log("target = " + vectorTrioAsFixed(this.target) +
+            ",  targetPosition = " + vectorTrioAsFixed(targetPosition))
 
         targetPosition.x = position.x + 100 * Math.sin(this.phi) * Math.cos(this.theta);
         targetPosition.y = position.y + 100 * Math.cos(this.phi);
         targetPosition.z = position.z + 100 * Math.sin(this.phi) * Math.sin(this.theta);
 
         this.object.lookAt(targetPosition);
+        console.log("CAMERA AT : " + vectorTrioAsFixed(this.object.position))
 
     };
+
+    function vectorTrioAsFixed(vector, precision)
+    {
+        return "(" + vector.x.toFixed(precision) + ", " + vector.y.toFixed(precision) + ", " + vector.z.toFixed(precision) + ")"
+    }
 
     //Put all this the non-NI code under a function so that we can enable it if we want later
     this.initMouseAndKeyboardControls = function () {

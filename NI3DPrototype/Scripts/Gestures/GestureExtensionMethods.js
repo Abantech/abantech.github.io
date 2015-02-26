@@ -5,7 +5,7 @@
 
     var a = this.length;
     var b = finger.length;
-    var c = mathHelper.DistanceBetweenPoints(finger0Vector, finger1Vector);
+    var c = finger0Vector.distanceTo(finger1Vector);
 
     var numerator = (a * a) + (b * b) - (c * c);
     var denominator = (2 * a * b)
@@ -40,5 +40,5 @@ Leap.Finger.prototype.distanceToFingerTip = function (finger)
     var finger0Vector = new THREE.Vector3(this.tipPosition[0], this.tipPosition[1], this.tipPosition[2]);
     var finger1Vector = new THREE.Vector3(finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2]);
 
-    return mathHelper.DistanceBetweenPoints(finger0Vector, finger1Vector);
+    return finger0Vector.distanceTo(finger1Vector);
 }
