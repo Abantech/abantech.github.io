@@ -6,20 +6,12 @@ var fingerAdjacencyAngleThreshold = 12
 
 function isHandInAirplaneMode(hand) {
     //Airplane mode = if the index, middle, and ring are together while the thumb and pinky are stretched out
-    //TODO: use the tip, pip, and dip positions of the fingers to determine if sufficient angles formed between fingers
     if (typeof (hand) != 'undefined')
-        //hand.indexFinger
-        //return (hand.indexFinger.extended && hand.middleFinger.extended && hand.ringFinger.extended && !hand.pinky.extended && !hand.thumb.extended);
         return (
-            //hand.thumb.extended && hand.indexFinger.extended && hand.middleFinger.extended && hand.ringFinger.extended && hand.pinky.extended &&
             fingersExtendedAndAdjacent(hand.indexFinger, hand.middleFinger) &&
             fingersExtendedAndAdjacent(hand.middleFinger, hand.ringFinger) &&
             !fingersExtendedAndAdjacent(hand.thumb, hand.indexFinger) &&
             !fingersExtendedAndAdjacent(hand.ringFinger, hand.pinky)
-            //hand.indexFinger.angleToFinger(hand.middleFinger) < fingerAdjacencyAngleThreshold &&
-                //hand.middleFinger.angleToFinger(hand.ringFinger) < fingerAdjacencyAngleThreshold //&&
-                //hand.indexFinger.angleToFinger(hand.thumb) > 9 &&
-                //hand.ringFinger.angleToFinger(hand.pinky) > 9
             )
     else
         return false;
@@ -30,8 +22,7 @@ var fingersExtendedAndAdjacent = function (finger1, finger2)
     return finger1.extended && finger2.extended && finger1.angleToFinger(finger2) < fingerAdjacencyAngleThreshold;
 }
 
-
-
+//not using this right now because I cannot get it to work correctly
 var firstPersonControlsNav = function (frame) {
     var hand, pitchAng, yawAng;
 
@@ -128,6 +119,7 @@ var navigationPlate, navigationStartPosition
 var updateNavigationControls = function (makeVisible, originPosition) {
     if (typeof (navigationPlate) == 'undefined')
     {
+        //TODO: make this 3 concentric cylinders (all translucent) so that the user can see what segment they are on
         var geometry = new THREE.CylinderGeometry(100, 100, 2, 32);
         var material = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
         navigationPlate = new THREE.Mesh(geometry, material);
@@ -217,12 +209,14 @@ var customNUINav = function(frame) {
         var cam = window.camera;
 
         var enableControls = (frame.hands.length >= 1 && isHandInAirplaneMode(hand))
-        //controls.freeze = !enableControls
+        if (!manualMovementMode)
+            controls.freeze = !enableControls
 
         if (enableControls) {
 
             //var camPosition = cam.position;
             navigationStartPosition = new THREE.Vector3(cam.position.x, cam.position.y - 20, cam.position.z - 200)
+            //TODO: figure out why this is no longer working
             updateNavigationControls(cam.position, true);
 
             var handOrigin = new THREE.Vector3().fromArray(hand.palmPosition);
@@ -232,50 +226,24 @@ var customNUINav = function(frame) {
             var moveLon = getLongitudinalDistanceSegment(handOrigin, navigationStartPosition) * moveSpeedDamping;
             var moveDir = getDirectionalDistanceSegment(handOrigin, navigationStartPosition) * moveSpeedDamping;
 
-            message = message + "<br>AIRPLANE MODE DETECTED" 
-                + "<br>" + 
-                "Segments (lat, long, dist) = (" +
-                moveLat
-                + ", " +
-                moveLon
-                + ", " +
-                moveDir
-                + ")"
+            message = message + "<br>AIRPLANE MODE DETECTED" + "<br>" + "Segments (lat, long, dist) = (" + moveLat + ", " + moveLon + ", " + moveDir + ")"
 
-            window.camera.translateX(moveLat);
-            window.camera.translateY(moveLon);
-            window.camera.translateZ(moveDir);
-            
-            //set the start sphere here
-
-            //cam.translateX(-1)
-            controls.moveLeft = true;
-            controls.moveBackward = true;
-            //controls.lon -= 0.5;
-            //targetPosition = new THREE.Vector3(cam.position.x, cam.position.y + 50, cam.position.z + 50);
-            //controls.freeze = false;
-            //controls.moveLeft = true;
-            //cam.translateX(-0.3) //look left and right
-            //cam.translateZ(-0.5)
-            //window.camera.rotate
-            //var temp = new THREE.Object3D();
-            //var newAngle = cam.rotation.x + 1;
-            //cam.lookAt(targetPosition);
-
-            //cam.rotation.x = cam.rotation.x + 1;
-            //cam.
-
-            //updateNavigationPlate(new THREE.Vector3().fromArray(hand.palmPosition));
-            
+            if (manualMovementMode)
+            {
+                window.camera.translateX(moveLat);
+                window.camera.translateY(moveLon);
+                window.camera.translateZ(moveDir);
+            }
         }
     }
     else
     {
         message = message + "NOT in airplane mode<br>" + 
             "to fly around, extend all fingers and keep only the index, middle, and ring fingers together - thumb and index stretching out like (backswept) airplane wings";
-        controls.freeze = true;
+        if (!manualMovementMode)
+            controls.freeze = true;
+
         updateNavigationControls(false);
-        //navigationPlate.visible = false
     }
 
     info.innerHTML = message;

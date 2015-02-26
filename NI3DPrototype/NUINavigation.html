@@ -20,10 +20,10 @@
     <body>
         <script src="Scripts/Controls/FirstPersonControls.js"></script>
         <script src="Scripts/Gestures/GestureExtensionMethods.js"></script>
-        <!-- BEGIN BOILERPLATE CODE -->
-        <!-- Creates the scene, groundbox, camera, lights, and the Controller. Also contains the render loop. -->
+
         <script type="text/javascript">
-            var useNUIConrols = false;
+            var useNUIConrols = false; //true = use FirstPersonControls, false = use OrbitControls
+            var manualMovementMode = true; //true = use the manual camera translation, false = use controls.freeze/unfreeze
             document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;';
             var info = document.body.appendChild(document.createElement('div'));
             info.txt = '<a href=""><h1>Leap-enabled hand navigation</h1></a>';
@@ -32,6 +32,7 @@
                     'position: absolute; right: 0; text-align: left; top: 0 !important; min-width: 280px; max-width: 1000px; }';
         </script>
 
+        <!-- Creates the scene, groundbox, camera, lights, and the Controller. Also contains the render loop. -->
         <script src="Scripts/Scene/SceneSetup.js"></script>
 
         <!--  This class attaches functions to the transform plugin to re-orient the hands after the camera moves -->
@@ -54,13 +55,11 @@
         <script src="Scripts/HandsPositionAdjustment.js"></script>
 
         <!-- END BOILERPLATE CODE -->
-        <!-- ---------------------------------------------------------------  -->
-        <!-- Below is where we begin to attach stuff -->
+
         <!--My rip-off from Theo's Fingerlings -->
         <script src="Scripts/FrameActions/CustomHand.js"></script>
 
-        <!-- The infamous FadingSpheres -->
-        
+        <!-- The early NUI navitgation stuff, which still sucks but just for now ;) -->
         <script src="Scripts/FrameActions/NUINavigation.js"></script>
 
     </body>
