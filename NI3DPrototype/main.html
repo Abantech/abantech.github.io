@@ -85,7 +85,7 @@
     <script src="http://threejs.org/examples/fonts/helvetiker_bold.typeface.js"></script>
     <script src="http://threejs.org/examples/fonts/helvetiker_regular.typeface.js"></script>
     <script src="fonts/helvetiker_regular.typeface.js"></script>
-    <script src="Scripts/HandBasedActions/FirstPersonControls.js"></script>
+    <script src="Scripts/Controls/FirstPersonControls.js"></script>
     <script src="Scripts/Utils/MathHelper.js"></script>
     <script src="Scripts/Utils/GestureTimer.js"></script>
     <script src="Scripts/Utils/HoveredAndPressedDetection.js"></script>
@@ -154,7 +154,7 @@
             {
                 action: function (hand)
                 {
-                    if (hand.fingers[1].angleTo(hand.fingers[2]) < 9)
+                    if (hand.fingers[1].angleToFinger(hand.fingers[2]) < 9)
                     {
                         alert("asdf");
                     }
