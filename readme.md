@@ -10,7 +10,7 @@ All about natural interaction in 3D. To be able to give people the ability to do
 
 Demos: 
 
-- [NI 3D prototype (without Physics)]( http://abantech.github.io/NI3DPrototype/main.html )  
+- [NI 3D prototype (Demo)]( http://abantech.github.io/NI3DPrototype/main.html )  
 - [NI 3D prototype with Physics]( http://abantech.github.io/NI3DPrototype/PhysicsEnabled.html )  
 - [NI 3D prototype using NUI Navigation (not working too well yet)]( http://abantech.github.io/NI3DPrototype/NUINavigation.html )  
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
