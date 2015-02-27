@@ -121,15 +121,12 @@
     <Content Include="Libs\Physics\physijs_worker.js" />
     <Content Include="Scripts\LeapLoopSetup-NoHandPlugins.js" />
     <Content Include="Scripts\references.js" />
-    <Content Include="Scripts\Scene\OBJLoader.js" />
-    <Content Include="Scripts\Scene\SceneExporter.js" />
-    <Content Include="Scripts\Scene\SceneLoader.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
     <Content Include="Scripts\Scene\PhysicsSceneSetup.js" />
+    <Content Include="Scripts\Scene\SceneSaving.js" />
     <Content Include="Scripts\Scene\SceneSetup.js" />
     <Content Include="Scripts\ActionTracking\TranslationAction.js" />
-    <Content Include="Scripts\Scene\STLLoader.js" />
     <Content Include="Scripts\Utils\GestureTimer.js" />
     <Content Include="Scripts\Utils\HoveredAndPressedDetection.js" />
     <Content Include="Scripts\Utils\MathHelper.js" />

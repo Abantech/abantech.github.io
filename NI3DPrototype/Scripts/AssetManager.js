@@ -11,7 +11,7 @@ function AssetManager()
     {
         window.scene.add(asset);
 
-        asset.isAsset = true;
+        asset.userData.isAsset = true;
         asset.name = assetType + " " + asset.id;
 
         if (!createAssetAction)

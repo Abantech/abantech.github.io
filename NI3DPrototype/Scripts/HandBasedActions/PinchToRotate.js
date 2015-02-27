@@ -14,7 +14,7 @@ var RotatePinchedObject = function (hand)
     {
         pinchedObject = getPinchedObject(hand);
 
-        if (pinchedObject && pinchedObject.isAsset)
+        if (pinchedObject && pinchedObject.userData.isAsset)
         {
             if (!rotationAction)
             {
@@ -27,7 +27,7 @@ var RotatePinchedObject = function (hand)
     }
     else
     {
-        if (pinchedObject && pinchedObject.isAsset)
+        if (pinchedObject && pinchedObject.userData.isAsset)
         {
             if (!rotationAction)
             {
@@ -95,7 +95,7 @@ function getPinchedObject(hand)
     for (var i = 0; i < window.scene.children.length; i++)
     {
         var sceneObject = window.scene.children[i];
-        if (sceneObject.isAsset && !sceneObject.isSelected)
+        if (sceneObject.userData.isAsset && !sceneObject.isSelected)
         {
             var distance = indexTipVector.distanceTo(sceneObject.position);
             if (distance < 50)

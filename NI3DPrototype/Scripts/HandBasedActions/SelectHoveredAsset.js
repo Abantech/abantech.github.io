@@ -19,7 +19,8 @@ var selectAssetOnHover = {
             var intersectedAsset = getIntersectedAssets(hand, assets)[0];
 
             if (intersectedAsset) {
-                if (!intersectedAsset.object.isPinched) {
+                if (!intersectedAsset.object.userData.isPinched)
+                {
                     if (!assetHoveredTimeDictionary[intersectedAsset.object.uuid]) {
                         console.log("Asset not previously in dictionary - Assigning hoveredTime now")
                         assetHoveredTimeDictionary[intersectedAsset.object.uuid] = new Date();
@@ -67,7 +68,7 @@ var selectAssetOnHover = {
 
                             changeAssetColor(intersectedAsset.object);
 
-                            intersectedAsset.object.isSelected = true;
+                            intersectedAsset.object.userData.isSelected = true;
                         }
                     }
                 }
@@ -126,15 +127,15 @@ function addHandlesToAsset(asset) {
 
     var xArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), 15 + xLength * asset.scale.x / 2, 0xff0000);
     xArrow.name = "XArrow";
-    xArrow.isArrow = true;
+    xArrow.userData.isArrow = true;
 
     var yArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 15 + yLength * asset.scale.y / 2, 0x0000ff);
     yArrow.name = "YArrow";
-    yArrow.isArrow = true;
+    yArrow.userData.isArrow = true;
 
     var zArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), 15 + zLength * asset.scale.z / 2, 0x00ff00);
     zArrow.name = "ZArrow";
-    zArrow.isArrow = true;
+    zArrow.userData.isArrow = true;
 
     arrows.add(xArrow);
     arrows.add(yArrow);

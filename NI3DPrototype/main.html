@@ -124,10 +124,6 @@
     <script src="Scripts/ActionTracking/ActionManager.js"></script>
 
     <script src="Scripts/AssetManager.js"></script>
-    <script src="Scripts/Scene/SceneLoader.js"></script>
-    <script src="Scripts/Scene/SceneExporter.js"></script>
-    <script src="Scripts/Scene/STLLoader.js"></script>
-    <script src="Scripts/Scene/OBJLoader.js"></script>
     <script src="Scripts/Gestures/GestureExtensionMethods.js"></script>
 
     <script>
@@ -136,30 +132,14 @@
 
         function exportScene()
         {
-            return JSON.stringify(new THREE.SceneExporter().parse(scene));
+            return JSON.stringify(scene.toJSON(), null, '\t');
+            //sceneExport = sceneExport.replace(/[\n\t]+([\d\.e\-\[\]]+)/g, '$1');
         }
 
         function importScene(json)
         {
-            new THREE.SceneLoader().parse(JSON.parse(json),
-
-                // Function when resource is loaded
-                function (result)
-                {
-                    scene = result.scene;
-                }, ".");
+            scene = new THREE.ObjectLoader().parse(JSON.parse(json));
         }
-
-        handController.RegisterAction("Test",
-            {
-                action: function (hand)
-                {
-                    if (hand.fingers[1].angleToFinger(hand.fingers[2]) < 9)
-                    {
-                        alert("asdf");
-                    }
-                }
-            });
 
         handController.RegisterAction("SelectAssetOnHover", selectAssetOnHover);
 
@@ -176,7 +156,7 @@
                 box.position.set(0, 0, 0);
                 box.castShadow = true;
                 box.receiveShadow = true;
-                box.isAsset = true;
+                box.userData.isAsset = true;
                 box.name = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c)
                 {
                     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);

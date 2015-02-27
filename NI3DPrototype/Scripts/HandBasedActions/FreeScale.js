@@ -9,7 +9,7 @@ var ScaleObject = function (hand)
     }
     else
     {
-        if (pinchedObject.isArrow)
+        if (pinchedObject.userData.isArrow)
         {
             var xScale = 1;
             var yScale = 1;
@@ -67,7 +67,7 @@ var ScaleObject = function (hand)
 
 var OnEndScaledObject = function (hand)
 {
-    if (pinchedObject && pinchedObject.isArrow)
+    if (pinchedObject && pinchedObject.userData.isArrow)
     {
         var parent = pinchedObject.parent.parent;
 
