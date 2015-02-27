@@ -15,6 +15,10 @@
 //See
 // http://mrdoob.github.io/three.js/examples/#webgl_interactive_raycasting_pointcloud
 
+	var soundPlus = new Audio('http://ie.microsoft.com/testdrive/Graphics/IEBeatz/assets/sounds/mp3/effect.mp3');
+	var soundMinus = new Audio('http://ie.microsoft.com/testdrive/Graphics/IEBeatz/assets/sounds/mp3/bonga.mp3');
+
+
 	var info, renderer, scene, camera, controls, stats, light;
 
 	var group;
@@ -189,6 +193,7 @@
 
 				intersects[0].object.material.color = new THREE.Color( 0xff0000 );
 				points++;
+				soundMinus.play();
 
 			}
 
@@ -202,9 +207,11 @@
 
 			msg.innerHTML = '<h1>Bingo! You win!</h1>';
 
+soundPlus.play();
+
 			winner = true
 
-			var names = ['pumpkin.js','rubber-duck-10.js','skeleton-left.js','WrightFlyer-pb-jw.js'];
+			var names = ['pumpkin.js','rubber-duck-10.js','skeleton-left.js'];
 
 			var fname = '../models/' + names[ Math.floor( Math.random() * names.length ) ];
 
