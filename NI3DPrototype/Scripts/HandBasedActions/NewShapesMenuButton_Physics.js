@@ -37,9 +37,9 @@ else {
 var newShapesButton = new THREE.Mesh(geometry, material);
 
 //newShapesButton.material.opacity = 0.2;
-newShapesButton.isAsset = false;
+newShapesButton.userData.isAsset = false;
 newShapesButton.material.color.setHex(0x8A2908);
-newShapesButton.menuIsExpanded = false;
+newShapesButton.userData.menuIsExpanded = false;
 newShapesButton.lastExpandedOrHoveredTime = null;
 
 var menuOptionLastUsedTime = null;
@@ -58,11 +58,11 @@ var revertButtonColorOnNotHovered = function (button) {
 }
 
 var conditionForShowingNewShapeButtons = function (frame) {
-    return newShapesButton.menuIsExpanded;
+    return newShapesButton.userData.menuIsExpanded;
 }
 
 var conditionForHidingNewShapeButtons = function (frame) {
-    return !newShapesButton.menuIsExpanded && (new Date() - newShapesButton.lastExpandedOrHoveredTime) > menuOpenGracePeriodMills;
+    return !newShapesButton.userData.menuIsExpanded && (new Date() - newShapesButton.lastExpandedOrHoveredTime) > menuOpenGracePeriodMills;
 }
 
 var actionNotPerfomredWithinThresholdTime = function (button) {
@@ -146,21 +146,23 @@ var changeButtonColorOnHoverAndPress = {
 };
 
 var closeMenuAfterDelay = function (frame) {
-    if (newShapesButton.menuIsExpanded) {
+    if (newShapesButton.userData.menuIsExpanded)
+    {
         //For some reason THREEJS clock is unrealiable in this scenario... Using good ol' javascript Date insted
         var expandedElapsedTime = new Date() - newShapesButton.lastExpandedOrHoveredTime
 
         //Close the menu only after the sufficient graceperiod has passed
         if (expandedElapsedTime > menuOpenGracePeriodMills) {
             newShapesButton.visible = true;
-            newShapesButton.menuIsExpanded = false;
+            newShapesButton.userData.menuIsExpanded = false;
         }
     }
 }
 
 var expandMenuSectionsOnHover = {
     action: function (hand) {
-        if (!newShapesButton.menuIsExpanded) {
+        if (!newShapesButton.userData.menuIsExpanded)
+        {
             if (isHoveringOverControls(hand, [newShapesButton])) {
                 if (!newShapesButton.beginHoverTime)
                     newShapesButton.beginHoverTime = new Date();
@@ -169,7 +171,7 @@ var expandMenuSectionsOnHover = {
                     //Setting menuOptionLastUsedTime here prevents the shapes from getting created right as the menu opens
                     menuOptionLastUsedTime = new Date();
                     newShapesButton.visible = false;
-                    newShapesButton.menuIsExpanded = true;
+                    newShapesButton.userData.menuIsExpanded = true;
                     newShapesButton.lastExpandedOrHoveredTime = new Date();
                 }
             }

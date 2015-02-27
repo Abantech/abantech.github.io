@@ -133,7 +133,7 @@
                 var box = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
                 box.position.set(0, 0, 0);
 
-                box.isAsset = true;
+                box.userData.isAsset = true;
                 window.scene.add(box);
 
                 if (!action)

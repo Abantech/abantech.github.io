@@ -6,7 +6,7 @@ var TranslatePinchedObject = function (hand)
     {
         pinchedObject = getPinchedObject(hand);
 
-        if (pinchedObject && pinchedObject.isAsset)
+        if (pinchedObject && pinchedObject.userData.isAsset)
         {
             if (!action)
             {
@@ -18,7 +18,7 @@ var TranslatePinchedObject = function (hand)
     }
     else
     {
-        if (pinchedObject.isAsset)
+        if (pinchedObject.userData.isAsset)
         {
             var indexTipPos = hand.fingers[1].tipPosition;
             var thumbTipPos = hand.fingers[0].tipPosition;
@@ -56,7 +56,7 @@ function getPinchedObject(hand)
     for (var i = 0; i < window.scene.children.length; i++)
     {
         var sceneObject = window.scene.children[i];
-        if (sceneObject.isAsset && !sceneObject.isSelected)
+        if (sceneObject.userData.isAsset && !sceneObject.isSelected)
         {
             var distance = pinchMidPos.distanceTo(sceneObject.position);
             if (distance < 50)

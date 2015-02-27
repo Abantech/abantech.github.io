@@ -63,7 +63,7 @@
     this.RedoAction = function myfunction()
     {
         var createdObject = this.getCreatedObject();
-        createdObject.isAsset = true;
+        createdObject.userData.isAsset = true;
         createdObject.name = this.getObjectName();
         window.scene.add(createdObject);
     }
