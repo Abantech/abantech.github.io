@@ -61,6 +61,7 @@
     <Content Include="CameraInHand.html" />
     <Content Include="fonts\helvetiker_bold.typeface.js" />
     <Content Include="fonts\helvetiker_regular.typeface.js" />
+    <Content Include="fortesting.html" />
     <Content Include="Images\ball.png" />
     <Content Include="Images\NewShapeMenu.jpg" />
     <Content Include="Libs\jquery-2.1.3.min.js" />
