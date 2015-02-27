@@ -1,6 +1,7 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 /// <reference path="../FrameActions.js" />
-var buttonSize = 28;
+var buttonSize = 40;
+var buttonOffsetFactor = 1.1
 var buttonPositionX = (window.innerWidth / 14);
 var buttonPositionY = (window.innerHeight / 12);
 var buttonPositionZ = -300;
@@ -104,10 +105,10 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
         , null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
 }
 
-createNewShapeChildOption("Cube", -1, 1, 0x2E9AFE, new THREE.BoxGeometry(15, 15, 15), new THREE.BoxGeometry(18, 18, 18));
-createNewShapeChildOption("Sphere", 1, 1, 0x7401DF, new THREE.SphereGeometry(10, 32, 32), new THREE.SphereGeometry(12, 32, 32));
-createNewShapeChildOption("Cylinder", -1, -1, 0xFE642E, new THREE.CylinderGeometry(8, 8, 16, 32), new THREE.CylinderGeometry(12, 12, 32, 32));
-createNewShapeChildOption("Cone", 1, -1, 0x0B4C5F, new THREE.CylinderGeometry(0, 8, 22, 32), new THREE.CylinderGeometry(0, 12, 32, 32));
+createNewShapeChildOption("Cube", -1 * buttonOffsetFactor, 1 * buttonOffsetFactor, 0x2E9AFE, new THREE.BoxGeometry(24, 24, 24), new THREE.BoxGeometry(18, 18, 18));
+createNewShapeChildOption("Sphere", 1 * buttonOffsetFactor, 1 * buttonOffsetFactor, 0x7401DF, new THREE.SphereGeometry(14, 32, 32), new THREE.SphereGeometry(12, 32, 32));
+createNewShapeChildOption("Cylinder", -1 * buttonOffsetFactor, -1 * buttonOffsetFactor, 0xFE642E, new THREE.CylinderGeometry(12, 12, 24, 32), new THREE.CylinderGeometry(12, 12, 32, 32));
+createNewShapeChildOption("Cone", 1 * buttonOffsetFactor, -1 * buttonOffsetFactor, 0x0B4C5F, new THREE.CylinderGeometry(0, 12, 30, 32), new THREE.CylinderGeometry(0, 12, 32, 32));
 
 
 var changeButtonColorOnHoverAndPress = {
