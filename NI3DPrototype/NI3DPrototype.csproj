@@ -106,8 +106,6 @@
     <Content Include="Scripts\HandBasedActions\NewShapesMenuButton.js" />
     <Content Include="Scripts\Controls\PointerLockControls.js" />
     <Content Include="Scripts\HandBasedActions\SelectHoveredAsset.js" />
-    <Content Include="Scripts\Gestures\FingerHovere.js" />
-    <Content Include="Scripts\HandBasedActions\MenuButtons.js" />
     <Content Include="Scripts\Gestures\Pinch.js" />
     <Content Include="Scripts\HandBasedActions\PinchLine.js" />
     <Content Include="Scripts\HandBasedActions\PinchToRotate.js" />
