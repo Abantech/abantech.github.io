@@ -67,8 +67,6 @@ var selectAssetOnHover = {
                             addHandlesToAsset(intersectedAsset.object);
 
                             changeAssetColor(intersectedAsset.object);
-
-                            intersectedAsset.object.userData.isSelected = true;
                         }
                     }
                 }
@@ -101,7 +99,7 @@ function getIntersectedAssets(hand, assets) {
 
     if (intersection) {
         for (var i = 0; i < intersection.length; i++) {
-            if (intersection[i].object.isAsset) {
+            if (intersection[i].object.userData.isAsset) {
                 intersectedAssets.push(intersection[i]);
             }
         }
@@ -159,7 +157,7 @@ function removeHandles(asset) {
 
     asset.material.color.setHSL(HSL.h, HSL.s, HSL.l - .2);
 
-    asset.isSelected = false;
+    assetManager.DeselectAsset(asset);
 }
 
 var updateBoundingBoxesOfSelectedAssets = function (frame) {
