@@ -21,7 +21,7 @@ if (url.substring(0, 4) != "file") {
     //console.log("window.location : " + window.location.href);
     if (url.substring(0, 4) != "file") {
         var image = document.createElement('img');
-        image.src = 'Images/icon-info.jpg';
+        image.src = 'Images/NewShapeMenu.jpg';
         texture = new THREE.Texture(image);
         image.onload = function () {
             texture.needsUpdate = true;
