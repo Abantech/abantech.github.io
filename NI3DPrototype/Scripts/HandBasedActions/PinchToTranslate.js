@@ -13,6 +13,8 @@ var TranslatePinchedObject = function (hand)
                 action = new TranslationAction();
 
                 action.Initialize(pinchedObject);
+
+                playAudioFeedback("effect");
             }
         }
     }

@@ -100,6 +100,7 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
             mesh.receiveShadow = true;
 
             assetManager.CreateAsset(shapeName, mesh);
+            playAudioFeedback("bass");
 
             if (firstShape && !$("#infoBox").dialog("isOpen"))
             {
@@ -168,6 +169,8 @@ var expandMenuSectionsOnHover = {
                     newShapesButton.visible = false;
                     newShapesButton.userData.menuIsExpanded = true;
                     newShapesButton.lastExpandedOrHoveredTime = new Date();
+
+                    playAudioFeedback("bass");
 
                     if (firstMenuOpen && !$("#infoBox").dialog("isOpen"))
                     {

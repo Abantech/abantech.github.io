@@ -72,6 +72,7 @@
     <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\AudioFeedback.js" />
     <Content Include="Scripts\info.js" />
     <Content Include="Libs\JQuery\jquery-1.9.1.js" />
     <Content Include="Libs\JQuery\jquery-ui.js" />

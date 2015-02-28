@@ -49,6 +49,7 @@ var selectAssetOnHover = {
                             if ((new Date() - assetLastSelectedTimeDictionary[intersectedAsset.object.name]) > selectedAssetGracePeriodToDeselectTimeRequiredMills)
                             {
                                 console.log("Asset was previously selected over threshold time of (" + selectedAssetGracePeriodToDeselectTimeRequiredMills + "ms). Delecting...");
+                                playAudioFeedback("effect");
                                 assetManager.DeselectAsset(intersectedAsset.object);
                                 assetHoveredTimeDictionary[intersectedAsset.object.name] = null;
                                 lastSelectedObjectName = null;
@@ -73,6 +74,7 @@ var selectAssetOnHover = {
                                 }, 6000);
                             }
 
+                            playAudioFeedback("effect");
                             assetManager.SelectAsset(intersectedAsset.object);
                             lastSelectedObjectName = intersectedAsset.object.name;
                             lastHoveredObjectName = intersectedAsset.object.name;
