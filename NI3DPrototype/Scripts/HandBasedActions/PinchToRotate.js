@@ -21,7 +21,7 @@ var RotatePinchedObject = function (hand)
                 rotationAction = new RotationAction();
 
                 rotationAction.Initialize(pinchedObject);
-                pinchedObject.isPinched = true;
+                pinchedObject.userData.isPinched = true;
             }
         }
     }
@@ -34,7 +34,7 @@ var RotatePinchedObject = function (hand)
                 rotationAction = new RotationAction();
 
                 rotationAction.Initialize(pinchedObject);
-                pinchedObject.isPinched = true;
+                pinchedObject.userData.isPinched = true;
             }
 
             var indexTipPos = hand.fingers[1].tipPosition;
@@ -79,7 +79,7 @@ var EndRotatePinchedObject = function (hand)
         {
             pinchedObject.geometry.computeBoundingBox();
 
-            pinchedObject.isPinched = false;
+            pinchedObject.userData.isPinched = false;
         }
     }
 

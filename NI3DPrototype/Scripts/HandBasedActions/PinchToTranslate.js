@@ -23,8 +23,8 @@ var TranslatePinchedObject = function (hand)
             var indexTipPos = hand.fingers[1].tipPosition;
             var thumbTipPos = hand.fingers[0].tipPosition;
             pinchedObject.position.set((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
-            pinchedObject.isPinched = true;
-            pinchedObject.hasBeenMoved = true;
+            pinchedObject.userData.isPinched = true;
+            pinchedObject.userData.hasBeenMoved = true;
         }
     }
 }
@@ -40,8 +40,8 @@ var EndTranslatePinchedObject = function (hand)
 
     if (pinchedObject)
     {
-        pinchedObject.isPinched = false;
-        pinchedObject.hasBeenMoved = false;
+        pinchedObject.userData.isPinched = false;
+        pinchedObject.userData.hasBeenMoved = false;
     }
 }
 

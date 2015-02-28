@@ -65,6 +65,8 @@
     <Content Include="GameForLeo.html" />
     <Content Include="Images\ball.png" />
     <Content Include="Images\NewShapeMenu.jpg" />
+    <Content Include="Scripts\AssetManager.js" />
+    <Content Include="Scripts\Assets\Asset.js" />
     <Content Include="Scripts\LeapLoopSetup-refactoring.js" />
     <Content Include="Libs\jquery-2.1.3.min.js" />
     <Content Include="Libs\Leap\leap-0.6.4.js" />
@@ -97,7 +99,6 @@
     <Content Include="Scripts\AssetManager.js" />
     <Content Include="Scripts\FadingSpheres.js" />
     <Content Include="Scripts\FrameActions.js" />
-    <Content Include="Scripts\FrameActions\AddHandlesToSelectedAssets.js" />
     <Content Include="Scripts\FrameActions\CustomHand.js" />
     <Content Include="Scripts\FrameActions\NUINavigation.js" />
     <Content Include="Scripts\Gestures\GestureExtensionMethods.js" />
@@ -133,6 +134,7 @@
     <Content Include="Scripts\Utils\GestureTimer.js" />
     <Content Include="Scripts\Utils\HoveredAndPressedDetection.js" />
     <Content Include="Scripts\Utils\MathHelper.js" />
+    <Content Include="Scripts\Utils\ThreeExtensions.js" />
     <Content Include="Styles\style1.css" />
     <Content Include="Web.config" />
   </ItemGroup>

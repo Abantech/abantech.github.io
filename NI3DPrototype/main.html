@@ -23,6 +23,9 @@
     <script src="Libs/THREEJS/Detector.js"></script>
     <script src="Libs/THREEJS/stats.min.js"></script>
 
+    <script src="Scripts/Utils/ThreeExtensions.js"></script>
+    <script src="Scripts/Assets/Asset.js"></script>
+
     <script src="Libs/Leap/leap-0.6.4.min.js"></script>
     <script src="Libs/Leap/leap-plugins-0.1.10.min.js"></script>
     <script src="Libs/Leap/leap-plugins-0.1.10-utils.min.js"></script>
@@ -90,7 +93,6 @@
 
         handController.RegisterAction("SelectAssetOnHover", selectAssetOnHover);
 
-        frameActions.RegisterAction("UpdateBoundingBoxesOfSelectedAssets", updateBoundingBoxesOfSelectedAssets);
 
         $(document).keypress(function (event)
         {

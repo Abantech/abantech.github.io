@@ -34,12 +34,18 @@ function AssetManager()
 
     this.SelectAsset = function (asset)
     {
+        asset.AddHandlesToAsset();
+        asset.ChangeAssetColorSelected();
+
         selectedAssets.push(asset);
     }
 
     this.SelectAllAssets = function ()
     {
-        selectedAssets = assets;
+        for (var asset in assets)
+        {
+            this.SelectAsset(asset);
+        }
     }
 
     this.GetSelectedAssets = function ()
@@ -66,6 +72,8 @@ function AssetManager()
         {
             if (asset.name === selectedAssets[i].name)
             {
+                selectedAssets[i].RemoveHandlesFromAsset();
+            selectedAssets[i].ChangeAssetColorDeselected();
                 selectedAssets.splice(i, 1);
             }
         }
@@ -73,8 +81,29 @@ function AssetManager()
 
     this.DeselectAllAssets = function ()
     {
+        for (var asset in this.GetSelectedAssets())
+        {
+            asset.RemoveHandlesFromAsset();
+            asset.ChangeAssetColorDeselected();
+        }
+
         selectedAssets = [];
+    } 
+
+    var updateBoundingBoxesOfSelectedAssets = function (frame)
+    {
+        var selectedAssets = assetManager.GetSelectedAssets();
+
+        for (var i = 0; i < selectedAssets.length; i++)
+        {
+            if (selectedAssets[i].hasBeenMoved)
+            {
+                selectedAssets[i].geometry.computeBoundingBox();
+            }
+        }
     }
+
+    frameActions.RegisterAction("UpdateBoundingBoxesOfSelectedAssets", updateBoundingBoxesOfSelectedAssets);
 }
 
 var assetManager = new AssetManager();

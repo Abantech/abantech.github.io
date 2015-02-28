@@ -75,7 +75,7 @@ var OnEndScaledObject = function (hand)
         {
             parent.remove(pinchedObject.parent);
 
-            addHandlesToAsset(parent);
+            parent.AddHandlesToAsset();
         }
     }
 }

@@ -33,8 +33,12 @@ var pasteSelectedObjects =
     function (button) {
         console.log("Pasting " + copiedObjects.length + " copied objects");
         for (var i = 0; i < copiedObjects.length; i++) {
-            //assetManager.CreateAsset("CopyOf" + copiedObjects[i].name, copiedObjects[i]);
-            assetManager.CreateAsset("CopiedObject", copiedObjects[i]);
+            var copiedObject = copiedObjects[i]
+            copiedObject.RemoveHandlesFromAsset(copiedObject);
+            copiedObject.ChangeAssetColorDeselected();
+
+            assetManager.CreateAsset("CopyOf" + copiedObjects[i].name, copiedObject);
+            //assetManager.CreateAsset("CopiedObject", copiedObjects[i]);
             copiedObjects[i].position.copy(leftHandPalmPosition);
         }
     };
