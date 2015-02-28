@@ -21,7 +21,7 @@ if (url.substring(0, 4) != "file") {
     //console.log("window.location : " + window.location.href);
     if (url.substring(0, 4) != "file") {
         var image = document.createElement('img');
-        image.src = 'Images/NewShapeMenu.jpg';
+        image.src = 'Images/icon-info.jpg';
         texture = new THREE.Texture(image);
         image.onload = function () {
             texture.needsUpdate = true;
@@ -70,6 +70,7 @@ var actionNotPerfomredWithinThresholdTime = function (button) {
     return (!menuOptionLastUsedTime || (new Date() - menuOptionLastUsedTime) > timeBetweenActionsMills)
 }
 
+var firstShape = true;
 var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactorY, iconColor, iconGeometry, createdShapeGeometry) {
     new menuButtonChildOption("Create" + shapeName + "Button", buttonSize, { wireframe: false },
         function (menuButtonChildOption) {
@@ -99,6 +100,19 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
             mesh.receiveShadow = true;
 
             assetManager.CreateAsset(shapeName, mesh);
+
+            if (firstShape && !$("#infoBox").dialog("isOpen"))
+            {
+                $("#infoBox").dialog("open");
+                $("#infoBox").text("Congratulations on creating your first shape! Nice " + shapeName + "!");
+                firstShape = false;
+
+                setTimeout(function ()
+                {
+                    $("#infoBox").dialog("close");
+                }, 4000);
+            }
+
             console.log(shapeName + " Created due to button pressed!")
             menuOptionLastUsedTime = new Date();
         }
@@ -139,6 +153,7 @@ var closeMenuAfterDelay = function (frame) {
     }
 }
 
+var firstMenuOpen = true;
 var expandMenuSectionsOnHover = {
     action: function (hand) {
         if (!newShapesButton.userData.menuIsExpanded)
@@ -153,6 +168,18 @@ var expandMenuSectionsOnHover = {
                     newShapesButton.visible = false;
                     newShapesButton.userData.menuIsExpanded = true;
                     newShapesButton.lastExpandedOrHoveredTime = new Date();
+
+                    if (firstMenuOpen && !$("#infoBox").dialog("isOpen"))
+                    {
+                        $("#infoBox").dialog("open");
+                        $("#infoBox").text("This is the menu for shape creation! Hover over this sphere to reveal the shapes you can create!")
+                        firstMenuOpen = false;
+
+                        setTimeout(function ()
+                        {
+                            $("#infoBox").dialog("close");
+                        }, 5000);
+                    }
                 }
             }
             else {

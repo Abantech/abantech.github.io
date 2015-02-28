@@ -59,14 +59,25 @@
   <ItemGroup>
     <Content Include="BeginnerSandbox.html" />
     <Content Include="CameraInHand.html" />
+    <Content Include="css\info.css" />
+    <Content Include="css\jquery-ui.css" />
     <Content Include="fonts\helvetiker_bold.typeface.js" />
     <Content Include="fonts\helvetiker_regular.typeface.js" />
     <Content Include="fortesting.html" />
     <Content Include="GameForLeo.html" />
     <Content Include="Images\ball.png" />
+    <Content Include="Images\icon-close-16.png" />
+    <Content Include="Images\icon-info.png" />
     <Content Include="Images\NewShapeMenu.jpg" />
+    <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\info.js" />
+    <Content Include="Libs\JQuery\jquery-1.9.1.js" />
+    <Content Include="Libs\JQuery\jquery-ui.js" />
     <Content Include="Scripts\AssetManager.js" />
     <Content Include="Scripts\Assets\Asset.js" />
+    <Content Include="Scripts\HandBasedActions\HelpMenu.js" />
     <Content Include="Scripts\LeapLoopSetup-refactoring.js" />
     <Content Include="Libs\jquery-2.1.3.min.js" />
     <Content Include="Libs\Leap\leap-0.6.4.js" />

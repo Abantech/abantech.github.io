@@ -10,6 +10,7 @@ var lastHoveredObjectName = null;
 var lastSelectedObjectName = null;
 var assetMaterialOriginalColors = {};
 var selectedAssetColor = 0xcc0000
+var firstSelect = true;
 
 var selectAssetOnHover = {
     action: function (hand) {
@@ -59,6 +60,19 @@ var selectAssetOnHover = {
                         }
                         else {
                             console.log("Hovered Asset was not previously selected. Selecting...");
+
+                            if (firstSelect && !$("#infoBox").dialog("isOpen"))
+                            {
+                                $("#infoBox").text("You have selected an object! Once selected, objects can be cut and copied, streched and scaled!")
+                                $("#infoBox").dialog("open");
+                                firstSelect = false;
+
+                                setTimeout(function ()
+                                {
+                                    $("#infoBox").dialog("close");
+                                }, 6000);
+                            }
+
                             assetManager.SelectAsset(intersectedAsset.object);
                             lastSelectedObjectName = intersectedAsset.object.name;
                             lastHoveredObjectName = intersectedAsset.object.name;

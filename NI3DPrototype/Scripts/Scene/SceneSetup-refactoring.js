@@ -147,12 +147,18 @@ function animate(timestamp) {
 
 var webglAvailable = (function () { try { var canvas = document.createElement('canvas'); return !!window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')); } catch (e) { return false; } })();
 
-if (webglAvailable) {
-    initScene(document.body);
+if (webglAvailable)
+{
+    var container = document.createElement( 'div' );
+    document.body.appendChild( container );
+
+    initScene(container);
     createSceneLighting();
     createGroundPlane();
+
     animate();
 }
 else {
     alert("WebGL is unavailable")
 }
+

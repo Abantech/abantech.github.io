@@ -90,6 +90,28 @@ function getPinchedObject(hand)
     return closestObject;
 }
 
+
+var firstPinch = true;
+function showHelpMeunOnBeginPinch()
+{
+    if (firstPinch && !$("#infoBox").dialog("isOpen"))
+    {
+        $("#infoBox").text("You have made the pinching gesture! The pinching gesture can be used to move objects around the scene, as well as rotate them.")
+        $("#infoBox").dialog("open");
+        firstPinch = false;
+
+        setTimeout(function ()
+        {
+            $("#infoBox").dialog("close");
+        }, 6000);
+    }
+}
+
+rightHandPinchGesture.registerOnGestureBegin(
+    {
+        func: showHelpMeunOnBeginPinch
+    });
+
 rightHandPinchGesture.registerOnFullGestureEnd(
     {
         func: EndTranslatePinchedObject
