@@ -62,8 +62,10 @@
     <Content Include="fonts\helvetiker_bold.typeface.js" />
     <Content Include="fonts\helvetiker_regular.typeface.js" />
     <Content Include="fortesting.html" />
+    <Content Include="GameForLeo.html" />
     <Content Include="Images\ball.png" />
     <Content Include="Images\NewShapeMenu.jpg" />
+    <Content Include="Scripts\LeapLoopSetup-refactoring.js" />
     <Content Include="Libs\jquery-2.1.3.min.js" />
     <Content Include="Libs\Leap\leap-0.6.4.js" />
     <Content Include="Libs\Leap\leap-0.6.4.min.js" />
@@ -88,6 +90,7 @@
     <Content Include="PointerLockControls.html" />
     <Content Include="rotation.html" />
     <Content Include="scaleDemo.html" />
+    <Content Include="Scripts\SceneSetup-refactoring.js" />
     <Content Include="Scripts\ActionTracking\ActionManager.js" />
     <Content Include="Scripts\ActionTracking\CreateAction.js" />
     <Content Include="Scripts\ActionTracking\RotationAction.js" />
@@ -124,6 +127,7 @@
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
     <Content Include="Scripts\Scene\PhysicsSceneSetup.js" />
     <Content Include="Scripts\Scene\SceneSaving.js" />
+    <Content Include="Scripts\Scene\SceneSetup-refactoring.js" />
     <Content Include="Scripts\Scene\SceneSetup.js" />
     <Content Include="Scripts\ActionTracking\TranslationAction.js" />
     <Content Include="Scripts\Utils\GestureTimer.js" />
