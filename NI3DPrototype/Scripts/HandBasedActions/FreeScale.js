@@ -90,7 +90,7 @@ function getPinchedObjectForScale(hand)
     {
         var sceneObject = window.scene.children[i];
 
-        if (sceneObject.isAsset && sceneObject.children.length > 0)
+        if (sceneObject.userData.isAsset && sceneObject.children.length > 0)
         {
             for (var j = 0; j < sceneObject.children.length; j++)
             {
