@@ -5,6 +5,7 @@ var ScaleObject = function (hand)
 {
     if (!pinchedObject)
     {
+        playAudioFeedback("effect");
         pinchedObject = getPinchedObjectForScale(hand);
     }
     else
@@ -51,6 +52,18 @@ var ScaleObject = function (hand)
                         break;
                     }
             }
+
+            pinchedObject.line.material.color = new THREE.Color([255, 215, 0]);
+            pinchedObject.cone.material.color = new THREE.Color([255, 215, 0])
+
+            for (var i = 0; i < pinchedObject.parent.children.length; i++)
+            {
+                if (pinchedObject.parent.children[i].uuid != pinchedObject.uuid)
+                {
+                    pinchedObject.parent.children[i].visible = false;
+                }
+            }
+            
 
             // Set the scalar to the new value
             if (xScale > 0 && yScale > 0 && zScale > 0)
