@@ -33,6 +33,7 @@ Updated Greg - 2015-02-24
 
 Demo: [Game for Leo]( http://abantech.github.io/game-for-leo/r1/game-for-leo.html )  
 Source code: [Game for Leo]( https://github.com/Abantech/abantech.github.io/blob/master/game-for-leo )  
+R2: Theo ~ 2015-02-28 ~ Objects rotate instead of camera  
 Added: Theo ~ 2015-02-27 ~ The leap device as a birthday celebration enhancer.
 
 Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/threejs-leap-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
