@@ -62,7 +62,7 @@ var selectAssetOnHover = {
                         else {
                             console.log("Hovered Asset was not previously selected. Selecting...");
 
-                            if (firstSelect && !$("#infoBox").dialog("isOpen"))
+                            if (showHelp && firstSelect && !$("#infoBox").dialog("isOpen"))
                             {
                                 $("#infoBox").text("You have selected an object! Once selected, objects can be cut and copied, streched and scaled!")
                                 $("#infoBox").dialog("open");

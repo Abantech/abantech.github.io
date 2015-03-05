@@ -96,7 +96,7 @@ function getPinchedObject(hand)
 var firstPinch = true;
 function showHelpMeunOnBeginPinch()
 {
-    if (firstPinch && !$("#infoBox").dialog("isOpen"))
+    if (showHelp && firstPinch && !$("#infoBox").dialog("isOpen"))
     {
         $("#infoBox").text("You have made the pinching gesture! The pinching gesture can be used to move objects around the scene, as well as rotate them.")
         $("#infoBox").dialog("open");

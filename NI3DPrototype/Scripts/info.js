@@ -1,4 +1,6 @@
-$(function() 
+var showHelp = false;
+
+$(function ()
 {
 	 $("#infoBox")
 	.css( 

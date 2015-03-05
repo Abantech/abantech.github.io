@@ -102,7 +102,7 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
             assetManager.CreateAsset(shapeName, mesh);
             playAudioFeedback("bass");
 
-            if (firstShape && !$("#infoBox").dialog("isOpen"))
+            if (showHelp && firstShape && !$("#infoBox").dialog("isOpen"))
             {
                 $("#infoBox").dialog("open");
                 $("#infoBox").text("Congratulations on creating your first shape! Nice " + shapeName + "!");
@@ -172,7 +172,7 @@ var expandMenuSectionsOnHover = {
 
                     playAudioFeedback("bass");
 
-                    if (firstMenuOpen && !$("#infoBox").dialog("isOpen"))
+                    if (showHelp && firstMenuOpen && !$("#infoBox").dialog("isOpen"))
                     {
                         $("#infoBox").dialog("open");
                         $("#infoBox").text("This is the menu for shape creation! Hover over this sphere to reveal the shapes you can create!")

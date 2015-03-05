@@ -2,6 +2,10 @@
 var rotationAction = null
 var snapRotation = true;
 var snapAngle;
+var canRotateAfterSnap = true;
+var lastQuaternion;
+var quaternionHistory = new Array(2);
+var snapTimeout = 3000;
 
 function setSnapAngle(degrees)
 {
@@ -61,7 +65,56 @@ var RotatePinchedObject = function (hand)
 
             if (angle != null)
             {
-                pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+                var quaternion = new THREE.Quaternion();
+                quaternion.setFromAxisAngle(axis, -1 * angle);
+
+                if (snapRotation)
+                {
+                    if (!pinchedObject.quaternion.equals(quaternion))
+                    {
+                        if (!quaternionHistory[0])
+                        {
+                            quaternionHistory[0] = pinchedObject.quaternion;
+                            quaternionHistory[1] = quaternion;
+                        }
+
+                        if (quaternionHistory[0].equals(quaternion))
+                        {
+                            if (canRotateAfterSnap)
+                            {
+                                quaternionHistory[0] = quaternionHistory[1];
+                                quaternionHistory[1] = quaternion;
+
+                                pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+                                canRotateAfterSnap = false;
+
+                                setTimeout(function ()
+                                {
+                                    canRotateAfterSnap = true;
+                                }, snapTimeout);
+                            }
+                        }
+                        else
+                        {
+                            quaternionHistory[0] = quaternionHistory[1];
+                            quaternionHistory[1] = quaternion;
+
+                            pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+
+                            canRotateAfterSnap = false;
+
+                            setTimeout(function ()
+                            {
+                                canRotateAfterSnap = true;
+                            }, snapTimeout);
+                        }
+                    }
+                }
+                else
+                {
+                    pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+                }
+
             }
         }
     }
