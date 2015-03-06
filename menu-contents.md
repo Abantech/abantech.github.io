@@ -1,10 +1,10 @@
 [Home]( http://www.abantech.net/ ) &raquo;
-[abantech.github.io]( index-left-side-hackette.html )
+[abantech.github.io]( index.html )
 ===
 <small>Developing the natural interactions for designing and building in 3D</small>
 
-[GitHub web page]( http://va3c.github.io/viewer/va3c-hacker-cookbook/templates/left-side-hackette/index-left-side-hackette.html "view the files as apps." ) <input value="<< You are here" size=15 style="font:bold 11pt monospace;border-width:0;" >  
-&raquo; [GitHub source code]( https://github.com/va3c/viewer/tree/gh-pages/va3c-hacker-cookbook/templates/left-side-hackette/ "View files with GitHub" ) <scan style=display:none ><< You are here</scan>  
+[GitHub web page]( http://abantech.github.io/ "view the files as apps." ) <input value="<< You are here" size=15 style="font:bold 11pt monospace;border-width:0;" >  
+&raquo; [GitHub source code]( https://github.com/abantech/ "View files with GitHub" ) <scan style=display:none ><< You are here</scan>  
 
 [Read Me]( #readme.md# )
 
@@ -32,7 +32,7 @@ Source Code:
 
 ## Interaction Studies
 
-Demo: [Game for Leo latest]( #http://abantech.github.io/game-for-leo/latest/# )  
+Demo: [Game for Leo latest]( #http://abantech.github.io/game-for-leo/r2/game-for-leo.html# )  
 Source code: [Game for Leo]( https://github.com/Abantech/abantech.github.io/blob/master/game-for-leo )  
 R2: Theo ~ 2015-02-28 ~ Objects rotate instead of camera  
 Added: Theo ~ 2015-02-27 ~ The leap device as a birthday celebration enhancer.
