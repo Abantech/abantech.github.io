@@ -1,7 +1,9 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 /// <reference path="../FrameActions.js" />
-var buttonSize = 40;
-var buttonOffsetFactor = 1.1
+
+var parentButtonSize = 40;
+var childButtonSize = 35;
+var buttonOffsetFactor = 1.06
 var buttonPositionX = (window.innerWidth / 14);
 var buttonPositionY = (window.innerHeight / 12);
 var buttonPositionZ = -300;
@@ -10,10 +12,10 @@ var menuOpenGracePeriodMills = 900;
 var url = window.location.href;
 
 //var texture = new THREE.Texture(img);
-var geometry = new THREE.SphereGeometry(16, 32, 32);
+var geometry = new THREE.SphereGeometry(parentButtonSize, 32, 32);
 geometry.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX, buttonPositionY, buttonPositionZ));
 
-var material = new THREE.MeshPhongMaterial({ wireframe: false });
+var material = new THREE.MeshPhongMaterial({ wireframe: false, transparent: true, opacity: 0.3 });
 
 if (url.substring(0, 4) != "file") {
     var texture = new THREE.Texture();
@@ -72,7 +74,7 @@ var actionNotPerfomredWithinThresholdTime = function (button) {
 
 var firstShape = true;
 var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactorY, iconColor, iconGeometry, createdShapeGeometry) {
-    new menuButtonChildOption("Create" + shapeName + "Button", buttonSize, { wireframe: false },
+    new menuButtonChildOption("Create" + shapeName + "Button", childButtonSize, { wireframe: false },
         function (menuButtonChildOption) {
             var sizeOffset = (menuButtonChildOption.size / 2) + 2;
             var translationMatrix = new THREE.Matrix4().makeTranslation(buttonPositionX + (sizeOffset * offsetFactorX), buttonPositionY + (sizeOffset * offsetFactorY), buttonPositionZ);
