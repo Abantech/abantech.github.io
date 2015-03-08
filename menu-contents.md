@@ -32,6 +32,10 @@ Source Code:
 
 ## Interaction Studies
 
+Demo: [Three.js Leap Position Text to Voice]( http://abantech.github.io/threejs-leap-position-text-to-voice/r1/threejs-leap-position-text-to-voice )  
+Source code: [Three.js Leap Position Text to Voice]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-position-text-to-voice/ )  
+Added: Theo ~ 2015-03-08 ~ the latest directional movement( left/right/up/down ) of one hand is detected and reported out load  
+
 Demo: [Game for Leo latest]( #http://abantech.github.io/game-for-leo/r2/game-for-leo.html# )  
 Source code: [Game for Leo]( https://github.com/Abantech/abantech.github.io/blob/master/game-for-leo )  
 R2: Theo ~ 2015-02-28 ~ Objects rotate instead of camera  
