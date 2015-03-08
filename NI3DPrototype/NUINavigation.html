@@ -18,12 +18,13 @@
 
     </head>
     <body>
-        <script src="Scripts/Controls/FirstPersonControls.js"></script>
+        <!--<script src="Scripts/Controls/FirstPersonControls.js"></script>-->
+        <script src="Scripts/Controls/FlyControls.js"></script>
         <script src="Scripts/Gestures/GestureExtensionMethods.js"></script>
 
         <script type="text/javascript">
-            var useNUIConrols = false; //true = use FirstPersonControls, false = use OrbitControls
-            var manualMovementMode = true; //true = use the manual camera translation, false = use controls.freeze/unfreeze
+            var useNUIConrols = true; //true = use FirstPersonControls, false = use OrbitControls
+            var manualMovementMode = false; //true = use the manual camera translation, false = use controls.freeze/unfreeze
             document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;';
             var info = document.body.appendChild(document.createElement('div'));
             info.txt = '<a href=""><h1>Leap-enabled hand navigation</h1></a>';
@@ -36,14 +37,14 @@
         <script src="Scripts/Scene/SceneSetup.js"></script>
 
         <!--  This class attaches functions to the transform plugin to re-orient the hands after the camera moves -->
-        <!--<script src="Scripts/Scene/LEAPToSceneConverter.js"></script>-->
+        <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
 
         <!-- Simply the leap loop and transform plugin -->
         <script src="Scripts/LeapLoopSetup-NoHandPlugins.js"></script>
 
         <!-- Not really sure why James needs here here but I think it's related to LEAPToSceneConverter
             needing to be called after the transform plugin is attached ... -->
-        <!--<script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>-->
+        <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
 
         <!-- A very simple struct that just holds an array of all the actions, THIS is the mechanism that allows our DI to work -->
         <script src="Scripts/FrameActions.js"></script>

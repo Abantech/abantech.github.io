@@ -120,20 +120,43 @@ var updateNavigationControls = function (makeVisible, originPosition) {
     if (typeof (navigationPlate) == 'undefined')
     {
         //TODO: make this 3 concentric cylinders (all translucent) so that the user can see what segment they are on
-        var geometry = new THREE.CylinderGeometry(100, 100, 2, 32);
+        var geometry = new THREE.CylinderGeometry(15, 15, 1, 32);
         var material = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
         navigationPlate = new THREE.Mesh(geometry, material);
 
         window.scene.add(navigationPlate);
+
+        var furthestArrowDistance = 12
+        var arrowColors = [0xff0000, 0xffa500, 0xffff00];
+
+        addDirectionArrows(navigationPlate, new THREE.Vector3(1, 0, 0), furthestArrowDistance, arrowColors);
+        addDirectionArrows(navigationPlate, new THREE.Vector3(-1, 0, 0), furthestArrowDistance, arrowColors);
+        addDirectionArrows(navigationPlate, new THREE.Vector3(0, 0, 1), furthestArrowDistance, arrowColors);
+        addDirectionArrows(navigationPlate, new THREE.Vector3(0, 0, -1), furthestArrowDistance, arrowColors);
     }
 
     if (originPosition)
     { 
         navigationPlate.position.copy(originPosition);
-        navigationPlate.translateY(-20);
+        navigationPlate.translateY(-5);
+        navigationPlate.translateZ(-30);
     }
 
     navigationPlate.visible = makeVisible;
+}
+
+function addDirectionArrows(container, directionVector, maxLength, colorHexArray)
+{
+    var count = colorHexArray.length;
+    var segmentSize = maxLength / count;
+
+    for (var i = 1; i <= count; i++)
+    {
+        var location = new THREE.Vector3().copy(directionVector);
+        location.multiplyScalar(segmentSize * i);
+        
+        container.add(new THREE.ArrowHelper(directionVector, location, segmentSize, colorHexArray[i-1], i, 0.4));
+    }
 }
 
 var distanceDetents = 30, segments = 4
@@ -193,6 +216,10 @@ var customNUINav = function(frame) {
     var message = info.txt
     var hand = frame.hands[0];
 
+    controls.moveState.right = 0;
+    controls.moveState.up = 0;
+    controls.moveState.back = 0;
+
     if (typeof (hand) != 'undefined')
     {
         message = message + "<br>" +
@@ -209,32 +236,36 @@ var customNUINav = function(frame) {
         var cam = window.camera;
 
         var enableControls = (frame.hands.length >= 1 && isHandInAirplaneMode(hand))
-        if (!manualMovementMode)
-            controls.freeze = !enableControls
 
         if (enableControls) {
 
             //var camPosition = cam.position;
             navigationStartPosition = new THREE.Vector3(cam.position.x, cam.position.y - 20, cam.position.z - 200)
-            //TODO: figure out why this is no longer working
-            updateNavigationControls(cam.position, true);
 
             var handOrigin = new THREE.Vector3().fromArray(hand.palmPosition);
-            var moveSpeedDamping = 1;
+            var moveSpeedDamping = 20;
 
             var moveLat = getLateralDistanceSegment(handOrigin, navigationStartPosition) * moveSpeedDamping;
             var moveLon = getLongitudinalDistanceSegment(handOrigin, navigationStartPosition) * moveSpeedDamping;
-            var moveDir = getDirectionalDistanceSegment(handOrigin, navigationStartPosition) * moveSpeedDamping;
+            var moveDir = (getDirectionalDistanceSegment(handOrigin, navigationStartPosition) - 1) * moveSpeedDamping;
 
             message = message + "<br>AIRPLANE MODE DETECTED" + "<br>" + "Segments (lat, long, dist) = (" + moveLat + ", " + moveLon + ", " + moveDir + ")"
 
             if (manualMovementMode)
-            {
+            {//for debugging purposes, turn on manualMovementMode to see what happens when the camera is translated manually
                 window.camera.translateX(moveLat);
                 window.camera.translateY(moveLon);
                 window.camera.translateZ(moveDir);
             }
+            else
+            {
+                controls.moveState.right = moveLat;
+                controls.moveState.up = moveLon;
+                controls.moveState.back = moveDir;
+            }
         }
+
+        updateNavigationControls(enableControls, cam.position);
     }
     else
     {
@@ -245,6 +276,8 @@ var customNUINav = function(frame) {
 
         updateNavigationControls(false);
     }
+
+    controls.updateMovementVector();
 
     info.innerHTML = message;
 }

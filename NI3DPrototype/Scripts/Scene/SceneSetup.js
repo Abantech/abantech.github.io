@@ -54,19 +54,20 @@ var addOrbitControls = function () {
 }
 
 var addFirstPersonControls = function () {
-    controls = new THREE.FirstPersonControls(window.camera);
+    controls = new THREE.FlyControls(window.camera);
+    //    new THREE.FirstPersonControls(window.camera);
 
-    controls.lookSpeed = 0.015; // 0.0125;
-    controls.lookSpeedMin = 0.005;
-    controls.lookSpeedMax = 0.5;
-    controls.movementSpeed = 50;
-    controls.movementSpeedMin = 20;
-    controls.movementSpeedMax = 300;
-    controls.noFly = false;
-    controls.lookVertical = true;
-    controls.constrainVertical = true;
-    controls.verticalMin = 1.5;
-    controls.verticalMax = 2.0;
+    //controls.lookSpeed = 0.015; // 0.0125;
+    //controls.lookSpeedMin = 0.005;
+    //controls.lookSpeedMax = 0.5;
+    //controls.movementSpeed = 50;
+    //controls.movementSpeedMin = 20;
+    //controls.movementSpeedMax = 300;
+    //controls.noFly = false;
+    //controls.lookVertical = true;
+    //controls.constrainVertical = true;
+    //controls.verticalMin = 1.5;
+    //controls.verticalMax = 2.0;
 
     updateControls = function () { controls.update(clock.getDelta()) }
 }
