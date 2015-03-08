@@ -32,7 +32,7 @@ Source Code:
 
 ## Interaction Studies
 
-Demo: [Three.js Leap Position Text to Voice]( http://abantech.github.io/threejs-leap-position-text-to-voice/r1/threejs-leap-position-text-to-voice )  
+Demo: [Three.js Leap Position Text to Voice]( http://abantech.github.io/threejs-leap-position-text-to-voice/r1/threejs-leap-position-text-to-voice.html )  
 Source code: [Three.js Leap Position Text to Voice]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-position-text-to-voice/ )  
 Added: Theo ~ 2015-03-08 ~ the latest directional movement( left/right/up/down ) of one hand is detected and reported out load  
 
