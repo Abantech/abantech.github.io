@@ -118,6 +118,7 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
 
             console.log(shapeName + " Created due to button pressed!")
             menuOptionLastUsedTime = new Date();
+            newShapesButton.lastExpandedOrHoveredTime = new Date();
         }
         , null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
 }
