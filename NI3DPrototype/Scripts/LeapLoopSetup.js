@@ -1,4 +1,6 @@
-﻿Leap.loop(
+﻿/// <reference path="../Libs/Leap/leap-0.6.4.js" />
+
+Leap.loop(
         function (frame) {
             frame.hands.forEach(
               function (hand) {

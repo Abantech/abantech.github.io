@@ -58,13 +58,13 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
         }
 
     this.buttonPressedAction = buttonPressedCallback;
-    this.onButtonPressed = {
-        action: function (hand)
+    this.onButtonPressed = 
+        function(frame)
         {
             if (!self.buttonMesh.visible)
                 return;
 
-            if (isButtonPressed(hand, self.buttonMesh)) {
+            if (isButtonPressed(frame, self.buttonMesh)) {
                 if (!self.conditionForPressed)
                     console.warn("ConditionForPressed not defined on button " + self.buttonMesh.name)
 
@@ -72,7 +72,6 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
                     self.buttonPressedAction(self.buttonMesh);
             }
         }
-    };
 
     this.onButtonNotPressed = function (frame) {
         if (!buttonNotPressedCallback)
@@ -94,7 +93,7 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
     }
 
     handController.RegisterAction(this.buttonMesh.name + "_onButtonHovered", this.onButtonHovered);
-    handController.RegisterAction(this.buttonMesh.name + "_onButtonPressed", this.onButtonPressed);
+    frameActions.RegisterAction(this.buttonMesh.name + "_onButtonPressed", this.onButtonPressed);
     frameActions.RegisterAction(this.buttonMesh.name + "_onButtonNotHovered", this.onButtonNotHovered);
     frameActions.RegisterAction(this.buttonMesh.name + "_onButtonNotPressed", this.onButtonNotPressed);
     frameActions.RegisterAction(this.buttonMesh.name + "_tryShowButton", this.tryShowButton);

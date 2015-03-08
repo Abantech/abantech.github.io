@@ -1,14 +1,22 @@
 ﻿var raycaster = new THREE.Raycaster();
 
-var isButtonPressed = function(hand, button) {
-    var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-    var directionVector = (new THREE.Vector3()).fromArray(hand.fingers[1].direction);
+var isButtonPressed = function (frame, button) {
+    var isObjectIntersected = false;
+    frame.hands.forEach(
+      function (hand) {
+          var indexTipPosition = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+          var directionVector = (new THREE.Vector3()).fromArray(hand.fingers[1].direction);
 
-    raycaster.set(indexTipPosition, directionVector.normalize());
-    raycaster.near = 0;
-    raycaster.far = 80;
-    var intersection = raycaster.intersectObject(button, true);
-    return intersection.length > 0;
+          raycaster.set(indexTipPosition, directionVector.normalize());
+          raycaster.near = 0;
+          raycaster.far = 80;
+          
+          if (raycaster.intersectObject(button, true).length > 0)
+              isObjectIntersected = true;
+      }
+    );
+
+    return isObjectIntersected;
 }
 
 var isHoveringOverControls = function (hand, controls) {

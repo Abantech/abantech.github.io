@@ -135,7 +135,8 @@ var changeButtonColorOnHoverAndPress = {
         //Hovering: Yellow = 0xAEB404
         //Pressed: Green =  0x04B431
         if (isHoveringOverControls(hand, [newShapesButton])) {
-            newShapesButton.material.color.setHex(isButtonPressed(hand, newShapesButton) ? 0x04B431 : 0xAEB404);
+            //newShapesButton.material.color.setHex(isButtonPressed(hand, newShapesButton) ? 0x04B431 : 0xAEB404);
+            newShapesButton.material.color.setHex(0xAEB404);
         }
         else {
             newShapesButton.material.color.setHex(0x8A2908);
@@ -201,6 +202,6 @@ var expandMenuSectionsOnHover = {
     }
 }
 
-handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorOnHoverAndPress);
 handController.RegisterAction("ExpandMenuSectionsOnHover", expandMenuSectionsOnHover);
+handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorOnHoverAndPress);
 frameActions.RegisterAction("CloseMenuAfterDelay", closeMenuAfterDelay);
