@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Leap Threejs Template R6</title>
+<title>Threejs Leap Position Text to Voice</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -17,6 +17,10 @@
 	var handies = {};
 	var loop = {};
 
+	var previousPosition = v( 0, 0, 0 );
+
+	var utterance;
+
 	var info, stats, renderer, scene, camera, controls;
 
 	init();
@@ -31,6 +35,7 @@
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +
+			'<div id=msg></div>' +
 		'';
 
 		stats = new Stats();
@@ -64,6 +69,9 @@
 
 		renderer.render( scene, camera );
 
+		utterance = new SpeechSynthesisUtterance( 'Move your hand over the leap device - and I will tell you which way you are moving' );
+		speechSynthesis.speak( utterance );
+
 	}
 
 	loop.animate = function( frame ) {
@@ -85,6 +93,28 @@
 		renderer.render( scene, camera );
 		controls.update();
 		stats.update();
+		if ( handies[ 0 ] ) { updatePosition(); }
+
+	}
+
+	function updatePosition() {
+		var handyPosition = handies[ 0 ].mesh.position;
+
+		if ( handyPosition.distanceTo( previousPosition ) > 50 ) {
+
+			directionXdelta = handies[ 0 ].mesh.position.x - previousPosition.x;
+			directionX = directionXdelta > 0 ? 'right' : 'left';
+			directionYdelta = handies[ 0 ].mesh.position.y - previousPosition.y;
+			directionY = directionYdelta > 0 ? 'up' : 'down';
+			direction = Math.abs( directionYdelta ) > Math.abs( directionXdelta ) ? directionY : directionX;
+			msg.innerHTML = direction + ' ' + handies[ 0 ].mesh.position.distanceTo( previousPosition).toFixed( 1 ) ;
+			previousPosition = handies[ 0 ].mesh.position.clone();
+
+			window.speechSynthesis.cancel();
+			utterance.text = direction;
+			speechSynthesis.speak( utterance );
+
+		}
 
 	}
 
@@ -96,6 +126,8 @@
 		var material = new THREE.MeshNormalMaterial();
 		var box = new THREE.Mesh( geometry, material );
 		scene.add( box );
+
+		handy.mesh = box;
 
 		handy.outputData = function( index, hand  ) {
 
