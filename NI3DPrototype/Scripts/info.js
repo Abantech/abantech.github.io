@@ -1,4 +1,4 @@
-var showHelp = false;
+var showHelp = true;
 
 $(function ()
 {

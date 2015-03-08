@@ -62,16 +62,11 @@ var selectAssetOnHover = {
                         else {
                             console.log("Hovered Asset was not previously selected. Selecting...");
 
-                            if (showHelp && firstSelect && !$("#infoBox").dialog("isOpen"))
+                            if (showHelp && firstSelect)
                             {
-                                $("#infoBox").text("You have selected an object! Once selected, objects can be cut and copied, streched and scaled!")
-                                $("#infoBox").dialog("open");
+                                var utterance = new SpeechSynthesisUtterance("You have selected an object! Once selected, objects can be cut and copied, streched and scaled!");
+                                speechSynthesis.speak(utterance);
                                 firstSelect = false;
-
-                                setTimeout(function ()
-                                {
-                                    $("#infoBox").dialog("close");
-                                }, 6000);
                             }
 
                             playAudioFeedback("effect");

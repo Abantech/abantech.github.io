@@ -104,16 +104,11 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
             assetManager.CreateAsset(shapeName, mesh);
             playAudioFeedback("bass");
 
-            if (showHelp && firstShape && !$("#infoBox").dialog("isOpen"))
+            if (showHelp && firstShape)
             {
-                $("#infoBox").dialog("open");
-                $("#infoBox").text("Congratulations on creating your first shape! Nice " + shapeName + "!");
+                var utterance = new SpeechSynthesisUtterance("Congratulations on creating your first shape! Nice " + shapeName + "!");
+                speechSynthesis.speak(utterance);
                 firstShape = false;
-
-                setTimeout(function ()
-                {
-                    $("#infoBox").dialog("close");
-                }, 4000);
             }
 
             console.log(shapeName + " Created due to button pressed!")
@@ -176,16 +171,11 @@ var expandMenuSectionsOnHover = {
 
                     playAudioFeedback("bass");
 
-                    if (showHelp && firstMenuOpen && !$("#infoBox").dialog("isOpen"))
+                    if (showHelp && firstMenuOpen)
                     {
-                        $("#infoBox").dialog("open");
-                        $("#infoBox").text("This is the menu for shape creation! Hover over this sphere to reveal the shapes you can create!")
+                        var utterance = new SpeechSynthesisUtterance("This is the menu for shape creation! Hover over this sphere to reveal the shapes you can create!");
+                        speechSynthesis.speak(utterance);
                         firstMenuOpen = false;
-
-                        setTimeout(function ()
-                        {
-                            $("#infoBox").dialog("close");
-                        }, 5000);
                     }
                 }
             }

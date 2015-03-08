@@ -88,6 +88,7 @@
     <script src="Scripts/AssetManager.js"></script>
     <script src="Scripts/Gestures/GestureExtensionMethods.js"></script>
 
+    <script src="Scripts/info.js"></script>
     <script>
         //handController.RegisterAction("DrawPinchLine", drawPinchLine);
 
@@ -138,13 +139,19 @@
         handController.RegisterAction("PinchGesture", rightHandPinchGesture);
         handController.RegisterAction("PinchGesture", leftHandPinchGesture);
 
+        if (showHelp)
+        {
+            var utterance = new SpeechSynthesisUtterance('Welcome to the Abahntech Natural User Interface demo.  Hover over the translucent sphere to create a shape.');
+            speechSynthesis.speak(utterance);
+        }
+
     </script>
 
     <script src="Libs/JQuery/jquery-1.9.1.js"></script>
     <script src="Libs/JQuery/jquery-ui.js"></script>
     <link rel=stylesheet href="css/jquery-ui.css" />
     <link rel=stylesheet href="css/info.css" />
-    <script src="Scripts/info.js"></script>
+
     <div id="infoButton"></div>
     <div id="infoBox" title="Demo Information">
         Find out more about us at 
