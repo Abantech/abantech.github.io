@@ -6,6 +6,8 @@
 [GitHub web page]( http://abantech.github.io/ "view the files as apps." ) <input value="<< You are here" size=15 style="font:bold 11pt monospace;border-width:0;" >  
 &raquo; [GitHub source code]( https://github.com/abantech/ "View files with GitHub" ) <scan style=display:none ><< You are here</scan>  
 
+<button onclick=ifr.contentWindow.speechSynthesis.cancel();>Cancel speech / Mute</button>
+
 [Read Me]( #readme.md# )
 
 ## Demos (open)
