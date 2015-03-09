@@ -12,7 +12,7 @@ THREE.FlyControls = function (object, domElement) {
     // API
 
     this.movementSpeed = 1.0;
-    this.rollSpeed = 0.005;
+    this.rollSpeed = 0.05;
 
     this.dragToLook = false;
     this.autoForward = false;
@@ -260,8 +260,8 @@ THREE.FlyControls = function (object, domElement) {
     //this.domElement.addEventListener('mousedown', bind(this, this.mousedown), false);
     //this.domElement.addEventListener('mouseup', bind(this, this.mouseup), false);
 
-    //window.addEventListener('keydown', bind(this, this.keydown), false);
-    //window.addEventListener('keyup', bind(this, this.keyup), false);
+    window.addEventListener('keydown', bind(this, this.keydown), false);
+    window.addEventListener('keyup', bind(this, this.keyup), false);
 
     this.updateMovementVector();
     this.updateRotationVector();

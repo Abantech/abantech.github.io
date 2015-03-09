@@ -219,6 +219,9 @@ var customNUINav = function(frame) {
     controls.moveState.right = 0;
     controls.moveState.up = 0;
     controls.moveState.back = 0;
+    controls.moveState.yawRight = 0;
+    controls.moveState.pitchUp = 0;
+    controls.moveState.rollLeft = 0;
 
     if (typeof (hand) != 'undefined')
     {
@@ -249,7 +252,11 @@ var customNUINav = function(frame) {
             var moveLon = getLongitudinalDistanceSegment(handOrigin, navigationStartPosition) * moveSpeedDamping;
             var moveDir = (getDirectionalDistanceSegment(handOrigin, navigationStartPosition) - 1) * moveSpeedDamping;
 
+            var yawVal = (hand.yaw().toFixed(1) * 3).toFixed(1);
+            var pitchVal = ((hand.pitch().toFixed(1) - 0.3) * 0.3).toFixed(1);
+
             message = message + "<br>AIRPLANE MODE DETECTED" + "<br>" + "Segments (lat, long, dist) = (" + moveLat + ", " + moveLon + ", " + moveDir + ")"
+            message = message + "<br>Yaw: " + yawVal + " Pitch: " + pitchVal + " Roll: " + hand.roll().toFixed(2)
 
             if (manualMovementMode)
             {//for debugging purposes, turn on manualMovementMode to see what happens when the camera is translated manually
@@ -262,6 +269,8 @@ var customNUINav = function(frame) {
                 controls.moveState.right = moveLat;
                 controls.moveState.up = moveLon;
                 controls.moveState.back = moveDir;
+                controls.moveState.yawRight = yawVal;
+                controls.moveState.pitchUp = hand.pitch().toFixed(2) - 0.3;
             }
         }
 
@@ -278,6 +287,7 @@ var customNUINav = function(frame) {
     }
 
     controls.updateMovementVector();
+    controls.updateRotationVector();
 
     info.innerHTML = message;
 }
