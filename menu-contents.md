@@ -35,7 +35,7 @@ Source Code:
 ## Interaction Studies
 
 
-Demo: [Three.js Skybox Sample]( http://abantech.github.io/interaction-studies/threejs-skybox/r1/threejs-skybox.html )  
+Demo: [Three.js Skybox Sample]( http://abantech.github.io/interaction-studies/threejs-skybox/r1/template-skybox.html )  
 Source code: [Three.js Leap Skybox Sample]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-skybox/ )  
 Added: Theo ~ 2015-03-09 ~ Skybox demo
 See also:  
