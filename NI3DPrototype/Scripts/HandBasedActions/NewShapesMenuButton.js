@@ -1,7 +1,7 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 /// <reference path="../FrameActions.js" />
 
-var parentButtonSize = 40;
+var parentButtonSize = 32;
 var childButtonSize = 35;
 var buttonOffsetFactor = 1.06
 var buttonPositionX = (window.innerWidth / 14);
@@ -15,7 +15,7 @@ var url = window.location.href;
 var geometry = new THREE.SphereGeometry(parentButtonSize, 32, 32);
 geometry.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX, buttonPositionY, buttonPositionZ));
 
-var material = new THREE.MeshPhongMaterial({ wireframe: false, transparent: true, opacity: 0.3 });
+var material = new THREE.MeshPhongMaterial({ wireframe: false, transparent: true, opacity: 0.6 });
 
 if (url.substring(0, 4) != "file") {
     var texture = new THREE.Texture();
@@ -41,7 +41,7 @@ var newShapesButton = new THREE.Mesh(geometry, material);
 
 //newShapesButton.material.opacity = 0.2;
 newShapesButton.userData.isAsset = false;
-newShapesButton.material.color.setHex(0x8A2908);
+newShapesButton.material.color.setHex(0xffeeff);
 newShapesButton.userData.menuIsExpanded = false;
 newShapesButton.lastExpandedOrHoveredTime = null;
 
