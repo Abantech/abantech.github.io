@@ -32,8 +32,9 @@ Updated Greg - 2015-02-24
 ***
 
 
-Demo: [Abantech HQ ~ 3D Schematic]( http://abantech.github.io/interaction-studies/abantech-hq/r1/abantech-hq.html )
-Source: [[Abantech HQ ~ 3D Schematic]( http://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/abantech-hq/r1/abantech-hq.html )
+Demo: [Abantech HQ ~ 3D Schematic]( http://abantech.github.io/interaction-studies/abantech-hq/r1/abantech-hq.html )  
+Source: [Abantech HQ ~ 3D Schematic]( http://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/abantech-hq/r1/abantech-hq.html )  
+[Read Me]( http://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/abantech-hq/readme.md )  
 Added: Theo ~ 2015-03-10 ~ sketching in 3D
 
 Demo: [Three.js Skybox Sample]( http://abantech.github.io/interaction-studies/threejs-skybox/r1/template-skybox.html )  
