@@ -1,21 +1,22 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 /// <reference path="../FrameActions.js" />
 
-var parentButtonSize = 32;
-var childButtonSize = 35;
+var parentButtonSize = 24;
+var childButtonSize = 65;
 var buttonOffsetFactor = 1.06
 var buttonPositionX = (window.innerWidth / 14);
-var buttonPositionY = (window.innerHeight / 12);
+var buttonPositionY = (window.innerHeight / 16);
 var buttonPositionZ = -300;
 var menuHoverToOpenDelayMills = 250;
 var menuOpenGracePeriodMills = 900;
 var url = window.location.href;
+var defaultButtonColor = 0xffeeff;
 
 //var texture = new THREE.Texture(img);
 var geometry = new THREE.SphereGeometry(parentButtonSize, 32, 32);
 geometry.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX, buttonPositionY, buttonPositionZ));
 
-var material = new THREE.MeshPhongMaterial({ wireframe: false, transparent: true, opacity: 0.6 });
+var material = new THREE.MeshPhongMaterial({ wireframe: false, transparent: true, opacity: 0.5 });
 
 if (url.substring(0, 4) != "file") {
     var texture = new THREE.Texture();
@@ -34,7 +35,7 @@ if (url.substring(0, 4) != "file") {
     material.needsUpdate = true;
 }
 else {
-    material.color.setHex(0x8A2908);
+    material.color.setHex(defaultButtonColor);
 }
 
 var newShapesButton = new THREE.Mesh(geometry, material);
@@ -74,11 +75,13 @@ var actionNotPerfomredWithinThresholdTime = function (button) {
 
 var firstShape = true;
 var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactorY, iconColor, iconGeometry, createdShapeGeometry) {
-    new menuButtonChildOption("Create" + shapeName + "Button", childButtonSize, { wireframe: false },
+    new menuButtonChildOption("Create" + shapeName + "Button", childButtonSize, { wireframe: false, transparent: true, opacity: 0.7 },
         function (menuButtonChildOption) {
             var sizeOffset = (menuButtonChildOption.size / 2) + 2;
-            var translationMatrix = new THREE.Matrix4().makeTranslation(buttonPositionX + (sizeOffset * offsetFactorX), buttonPositionY + (sizeOffset * offsetFactorY), buttonPositionZ);
-            var iconMesh = new THREE.Mesh(iconGeometry, new THREE.MeshPhongMaterial({ wireframe: false }))
+            var translationMatrix = new THREE.Matrix4().makeTranslation(buttonPositionX/2.3 + (sizeOffset * offsetFactorX), buttonPositionY/2.3 + (sizeOffset * offsetFactorY), buttonPositionZ);
+            var iconMesh = new THREE.Mesh(iconGeometry, new THREE.MeshPhongMaterial({ wireframe: false}))
+            iconMesh.material.transparent = true;
+            iconMesh.material.opacity = 0.5;
             iconMesh.material.color.setHex(iconColor);
 
             menuButtonChildOption.buttonMesh.applyMatrix(translationMatrix)
@@ -118,15 +121,15 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
         , null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
 }
 
-createNewShapeChildOption("Cube", -1 * buttonOffsetFactor, 1 * buttonOffsetFactor, 0x2E9AFE, new THREE.BoxGeometry(24, 24, 24), new THREE.BoxGeometry(18, 18, 18));
-createNewShapeChildOption("Sphere", 1 * buttonOffsetFactor, 1 * buttonOffsetFactor, 0x7401DF, new THREE.SphereGeometry(14, 32, 32), new THREE.SphereGeometry(12, 32, 32));
-createNewShapeChildOption("Cylinder", -1 * buttonOffsetFactor, -1 * buttonOffsetFactor, 0xFE642E, new THREE.CylinderGeometry(12, 12, 24, 32), new THREE.CylinderGeometry(12, 12, 32, 32));
-createNewShapeChildOption("Cone", 1 * buttonOffsetFactor, -1 * buttonOffsetFactor, 0x0B4C5F, new THREE.CylinderGeometry(0, 12, 30, 32), new THREE.CylinderGeometry(0, 12, 32, 32));
+createNewShapeChildOption("Cube", -1 * buttonOffsetFactor, 1 * buttonOffsetFactor, 0x2E9AFE, new THREE.BoxGeometry(40, 40, 40), new THREE.BoxGeometry(18, 18, 18));
+createNewShapeChildOption("Sphere", 1 * buttonOffsetFactor, 1 * buttonOffsetFactor, 0x7401DF, new THREE.SphereGeometry(25, 32, 32), new THREE.SphereGeometry(12, 32, 32));
+createNewShapeChildOption("Cylinder", -1 * buttonOffsetFactor, -1 * buttonOffsetFactor, 0xFE642E, new THREE.CylinderGeometry(20, 20, 40, 32), new THREE.CylinderGeometry(12, 12, 32, 32));
+createNewShapeChildOption("Cone", 1 * buttonOffsetFactor, -1 * buttonOffsetFactor, 0x0B4C5F, new THREE.CylinderGeometry(0, 20, 40, 32), new THREE.CylinderGeometry(0, 12, 32, 32));
 
 
 var changeButtonColorOnHoverAndPress = {
     action: function (hand) {
-        //Inactive: Brown = 0x8A2908
+        //Inactive: Brown = defaultButtonColor
         //Hovering: Yellow = 0xAEB404
         //Pressed: Green =  0x04B431
         if (isHoveringOverControls(hand, [newShapesButton])) {
@@ -134,7 +137,7 @@ var changeButtonColorOnHoverAndPress = {
             newShapesButton.material.color.setHex(0xAEB404);
         }
         else {
-            newShapesButton.material.color.setHex(0x8A2908);
+            newShapesButton.material.color.setHex(defaultButtonColor);
         }
     }
 };
