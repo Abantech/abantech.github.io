@@ -41,7 +41,7 @@ Added: Theo ~ 2015-03-09 ~ Skybox demo
 See also:  
 <http://en.wikipedia.org/wiki/Skybox_(video_games)>  
 Sources:
-<http://www.humus.name/index.php?page=Textures>
+<http://www.humus.name/index.php?page=Textures>  
 [Google Images]( https://www.google.com/search?q=skybox&tbm=isch&tbo=u&source=univ&sa=X&ei=sjz-VPmYHdbaoASxo4LACg&ved=0CEsQsAQ&biw=1855&bih=995 )
 
  
