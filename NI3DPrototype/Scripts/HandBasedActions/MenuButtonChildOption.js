@@ -64,7 +64,8 @@ var menuButtonChildOption = function(buttonName, buttonSize, meshParameters,
             if (!self.buttonMesh.visible)
                 return;
 
-            if (isButtonPressed(frame, self.buttonMesh)) {
+            if (isButtonPressed(frame, self.buttonMesh))
+            {
                 if (!self.conditionForPressed)
                     console.warn("ConditionForPressed not defined on button " + self.buttonMesh.name)
 
