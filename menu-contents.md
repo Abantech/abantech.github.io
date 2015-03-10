@@ -34,6 +34,9 @@ Source Code:
 
 ## Interaction Studies
 
+Demo: [Abantech HQ ~ 3D Schematic]( http://abantech.github.io/interaction-studies/abantech-hq/r1/abantech-hq.html )
+Source: [[Abantech HQ ~ 3D Schematic]( http://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/abantech-hq/r1/abantech-hq.html )
+Added: Theo ~ 2015-03-10 ~ sketching in 3D
 
 Demo: [Three.js Skybox Sample]( http://abantech.github.io/interaction-studies/threejs-skybox/r1/template-skybox.html )  
 Source code: [Three.js Leap Skybox Sample]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-skybox/ )  
@@ -43,7 +46,6 @@ See also:
 Sources:
 <http://www.humus.name/index.php?page=Textures>  
 [Google Images]( https://www.google.com/search?q=skybox&tbm=isch&tbo=u&source=univ&sa=X&ei=sjz-VPmYHdbaoASxo4LACg&ved=0CEsQsAQ&biw=1855&bih=995 )
-
  
 
 Demo: [Three.js Leap Position Text to Voice]( http://abantech.github.io/interaction-studies/threejs-leap-position-text-to-voice/r1/threejs-leap-position-text-to-voice.html )  
