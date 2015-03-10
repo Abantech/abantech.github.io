@@ -20,6 +20,9 @@ Source: [Abantech HQ ~ 3D Schematic]( http://github.com/abantech/interaction-stu
 
 * Staircase is twisted 45 degrees
 
+* Garage space enlarged 
+	* To give 12' width per car + space for bicycles etc
+
 ## Change Log
 
 2015-03-10 ~ Theo
