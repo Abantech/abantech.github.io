@@ -20,6 +20,7 @@ var RotatePinchedObject = function (hand)
 
         if (pinchedObject && pinchedObject.userData.isAsset)
         {
+            console.log("GOT A PINCHED OBJECT!")
             if (!rotationAction)
             {
                 rotationAction = new RotationAction();
@@ -141,32 +142,23 @@ var EndRotatePinchedObject = function (hand)
 
 function getPinchedObject(hand)
 {
-    var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+    var indexTipPos = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+    var thumbTipPos = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+
+    var direction = new THREE.Vector3().subVectors(indexTipPos, thumbTipPos).normalize();
+    var rayCaster = new THREE.Raycaster(indexTipPos, direction, 0, direction.length());
 
     var closestObject = null;
 
     for (var i = 0; i < window.scene.children.length; i++)
     {
         var sceneObject = window.scene.children[i];
-        if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject))
+        if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject) && rayCaster.intersectObject(sceneObject))
         {
-            var distance = indexTipVector.distanceTo(sceneObject.position);
-            if (distance < 50)
-            {
-                if (closestObject)
-                {
-                    if (distance < closestObject.distance)
-                    {
-                        closestObject = sceneObject;
-                        closestObject.distance = distance;
-                    }
-                }
-                else
-                {
-                    closestObject = sceneObject;
-                    closestObject.distance = distance;
-                }
-            }
+            //var distance = indexTipVector.distanceTo(sceneObject.position);
+            closestObject = sceneObject;
+
+            return closestObject;
         }
     }
 
