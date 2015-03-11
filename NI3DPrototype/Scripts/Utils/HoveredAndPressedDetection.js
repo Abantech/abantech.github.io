@@ -14,7 +14,11 @@ var isButtonPressed = function (frame, button) {
                       var indexFinger = hand.fingers[1];
                       var prevIndexFinger = hand.frame.controller.frame(1).pointablesMap[indexFinger.id];
 
-                      if (prevIndexFinger.touchDistance <= 0 && indexFinger.touchDistance > 0) {
+                      if (typeof (prevIndexFinger) != "undefined" && 
+                          typeof(prevIndexFinger.touchDistance) != "undefined" &&
+                          prevIndexFinger.touchDistance <= 0 && 
+                          indexFinger.touchDistance > 0)
+                      {
                           isObjectIntersected = true;
                       }
                   }
