@@ -4,7 +4,6 @@ var TranslatePinchedObject = function (hand)
 {
     if (!pinchedObject)
     {
-        console.log("<<<<<<<<<<<<<<<< Getting a new pinched object >>>>>>>>>>>>>>>>>>>>>>>>>")
         pinchedObject = getPinchedObject(hand);
 
         if (pinchedObject && pinchedObject.userData.isAsset)
@@ -23,7 +22,6 @@ var TranslatePinchedObject = function (hand)
     }
     else
     {
-        console.log("Using last pinched object")
         if (pinchedObject.userData.isAsset && pinchedObject.userData.isPinched)
         {
             var indexTipPos = hand.fingers[1].tipPosition;
@@ -46,7 +44,6 @@ var EndTranslatePinchedObject = function (hand)
 
     if (pinchedObject)
     {
-        console.log("END PINCH TRANSLATE")
         pinchedObject.userData.isPinched = false;
         pinchedObject.userData.hasBeenMoved = false;
     }

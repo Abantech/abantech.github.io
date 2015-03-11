@@ -20,7 +20,6 @@ var RotatePinchedObject = function (hand)
 
         if (pinchedObject && pinchedObject.userData.isAsset)
         {
-            console.log("GOT A PINCHED OBJECT!")
             if (!rotationAction)
             {
                 rotationAction = new RotationAction();
