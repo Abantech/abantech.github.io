@@ -97,3 +97,28 @@ leftHandPinchGesture.setType("left");
 
 var eitherHandPinchGesutre = new PinchGesture();
 eitherHandPinchGesutre.setType("either");
+
+function getPinchedObject(hand) {
+    var indexTipPos = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+    var thumbTipPos = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+
+    var direction = new THREE.Vector3().subVectors(indexTipPos, thumbTipPos).normalize();
+    var rayCaster = new THREE.Raycaster(indexTipPos, direction, 0, direction.length());
+
+    var closestObject = null;
+
+    for (var i = 0; i < window.scene.children.length; i++) {
+        var sceneObject = window.scene.children[i];
+        if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject)) {
+            if (rayCaster.intersectObject(sceneObject).length == 1)
+            {
+                console.log("Found pinched object " + sceneObject.id)
+                closestObject = sceneObject;
+                return closestObject;
+            }
+
+        }
+    }
+
+    return closestObject;
+}

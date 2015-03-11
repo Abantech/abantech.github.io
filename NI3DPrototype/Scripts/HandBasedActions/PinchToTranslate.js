@@ -4,6 +4,7 @@ var TranslatePinchedObject = function (hand)
 {
     if (!pinchedObject)
     {
+        console.log("<<<<<<<<<<<<<<<< Getting a new pinched object >>>>>>>>>>>>>>>>>>>>>>>>>")
         pinchedObject = getPinchedObject(hand);
 
         if (pinchedObject && pinchedObject.userData.isAsset)
@@ -22,6 +23,7 @@ var TranslatePinchedObject = function (hand)
     }
     else
     {
+        console.log("Using last pinched object")
         if (pinchedObject.userData.isAsset && pinchedObject.userData.isPinched)
         {
             var indexTipPos = hand.fingers[1].tipPosition;
@@ -44,32 +46,10 @@ var EndTranslatePinchedObject = function (hand)
 
     if (pinchedObject)
     {
+        console.log("END PINCH TRANSLATE")
         pinchedObject.userData.isPinched = false;
         pinchedObject.userData.hasBeenMoved = false;
-        pinchedObject = null;
     }
-}
-
-function getPinchedObject(hand) {
-    var indexTipPos = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-    var thumbTipPos = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-
-    var direction = new THREE.Vector3().subVectors(indexTipPos, thumbTipPos).normalize();
-    var rayCaster = new THREE.Raycaster(indexTipPos, direction, 0, direction.length());
-
-    var closestObject = null;
-
-    for (var i = 0; i < window.scene.children.length; i++) {
-        var sceneObject = window.scene.children[i];
-        if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject) && rayCaster.intersectObject(sceneObject)) {
-            var distance = indexTipVector.distanceTo(sceneObject.position);
-            closestObject = sceneObject;
-
-            return closestObject;
-        }
-    }
-
-    return closestObject;
 }
 
 var firstPinch = true;

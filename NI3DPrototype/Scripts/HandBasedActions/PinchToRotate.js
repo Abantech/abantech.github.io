@@ -140,31 +140,6 @@ var EndRotatePinchedObject = function (hand)
     axis = null;
 }
 
-function getPinchedObject(hand)
-{
-    var indexTipPos = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-    var thumbTipPos = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-
-    var direction = new THREE.Vector3().subVectors(indexTipPos, thumbTipPos).normalize();
-    var rayCaster = new THREE.Raycaster(indexTipPos, direction, 0, direction.length());
-
-    var closestObject = null;
-
-    for (var i = 0; i < window.scene.children.length; i++)
-    {
-        var sceneObject = window.scene.children[i];
-        if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject) && rayCaster.intersectObject(sceneObject))
-        {
-            //var distance = indexTipVector.distanceTo(sceneObject.position);
-            closestObject = sceneObject;
-
-            return closestObject;
-        }
-    }
-
-    return closestObject;
-}
-
 setSnapAngle(30);
 
 rightHandPinchGesture.registerOnFullGesture(
