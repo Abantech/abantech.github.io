@@ -74,7 +74,7 @@
 		light.shadowMapHeight = 2048;
 
 		light.castShadow = true;
-		light.shadowCameraVisible = true;
+		//light.shadowCameraVisible = true;
 		scene.add( light );
 
 		light = new THREE.PointLight( 0xffffff, 0.5 );
@@ -82,7 +82,7 @@
 		camera.add( light );
 
 // Ground Plane
-		geometry = new THREE.BoxGeometry( 100, 5, 100 );
+		geometry = new THREE.BoxGeometry(1000, 5, 400 );
 
 //		var material.color = 0x202099; 
 //		var material = new THREE.MeshNormalMaterial();
@@ -95,7 +95,7 @@
 		} );
 
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -10, 0 );
+		mesh.position.set( 0, -5,-150);
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
 		scene.add( mesh );
@@ -104,14 +104,15 @@
 		helper.material.color.setRGB( 1, 0, 1 );
 		scene.add( helper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
+		//var axisHelper = new THREE.AxisHelper( 50 );
+		//scene.add( axisHelper );
 		
 		var helper = new THREE.GridHelper( 50, 10 );
-		helper.position.set( 0, -7.5, 0 );
+		helper.position.set( 0, -2.5, 0 );
 		scene.add( helper );
 
 // Sphere
+/*
 		geometry = new THREE.SphereGeometry( 25, 50, 50 );
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
@@ -137,7 +138,7 @@
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
 		scene.add( mesh );
-
+*/
 
 // South Wing
 		box = makeContainer();
@@ -181,21 +182,22 @@
 		north.add( box );
 
 // North Wing East
+		geometry = new THREE.BoxGeometry( 20, 8, 8 );
+		box = makeContainer( geometry )
+		box.position.set( 18.5, 4, 10 );
+		north.add( box );
+
+		box = makeContainer( geometry )
+		box.position.set( 18.5, 4, 18 );
+		north.add( box );
+
 		geometry = new THREE.BoxGeometry( 32, 8, 8 );
-		box = makeContainer( geometry )
-		box.position.set( 20, 4, 8 );
-		north.add( box );
-
-		box = makeContainer( geometry )
-		box.position.set( 24, 4, 16 );
-		north.add( box );
-
 		box = makeContainer( geometry )
 		box.position.set( 24, 12, 8 );
 		north.add( box );
 
 		box = makeContainer( geometry)
-		box.position.set( 20, 12, 16 );
+		box.position.set( 22, 12, 16 );
 		north.add( box );
 
 		scene.add( north );
@@ -214,8 +216,17 @@
 		geometry = new THREE.BoxGeometry( 8, 24, 8 );
 		box = makeContainer( geometry )
 		box.position.set( -2, 12, 0 );
-		box.rotation.y =  Math.PI / 4 ;
+		box.rotation.y =  Math.PI / 4;
+		
+		var driveway = new THREE.Mesh(new THREE.BoxGeometry(18, 3, 36), new THREE.MeshPhongMaterial( { color: 0x36454f, transparent: true, opacity: 0.85 }));
+		driveway.position.set( 14, -2, 32 )
+		scene.add(driveway);
+		driveway.rotation.x = 0.03
 
+//SKYBOX!
+		var skyBox = createSkybox();
+		skyBox.position.set(0, 100, 0)
+		scene.add(skyBox);
 	}
 
 	function makeContainer( geo ) {
@@ -224,7 +235,7 @@
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
 			ambient: 0xffffff * Math.random(),
-			opacity: 0.7,
+			opacity: 0.85,
 			specular: 0xffffff * Math.random(),
 			shininess: 10,
 			transparent: true
@@ -240,7 +251,17 @@
 		scene.add( helper );
 
 		return mesh
+	}
+	
+	function createSkybox() {
+		var files = ['px','nx','py','ny','pz','nz']
+		var materials = [];
+		for (var i = 0, image; i < 6; i++) {
+			image = THREE.ImageUtils.loadTexture( '../../textures/cubes/skybox1/' + files[ i ] + '.jpg' );
+			materials.push( new THREE.MeshBasicMaterial( { map: image, side: THREE.BackSide } ) ); 
+		}
 
+		return new THREE.Mesh( new THREE.BoxGeometry( 800, 800, 800 ), new THREE.MeshFaceMaterial( materials ));
 	}
 
 	function v2( x, y ){ return new THREE.Vector2( x, y ); }
