@@ -1,4 +1,7 @@
-﻿function PinchGesture()
+﻿/// <reference path="../../Libs/THREEJS/three.js" />
+
+
+function PinchGesture()
 {
     this.options =
     {
@@ -98,27 +101,70 @@ leftHandPinchGesture.setType("left");
 var eitherHandPinchGesutre = new PinchGesture();
 eitherHandPinchGesutre.setType("either");
 
+var useRayCasterMethod = true;
+
 function getPinchedObject(hand) {
-    var indexTipPos = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-    var thumbTipPos = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
 
-    var direction = new THREE.Vector3().subVectors(indexTipPos, thumbTipPos).normalize();
-    var rayCaster = new THREE.Raycaster(indexTipPos, direction, 0, direction.length());
+    var foundObject = null;
 
-    var closestObject = null;
+    if (useRayCasterMethod)
+    {
+        var indexTipPos = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+        var thumbTipPos = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
 
-    for (var i = 0; i < window.scene.children.length; i++) {
-        var sceneObject = window.scene.children[i];
-        if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject)) {
-            if (rayCaster.intersectObject(sceneObject).length == 1)
-            {
-                console.log("Found pinched object " + sceneObject.id)
-                closestObject = sceneObject;
-                return closestObject;
+        //This is the only one that works.
+        var rayCasterFromFinger = getRayCasterBetweenPoints(indexTipPos, thumbTipPos);
+        //This one never works
+        var rayCasterFromThumb = getRayCasterBetweenPoints(thumbTipPos, indexTipPos);
+
+        for (var i = 0; i < window.scene.children.length; i++) {
+            var sceneObject = window.scene.children[i];
+            if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject)) {
+                if (rayCasterFromFinger.intersectObject(sceneObject).length == 1
+                    //&& rayCasterFromThumb.intersectObject(sceneObject).length == 1
+                    )
+                {
+                    console.log("Found pinched object " + sceneObject.id)
+                    if (rayCasterFromThumb.intersectObject(sceneObject).length == 1)
+                    {
+                        console.log("INTERSECTED BY THUMB RAYCASTER!")
+                    }
+                    foundObject = sceneObject;
+                    return foundObject;
+                }
+
             }
+        }
+    }
+    else
+    {
+        var indexTipVector = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
 
+        for (var i = 0; i < window.scene.children.length; i++) {
+            var sceneObject = window.scene.children[i];
+            if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject)) {
+                var distance = indexTipVector.distanceTo(sceneObject.position);
+                if (distance < 50) {
+                    if (foundObject) {
+                        if (distance < foundObject.distance) {
+                            foundObject = sceneObject;
+                            foundObject.distance = distance;
+                        }
+                    }
+                    else {
+                        foundObject = sceneObject;
+                        foundObject.distance = distance;
+                    }
+                }
+            }
         }
     }
 
-    return closestObject;
+    return foundObject;
+}
+
+function getRayCasterBetweenPoints(point0, point1)
+{
+    var direction = new THREE.Vector3().subVectors(point0, point1).normalize();
+    return new THREE.Raycaster(point0, direction, 0, direction.length());
 }
