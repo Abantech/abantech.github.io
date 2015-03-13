@@ -34,6 +34,12 @@ Source Code:
 
 ## Interaction Studies
 
+Demo: [Three.js Object to Object Raycasting]( #http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r2/threejs-object-to-object-raycasting.html# )  
+Source code & Read Me: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-object-to-object-raycasting/ )  
+Added Theo ~ 2015-03-12 ~ ~ Added R2 bi-directional intersections  
+Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going from any two object in a scene
+
+
 Demo: [Abantech HQ ~ 3D Schematic]( http://abantech.github.io/interaction-studies/abantech-hq/r1/abantech-hq.html )  
 Source: [Abantech HQ ~ 3D Schematic]( http://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/abantech-hq/r1/abantech-hq.html )  
 [Read Me]( http://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/abantech-hq/readme.md )  
@@ -94,11 +100,6 @@ Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing t
 Demo: [Three.js Mouseover]( #http://abantech.github.io/interaction-studies/threejs-mouseover/r1/threejs-mouseover.html# )  
 Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-mouseover/ )  
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting (finding the object under the cursor) going from camera position
-
-Demo: [Three.js Object to Object Raycasting]( #http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r1/threejs-object-to-object-raycasting.html# )  
-Source code: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-object-to-object-raycasting/ )  
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going from any two object in a scene
-
 
 Demo: [Item Touched Add Handles]( #http://abantech.github.io/interaction-studies/item-touched-add-handles/r1/item-touched-add-handles-r1.html# )  
 Source code: [Item Touched Add Handles]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/item-touched-add-handles/r1/item-touched-add-handles-r1.html )  
