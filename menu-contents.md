@@ -34,7 +34,7 @@ Source Code:
 
 ## Interaction Studies
 
-Demo: [Three.js Object to Object Raycasting]( #http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r2/threejs-object-to-object-raycasting.html# )  
+Demo: [Three.js Object to Object Raycasting]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r2/threejs-object-to-object-raycasting.html )  
 Source code & Read Me: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-object-to-object-raycasting/ )  
 Added Theo ~ 2015-03-12 ~ ~ Added R2 bi-directional intersections  
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going from any two object in a scene
