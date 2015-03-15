@@ -20,7 +20,7 @@ Constructive Solid Geometry Read Me
 
 [Chandler Prall's CSG]( https://github.com/chandlerprall/ThreeCSG )  
 [S Shirikov BSP]( https://github.com/sshirokov/ThreeBSP )  
-[Joe Dirksen's Binary Operations]( http://www.smartjava.org/ltjs/chapter-06/08-binary-operations.html  
+[Joe Dirksen's Binary Operations]( http://www.smartjava.org/ltjs/chapter-06/08-binary-operations.html )
 
 
 ## Change Log
