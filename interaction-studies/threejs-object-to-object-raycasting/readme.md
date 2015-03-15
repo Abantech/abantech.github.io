@@ -3,7 +3,7 @@ Three.js Object to Object Raycasting Read Me
 
 ### The Issue
 
-Given an asymmetrical 3D asset, is it possible to determine if two test objects are both simultaneously in close proximity or even inside the asset.
+Given an asymmetrical 3D asset, is it possible to determine if two test objects are both simultaneously in close proximity such that a ray drawn between the geometric centers of the objects would lay entirely inside the asset.
 The directional rays of the two test object should be pointing toward each other.
    
 ## Demos
