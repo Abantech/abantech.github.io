@@ -1,13 +1,17 @@
 ﻿/// <reference path="../../Libs/THREEJS/three.js" />
 
 var useRayCasterMethod = false;
+var currentPinchMinDistance = null;
 
 function PinchGesture()
 {
     this.options =
     {
         // Minimum distance between the two fingers to determine if pinch has been achieved
-        distance: 150,
+        distance: 100,
+
+        // Distance from finger to asset where pinch capture is allowed
+        fingerRangeAllowance: 10,
 
         // Minimum time of gesture for full gesture to be achieved
         delay: 0.3,
@@ -26,55 +30,70 @@ function PinchGesture()
     {
         if (useRayCasterMethod)
         {
+            var indexTipPos = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
+            var thumbTipPos = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
+            
+            if (!currentPinchMinDistance)
+            {
+                var rayCasterFromFinger = getRayCasterBetweenPoints(indexTipPos, thumbTipPos);
+
+                var rayCasterFromThumb = getRayCasterBetweenPoints(thumbTipPos, indexTipPos);
+
+                var assetIntersectionFromFinger = getAssetIntersectionFromRaycaster(rayCasterFromFinger);
+                var assetIntersectionFromThumb = getAssetIntersectionFromRaycaster(rayCasterFromThumb);
+
+                //Really difficult to get this condition to succeed
+                if (typeof (assetIntersectionFromFinger) != "undefined" && assetIntersectionFromFinger.length > 0 &&
+                    typeof (assetIntersectionFromThumb) != "undefined" && assetIntersectionFromThumb.length > 0 &&
+                    assetIntersectionFromFinger[0].object.uuid == assetIntersectionFromThumb[0].object.uuid)
+                {
+                    console.log("ASSETS IN PINCH ZONE! ID = " + assetIntersectionFromFinger[0].object.uuid)
+                    currentPinchMinDistance = assetIntersectionFromFinger[0].point.distanceTo(assetIntersectionFromThumb[0].point);
+                    //TODO: save the uuid of the obejct
+                }
+            }
+
+            var pinchDistanceWithAllowance = currentPinchMinDistance + (this.addtionalOptions.fingerRangeAllowance * 2 * transformPlugin.getScale().x);
+            var distanceBetweenFingers = indexTipPos.distanceTo(thumbTipPos);
+
+            //reset the currentPinchMaxDistance if the previously defined pinch distance was exceeded
+            if (distanceBetweenFingers > pinchDistanceWithAllowance)
+                currentPinchMinDistance = null
+
+            return currentPinchMinDistance != null && distanceBetweenFingers <= pinchDistanceWithAllowance;
+
+            /*
             //HACK: if either thumb or finger are extended the pinch will reset
             if (hand.indexFinger.extended || hand.thumb.extended)
             {
+                console.log("One of the fingers extended, resetting Pinch distance")
                 this.addtionalOptions.distance = 100;
                 return false;
             }
             else
             {
-                var indexTipPos = (new THREE.Vector3()).fromArray(hand.fingers[1].tipPosition);
-                var thumbTipPos = (new THREE.Vector3()).fromArray(hand.fingers[0].tipPosition);
-
                 //HACK using 100 for now in case other values break other stuff
                 //HACK For now, 100 means there was previously no pinch
                 if (this.addtionalOptions.distance == 100)
                 {
-                    //This is the only one that works.
+                    
                     var rayCasterFromFinger = getRayCasterBetweenPoints(indexTipPos, thumbTipPos);
 
-                    var intersections = getAssetIntersectionFromRaycaster(rayCasterFromFinger);
-                    if (typeof (intersections) != "undefined" && intersections.length > 1)
+                    var rayCasterFromThumb = getRayCasterBetweenPoints(thumbTipPos, indexTipPos);
+
+                    var assetIntersectionFromFinger = getAssetIntersectionFromRaycaster(rayCasterFromFinger);
+                    var assetIntersectionFromThumb = getAssetIntersectionFromRaycaster(rayCasterFromThumb);
+
+                    if (typeof (assetIntersectionFromFinger) != "undefined" && assetIntersectionFromFinger.length > 0 && 
+                        typeof (assetIntersectionFromThumb) != "undefined" && assetIntersectionFromThumb.length > 0 && 
+                        assetIntersectionFromFinger[0].object.uuid == assetIntersectionFromThumb[0].object.uuid)
                     {
-                        console.log("ASSETS IN PINCH ZONE")
-
-                        var intersectionPoints = getAssetIntersectionPoints(intersections);
-                        //HACK: Assuming that point[0] is closer and point[1] is further but this may cause issues
-
-                        if (intersectionPoints.length > 1) {
-                            var allowableMargin = 10;
-
-                            if (indexTipPos.distanceTo(intersectionPoints[0]) < allowableMargin) {
-                                console.log("Pinch within range of INDEX")
-                            }
-
-                            if (thumbTipPos.distanceTo(intersectionPoints[1]) < allowableMargin) {
-                                console.log("Pinch within range of THUMB")
-                            }
-
-                            if (indexTipPos.distanceTo(intersectionPoints[0]) < allowableMargin && thumbTipPos.distanceTo(intersectionPoints[1]) < allowableMargin) {
-                                console.log("Pinch only in range of BOTH")
-                                this.addtionalOptions.distance = intersectionPoints[0].distanceTo(intersectionPoints[1]);
-                            }
-                            else {
-                                console.log("Pinch only in range of One finger")
-                            }
-                        }
+                        console.log("ASSETS IN PINCH ZONE! ID = " + assetIntersectionFromFinger[0].object.uuid)
+                        this.addtionalOptions.distance = assetIntersectionFromFinger[0].point.distanceTo(assetIntersectionFromThumb[0].point);
                     }
                 }
 
-                var pinchDistance = this.addtionalOptions.distance + (allowableMargin * 2);
+                var pinchDistance = this.addtionalOptions.distance + (this.addtionalOptions.fingerRangeAllowance * 2);
 
                 // Scale distance between thumb and index
                 if (this.addtionalOptions.scaleWithScene)
@@ -91,6 +110,7 @@ function PinchGesture()
 
                 return result;
             }
+            */
         }
         else
         {
@@ -112,7 +132,8 @@ function PinchGesture()
 
     this.singleHandGesture.addtionalOptions = {
         scaleWithScene: this.options.scaleWithScene,
-        distance: this.options.distance
+        distance: this.options.distance,
+        fingerRangeAllowance: this.options.fingerRangeAllowance
     }
 
     this.action = this.singleHandGesture.action;
@@ -182,7 +203,7 @@ var getAssetIntersectionFromRaycaster = function (rcaster) {
         var sceneObject = window.scene.children[i];
         if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject)) {
             intersectionsOnAsset = rcaster.intersectObjects([sceneObject]);
-            if (intersectionsOnAsset.length > 1) {
+            if (intersectionsOnAsset.length > 0) {
                 return intersectionsOnAsset;
             }
         }
@@ -265,8 +286,8 @@ function getPinchedObject(hand) {
 function getRayCasterBetweenPoints(point0, point1)
 {
     //var direction = new THREE.Vector3().subVectors(point0, point1).normalize();
-    var direction = point1.sub(point0);
-    return new THREE.Raycaster(point0, direction.normalize()); //, 0, direction.length());
+    var direction = point1.clone().sub(point0.clone());
+    return new THREE.Raycaster(point0, direction.normalize(), 0, direction.length());
 }
 
 function getAssetIntersectionPoints(intersections) {
