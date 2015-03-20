@@ -211,8 +211,11 @@
 			color: 0xff00ff
 		});
 
-		vector1 = objOne.geometry.vertices[33].clone();
-		vector1.applyMatrix4( objOne.matrixWorld );
+//		vector1 = objOne.geometry.vertices[33].clone();
+//		vector1.applyMatrix4( objOne.matrixWorld );
+
+		vector1 = objOne.localToWorld( objOne.geometry.vertices[33].clone() );
+
 
 		vector2 = objTwo.geometry.vertices[33].clone();
 		vector2.applyMatrix4( objTwo.matrixWorld );

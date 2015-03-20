@@ -3,11 +3,29 @@ Three.js Object to Object Raycasting Read Me
 
 ### The Issue
 
-Given an asymmetrical 3D asset, is it possible to determine if two test objects are both simultaneously in close proximity 
-such that a ray drawn between the geometric centers of the objects would lay entirely inside the asset.
+Given an asymmetrical 3D asset, randomly embedded within a group of objects, 
+is it possible to determine if two test objects are both simultaneously in close proximity 
+such that a ray drawn between the geometric centers of the two objects would lay entirely inside the selected asset.
 The directional rays of the two test object should be pointing toward each other.
    
+## Notes
+
+In any demo/test case like this, there should be a good level of abstraction between what is being tested and the actual device you may have at hand.
+We have no way of knowing whether you are using your fingers, using voice recognition or even blinking your eyes to control our app.
+
+Further releases of this study may well be Leap-enabled, 
+but the over-arching guideline is to be able to recognize and display pinching and grasping 'in-world' and not merely replicate your current desktop.
+
+
+
 ## Demos
+
+[Object to Object Raycasting R4]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r2/threejs-object-to-object-raycasting.html )
+
+* Adds multiple objects
+* The two test objects may be independently moved in X, Y and Z directions
+
+
 
 [Object to Object Raycasting R3]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r2/threejs-object-to-object-raycasting.html )
 
