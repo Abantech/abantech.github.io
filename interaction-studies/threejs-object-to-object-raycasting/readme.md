@@ -20,6 +20,12 @@ but the over-arching guideline is to be able to recognize and display pinching a
 
 ## Demos
 
+[Object to Object Raycasting R5]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r5/threejs-object-to-object-raycasting.html )
+
+* Adds (imperfect) highlighting of intersected objects
+* Adds text output of selected intersection parameters
+
+
 [Object to Object Raycasting R4]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r2/threejs-object-to-object-raycasting.html )
 
 * Adds multiple objects

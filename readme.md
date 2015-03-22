@@ -31,9 +31,10 @@ Updated Greg - 2015-02-24
  
 ***
 
-Demo: [Three.js Object to Object Raycasting R4]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r4/threejs-object-to-object-raycasting.html )  
+Demo: [Three.js Object to Object Raycasting R5]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r5/threejs-object-to-object-raycasting.html )  
 Source code & Read Me: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-object-to-object-raycasting/ )  
-Added: Theo ~ 2015-03-19~ R4 - Adds multiple objects, XYZ movement. See read me 
+Added: Theo ~ 2015-03-21 ~ R5 - Adds highlighting and text status output of intersected objects 
+Added: Theo ~ 2015-03-19 ~ R4 - Adds multiple objects, XYZ movement. See read me 
 Added: Theo ~ 2015-03-18 ~ R3 - a work in progress. See read me.  
 Update: Theo ~ 2015-03-15 ~ Added issue  
 Added Theo ~ 2015-03-12 ~ Added R2 bi-directional intersections  
