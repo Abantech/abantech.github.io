@@ -296,6 +296,7 @@
 
 	}
 
+	var txtOne, txtTwo
 
 	function updateLine() {
 
@@ -314,7 +315,7 @@
 		raycasterOne.set( v1, directionVectorOne.normalize() );
 
 		intersectsOne = raycasterOne.intersectObjects( touchables );
-
+		
 		if ( intersectsOne.length > 0 ) {
 
 			if ( intersected1 != intersectsOne[ 0 ].object ) {
@@ -324,14 +325,14 @@
 				intersected1 = intersectsOne[ 0 ].object;
 				intersected1.currentHex = intersected1.material.emissive.getHex();
 				intersected1.material.emissive.setHex( 0xff0000 );
-				txt = 'id:' + intersectsOne[0].object.id + ' distance:' + intersectsOne[0].distance.toFixed(1);
+				txtOne = 'id:' + intersectsOne[0].object.id + ' distance:' + intersectsOne[0].distance.toFixed(1);
 			}
 
 		} else {
 
 			if ( intersected1 ) intersected1.material.emissive.setHex( intersected1.currentHex );
 
-			txt = '&nbsp';
+			txtOne = '&nbsp';
 
 			intersected1 = null;
 
@@ -339,7 +340,7 @@
 
 		msg1.innerHTML = '<h2>Toucher 1</h2> origin x:' + raycasterOne.ray.origin.x.toFixed(1) + ' y:' + raycasterOne.ray.origin.y.toFixed(1) + ' z:' + raycasterOne.ray.origin.z.toFixed(1) + '<br>' +
 			'intersectsOne.length:' +  intersectsOne.length + '<br>' +
-			txt +
+			txtOne +
 		'';
 
 		raycasterTwo = new THREE.Raycaster();
@@ -347,7 +348,7 @@
 		raycasterTwo.set( v2, directionVectorTwo.normalize() );
 
 		intersectsTwo = raycasterTwo.intersectObjects( touchables );
-
+		
 		if ( intersectsTwo.length > 0 ) {
 
 			if ( intersected2 != intersectsTwo[ 0 ].object ) {
@@ -357,21 +358,21 @@
 				intersected2 = intersectsTwo[ 0 ].object;
 				intersected2.currentHex = intersected2.material.emissive.getHex();
 				intersected2.material.emissive.setHex( 0x00ff00 );
-				txt = 'id:' + intersectsTwo[0].object.id + ' distance:' + intersectsTwo[0].distance.toFixed(1);
+				txtTwo = 'id:' + intersectsTwo[0].object.id + ' distance:' + intersectsTwo[0].distance.toFixed(1);
 
 			}
 
 		} else {
 
 			if ( intersected2 ) intersected2.material.emissive.setHex( intersected2.currentHex );
-			txt = '&nbsp';
+			txtTwo = '&nbsp';
 			intersected2 = null;
 
 		}
 
 		msg2.innerHTML = '<h2>Toucher 2</h2>origin x:' + raycasterTwo.ray.origin.x.toFixed(1) + ' y:' + raycasterTwo.ray.origin.y.toFixed(1) + ' z:' + raycasterTwo.ray.origin.z.toFixed(1) + '<br>' +
 			'intersectsTwo.length:' +  intersectsTwo.length + '<br>' +
-			txt +
+			txtTwo +
 		'';
 
 	}
