@@ -20,6 +20,13 @@ but the over-arching guideline is to be able to recognize and display pinching a
 
 ## Demos
 
+[Object to Object Raycasting R6]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r6/threejs-object-to-object-raycasting.html )
+
+* Adds Leap-enabled
+	* Which causes issues with the sliders
+	* A work-in-progress
+	* An experiment
+
 [Object to Object Raycasting R5]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r5/threejs-object-to-object-raycasting.html )
 
 * Adds (imperfect) highlighting of intersected objects
