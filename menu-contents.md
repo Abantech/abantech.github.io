@@ -34,8 +34,9 @@ Source Code:
 
 ## Interaction Studies
 
-Demo: [Three.js Object to Object Raycasting R5]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r5/threejs-object-to-object-raycasting.html )  
+Demo: [Three.js Object to Object Raycasting R6]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r6/threejs-object-to-object-raycasting.html )  
 Source code & Read Me: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-object-to-object-raycasting/ )  
+Added: Theo ~ 2015-03-25 ~ R6 - Add Leap-enabled, a work-in-progress, an experiment
 Added: Theo ~ 2015-03-21 ~ R5 - Adds highlighting and text status output of intersected objects 
 Added: Theo ~ 2015-03-19 ~ R4 - Adds multiple objects, XYZ movement. See read me 
 Added: Theo ~ 2015-03-18 ~ R3 - a work in progress. See read me.  
@@ -43,6 +44,10 @@ Update: Theo ~ 2015-03-15 ~ Added issue
 Added Theo ~ 2015-03-12 ~ Added R2 bi-directional intersections  
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going from any two object in a scene
 
+Demo: [Three.js Leap-Enabled Template R2]( http://abantech.github.io/threejs-leap-enabled-template/r2/threejs-leap-enabled-template.html )  
+Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-enabled-template/ )  
+Added: Theo ~ 2015-03-25 ~ R2: simpler and lighter
+Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
 
 [Constructive Solid Geometry R1]( http://abantech.github.io/interaction-studies/threejs-contructive-solid-geometry/r1/constructive-solid-geometry.html )
 Source code & Read Me: [Constructive Solid Geometry R1]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-contructive-solid-geometry/ )  
@@ -101,10 +106,6 @@ Updated: Theo ~ 2015-01-25 ~ Minimum rig to get Three.js to highlight object a L
 Demo: [Three.js Camera Object Child]( #http://abantech.github.io/interaction-studies/threejs-camera-object-child/r1/threejs-camera-object-child.html# )  
 Source code: [Three.js Camera Object Child]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-camera-object-child )  
 Added: Theo ~ 2015-01-25 ~ Three.js example of an object that remains at fixed position in relation to a camera.
-
-Demo: [Three.js Leap-Enabled Template]( #http://abantech.github.io/interaction-studies/threejs-leap-enabled-template/r1/threejs-leap-enabled-template.html# )  
-Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-leap-enabled-template/ )  
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
 
 Demo: [Three.js Mouseover]( #http://abantech.github.io/interaction-studies/threejs-mouseover/r1/threejs-mouseover.html# )  
 Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-mouseover/ )  
