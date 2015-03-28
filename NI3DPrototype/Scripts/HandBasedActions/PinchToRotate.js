@@ -6,6 +6,7 @@ var canRotateAfterSnap = true;
 var lastQuaternion;
 var quaternionHistory = new Array(2);
 var snapTimeout = 3000;
+var rotationAxis = "y"; //Possible Values: x, y, z, relative
 
 function setSnapAngle(degrees)
 {
@@ -41,17 +42,6 @@ var RotatePinchedObject = function (hand)
                 pinchedObject.userData.isPinched = true;
             }
 
-            var indexTipPos = hand.fingers[1].tipPosition;
-            var thumbTipPos = hand.fingers[0].tipPosition;
-
-            var midPoint = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
-            var camera = window.camera.position.clone();
-
-            if (!axis)
-            {
-                axis = new THREE.Vector3(midPoint.x - camera.x, midPoint.y - camera.y, midPoint.z - camera.z).normalize();
-            }
-
             var angle = null;
 
             if (snapRotation)
@@ -61,6 +51,39 @@ var RotatePinchedObject = function (hand)
             else
             {
                 angle = hand.roll();
+            }
+
+            var indexTipPos = hand.fingers[1].tipPosition;
+            var thumbTipPos = hand.fingers[0].tipPosition;
+
+            var midPoint = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
+            var camera = window.camera.position.clone();
+
+            if (!axis)
+            {
+                switch (rotationAxis)
+                {
+                    case 'x':
+                        {
+                            axis = new THREE.Vector3(1, 0, 0);
+                            break;
+                        }
+                    case 'y':
+                        {
+                            axis = new THREE.Vector3(0, 1, 0);
+                            break;
+                        }
+                    case 'z':
+                        {
+                            axis = new THREE.Vector3(0, 0, 1);
+                            break;
+                        }
+                    case 'relative':
+                        {
+                            axis = new THREE.Vector3(midPoint.x - camera.x, midPoint.y - camera.y, midPoint.z - camera.z).normalize();
+                            break;
+                        }
+                }
             }
 
             if (angle != null)
@@ -114,7 +137,6 @@ var RotatePinchedObject = function (hand)
                 {
                     pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
                 }
-
             }
         }
     }
