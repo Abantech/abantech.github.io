@@ -16,34 +16,34 @@ function LEAPToSceneConverter()
     */
     this.AttachRotationConverter = function ()
     {
-        transformPlugin.quaternion = function ()
-        {
-            return window.camera.quaternion;
-        }
+        // transformPlugin.quaternion = function ()
+        // {
+        //     return window.camera.quaternion;
+        // }
     }
 
     this.AttachScaleConverter = function ()
     {
         // Finds how much the LeapMotion inputs need to be scaled, based on the distance from the origin (0, 0, 0)
-        transformPlugin.scale = function ()
-        {
-            // Get the current position of the camera
-            var currentPosition = new THREE.Vector3(window.camera.position.x, window.camera.position.y, window.camera.position.z);
+        // transformPlugin.scale = function ()
+        // {
+        //     // Get the current position of the camera
+        //     var currentPosition = new THREE.Vector3(window.camera.position.x, window.camera.position.y, window.camera.position.z);
 
-            // Get the ratio of the difference between the last position and the current position
-            var differenceRatio = currentPosition.distanceTo(new THREE.Vector3(0, 0, 0)) / lastPosition.distanceTo(new THREE.Vector3(0, 0, 0));
+        //     // Get the ratio of the difference between the last position and the current position
+        //     var differenceRatio = currentPosition.distanceTo(new THREE.Vector3(0, 0, 0)) / lastPosition.distanceTo(new THREE.Vector3(0, 0, 0));
 
-            // Change the scalar by the ratio of the different distances
-            var newScalar = scalar.x * differenceRatio;
+        //     // Change the scalar by the ratio of the different distances
+        //     var newScalar = scalar.x * differenceRatio;
 
-            // Set the scalar to the new value
-            scalar.set(newScalar, newScalar, newScalar);
+        //     // Set the scalar to the new value
+        //     scalar.set(newScalar, newScalar, newScalar);
 
-            // Track the new position
-            lastPosition = currentPosition;
+        //     // Track the new position
+        //     lastPosition = currentPosition;
 
-            return scalar;
-        }
+        //     return scalar;
+        // }
     }
 
     // Initializes the scale variable to the initial scale variable suppied by the 'Transform' plugin
@@ -67,7 +67,9 @@ function LEAPToSceneConverter()
 
     this.AttachPositionConverter = function ()
     {
-
+        // transformPlugin.position = function () {
+        //     return camera.position.clone().add(new THREE.Vector3(0, -50, -200));
+        // };
     }
 
     this.Initialize = function()

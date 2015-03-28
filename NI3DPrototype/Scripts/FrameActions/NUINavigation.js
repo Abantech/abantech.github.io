@@ -252,11 +252,27 @@ var customNUINav = function(frame) {
             var moveLon = getLongitudinalDistanceSegment(handOrigin, navigationStartPosition) * moveSpeedDamping;
             var moveDir = (getDirectionalDistanceSegment(handOrigin, navigationStartPosition) - 1) * moveSpeedDamping;
 
-            var yawVal = (hand.yaw().toFixed(1) * 3).toFixed(1);
-            var pitchVal = ((hand.pitch().toFixed(1) - 0.3) * 0.3).toFixed(1);
+            var ROTATION_PRECISION = 1;
 
-            message = message + "<br>AIRPLANE MODE DETECTED" + "<br>" + "Segments (lat, long, dist) = (" + moveLat + ", " + moveLon + ", " + moveDir + ")"
-            message = message + "<br>Yaw: " + yawVal + " Pitch: " + pitchVal + " Roll: " + hand.roll().toFixed(2)
+            var YAW_RATE = 3;
+            var yawVal = hand.yaw().toFixed(ROTATION_PRECISION) * YAW_RATE;
+
+            var PITCH_RATE = 3;
+            var pitchVal = hand.pitch().toFixed(ROTATION_PRECISION) * PITCH_RATE;
+
+            var ROLL_RATE = 3;
+            var rollVal = hand.roll().toFixed(ROTATION_PRECISION) * ROLL_RATE;
+
+            message = (
+                message + "<br>" +
+                "AIRPLANE MODE DETECTED<br>" + 
+                "Segments (lat, long, dist) = (" + moveLat + ", " + moveLon + ", " + moveDir + ")");
+
+            message = (
+                message + "<br>" +
+                "Yaw: " + yawVal.toFixed(ROTATION_PRECISION) + 
+                " Pitch: " + pitchVal.toFixed(ROTATION_PRECISION) + 
+                " Roll: " + rollVal.toFixed(ROTATION_PRECISION));
 
             if (manualMovementMode)
             {//for debugging purposes, turn on manualMovementMode to see what happens when the camera is translated manually
@@ -269,12 +285,16 @@ var customNUINav = function(frame) {
                 controls.moveState.right = moveLat;
                 controls.moveState.up = moveLon;
                 controls.moveState.back = moveDir;
+
                 controls.moveState.yawRight = yawVal;
-                controls.moveState.pitchUp = hand.pitch().toFixed(2) - 0.3;
+                controls.moveState.pitchUp = pitchVal;
+                // controls.moveState.rollLeft = rollVal;
             }
         }
 
         updateNavigationControls(enableControls, cam.position);
+
+        transformPlugin.position.copy(cam.position.clone().add(new THREE.Vector3(0, -80, -200)));
     }
     else
     {

@@ -5,13 +5,13 @@ var xTranslation, yTranslation, zTranslation
 
 function initializeAdjustmentHandlers(inputElementID, outputElementID, setterCallback) {
     setterCallback(parseInt(document.getElementById(inputElementID).value, 10));
-    transformPlugin.position.set(xTranslation, yTranslation, zTranslation);
+    transformPlugin.position().set(xTranslation, yTranslation, zTranslation);
     document.getElementById(outputElementID).innerHTML = document.getElementById(inputElementID).value;
 
     document.getElementById(inputElementID).oninput = function (e) {
         var value = e.target.value;
         setterCallback(parseInt(value, 10));
-        transformPlugin.position.set(xTranslation, yTranslation, zTranslation);
+        transformPlugin.position().set(xTranslation, yTranslation, zTranslation);
         document.getElementById(outputElementID).innerHTML = value;
     };
 }
@@ -50,6 +50,6 @@ function createAdjuster(dimension, minValue, maxValue, initialValue, setterCallb
 }
 
 //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work
-createAdjuster("x", -250, 250, -15, function (value) { xTranslation = value });
-createAdjuster("y", -300, 300, -100, function (value) { yTranslation = value });
-createAdjuster("z", -1000, 150, -15, function (value) { zTranslation = value });
+// createAdjuster("x", -250, 250, -15, function (value) { xTranslation = value });
+// createAdjuster("y", -300, 300, -100, function (value) { yTranslation = value });
+// createAdjuster("z", -1000, 150, -15, function (value) { zTranslation = value });
