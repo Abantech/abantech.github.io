@@ -35,8 +35,8 @@ Demo: [Light - directional with sliders & Leap R1]( http://abantech.github.io/in
 Source code: [Light - directional with sliders & Leap R1]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-light-directional-with-sliders-leap/ )  
 Added: Theo ~ 2015-03-30 ~ R1: manually ( heh, heh ) set the latitude and longitude of the sun direction
 
-Demo: [Three.js Leap-Enabled Template R3]( http://abantech.github.io/threejs-leap-enabled-template/r3/threejs-leap-enabled-template.html )  
-Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-enabled-template/ )  
+Demo: [Three.js Leap-Enabled Template R3]( http://abantech.github.io/interaction-studies/threejs-leap-enabled-template/r3/threejs-leap-enabled-template.html )  
+Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-leap-enabled-template/ )  
 Added: Theo ~ 2015-03-30 ~ R2: more funk
 Added: Theo ~ 2015-03-25 ~ R2: simpler and lighter
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
