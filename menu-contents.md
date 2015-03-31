@@ -34,6 +34,16 @@ Source Code:
 
 ## Interaction Studies
 
+Demo: [Light - directional with sliders & Leap R1]( http://abantech.github.io/interaction-studies/threejs-light-directional-with-sliders-leap/r1/threejs-light-directional-with-sliders-leap.html)  
+Source code: [Light - directional with sliders & Leap R1]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-light-directional-with-sliders-leap/ )  
+Added: Theo ~ 2015-03-30 ~ R1: manually ( heh, heh ) set the latitude and longitude of the sun direction
+
+Demo: [Three.js Leap-Enabled Template R3]( http://abantech.github.io/threejs-leap-enabled-template/r3/threejs-leap-enabled-template.html )  
+Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-enabled-template/ )  
+Added: Theo ~ 2015-03-30 ~ R2: more funk
+Added: Theo ~ 2015-03-25 ~ R2: simpler and lighter
+Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
+
 Demo: [Three.js Object to Object Raycasting R6]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r6/threejs-object-to-object-raycasting.html )  
 Source code & Read Me: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-object-to-object-raycasting/ )  
 Added: Theo ~ 2015-03-25 ~ R6 - Add Leap-enabled, a work-in-progress, an experiment
