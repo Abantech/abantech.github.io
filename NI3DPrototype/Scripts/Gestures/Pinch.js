@@ -14,7 +14,7 @@ function PinchGesture()
         fingerRangeAllowance: 10,
 
         // Minimum time of gesture for full gesture to be achieved
-        delay: 0.3,
+        delay: 0.001,
 
         // Indicates whether or not to scale the gesture distance with the zoom of the camera
         scaleWithScene: true,
