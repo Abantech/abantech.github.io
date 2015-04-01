@@ -139,6 +139,7 @@
     <Content Include="Scripts\references.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
+    <Content Include="Scripts\Scene\MovableDirectionalLight.js" />
     <Content Include="Scripts\Scene\PhysicsSceneSetup.js" />
     <Content Include="Scripts\Scene\SceneSaving.js" />
     <Content Include="Scripts\Scene\SceneSetup-refactoring.js" />

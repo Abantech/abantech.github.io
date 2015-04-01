@@ -122,37 +122,51 @@ var createGroundPlane = function() {
 	scene.add( axisHelper );		
 }
 
+var directionalLight;
+
 var createSceneLighting = function() {
+        directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(-200, 200, 200);
 
-		light = new THREE.AmbientLight( 0x888888 );
-		scene.add( light );
+        var d = 200;
+        directionalLight.shadowCameraLeft = -d;
+        directionalLight.shadowCameraRight = d;
+        directionalLight.shadowCameraTop = d;
+        directionalLight.shadowCameraBottom = -d;
 
-		light = new THREE.DirectionalLight( 0xffffff, 0.5 );
-		light.position.set( -200, 200, 200 );
+        directionalLight.shadowCameraNear = 200;
+        directionalLight.shadowCameraFar = 500;
 
-		var d = 200;
-		light.shadowCameraLeft = -d;
-		light.shadowCameraRight = d;
-		light.shadowCameraTop = d;
-		light.shadowCameraBottom = -d;
+        // can help stop appearance of gridlines in objects with opacity < 1
+        directionalLight.shadowBias = -0.0002; // default 0 ~ distance fron corners?
+        directionalLight.shadowDarkness = 0.3; // default 0.5
+        directionalLight.shadowMapWidth = 2048;  // default 512
+        directionalLight.shadowMapHeight = 2048;
 
-		light.shadowCameraNear = 200;
-		light.shadowCameraFar = 500;
+        directionalLight.castShadow = true;
+        //		light.shadowCameraVisible = true;
+        scene.add(directionalLight);
 
-// can help stop appearance of gridlines in objects with opacity < 1
-		light.shadowBias = -0.0002; // default 0 ~ distance fron corners?
-		light.shadowDarkness = 0.3; // default 0.5
-		light.shadowMapWidth = 2048;  // default 512
-		light.shadowMapHeight = 2048;
-
-		light.castShadow = true;
-//		light.shadowCameraVisible = true;
+        light = new THREE.AmbientLight(0x888888);
 		scene.add( light );
 
 		light = new THREE.PointLight( 0xffffff, 0.5 );
 		light.position = camera.position;
 		camera.add( light );
-		
+}
+
+function updateLightPosition(lat, lon) {
+
+    var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
+    var d2r = pi / 180, r2d = 180 / pi;  // degrees / radians
+    function cos(a) { return Math.cos(a); }
+    function sin(a) { return Math.sin(a); }
+    var theta = lat * d2r;
+    var phi = lon * d2r;
+    var radius = 600;
+    directionalLight.position.x = radius * cos(theta) * sin(phi);
+    directionalLight.position.y = radius * sin(theta);
+    directionalLight.position.z = radius * cos(theta) * cos(phi);
 }
 
 	var createBackgroundGradient = function() {
