@@ -4,17 +4,15 @@
 var parentButtonSize = 24;
 var childButtonSize = 65;
 var buttonOffsetFactor = 1.06
-var buttonPositionX = (window.innerWidth / 14);
-var buttonPositionY = (window.innerHeight / 16);
-var buttonPositionZ = -300;
-var menuHoverToOpenDelayMills = 250;
-var menuOpenGracePeriodMills = 900;
+var buttonPosition = new THREE.Vector3(window.innerWidth / 12, window.innerHeight / 14, -300)
+var menuHoverToOpenDelayMills = 1200;
+var menuOpenGracePeriodMills = 1100;
 var url = window.location.href;
 var defaultButtonColor = 0xffeeff;
 
 //var texture = new THREE.Texture(img);
 var geometry = new THREE.SphereGeometry(parentButtonSize, 32, 32);
-geometry.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPositionX, buttonPositionY, buttonPositionZ));
+geometry.applyMatrix(new THREE.Matrix4().makeTranslation(buttonPosition.x, buttonPosition.y, buttonPosition.z));
 
 var material = new THREE.MeshPhongMaterial({ wireframe: false, transparent: true, opacity: 0.5 });
 
@@ -45,6 +43,7 @@ newShapesButton.userData.isAsset = false;
 newShapesButton.material.color.setHex(0xffeeff);
 newShapesButton.userData.menuIsExpanded = false;
 newShapesButton.lastExpandedOrHoveredTime = null;
+newShapesButton.visible = false;
 
 var menuOptionLastUsedTime = null;
 
@@ -78,7 +77,7 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
     new menuButtonChildOption("Create" + shapeName + "Button", childButtonSize, { wireframe: false, transparent: true, opacity: 0.7 },
         function (menuButtonChildOption) {
             var sizeOffset = (menuButtonChildOption.size / 2) + 2;
-            var translationMatrix = new THREE.Matrix4().makeTranslation(buttonPositionX/2.3 + (sizeOffset * offsetFactorX), buttonPositionY/2.3 + (sizeOffset * offsetFactorY), buttonPositionZ);
+            var translationMatrix = new THREE.Matrix4().makeTranslation(buttonPosition.x/2.3 + (sizeOffset * offsetFactorX), buttonPosition.y/2.3 + (sizeOffset * offsetFactorY), buttonPosition.z);
             var iconMesh = new THREE.Mesh(iconGeometry, new THREE.MeshPhongMaterial({ wireframe: false}))
             iconMesh.material.transparent = true;
             iconMesh.material.opacity = 0.5;
@@ -116,7 +115,7 @@ var createNewShapeChildOption = function (shapeName, offsetFactorX, offsetFactor
 
             console.log(shapeName + " Created due to button pressed!")
             menuOptionLastUsedTime = new Date();
-            newShapesButton.lastExpandedOrHoveredTime = new Date();
+//            newShapesButton.lastExpandedOrHoveredTime = new Date();
         }
         , null, actionNotPerfomredWithinThresholdTime, changeButtonColorOnHover, revertButtonColorOnNotHovered, null);
 }
@@ -150,7 +149,7 @@ var closeMenuAfterDelay = function (frame) {
 
         //Close the menu only after the sufficient graceperiod has passed
         if (expandedElapsedTime > menuOpenGracePeriodMills) {
-            newShapesButton.visible = true;
+//            newShapesButton.visible = true;
             newShapesButton.userData.menuIsExpanded = false;
         }
     }
@@ -195,6 +194,50 @@ var expandMenuSectionsOnHover = {
     }
 }
 
-handController.RegisterAction("ExpandMenuSectionsOnHover", expandMenuSectionsOnHover);
-handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorOnHoverAndPress);
+var expandMenuSectionsOnFist = {
+    action: function (hand) {
+        if (!newShapesButton.userData.menuIsExpanded) {
+            if (!(hand.thumb.extended || 
+                hand.indexFinger.extended || 
+                hand.middleFinger.extended || 
+                hand.ringFinger.extended || 
+                hand.pinky.extended)
+                //isHoveringOverControls(hand, [newShapesButton])
+                ) {
+                if (!newShapesButton.beginHoverTime)
+                    newShapesButton.beginHoverTime = new Date();
+
+                if ((new Date() - newShapesButton.beginHoverTime) > menuHoverToOpenDelayMills) {
+                    //Setting menuOptionLastUsedTime here prevents the shapes from getting created right as the menu opens
+                    menuOptionLastUsedTime = new Date();
+                    newShapesButton.visible = false;
+                    newShapesButton.userData.menuIsExpanded = true;
+                    newShapesButton.lastExpandedOrHoveredTime = new Date();
+
+                    playAudioFeedback("bass");
+
+                    if (showHelp && firstMenuOpen) {
+                        var utterance = new SpeechSynthesisUtterance("This is the menu for shape creation! Hover over this sphere to reveal the shapes you can create!");
+                        speechSynthesis.speak(utterance);
+                        firstMenuOpen = false;
+                    }
+                }
+            }
+            else {
+                newShapesButton.beginHoverTime = null;
+            }
+        }
+        else {
+            if (isHoveringOverControls(hand, newShapesButton.children)) {
+                //Detected a hover over the children so reset the lastExpandedOrHoveredTime to keep it open
+                newShapesButton.lastExpandedOrHoveredTime = new Date();
+            }
+        }
+    }
+}
+
+
+//handController.RegisterAction("ExpandMenuSectionsOnHover", expandMenuSectionsOnHover);
+handController.RegisterAction("ExpandMenuSectionsOnFist", expandMenuSectionsOnFist);
+//handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorOnHoverAndPress);
 frameActions.RegisterAction("CloseMenuAfterDelay", closeMenuAfterDelay);
