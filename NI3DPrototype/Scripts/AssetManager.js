@@ -24,6 +24,7 @@ function AssetManager()
             createAssetAction = null;
         }
 
+        collidableMeshList.push(asset);
         assets.push(asset);
     }
 

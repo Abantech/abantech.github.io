@@ -106,7 +106,6 @@
     <Content Include="PointerLockControls.html" />
     <Content Include="rotation.html" />
     <Content Include="scaleDemo.html" />
-    <Content Include="Scripts\SceneSetup-refactoring.js" />
     <Content Include="Scripts\ActionTracking\ActionManager.js" />
     <Content Include="Scripts\ActionTracking\CreateAction.js" />
     <Content Include="Scripts\ActionTracking\RotationAction.js" />

@@ -1,16 +1,17 @@
-﻿function DetectCollision(movingAsset)
+﻿var collidableMeshList = new Array();
+
+function DetectCollision(movingAsset)
 {
     var collisionDetected = false;
 
     var originPoint = movingAsset.position.clone();
-    var assets = assetManager.GetAssets();
 
-    for (var i = 0; i < assets.length; i++)
+    for (var i = 0; i < collidableMeshList.length; i++)
     {
-        if (assets[i].uuid !== movingAsset.uuid)
+        if (collidableMeshList[i].uuid !== movingAsset.uuid)
         {
             var box1 = new THREE.Box3().setFromObject(movingAsset);
-            var box2 = new THREE.Box3().setFromObject(assets[i]);
+            var box2 = new THREE.Box3().setFromObject(collidableMeshList[i]);
 
             if (box1.isIntersectionBox(box2))
             {

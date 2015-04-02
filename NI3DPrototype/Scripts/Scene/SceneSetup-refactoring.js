@@ -92,6 +92,8 @@ var createGroundPlane = function () {
     mesh.receiveShadow = true;
     scene.add(mesh);
 
+    // Add ground as a collidable mesh to prevent assets from intersecting it
+    collidableMeshList.push(mesh);
 
     var boxHelper = new THREE.BoxHelper(mesh);
     boxHelper.material.color.setRGB(1, 0, 1);
