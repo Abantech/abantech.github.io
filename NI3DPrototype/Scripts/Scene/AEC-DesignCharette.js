@@ -7,23 +7,27 @@ function createBoxes()
     for (var i = 0; i < halfCount * 2; i++) {
         var box = makeContainer({ color: defaultColor });
         assetManager.CreateAsset("Cube", box);
-        box.position.set(24 * (i % halfCount) + 100, -40, -120 * ((i - 1) / halfCount).toFixed(0));
+        box.position.set(24 * (i % halfCount) + 100, -40, (-100 * ((i - 1) / halfCount).toFixed(0)) - 30);
     }
 
         for (var i = 0; i < halfCount * 2; i++) {
         var box = makeContainer({ color: defaultColor });
         assetManager.CreateAsset("Cube", box);
-        box.position.set(-24 * (i % halfCount) - 100, -40, -120 * ((i - 1) / halfCount).toFixed(0));
+        box.position.set(-24 * (i % halfCount) - 100, -40, (-100 * ((i - 1) / halfCount).toFixed(0)) - 30);
     }
-
-   
 
     for (var i = 0; i < 5; i++) {
         var box = makeContainer({ geo : new THREE.BoxGeometry(16, 19, 40), color: defaultColor });
         assetManager.CreateAsset("Cube", box);
-        box.position.set(-24 * i - 100, -40, -120);
+        box.position.set(-24 * i - 100, -40, 50);
     }
     
+
+    for (var i = 0; i < 4; i++) {
+        var box = makeContainer({ geo: new THREE.BoxGeometry(40, 19, 16), color: defaultColor });
+        assetManager.CreateAsset("Cube", box);
+        box.position.set(110, -40, 20 * i + 37);
+    }
 
 /*
     // Connection
@@ -57,9 +61,14 @@ function createBoxes()
     //plat.rotation.x = 0.03
 
     //SKYBOX!
-    var skyBox = createSkybox();
-    skyBox.position.set(0, 100, 0)
-    scene.add(skyBox);
+    var url = window.location.href;
+
+    if (url.substring(0, 4) != "file")
+    {
+        var skyBox = createSkybox();
+        skyBox.position.set(0, 100, 0)
+        scene.add(skyBox);
+    }
 }
 
 function createSkybox() {
@@ -70,7 +79,7 @@ function createSkybox() {
         materials.push(new THREE.MeshBasicMaterial({ map: image, side: THREE.BackSide }));
     }
 
-    return new THREE.Mesh(new THREE.BoxGeometry(800, 800, 800), new THREE.MeshFaceMaterial(materials));
+    return new THREE.Mesh(new THREE.BoxGeometry(1000, 1000, 1000), new THREE.MeshFaceMaterial(materials));
 }
 
 function makeContainer(options) {
