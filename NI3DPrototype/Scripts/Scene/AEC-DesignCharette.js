@@ -66,7 +66,7 @@ function createSkybox() {
     var files = ['px', 'nx', 'py', 'ny', 'pz', 'nz']
     var materials = [];
     for (var i = 0, image; i < 6; i++) {
-        image = THREE.ImageUtils.loadTexture('../Images/skyboxes/land1/' + files[i] + '.jpg');
+        image = THREE.ImageUtils.loadTexture('Images/skyboxes/land1/' + files[i] + '.jpg');
         materials.push(new THREE.MeshBasicMaterial({ map: image, side: THREE.BackSide }));
     }
 
