@@ -1,5 +1,8 @@
 ﻿// <reference path="../../Libs/THREEJS/three.js" />
 
+// Can be boolean, a number, or a function that returns a vector3;
+var snap = 0;
+
 var TranslatePinchedObject = function (hand)
 {
     if (!pinchedObject)
@@ -26,9 +29,21 @@ var TranslatePinchedObject = function (hand)
         {
             var indexTipPos = hand.fingers[1].tipPosition;
             var thumbTipPos = hand.fingers[0].tipPosition;
-            pinchedObject.position.set((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
+
+            var originalPosition = pinchedObject.position.clone();
+            var proposedPos = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
+            var newPos = GetTranslationVector(originalPosition, proposedPos, snap);
+
+            pinchedObject.position.set(newPos.x, newPos.y, newPos.z);
+
+            if (DetectCollision(pinchedObject))
+            {
+                pinchedObject.position.set(originalPosition.x, originalPosition.y, originalPosition.z);
+            }
+
             pinchedObject.userData.isPinched = true;
             pinchedObject.userData.hasBeenMoved = true;
+            
         }
     }
 }
@@ -74,3 +89,58 @@ rightHandPinchGesture.registerOnFullGesture(
     {
         func: TranslatePinchedObject
     });
+
+function GetTranslationVector(currentPosition, proposedPosition, snap)
+{
+    var returnedVector = currentPosition.clone();
+
+    //  Checks if the snap variable exists. If not, it will assume that snapping is not enabled.
+    if (snap)
+    {
+        // Checks if snap is a boolean. If it is, it uses the default snap value (Here it is 10).
+        if (typeof snap === 'boolean')
+        {
+            snap = 10;
+        }
+
+        // If a custom snapping function is passed in, we execute that custom function.
+        if (typeof snap === 'function')
+        {
+            returnedVector = snap(currentPosition, proposedPosition);
+        }
+        else
+        {
+            if (typeof snap !== 'number')
+            {
+                throw new Exception('Snap value must be of type "number"');
+            }
+
+            // Checks if the distance difference on the x-axis is greater than the snap distance.
+            if (Math.abs(currentPosition.x - proposedPosition.x) > snap)
+            {
+                // Returns the position moved on the x-axis by the closest snap distance.
+                returnedVector.x = (proposedPosition.x - (proposedPosition.x % snap));
+            }
+
+            // Checks if the distance difference on the y-axis is greater than the snap distance.
+            if (Math.abs(currentPosition.y - proposedPosition.y) > snap)
+            {
+                // Returns the position moved on the y-axis by the closest snap distance.
+                returnedVector.y = (proposedPosition.y - (proposedPosition.y % snap));
+            }
+
+            // Checks if the distance difference on the z-axis is greater than the snap distance.
+            if (Math.abs(currentPosition.z - proposedPosition.z) > snap)
+            {
+                // Returns the position moved on the z-axis by the closest snap distance.
+                returnedVector.z = (proposedPosition.z - (proposedPosition.z % snap));
+            }
+        }
+    }
+    else
+    {
+        returnedVector = proposedPosition.clone();
+    }
+
+    return returnedVector;
+}

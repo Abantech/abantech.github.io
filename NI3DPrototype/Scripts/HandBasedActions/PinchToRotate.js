@@ -91,6 +91,8 @@ var RotatePinchedObject = function (hand)
                 var quaternion = new THREE.Quaternion();
                 quaternion.setFromAxisAngle(axis, -1 * angle);
 
+                var originalQuaternion = pinchedObject.quaternion.clone();
+
                 if (snapRotation)
                 {
                     if (!pinchedObject.quaternion.equals(quaternion))
@@ -136,6 +138,11 @@ var RotatePinchedObject = function (hand)
                 else
                 {
                     pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+                }
+
+                if (DetectCollision(pinchedObject))
+                {
+                    pinchedObject.quaternion.copy(originalQuaternion);
                 }
             }
         }

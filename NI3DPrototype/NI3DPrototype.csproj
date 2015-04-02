@@ -74,6 +74,7 @@
     <Content Include="Images\ui-icons_222222_256x240.png" />
     <Content Include="Scripts\AudioFeedback.js" />
     <Content Include="Scripts\Controls\FlyControls.js" />
+    <Content Include="Scripts\Assets\CollisionDetection.js" />
     <Content Include="Scripts\info.js" />
     <Content Include="Libs\JQuery\jquery-1.9.1.js" />
     <Content Include="Libs\JQuery\jquery-ui.js" />
