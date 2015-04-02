@@ -15,9 +15,12 @@ Demos:
 - [NI 3D prototype using NUI Navigation (not working too well yet)]( http://abantech.github.io/NI3DPrototype/NUINavigation.html )  
 Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
 
-Updated Greg ~ 2015-02-26
- 
- - Implemented initial version of the NI navigation which is not working too great yet but at least has some semblance of working. Still some issues, but at least it no longer flies into space (yay!)
+Updated Greg/James - 2015-04-02
+
+- Added collision detection for assets in scene (!!)
+- Added snapping for asset translation
+- Modified menu so that it uses the closed fist instead of pressing the translucent button
+- prepopulated with containers, plat, and setbacks in preparation for early adopter design charette
 
 ***
 
