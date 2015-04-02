@@ -98,7 +98,7 @@ var createGroundPlane = function() {
 		color: 0x008080,
 		ambient: 0x008080,
 		specular: 0xee3344,
-		shininess: 50,
+		shininess: 10,
 		side: THREE.DoubleSide
 	} );
 

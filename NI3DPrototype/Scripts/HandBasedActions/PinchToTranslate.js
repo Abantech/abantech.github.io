@@ -1,7 +1,7 @@
 ﻿// <reference path="../../Libs/THREEJS/three.js" />
 
 // Can be boolean, a number, or a function that returns a vector3;
-var snap = 0;
+var snap = 0.1;
 
 var TranslatePinchedObject = function (hand)
 {

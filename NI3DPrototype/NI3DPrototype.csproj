@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AEC-DesignCharette.html" />
     <Content Include="BeginnerSandbox.html" />
     <Content Include="CameraInHand.html" />
     <Content Include="css\info.css" />
@@ -69,6 +70,18 @@
     <Content Include="Images\icon-close-16.png" />
     <Content Include="Images\icon-info.png" />
     <Content Include="Images\NewShapeMenu.jpg" />
+    <Content Include="Images\skyboxes\footballfield\nx.jpg" />
+    <Content Include="Images\skyboxes\footballfield\ny.jpg" />
+    <Content Include="Images\skyboxes\footballfield\nz.jpg" />
+    <Content Include="Images\skyboxes\footballfield\px.jpg" />
+    <Content Include="Images\skyboxes\footballfield\py.jpg" />
+    <Content Include="Images\skyboxes\footballfield\pz.jpg" />
+    <Content Include="Images\skyboxes\land1\nx.jpg" />
+    <Content Include="Images\skyboxes\land1\ny.jpg" />
+    <Content Include="Images\skyboxes\land1\nz.jpg" />
+    <Content Include="Images\skyboxes\land1\px.jpg" />
+    <Content Include="Images\skyboxes\land1\py.JPG" />
+    <Content Include="Images\skyboxes\land1\pz.jpg" />
     <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
@@ -137,6 +150,7 @@
     <Content Include="Libs\Physics\physijs_worker.js" />
     <Content Include="Scripts\LeapLoopSetup-NoHandPlugins.js" />
     <Content Include="Scripts\references.js" />
+    <Content Include="Scripts\Scene\AEC-DesignCharette.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
     <Content Include="Scripts\Scene\MovableDirectionalLight.js" />

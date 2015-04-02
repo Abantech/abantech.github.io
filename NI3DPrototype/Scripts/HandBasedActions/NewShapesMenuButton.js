@@ -4,7 +4,7 @@
 var parentButtonSize = 24;
 var childButtonSize = 65;
 var buttonOffsetFactor = 1.06
-var buttonPosition = new THREE.Vector3(window.innerWidth / 12, window.innerHeight / 14, -300)
+var buttonPosition = new THREE.Vector3(window.innerWidth / 16, window.innerHeight / 18, -300)
 var menuHoverToOpenDelayMills = 1200;
 var menuOpenGracePeriodMills = 1100;
 var url = window.location.href;
