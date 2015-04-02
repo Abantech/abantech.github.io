@@ -76,9 +76,9 @@
     <Content Include="Images\skyboxes\footballfield\px.jpg" />
     <Content Include="Images\skyboxes\footballfield\py.jpg" />
     <Content Include="Images\skyboxes\footballfield\pz.jpg" />
-    <Content Include="Images\skyboxes\land1\nx.jpg" />
-    <Content Include="Images\skyboxes\land1\ny.jpg" />
     <Content Include="Images\skyboxes\land1\nz.jpg" />
+    <Content Include="Images\skyboxes\land1\ny.jpg" />
+    <Content Include="Images\skyboxes\land1\nx.jpg" />
     <Content Include="Images\skyboxes\land1\px.jpg" />
     <Content Include="Images\skyboxes\land1\py.JPG" />
     <Content Include="Images\skyboxes\land1\pz.jpg" />
