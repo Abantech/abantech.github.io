@@ -87,10 +87,10 @@
     <script src="Scripts/ActionTracking/CreateAction.js"></script>
     <script src="Scripts/ActionTracking/ActionManager.js"></script>
 
+    <script src="Scripts/Scene/SceneSaving.js"></script>
     <script src="Scripts/AssetManager.js"></script>
     <script src="Scripts/Gestures/GestureExtensionMethods.js"></script>
     <script src="Scripts/Scene/AEC-DesignCharette.js"></script>
-
     <script src="Scripts/info.js"></script>
     <script>
         //handController.RegisterAction("DrawPinchLine", drawPinchLine);
@@ -116,7 +116,10 @@
 
             if (keyChar === 's')
             {
-                savedScene = exportScene();
+                savedScene = exportSceneAssets();
+                var data = new Blob([savedScene], {type: 'text/plain'});
+                var url = window.URL.createObjectURL(data);
+                window.open(url, "_blank")
             }
 
             if (keyChar === 'l')
@@ -145,7 +148,7 @@
 
         if (showHelp)
         {
-            var utterance = new SpeechSynthesisUtterance('Welcome to the Abahntech Natural User Interface demo.  Make a closed fist to open the menu for creating shapes.');
+            var utterance = new SpeechSynthesisUtterance('Welcome to the Abahntech Natural User Interface demo.  Make a thumbs up gesture to open the menu for creating shapes.');
             speechSynthesis.speak(utterance);
         }
 
