@@ -1,6 +1,6 @@
 ﻿var axis = null;
 var rotationAction = null
-var snapRotation = true;
+var snapRotation = false;
 var snapAngle;
 var canRotateAfterSnap = true;
 var lastQuaternion;
@@ -40,6 +40,8 @@ var RotatePinchedObject = function (hand)
 
                 rotationAction.Initialize(pinchedObject);
                 pinchedObject.userData.isPinched = true;
+
+                pinchedObject.userData.rotationOffset = pinchedObject.quaternion.clone();
             }
 
             var angle = null;
@@ -88,29 +90,37 @@ var RotatePinchedObject = function (hand)
 
             if (angle != null)
             {
-                var quaternion = new THREE.Quaternion();
-                quaternion.setFromAxisAngle(axis, -1 * angle);
+                var originalQuaternion;
 
-                var originalQuaternion = pinchedObject.quaternion.clone();
+                if (pinchedObject.userData.rotationOffset)
+                {
+                    originalQuaternion = pinchedObject.userData.rotationOffset.clone();
+                }
+                else
+                {
+                    originalQuaternion = pinchedObject.quaternion.clone();
+                }
+
+                var newQuaternion = originalQuaternion.multiply(new THREE.Quaternion().setFromAxisAngle(axis, -1 * angle));
 
                 if (snapRotation)
                 {
-                    if (!pinchedObject.quaternion.equals(quaternion))
+                    if (!pinchedObject.quaternion.equals(newQuaternion))
                     {
                         if (!quaternionHistory[0])
                         {
                             quaternionHistory[0] = pinchedObject.quaternion;
-                            quaternionHistory[1] = quaternion;
+                            quaternionHistory[1] = newQuaternion;
                         }
 
-                        if (quaternionHistory[0].equals(quaternion))
+                        if (quaternionHistory[0].equals(newQuaternion))
                         {
                             if (canRotateAfterSnap)
                             {
                                 quaternionHistory[0] = quaternionHistory[1];
-                                quaternionHistory[1] = quaternion;
+                                quaternionHistory[1] = newQuaternion;
 
-                                pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+                                pinchedObject.quaternion.copy(newQuaternion);
                                 canRotateAfterSnap = false;
 
                                 setTimeout(function ()
@@ -122,9 +132,9 @@ var RotatePinchedObject = function (hand)
                         else
                         {
                             quaternionHistory[0] = quaternionHistory[1];
-                            quaternionHistory[1] = quaternion;
+                            quaternionHistory[1] = newQuaternion;
 
-                            pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+                            pinchedObject.quaternion.copy(newQuaternion);
 
                             canRotateAfterSnap = false;
 
@@ -137,7 +147,7 @@ var RotatePinchedObject = function (hand)
                 }
                 else
                 {
-                    pinchedObject.quaternion.setFromAxisAngle(axis, -1 * angle);
+                    pinchedObject.quaternion.copy(newQuaternion);
                 }
 
                 if (DetectCollision(pinchedObject))
@@ -156,11 +166,11 @@ var EndRotatePinchedObject = function (hand)
         rotationAction.RegisterRotation(pinchedObject)
         actionManager.ActionPerformed(rotationAction);
         rotationAction = null;
+        pinchedObject.userData.rotationOffset = pinchedObject.quaternion.clone();
 
         if (pinchedObject)
         {
             pinchedObject.geometry.computeBoundingBox();
-
             pinchedObject.userData.isPinched = false;
         }
     }

@@ -126,7 +126,7 @@ function PinchGesture()
             }
 
             // Checks if the distance between the thumb and index meets the minimum requirement for the gesture.
-            return !hand.pinky.extended && hand.pinchStrength > 0.3 && indexTipVector.distanceTo(thumbTipVector) < pinchDistance;
+            return hand.pinchStrength > 0.3 && indexTipVector.distanceTo(thumbTipVector) < pinchDistance;
         }
     }
 
