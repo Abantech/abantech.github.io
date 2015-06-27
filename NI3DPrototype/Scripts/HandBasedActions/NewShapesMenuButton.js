@@ -197,7 +197,8 @@ var expandMenuSectionsOnHover = {
 var expandMenuSectionsOnFist = {
     action: function (hand) {
         if (!newShapesButton.userData.menuIsExpanded) {
-            if (!(hand.thumb.extended || 
+            if (hand.thumb.extended &&
+                !( 
                 hand.indexFinger.extended || 
                 hand.middleFinger.extended || 
                 hand.ringFinger.extended || 
