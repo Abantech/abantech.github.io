@@ -1,6 +1,10 @@
-﻿var bus = require('./Message Bus/MessageBus.js');
+﻿// Efficio Internal Components
+var bus = require('./Message Bus/MessageBus.js');
 var hirp = require('./Human Input Recognition and Processing/HumanInputRecognitionAndProcessing.js');
 var ami = require('./Asset Management And Inventory/AssetManager.js');
+var constraintsEngine = require('./Constraints Engine/ConstraintsEngine.js');
+
+
 var sketchup = require('./Plugins/SketchUp/SketchUp.js');
 var leap;
 
@@ -10,7 +14,9 @@ module.exports =
         bus.Initialize();
         hirp.Initialize();
         ami.Initialize();
-        sketchup.Init();
+        constraintsEngine.Initialize();
+
+        sketchup.Initialize();
         
         // Stub for simulating input
         leap = require('./Plugins/LeapMotion/LeapMotionStub.js');
