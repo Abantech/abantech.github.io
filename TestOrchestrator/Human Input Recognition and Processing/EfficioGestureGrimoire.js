@@ -32,7 +32,6 @@ module.exports = {
     },
     
     ProcessInput: function (data) {
-        
         // Where input is processed and Custom Gestures are published on the channel
         DetectPredefinedGestures(data);
     }

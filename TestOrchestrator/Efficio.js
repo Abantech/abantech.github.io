@@ -3,9 +3,8 @@ var bus = require('./Message Bus/MessageBus.js');
 var hirp = require('./Human Input Recognition and Processing/HumanInputRecognitionAndProcessing.js');
 var ami = require('./Asset Management And Inventory/AssetManager.js');
 var constraintsEngine = require('./Constraints Engine/ConstraintsEngine.js');
+var systemInterface = require('./3D System Interface/3DSystemInterface.js')
 
-
-var sketchup = require('./Plugins/SketchUp/SketchUp.js');
 var leap;
 
 module.exports = 
@@ -15,8 +14,7 @@ module.exports =
         hirp.Initialize();
         ami.Initialize();
         constraintsEngine.Initialize();
-
-        sketchup.Initialize();
+        systemInterface.Initialize();
         
         // Stub for simulating input
         leap = require('./Plugins/LeapMotion/LeapMotionStub.js');

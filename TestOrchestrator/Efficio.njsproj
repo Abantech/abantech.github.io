@@ -31,6 +31,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="3D System Interface\3DSystemInterface.js" />
     <Compile Include="app.js" />
     <Compile Include="Asset Management And Inventory\AssetManager.js" />
     <Compile Include="Constraints Engine\ConstraintsEngine.js" />
@@ -41,7 +42,8 @@
     <Compile Include="Human Input Recognition and Processing\HumanInputRecognitionAndProcessing.js" />
     <Compile Include="Message Bus\MessageBus.js" />
     <Compile Include="Plugins\LeapMotion\LeapMotionStub.js" />
-    <Compile Include="Plugins\SketchUp\SketchUp.js" />
+    <Compile Include="3D System Interface\SketchUp.js" />
+    <Content Include="3D System Interface\ActionToFunctionMapping.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
@@ -52,9 +54,9 @@
     <Folder Include="Asset Management And Inventory\" />
     <Folder Include="Command Issuance And Control\" />
     <Folder Include="Constraints Engine\" />
+    <Folder Include="3D System Interface\" />
     <Folder Include="Plugins\" />
     <Folder Include="Plugins\LeapMotion\" />
-    <Folder Include="Plugins\SketchUp\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
 </Project>

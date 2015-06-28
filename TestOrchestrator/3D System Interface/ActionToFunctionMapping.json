@@ -1,0 +1,8 @@
+{
+    "PluginName": "SketchUp.js",
+    "ActionMappings": [
+        { "Gesture": "Pinch", "Source": "Efficio", "Action": "Extrude", "Result" : "Update" },
+        { "Gesture": "Grasp", "Source": "Efficio", "Action": "Translate", "Result" : "Update"  },
+        { "Gesture": "my custom gesture", "Source": "Custom.custom library 1", "Action": "Create", "Result" : "Create"  }
+    ]
+}

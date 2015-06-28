@@ -8,8 +8,6 @@
     "email": ""
   },
   "dependencies": {
-    "archi": "^0.1.2",
-    "architect": "^0.1.11",
     "postal": "^1.0.6"
   }
 }
