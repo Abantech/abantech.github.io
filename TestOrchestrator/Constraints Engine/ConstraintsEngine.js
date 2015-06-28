@@ -10,14 +10,14 @@ function RegisterSubscriber(subscription) {
 }
 
 function CheckConstraints(data){
-    if (violated) {
-        console.log('Constraints violated, changes not reflected internally.')
-    }
-    else {
-        console.log('Constraints not violated, changes reflected internally.')
-    }
+    //if (violated) {
+    //    console.log('Constraints violated, changes not reflected internally.')
+    //}
+    //else {
+    //    console.log('Constraints not violated, changes reflected internally.')
+    //}
 
-    return !violated;
+    return true;
 }
 
 module.exports = {

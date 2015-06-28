@@ -8,6 +8,7 @@
     "email": ""
   },
   "dependencies": {
-    "postal": "^1.0.6"
+    "postal": "^1.0.6",
+    "three": "^0.71.0"
   }
 }

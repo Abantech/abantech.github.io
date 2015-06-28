@@ -1,8 +1,12 @@
-﻿var bus = require('postal');
+﻿var three = require('three');
+var internalScene = require('../InternalScene');
+var bus = require('postal');
 var source = "Efficio Asset Manager"
 
 function CreateAsset(asset) {
     console.log('Asset created with data: ' + asset);
+    
+    internalScene.Scene.add(asset);
 };
 
 function CreateAssets(assets) {
@@ -27,6 +31,11 @@ function RetrieveAllAssetIDs() {
 
 function UpdateAsset(asset) {
     console.log('Asset updated with data: ' + asset);
+
+    var oldAsset = internalScene.Scene.getObjectById(asset.id);
+
+    internalScene.Scene.remove(oldAsset);
+    internalScene.Scene.add(asset);
 };
 
 function UpdateAssets(assets) {

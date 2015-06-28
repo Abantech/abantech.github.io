@@ -4,6 +4,7 @@ var hirp = require('./Human Input Recognition and Processing/HumanInputRecogniti
 var ami = require('./Asset Management And Inventory/AssetManager.js');
 var constraintsEngine = require('./Constraints Engine/ConstraintsEngine.js');
 var systemInterface = require('./3D System Interface/3DSystemInterface.js')
+var internalScene = require('./InternalScene.js');
 
 var leap;
 
@@ -15,6 +16,7 @@ module.exports =
         ami.Initialize();
         constraintsEngine.Initialize();
         systemInterface.Initialize();
+        internalScene.Initialize();
         
         // Stub for simulating input
         leap = require('./Plugins/LeapMotion/LeapMotionStub.js');
