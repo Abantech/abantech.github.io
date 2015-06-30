@@ -23,12 +23,16 @@ module.exports =
         config.ActionMappings.forEach(function (mapping) {
             RegisterSubscriber(
                 bus.subscribe({
+
                     channel: mapping.Source,
                     topic: mapping.Topic,
                     callback: function (data, envelope) {
+
                         console.log('\n' + envelope.topic + ' Received in Plugin');
+                        
                         var returnedFromFunction = new Object();
                         returnedFromFunction.publishResults = true;
+
                         CallDynamicFunction(mapping.Action, data, returnedFromFunction);
                         
                         if (mapping.Result) {

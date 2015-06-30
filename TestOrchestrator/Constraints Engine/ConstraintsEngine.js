@@ -9,14 +9,14 @@ function RegisterSubscriber(subscription) {
     subscriptions.push(subscription);
 }
 
-function CheckConstraints(data){
+function CheckConstraints(data) {
     //if (violated) {
     //    console.log('Constraints violated, changes not reflected internally.')
     //}
     //else {
     //    console.log('Constraints not violated, changes reflected internally.')
     //}
-
+    
     return true;
 }
 
@@ -25,49 +25,25 @@ module.exports = {
         RegisterSubscriber(
             bus.subscribe({
                 channel: "Asset",
-                topic: "Create",
+                topic: "*",
                 callback: function (data, envelope) {
                     if (envelope.source != source) {
                         if (CheckConstraints(data.asset)) {
-                            ami.CreateAsset(data.asset);
+                            switch (envelope.topic) {
+                                case "Create": {
+                                    ami.CreateAsset(data.asset);
+                                }
+                                case "Update": {
+                                    ami.UpdateAsset(data.asset);
+                                }
+                                case "Delete": {
+                                    ami.DeleteAsset(data.asset);
+                                }
+                            }
                         } else {
 
                         }
-
-                        violated = !violated;
-                    }
-                }
-            }));
-        
-        RegisterSubscriber(
-            bus.subscribe({
-                channel: "Asset",
-                topic: "Update",
-                callback: function (data, envelope) {
-                    if (envelope.source != source) {
-                        if (CheckConstraints(data.asset)) {
-                            ami.UpdateAsset(data.asset);
-                        } else {
-
-                        }
-
-                        violated = !violated;
-                    }
-                }
-            }));
-        
-        RegisterSubscriber(
-            bus.subscribe({
-                channel: "Asset",
-                topic: "Delete",
-                callback: function (data, envelope) {
-                    if (envelope.source != source) {
-                        if (CheckConstraints(data.asset)) {
-                            ami.DeleteAsset(data.asset);
-                        } else {
-
-                        }
-
+                        
                         violated = !violated;
                     }
                 }

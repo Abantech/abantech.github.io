@@ -9,6 +9,10 @@ function Extrude(data, returnedFromFunction){
     returnedFromFunction.MyUpdatedAsset = 'Extruded Asset';
 };
 
+function MyFunction(){
+    console.log("CHAINED");
+}
+
 function Translate(data, returnedFromFunction) {
 
     console.log("Translate Called");
@@ -50,5 +54,6 @@ module.exports = {
     Extrude: Extrude,
     Translate: Translate,
     Create: Create,
-    Log: Log
+    Log: Log,
+    MyFunction: MyFunction
 }
