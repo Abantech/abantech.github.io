@@ -21,12 +21,14 @@ module.exports =
         sysNotificationListener.Initialize();
         
         // Stub for simulating input
-        leap = require('./Plugins/LeapMotion/LeapMotionStub.js');
+        leap = require('./Plugins/LeapMotion/LeapMotionStub.js'); //will make this read from config to allow whatever NUI device
         leap.Init();
     },
+    
     Start: function () {
         var option = 0;
         
+        //This loop calls stubs right now but will be execpted to read data from the NUI devices hooked up (return BVH data)    
         while (true) {
             if (Date.now() % 2000 === 0) {
                 if (option === 0) {

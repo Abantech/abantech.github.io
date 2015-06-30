@@ -32,7 +32,8 @@ module.exports =
                         
                         var returnedFromFunction = new Object();
                         returnedFromFunction.publishResults = true;
-
+                        
+                        //This is the actual call to the external tool's plugin (i.e. SketchUp.js)
                         CallDynamicFunction(mapping.Action, data, returnedFromFunction);
                         
                         if (mapping.Result) {

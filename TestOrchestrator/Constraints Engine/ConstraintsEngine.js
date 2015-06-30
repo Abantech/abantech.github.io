@@ -20,6 +20,7 @@ function CheckConstraints(data) {
     return true;
 }
 
+//How do we make sure that the ConstraintsEngine is always registered before updates are made to assets?
 module.exports = {
     Initialize: function () {
         RegisterSubscriber(

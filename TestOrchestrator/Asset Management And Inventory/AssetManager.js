@@ -39,7 +39,7 @@ function RetrieveAllAssetIDs() {
 function UpdateAsset(asset) {
     bus.publish({
         channel: "UserNotification",
-        topic: "AssetCreated",
+        topic: "AssetUpdated",
         source: source,
         data: {
             message: 'Asset updated with data: ' + asset

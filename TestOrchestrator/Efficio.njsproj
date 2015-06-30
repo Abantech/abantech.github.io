@@ -58,6 +58,7 @@
     <Folder Include="Constraints Engine\" />
     <Folder Include="3D System Interface\" />
     <Folder Include="Logging\" />
+    <Folder Include="Sequence Execution and Action Scheduling\" />
     <Folder Include="Plugins\" />
     <Folder Include="Plugins\LeapMotion\" />
   </ItemGroup>
