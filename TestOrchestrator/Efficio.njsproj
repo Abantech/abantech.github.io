@@ -41,6 +41,7 @@
     <Compile Include="Human Input Recognition and Processing\EfficioGestureGrimoire.js" />
     <Compile Include="Human Input Recognition and Processing\HumanInputRecognitionAndProcessing.js" />
     <Compile Include="InternalScene.js" />
+    <Compile Include="Logging\SystemNotificationListener.js" />
     <Compile Include="Message Bus\MessageBus.js" />
     <Compile Include="Plugins\LeapMotion\LeapMotionStub.js" />
     <Compile Include="3D System Interface\SketchUp.js" />
@@ -56,6 +57,7 @@
     <Folder Include="Command Issuance And Control\" />
     <Folder Include="Constraints Engine\" />
     <Folder Include="3D System Interface\" />
+    <Folder Include="Logging\" />
     <Folder Include="Plugins\" />
     <Folder Include="Plugins\LeapMotion\" />
   </ItemGroup>

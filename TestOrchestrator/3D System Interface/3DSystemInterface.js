@@ -9,8 +9,8 @@ function RegisterSubscriber(subscription) {
     subscriptions.push(subscription);
 }
 
-function CallDynamicFunction(func, data) {
-    return ThreeDSystem[func](data);
+function CallDynamicFunction(func, data, returnedFromFunction) {
+    return ThreeDSystem[func](data, returnedFromFunction);
 }
 
 module.exports = 
@@ -23,20 +23,34 @@ module.exports =
         config.ActionMappings.forEach(function (mapping) {
             RegisterSubscriber(
                 bus.subscribe({
-                    channel: "Input.Processed." + mapping.Source,
-                    topic: mapping.Gesture,
+                    channel: mapping.Source,
+                    topic: mapping.Topic,
                     callback: function (data, envelope) {
-                        console.log('\n' + mapping.Gesture + ' Received in Plugin');
-                        var result = CallDynamicFunction(mapping.Action, data);
+                        console.log('\n' + envelope.topic + ' Received in Plugin');
+                        var returnedFromFunction = new Object();
+                        returnedFromFunction.publishResults = true;
+                        CallDynamicFunction(mapping.Action, data, returnedFromFunction);
                         
-                        bus.publish({
-                            channel: "Asset",
-                            topic: mapping.Result,
-                            source: mapping.Source,
-                            data: {
-                                asset: result
-                            }
-                        });
+                        if (mapping.Result) {
+                            mapping.Result.forEach(function (result) {
+                                var data = new Object();
+                                
+                                if (result.Data) {
+                                    for (key in result.Data) {
+                                        data[key] = returnedFromFunction[result.Data[key]];
+                                    }
+                                }
+                                
+                                if (returnedFromFunction.publishResults) {
+                                    bus.publish({
+                                        channel: result.Channel,
+                                        topic: result.Topic,
+                                        source: mapping.Source,
+                                        data: data
+                                    });
+                                }
+                            });
+                        }
                     }
                 }));
         });

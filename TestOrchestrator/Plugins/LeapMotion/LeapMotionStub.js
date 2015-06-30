@@ -1,4 +1,4 @@
-﻿var postal = require('postal');
+﻿var bus = require('postal');
 var source = 'Leap Motion';
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
     },
     
     StubPinch: function () {
-        postal.publish({
+        bus.publish({
             channel: "Input.Raw",
             topic: "InputReceived", 
             source: source,
@@ -18,7 +18,7 @@ module.exports = {
     },
     
     StubGrasp: function () {
-        postal.publish({
+        bus.publish({
             channel: "Input.Raw",
             topic: "InputReceived", 
             source: source,
@@ -29,7 +29,7 @@ module.exports = {
     },
     
     StubCustomGesture: function () {
-        postal.publish({
+        bus.publish({
             channel: "Input.Raw",
             topic: "InputReceived", 
             source: source,

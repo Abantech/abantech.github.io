@@ -5,6 +5,7 @@ var ami = require('./Asset Management And Inventory/AssetManager.js');
 var constraintsEngine = require('./Constraints Engine/ConstraintsEngine.js');
 var systemInterface = require('./3D System Interface/3DSystemInterface.js')
 var internalScene = require('./InternalScene.js');
+var sysNotificationListener = require('./Logging/SystemNotificationListener.js');
 
 var leap;
 
@@ -17,6 +18,7 @@ module.exports =
         constraintsEngine.Initialize();
         systemInterface.Initialize();
         internalScene.Initialize();
+        sysNotificationListener.Initialize();
         
         // Stub for simulating input
         leap = require('./Plugins/LeapMotion/LeapMotionStub.js');

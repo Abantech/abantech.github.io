@@ -1,7 +1,46 @@
 {
     "PluginName": "SketchUp.js",
     "ActionMappings": [
-        { "Gesture": "Grasp", "Source": "Efficio", "Action": "Create", "Result" : "Create"  },
-        { "Gesture": "my custom gesture", "Source": "Custom.custom library 1", "Action": "Translate", "Result" : "Update"  }
+        {
+            "Topic": "Grasp",
+            "Source": "Input.Processed.Efficio",
+            "Action": "Create",
+            "Result": [
+                {
+                    "Channel": "Asset",
+                    "Topic": "Create",
+                    "Data": {
+                        "asset": "MyUpdatedAsset"
+                    }
+
+                }
+            ]
+        },
+        {
+            "Topic": "my custom gesture",
+            "Source": "Input.Processed.Custom.custom library 1",
+            "Action": "Translate",
+            "Result": [
+                {
+                    "Channel": "Asset",
+                    "Topic": "Update",
+                    "Data": {
+                        "asset": "MyUpdatedAsset"
+                    }
+                },
+                {
+                    "Channel": "SystemNotification",
+                    "Topic": "MyCustomMessage",
+                    "Data": {
+                        "message": "MyMessage"
+                    }
+                }
+            ]
+        },
+        {
+            "Topic": "*",
+            "Source": "UserNotification",
+            "Action": "Log"
+        }
     ]
 }

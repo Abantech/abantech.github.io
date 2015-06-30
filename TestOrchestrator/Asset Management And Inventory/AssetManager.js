@@ -4,7 +4,14 @@ var bus = require('postal');
 var source = "Efficio Asset Manager"
 
 function CreateAsset(asset) {
-    console.log('Asset created with data: ' + asset);
+    bus.publish({
+        channel: "UserNotification",
+        topic: "AssetCreated",
+        source: source,
+        data: {
+            message: "Asset created with data: " + asset
+        }
+    });
     
     internalScene.Scene.add(asset);
 };
@@ -30,7 +37,14 @@ function RetrieveAllAssetIDs() {
 };
 
 function UpdateAsset(asset) {
-    console.log('Asset updated with data: ' + asset);
+    bus.publish({
+        channel: "UserNotification",
+        topic: "AssetCreated",
+        source: source,
+        data: {
+            message: 'Asset updated with data: ' + asset
+        }
+    });
 
     var oldAsset = internalScene.Scene.getObjectById(asset.id);
 
