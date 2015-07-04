@@ -30,7 +30,7 @@ module.exports =
         
         //This loop calls stubs right now but will be execpted to read data from the NUI devices hooked up (return BVH data)    
         while (true) {
-            if (Date.now() % 2000 === 0) {
+            if (Date.now() % 2 === 0) {
                 if (option === 0) {
                     leap.StubPinch();
                     
