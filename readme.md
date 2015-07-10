@@ -4,8 +4,8 @@ _Revolutionizing the way we shape our world_
 
 [About Us]( #about) ~ [Our Team](#team) ~ [Efficio Middleware]( #middleware ) ~ [Demos and Videos]( #demo )
 
-<span style=display:none; >[View as web page]( http://abantech.github.io/libs "View file as a web page." ) </span>
-<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/abantach/libs/tree/gh-pages'; />
+<span style=display:none; >[View as web page]( http://abantech.github.io/ "View file as a web page." ) </span>
+<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/Abantech/abantech.github.io'; />
 
 
 <a name=about class=abou >About Us</a>
