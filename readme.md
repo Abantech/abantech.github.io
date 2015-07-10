@@ -74,4 +74,6 @@ Otherwise, below are videos of some the features currently implemented into the 
 
 Note: We're still coming up with our MVP so stay tuned for updates!
 
+
+***
 Copyright &copy; 2015 Abantech
