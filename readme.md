@@ -1,138 +1,77 @@
-Abantech Read Me
+
+
+_Revolutionizing the way we shape our world_
+
+[About Us]( #about) ~ [Our Team](#team) ~ [Efficio Middleware]( #middleware ) ~ [Demos and Videos]( #demo )
+
+<span style=display:none; >[View as web page]( http://abantech.github.io/libs "View file as a web page." ) </span>
+<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/abantach/libs/tree/gh-pages'; />
+
+
+<a name=about class=abou >About Us</a>
 ===
-[Web Page View]( http://abantech.github.io/index.html )  
-[Source Code View]( https://github.com/abantech/abantech.github.io/ )
 
-Mission:  
-All about natural interaction in 3D. To be able to give people the ability to do whatever they can do in Google Sketchup (or maya or blender, or Solidworks, etc) , but to do it with the Leap controller (or similar equipment) in order to allow this interaction to be intuitive (NUI). With the mouse and keyboard, you aren't "in there" with the medium, but with our first project, we want to allow people to create their 3D models in a small fraction of the time, and with far more ease than can be done today.
+Abantech's mission is to break down the barriers that have prevented people from working efficiently with software systems. We wish to allow people to break free of the artificial restrictions imposed by working with primitive devices (like the mouse, keyboard, etc) and to be unencumbered by the specialization required to work with 3D applications.
 
+We want to allow people to do things in ways that have been traditionally difficult or impossible. We want to allow people to better be able to express their creativity, to collaborate, to invent and innovate. To boldly do what they couldn't (easily) do before.
 
-
-Demos: 
-
-- [NI 3D prototype (Demo)]( http://abantech.github.io/NI3DPrototype/main.html )  
-- [NI 3D prototype with Physics]( http://abantech.github.io/NI3DPrototype/PhysicsEnabled.html )  
-- [NI 3D prototype using NUI Navigation (not working too well yet)]( http://abantech.github.io/NI3DPrototype/NUINavigation.html )  
-Source Code: [NI 3D prototype workspace]( https://github.com/Abantech/abantech.github.io/tree/master/NI3DPrototype )  
-
-Updated Greg/James - 2015-04-02
-
-- Added collision detection for assets in scene (!!)
-- Added snapping for asset translation
-- Modified menu so that it uses the closed fist instead of pressing the translucent button
-- prepopulated with containers, plat, and setbacks in preparation for early adopter design charette
-
-***
-
- - [NI 3D prototype Beginner Sandbox]( http://abantech.github.io/NI3DPrototype/BeginnerSandbox.html )  
- - Source Code: [NI 3D prototype Beginner Sandbox]( https://github.com/Abantech/abantech.github.io/blob/master/NI3DPrototype/BeginnerSandbox.html )
-
-Updated Greg - 2015-02-24
-
- - Created a simplified version of the prototype which still uses the same system for dependency injection
- 
- 
-***
-
-Demo: [Light - directional with sliders & Leap R1]( http://abantech.github.io/interaction-studies/threejs-light-directional-with-sliders-leap/r1/threejs-light-directional-with-sliders-leap.html)  
-Source code: [Light - directional with sliders & Leap R1]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-light-directional-with-sliders-leap/ )  
-Added: Theo ~ 2015-03-30 ~ R1: manually ( heh, heh ) set the latitude and longitude of the sun direction
-
-Demo: [Three.js Leap-Enabled Template R3]( http://abantech.github.io/interaction-studies/threejs-leap-enabled-template/r3/threejs-leap-enabled-template.html )  
-Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-leap-enabled-template/ )  
-Added: Theo ~ 2015-03-30 ~ R2: more funk
-Added: Theo ~ 2015-03-25 ~ R2: simpler and lighter
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
-
-Demo: [Three.js Object to Object Raycasting R6]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r6/threejs-object-to-object-raycasting.html )  
-Source code & Read Me: [Three.js Object to Object Raycasting]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-object-to-object-raycasting/ )  
-Added: Theo ~ 2015-03-25 ~ R6 - Add Leap-enabled, a work-in-progress, an experiment
-Added: Theo ~ 2015-03-21 ~ R5 - Adds highlighting and text status output of intersected objects 
-Added: Theo ~ 2015-03-19 ~ R4 - Adds multiple objects, XYZ movement. See read me 
-Added: Theo ~ 2015-03-18 ~ R3 - a work in progress. See read me.  
-Update: Theo ~ 2015-03-15 ~ Added issue  
-Added Theo ~ 2015-03-12 ~ Added R2 bi-directional intersections  
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting going from any two object in a scene
-
-Demo: [Three.js Leap-Enabled Template R2]( http://abantech.github.io/interaction-studies/threejs-leap-enabled-template/r2/threejs-leap-enabled-template.html )  
-Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-leap-enabled-template/ )  
-Added: Theo ~ 2015-03-25 ~ R2: simpler and lighter
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
-
-[Constructive Solid Geometry R1]( http://abantech.github.io/interaction-studies/threejs-contructive-solid-geometry/r1/constructive-solid-geometry.html )  
-Source code & Read Me: [Constructive Solid Geometry R1]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-contructive-solid-geometry/ )  
-Added Theo ~ 2015-03-15 ~ 3D Boolean operations
-
-Demo: [Abantech HQ ~ 3D Schematic]( http://abantech.github.io/interaction-studies/abantech-hq/r1/abantech-hq.html )  
-Source: [Abantech HQ ~ 3D Schematic]( http://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/abantech-hq/r1/abantech-hq.html )  
-[Read Me]( http://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/abantech-hq/readme.md )  
-Added: Theo ~ 2015-03-10 ~ sketching in 3D
-
-Demo: [Three.js Skybox Sample]( http://abantech.github.io/interaction-studies/threejs-skybox/r1/template-skybox.html )  
-Source code: [Three.js Leap Skybox Sample]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-skybox/ )  
-Added: Theo ~ 2015-03-09 ~ Skybox demo
-See also:  
-<http://en.wikipedia.org/wiki/Skybox_(video_games)>  
-Sources:
-<http://www.humus.name/index.php?page=Textures>  
-[Google Images]( https://www.google.com/search?q=skybox&tbm=isch&tbo=u&source=univ&sa=X&ei=sjz-VPmYHdbaoASxo4LACg&ved=0CEsQsAQ&biw=1855&bih=995 )
- 
-
-Demo: [Three.js Leap Position Text to Voice]( http://abantech.github.io/threejs-leap-position-text-to-voice/r1/threejs-leap-position-text-to-voice.html )  
-Source code: [Three.js Leap Position Text to Voice]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-position-text-to-voice/ )  
-Added: Theo ~ 2015-03-08 ~ the latest directional movement( left/right/up/down ) of one hand is detected and reported out load  
-
-Demo: [Game for Leo latest]( http://abantech.github.io/game-for-leo/latest/ )  
-Source code: [Game for Leo]( https://github.com/Abantech/abantech.github.io/blob/master/game-for-leo )  
-R2: Theo ~ 2015-02-28 ~ Objects rotate instead of camera  
-Added: Theo ~ 2015-02-27 ~ The leap device as a birthday celebration enhancer.
-
-Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/threejs-leap-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
-Source code: [Three.js Camera in Palm]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-camera-in-palm )  
-Added: Theo ~ 2015-02-23 ~ The camera as a Leap wearable.
-
-Demo: [Three.js Physijs Leap]( http://abantech.github.io/threejs-physijs-leap/r1/threejs-physijs-leap.html )  
-Source code: [Three.js Physijs Leap]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-physijs-leap )  
-Added: Theo ~ 2015-01-30 ~ WIP Three.js Physi.js Leap demo.
-
-Demo: [Three.js Physijs Basic]( http://abantech.github.io/threejs-physijs-basic/r1/threejs-physijs-basic.html )  
-Source code: [Three.js Physijs Basic]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-physijs-basic )  
-Added: Theo ~ 2015-01-30 ~ Very basic demo/template for Three.js with the Physijs/Ammo physics engine
-
-Demo: [Three.js Scale Sliders Leap]( http://abantech.github.io/threejs-scale-sliders-leap/r1/threejs-scale-sliders-leap.html )  
-Source code: [Three.js Scale Sliders Leap]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-scale-sliders-leap )  
-Added: Theo ~ 2015-01-30 ~ X-axis 'knobs' follow camera. Right knob enlarges. Left knob shrinks.
-
-Demo: [Three.js Leap Wearable]( http://abantech.github.io/threejs-leap-wearable/r1/threejs-leap-wearable.html )  
-Source code: [Three.js Leap Wearable]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-wearable )  
-Added: Theo ~ 2015-01-25 ~ First pass at a Leap Wearable. Left arm only.
-
-Demo: [Three.js FingerOver Leap-Enabled]( http://abantech.github.io/threejs-mouseover-leap-enabled/r1/threejs-mouseover-leap-enabled.html )  
-Source code: [Three.js FingerOver Leap-Enabled]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover-leap-enabled/ )  
-Added: Theo ~ 2015-01-24  
-Updated: Theo ~ 2015-01-25 ~ Minimum rig to get Three.js to highlight object a Leap finger is pointing at. Also begins to be a game for Leo. 
-
-Demo: [Three.js Camera Object Child]( http://abantech.github.io/threejs-camera-object-child/r1/threejs-camera-object-child.html )  
-Source code: [Three.js Camera Object Child]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-camera-object-child )  
-Added: Theo ~ 2015-01-25 ~ Three.js example of an object that remains at fixed position in relation to a camera.
-
-Demo: [Three.js Leap-Enabled Template]( http://abantech.github.io/threejs-leap-enabled-template/r1/threejs-leap-enabled-template.html )  
-Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-enabled-template/ )  
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
-
-Demo: [Three.js Mouseover]( http://abantech.github.io/threejs-mouseover/r1/threejs-mouseover.html )  
-Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover/ )  
-Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting (finding the object under the cursor) going from camera position
-
-Demo: [Item Touched Add Handles]( http://abantech.github.io/item-touched-add-handles/r1/item-touched-add-handles-r1.html )  
-Source code: [Item Touched Add Handles]( https://github.com/Abantech/abantech.github.io/blob/master/item-touched-add-handles/r1/item-touched-add-handles-r1.html )  
-Added: Theo ~ 2015-01-22
+We want empower peopls ideas and action' to be able to better work in 3D. We seek to tear down the "barriers-to-entry" so as to overcome the obstacles to their productivity.
 
 
-***
+<a name=team >Our Team</a>
+===
 
-See Also
+The team's skills allows for complete coverage of all technical subject matters through deep technical expertise. Our team is comprised of subject matter experts in all relevant areas in Software architecture and development, 3D technology, Human Computer Interaction (human factors and applied cognition), Physics and scientific algorithms.
 
-[UI Functions Google Spreadsheet]( https://docs.google.com/a/abantech.net/spreadsheets/d/1skBOHfMX3LZ_gv2S56IFMq_Ht_X6t1KnvRIzo_ihxXQ/edit#gid=1786159030 )
+But most importantly, we are all passionate about bringing the ability to create help others achieve whatever they would be willing to set their minds and hearts to do.
 
+Gregory Melencio: CEO, President, and Chairman
 
+* Currently Software Architect and Development Manager with Accenture. 
+* Over 15 years software development and architecture experience.
+* Previously worked for National Science Foundation.
+* Architected several solutions for the Federal Government with an unbroken track-record of successful implementation of high-availability, mission-critical systems. 
+* Always been an inventor and innovator.
+
+Theo Armour: Chief Technology Officer
+
+* Well-respected technologist who started 3D at Autodesk, program manager for 3 releases of AutoCAD. 
+* Tech founder and angel investor.
+* Hack client-side realtime 3D JavaScript Three.js/Leap - all FOSS on GitHub.
+
+James Stephens: Vice President of Development
+
+* Senior Software Developer at Accenture. Professional background in Federal Technology Consulting and System Integration
+* Extensive experience in web, software development, and 3D development. _Magna Cum Laude_ BS Applied Mathematics
+
+John Bledsoe: Physicist and Scientific Algorithms Expert
+
+* 30+ years of scientific programming and expert at creating scientific algorithms. 
+* Experience with a wide array of software systems, programming languanges, and platforms.
+
+Ryan McGarry: Human Factors/HCI (Human-Computer Interaction) Expert
+
+* PhD Candidate in Human Factors and Applied Cognition. 
+* Extensive UI research experience and design for improving interactions with computer interfaces/machines.
+* Published studies for top research journals. Education at the doctoral level from GMU in human-computer interaction (HCI). 
+* Academic background in Computer Science.
+
+<a name=middleware >Efficio Middleware</a>
+===
+
+At a high-level, Efficio Middleware is a set of components intended to manage the control and interaction between the enduser input (as provided by the Hardware APIs) and the consuming the 3D modeling software. Within the 3D consuming 3D software, it defining the interaction between the Assets within the system, marshalling of context-aware instructions.
+
+Among Efficio's Goals are: To enable hand-motion-sensing devices - such as Leap, RealSense, Kinect, etc - to communicate effectively with 3D design systems such as CAD/CAM programs and game engines (consuming system). We extend beyond the abstracting human input from NI devices (as with OpenNI) to translate this into actions. That is, we attempt to recognize/perceive user intent and effect this through the execution of functions (or a series of functions) in the consuming system. This is most closely resembles Motion Planning, but applied to functions executed in the consuming system. To capture the huge subtlety and sensitivity of finger/skeletal movements - along with the extremely high bandwidth incurred - and channel this information as exquisitely useful instructions for creating objects of immense detail, craftsmanship and sophistication.
+
+Visit Demo Page for a live demo or videos
+
+<a name=demo>Live Demo and Videos</a>
+===
+
+If you have a LEAP device installed with the latest SDK: View a Live Demo HERE
+
+Otherwise, below are videos of some the features currently implemented into the early prototype
+
+Note: We're still coming up with our MVP so stay tuned for updates!
+
+Copyright &copy; 2015 Abantech
