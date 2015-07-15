@@ -6,13 +6,17 @@
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-<body>
-<script>
-
+<script type="text/javascript">
 	$.get('home/r2/index.html').then(function(responseData) 
 	{
-  		$('#someElem').append(responseData);
+  		$('#bodyContent').append(responseData);
 	});
+</script>
+<body>
+	<div id="bodyContent"></div>
+<script>
+
+
 
 	
 	//var script = document.body.appendChild( document.createElement( 'script' ) );
