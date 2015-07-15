@@ -5,19 +5,12 @@
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <body>
 <script>
 
-	$.get('home/r2/index.html').then(function(responseData) 
-	{
-  		$('#someElem').append(responseData);
-	});
-
-	
-	//var script = document.body.appendChild( document.createElement( 'script' ) );
-	//script.onload = init;
-	//script.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js'; 
+	var script = document.body.appendChild( document.createElement( 'script' ) );
+	script.onload = init;
+	script.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js'; 
 
 	function init() {
 
