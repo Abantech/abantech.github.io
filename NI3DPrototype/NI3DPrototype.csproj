@@ -80,8 +80,9 @@
     <Content Include="Images\skyboxes\land1\ny.jpg" />
     <Content Include="Images\skyboxes\land1\nx.jpg" />
     <Content Include="Images\skyboxes\land1\px.jpg" />
-    <Content Include="Images\skyboxes\land1\py.JPG" />
+    <Content Include="Images\skyboxes\land1\py.jpg" />
     <Content Include="Images\skyboxes\land1\pz.jpg" />
+    <Content Include="Images\skyboxes\land1\top.jpg" />
     <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
