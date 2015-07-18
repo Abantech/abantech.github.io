@@ -82,6 +82,23 @@ function createSkybox() {
     return new THREE.Mesh(new THREE.BoxGeometry(1000, 1000, 1000), new THREE.MeshFaceMaterial(materials));
 }
 
+function makeContainerByVoice(size) {
+    if (size == "SMALL") {
+        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 40) });
+        box.position.set(0,0,0);
+    }
+
+    if (size == "MEDIUM") {
+        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 60) });
+        box.position.set(0,0,0);
+    }
+
+    if (size == "LONG") {
+        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 80) });
+        box.position.set(0,0,0);
+    }
+}
+
 function makeContainer(options) {
 
     var geometry = typeof (options) != "undefined" && typeof (options.geo) != "undefined" ? options.geo : new THREE.BoxGeometry(16, 19, 80);
