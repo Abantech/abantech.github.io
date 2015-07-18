@@ -83,17 +83,17 @@ function createSkybox() {
 }
 
 function makeContainerByVoice(size) {
-    if (size == "SMALL") {
+    if (size == "SMALL" || size == "TWENTY FOOT") {
         var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 40) });
         box.position.set(0,0,0);
     }
 
-    if (size == "MEDIUM") {
+    if (size == "MEDIUM" || size == "THIRTY FOOT") {
         var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 60) });
         box.position.set(0,0,0);
     }
 
-    if (size == "LONG") {
+    if (size == "LARGE" || size == "FORTY FOOT" || size == "FOURTY FOOT") {
         var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 80) });
         box.position.set(0,0,0);
     }
