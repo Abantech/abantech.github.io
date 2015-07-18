@@ -34,6 +34,7 @@
     <Compile Include="app.js" />
     <Compile Include="examples\js\ammo.js" />
     <Compile Include="jenga-free\physi.js" />
+    <Compile Include="jenga-free\Scripts\FingerTipBoxes.js" />
     <Compile Include="physijs_worker.js" />
     <Compile Include="jenga-free\Scripts\ActionToFunctionMapping.js" />
     <Compile Include="jenga-free\Scripts\Efficio.min.js" />
@@ -46,6 +47,7 @@
     <Content Include="jenga-free\css\styles.css" />
     <Content Include="jenga-free\images\plywood.jpg" />
     <Content Include="jenga-free\images\wood.jpg" />
+    <Content Include="jenga-free\jenga-free-r4.html" />
     <Content Include="jenga-free\jenga-free-r3.html" />
     <Content Include="jenga-free\jenga-free-r2.html" />
     <Content Include="jenga-free\jenga-free.html" />

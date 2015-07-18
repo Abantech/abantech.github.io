@@ -1,5 +1,6 @@
 ﻿var pointer;
 var isMouseDown;
+var CreateOrMoveBoxAtFingerTip = function () { };
 
 JengaPlugin = {
     ClearPointer: function (){
@@ -25,7 +26,7 @@ JengaPlugin = {
             pointer.style.left = screenPosition.x + 'px';
             pointer.style.top = $(window).scrollTop() + screenPosition.y + 'px';
             pointer.style.opacity = (((1 - normalizedPosition[2]) < .5) ? ((1 - normalizedPosition[2])) : normalizedPosition[2]) * .7;
-            pointer.style.width = pointer.style.height = (((1 - normalizedPosition[2]) < .5) ? (((1 - normalizedPosition[2])) * 100) + 'px' : (normalizedPosition[2] * 100) + 'px');
+            pointer.style.width = pointer.style.height = (normalizedPosition[2] * 100) + 'px';
 
             if (isMouseDown) {
                 triggerMouseEvent(renderer.domElement, "mouseup", screenPosition.x, screenPosition.y)
@@ -35,6 +36,8 @@ JengaPlugin = {
         else {
             JengaPlugin.ClearPointer();
         }
+
+        CreateOrMoveBoxAtFingerTip(Frame);
     },
     TwoFingerPoint: function (Frame, PointedFingers) {
         if (!pointer) {
@@ -52,7 +55,7 @@ JengaPlugin = {
             pointer.style.left = screenPosition.x + 'px';
             pointer.style.top = $(window).scrollTop() + screenPosition.y + 'px';
             pointer.style.opacity = (((1 - normalizedPosition[2]) < .5) ? ((1 - normalizedPosition[2])) : normalizedPosition[2]) * .7;
-            pointer.style.width = pointer.style.height = (((1 - normalizedPosition[2]) < .5) ? (((1 - normalizedPosition[2])) * 100) + 'px' : (normalizedPosition[2] * 100) + 'px');
+            pointer.style.width = pointer.style.height = (normalizedPosition[2] * 100) + 'px';
 
             if (!isMouseDown) {
                 triggerMouseEvent(renderer.domElement, "mousedown", screenPosition.x, screenPosition.y)
@@ -66,6 +69,7 @@ JengaPlugin = {
         else {
             JengaPlugin.ClearPointer();
         }
+        CreateOrMoveBoxAtFingerTip(Frame);
     },
     Reset: function (message) {
         message = CleanseMessage(message);
