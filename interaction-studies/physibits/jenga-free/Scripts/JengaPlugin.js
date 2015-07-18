@@ -52,9 +52,6 @@ JengaPlugin = {
             pointer.style.top = $(window).scrollTop() + screenPosition.y + 'px';
             pointer.style.opacity = (((1 - normalizedPosition[2]) < .5) ? ((1 - normalizedPosition[2])) : normalizedPosition[2]) * .7;
 
-            //renderer.domElement.mousedown({ clientX: screenPosition.x, clientY: screenPosition.y })
-            
-            //handleMouseDownXY(screenPosition.x, screenPosition.y);
             if (!isMouseDown) {
                 triggerMouseEvent(renderer.domElement, "mousedown", screenPosition.x, screenPosition.y)
                 isMouseDown = true;
