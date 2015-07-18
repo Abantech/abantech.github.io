@@ -70,7 +70,7 @@ JengaPlugin = {
     Reset: function (message) {
         message = CleanseMessage(message);
         if (message == "RELOAD" || message == "REFRESH" || message == "START OVER" || message == "PLAY AGAIN") {
-            window.reload();
+            location.reload();
         }
     }
 }
