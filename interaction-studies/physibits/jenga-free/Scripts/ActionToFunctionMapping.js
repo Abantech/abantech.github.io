@@ -39,6 +39,18 @@
                     "MapTo": "PointedFingers"
                 }
             ],
+        },
+        {
+            "Source": "Input.Audio.Raw",
+            "Topic": "Sound",
+            "Action": "Reset",
+            "Arguments": [
+                {
+                    "Source": "Gesture",
+                    "Name": "message",
+                    "MapTo": "message"
+                }
+            ]
         }
     ]
 }
