@@ -13,7 +13,7 @@
     <ProjectGuid>a6680962-f10b-4cb4-8b40-a081141bbb26</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>app.js</StartupFile>
+    <StartupFile>src\app.js</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -31,36 +31,46 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="3D System Interface\3DSystemInterface.js" />
-    <Compile Include="app.js" />
-    <Compile Include="Asset Management And Inventory\AssetManager.js" />
-    <Compile Include="Constraints Engine\ConstraintsEngine.js" />
-    <Compile Include="Efficio.js" />
-    <Compile Include="Hardware Abstraction Layer\LeapToBVH.js" />
-    <Compile Include="Human Input Recognition and Processing\CustomGestureLibrariesAccess.js" />
-    <Compile Include="Human Input Recognition and Processing\EfficioGestureGrimoire.js" />
-    <Compile Include="Human Input Recognition and Processing\HumanInputRecognitionAndProcessing.js" />
-    <Compile Include="InternalScene.js" />
-    <Compile Include="Logging\SystemNotificationListener.js" />
-    <Compile Include="Message Bus\MessageBus.js" />
-    <Compile Include="Plugins\LeapMotion\LeapMotionStub.js" />
-    <Compile Include="3D System Interface\SketchUp.js" />
-    <Content Include="3D System Interface\ActionToFunctionMapping.json" />
+    <Compile Include="src\Command Issuance And Control\CommandIssuanceAndControl.js" />
+    <Compile Include="src\Command Issuance And Control\ActionToFunctionMapping.json" />
+    <Compile Include="src\app.js" />
+    <Compile Include="src\Asset Management And Inventory\AssetManager.js" />
+    <Compile Include="src\Constraints Engine\ConstraintsEngine.js" />
+    <Compile Include="src\Debug and Exceptions\EfficioBasedExceptionHandler.js" />
+    <Compile Include="src\Efficio.js" />
+    <Compile Include="Gruntfile.js" />
+    <Compile Include="src\Hardware Abstraction Layer\LeapToBVH.js" />
+    <Compile Include="src\Human Input Recognition and Processing\CustomGestureLibrariesAccess.js" />
+    <Compile Include="src\Human Input Recognition and Processing\EfficioAudioGrimoire.js" />
+    <Compile Include="src\Human Input Recognition and Processing\EfficioGestureGrimoireTest.js" />
+    <Compile Include="src\Human Input Recognition and Processing\EfficioGestureGrimoire.js" />
+    <Compile Include="src\Human Input Recognition and Processing\HumanInputRecognitionAndProcessing.js" />
+    <Compile Include="src\Input\LeapMotion\LeapMotion.js" />
+    <Compile Include="src\Input\Mic\Microphone.js" />
+    <Compile Include="src\InternalScene.js" />
+    <Compile Include="src\Logging\SystemNotificationListener.js" />
+    <Compile Include="src\Message Bus\MessageBus.js" />
+    <Compile Include="src\3D System Interface\SketchUp.js" />
+    <Content Include="debug.html" />
+    <Content Include="src\Human Input Recognition and Processing\EfficioGestureGrimore.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Message Bus\" />
-    <Folder Include="Human Input Recognition and Processing\" />
-    <Folder Include="Hardware Abstraction Layer\" />
-    <Folder Include="Asset Management And Inventory\" />
-    <Folder Include="Command Issuance And Control\" />
-    <Folder Include="Constraints Engine\" />
-    <Folder Include="3D System Interface\" />
-    <Folder Include="Logging\" />
-    <Folder Include="Sequence Execution and Action Scheduling\" />
-    <Folder Include="Plugins\" />
-    <Folder Include="Plugins\LeapMotion\" />
+    <Folder Include="src\Input\Mic\" />
+    <Folder Include="src\Message Bus\" />
+    <Folder Include="src\Human Input Recognition and Processing\" />
+    <Folder Include="src\Hardware Abstraction Layer\" />
+    <Folder Include="src\Asset Management And Inventory\" />
+    <Folder Include="src\Command Issuance And Control\" />
+    <Folder Include="src\Constraints Engine\" />
+    <Folder Include="src\3D System Interface\" />
+    <Folder Include="src\Logging\" />
+    <Folder Include="src\Debug and Exceptions\" />
+    <Folder Include="src\" />
+    <Folder Include="src\Sequence Execution and Action Scheduling\" />
+    <Folder Include="src\Input\" />
+    <Folder Include="src\Input\LeapMotion\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
 </Project>

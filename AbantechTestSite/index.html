@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Abantech Efficio</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="Styles/Bootstrap.css" />
+
+    <style type="text/css">
+        .flex-video {
+            position: relative;
+            padding-top: 25px;
+            padding-bottom: 67.5%;
+            height: 0;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+            .flex-video.widescreen {
+                padding-bottom: 57.25%;
+            }
+
+            .flex-video.vimeo {
+                padding-top: 0;
+            }
+
+            .flex-video iframe,
+            .flex-video object,
+            .flex-video embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+        @media only screen and (max-device-width: 800px), only screen and (device-width: 1024px) and (device-height: 600px), only screen and (width: 1280px) and (orientation: landscape), only screen and (device-width: 800px), only screen and (max-width: 767px) {
+            .flex-video {
+                padding-top: 0;
+            }
+        }
+    </style>
+    <style>
+        .circleBase {
+            border-radius: 50%;
+            behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+        }
+
+        .type1 {
+            width: 50px;
+            height: 50px;
+            background: red;
+            opacity: .25;
+            position: absolute;
+        }
+    </style>
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- [if lt IE 9] > <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js" > </script > <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js" > </script > <![endif] -->
+    <!-- jQuery -->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"> </script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"> </script>
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="Scripts/Touching.js"></script>
+    <script src="Scripts/ActionToFunctionMapping.js"></script>
+    <script src="Scripts/EfficioSitePlugin.js"></script>
+    <script src="Scripts/Efficio.js"></script>
+    <script type="text/javascript">
+        $(window).load(function ()
+        {
+            window.mobilecheck = function ()
+            {
+                var check = false;
+                (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true })(navigator.userAgent || navigator.vendor || window.opera);
+                return check;
+            }
+
+            if (window.mobilecheck() && devices.contains("Microphone"))
+            {
+                $('#MobileModal').modal();
+            }
+            else
+            {
+                if (devices.length > 0)
+                {
+                    $('#LeapModal').modal()
+                }
+                else
+                {
+                    $('#NoDeviceModal').modal()
+                }
+            }
+        }); </script>
+</head>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+    <div id="pointer" class="circleBase type1" style="opacity:0; z-index:3" ></div>
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse"> <i class="fa fa-bars"> </i> </button> <a class="navbar-brand page-scroll" href="#page-top"> <i class="fa fa-play-circle"> </i> <span class="light"> Home</span> </a> </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden"> <a href="#page-top"> </a> </li>
+                    <li> <a class="page-scroll" href="#about"> About</a> </li>
+                    <li> <a class="page-scroll" id="Efficio" href="#efficio"> Efficio</a> </li>
+                    <li> <a class="page-scroll" href="#samples"> Samples</a> </li>
+                    <li> <a class="page-scroll" href="#download"> Download</a> </li>
+                    <li> <a class="page-scroll" href="#contact"> Contact</a> </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav> 
+
+    <div class="modal fade" id="LeapModal">
+        <div class="modal-dialog">
+            <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"> &times;</span> </button> <h4 class="modal-title" style="color:black"> Leap Motion Detected!</h4> </div> <div class="modal-body"> <p style="color:black"> This website is Leap Motion enabled. To scroll up, point your fingers up. To scroll down, point your fingers down. Use your finger to point around the screen.</p> </div> </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" id="NoDeviceModal">
+        <div class="modal-dialog">
+            <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"> &times;</span> </button> <h4 class="modal-title" style="color:black"> NUI Device Enabled Website</h4> </div> <div class="modal-body"> <p style="color:black"> This website is NUI device enabled. Currently, this website supports the following devices: <ul> <li> <a href="https://www.leapmotion.com/"> Leap Motion</a> </li> </ul> <br /> > <div style="color:black"> If you have any of the following devices, enable them and reload this website for the full Efficio experience!</div> </div> </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- Intro Header -->
+    <header class="intro"> <div class="intro-body"> <div class="container"> <div class="row"> <div class="col-md-8 col-md-offset-2"> <h1 class="brand-heading"> Abantech</h1> <p class="intro-text"> Revolutionizing the way<br />we shape our world.</p> <a href="#about" class="btn btn-circle page-scroll"> <i class="fa fa-angle-double-down animated"> </i> </a> </div> </div> </div> </div> </header>
+    <!-- About Section -->
+    <section id="about" class="container content-section text-center"> <div class="row"> <div class="col-lg-8 col-lg-offset-2"> <h2> About Abantech</h2> <p> Abantech's mission is to break down the barriers that have prevented people from working efficiently with software systems. We wish to allow people to break free of the artificial restrictions imposed by working with primitive devices (like the mouse, keyboard, etc) and to be unencumbered by the specialization required to work with 3D applications.</p> <p> We want to allow people to do things in ways that have been traditionally difficult or impossible. We want to allow people to better be able to express their creativity, to collaborate, to invent and innovate. To boldly do what they couldn't (easily) do before. </p> <p> We want empower peopls ideas and action' to be able to better work in 3D. We seek to tear down the "barriers-to-entry" so as to overcome the obstacles to their productivity. </p> </div> </div> </section>
+    <!-- About Efficio Section -->
+    <section id="efficio" class="container content-section text-center"> <div class="row"> <div class="col-lg-8 col-lg-offset-2"> <h2> About Efficio</h2> <p> At a high-level, Efficio Middleware is a set of components intended to manage the control and interaction between the enduser input (as provided by the Hardware APIs) and the consuming the 3D modeling software. Within the 3D consuming 3D software, it defining the interaction between the Assets within the system, marshalling of context-aware instructions.</p> <p> Among Efficio's Goals are: To enable hand-motion-sensing devices - such as Leap, RealSense, Kinect, etc - to communicate effectively with 3D design systems such as CAD/CAM programs and game engines (consuming system). We extend beyond the abstracting human input from NI devices (as with OpenNI) to translate this into actions. That is, we attempt to recognize/perceive user intent and effect this through the execution of functions (or a series of functions) in the consuming system. This is most closely resembles Motion Planning, but applied to functions executed in the consuming system. To capture the huge subtlety and sensitivity of finger/skeletal movements - along with the extremely high bandwidth incurred - and channel this information as exquisitely useful instructions for creating objects of immense detail, craftsmanship and sophistication.</p> </div> </div> </section>
+    <section id="samples" class="container content-section text-center">
+        <h2>Samples</h2>
+        <div class="row">
+            <div class="span6">
+                <div class="flex-video widescreen"><iframe width="560" height="315" src="https://www.youtube.com/embed/nG4ZwhyjtBw" frameborder="0" allowfullscreen></iframe></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div class="flex-video widescreen"><iframe width="560" height="315" src="https://www.youtube.com/embed/nIXdwZfWjR0" frameborder="0" allowfullscreen></iframe></div>
+            </div>
+        </div>
+    </section>
+    <section id="download" class="content-section text-center"> <div class="download-section"> <div class="container"> <div class="col-lg-8 col-lg-offset-2"> <h2> View Source Code</h2> <p> You can view the Efficio sourcecode here.</p> <a href="https://github.com/Abantech/abantech.github.io" class="btn btn-default btn-lg"> Visit Download Page</a> </div> </div> </div> </section>
+    <!-- Contact Section -->
+    <section id="contact" class="container content-section text-center"> <div class="row"> <div class="col-lg-8 col-lg-offset-2"> <h2> Contact Abantech Team</h2> <p> Feel free to email us to provide some feedback on our templates, give us suggestions for new templates and themes, or to just say hello!</p> <p> <a href="mailto:ceo@abantech.net"> ceo@abantech.net</a> </p> <ul class="list-inline banner-social-buttons"> <li> <a href="https://github.com/Abantech/abantech.github.io" class="btn btn-default btn-lg"> <i class="fa fa-github fa-fw"> </i> <span class="network-name"> Github</span> </a> </li> <li> <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"> <i class="fa fa-google-plus fa-fw"> </i> <span class="network-name"> Google + </span> </a> </li> </ul> </div> </div> </section>
+    <!-- Map Section -->
+    <div id="map"> </div>
+    <!-- Footer -->
+    <footer> <div class="container text-center"> <p> Copyright &copy; Your Website 2014</p> </div> </footer>
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
+    <!-- Custom Theme JavaScript -->
+    <script>
+        /*!
+     * Start Bootstrap - Grayscale Bootstrap Theme (http://startbootstrap.com)
+     * Code licensed under the Apache License v2.0.
+     * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+     */
+
+        // jQuery to collapse the navbar on scroll
+        $(window).scroll(function ()
+        {
+            if ($(".navbar").offset().top > 50)
+            {
+                $(".navbar-fixed-top").addClass("top-nav-collapse");
+            } else
+            {
+                $(".navbar-fixed-top").removeClass("top-nav-collapse");
+            }
+        });
+
+        // jQuery for page scrolling feature - requires jQuery Easing plugin
+        $(function ()
+        {
+            $('a.page-scroll').bind('click', function (event)
+            {
+                var $anchor = $(this);
+                $('html, body').stop().animate({
+                    scrollTop: $($anchor.attr('href')).offset().top
+                }, 1500, 'easeInOutExpo');
+                event.preventDefault();
+            });
+        });
+
+        // Closes the Responsive Menu on Menu Item Click
+        $('.navbar-collapse ul li a').click(function ()
+        {
+            $('.navbar-toggle:visible').click();
+        });
+
+        // Google Maps Scripts
+        // When the window has finished loading create our google map below
+        google.maps.event.addDomListener(window, 'load', init);
+
+        function init()
+        {
+            // Basic options for a simple Google Map
+            // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+            var mapOptions = {
+                // How zoomed in you want the map to start at (always required)
+                zoom: 15,
+
+                // The latitude and longitude to center the map (always required)
+                center: new google.maps.LatLng(40.6700, -73.9400), // New York
+
+                // Disables the default Google Maps UI components
+                disableDefaultUI: true,
+                scrollwheel: false,
+                draggable: false,
+
+                // How you would like to style the map.
+                // This is where you would paste any style found on Snazzy Maps.
+                styles: [{
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 17
+                    }]
+                }, {
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 20
+                    }]
+                }, {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 17
+                    }]
+                }, {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 29
+                    }, {
+                        "weight": 0.2
+                    }]
+                }, {
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 18
+                    }]
+                }, {
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 16
+                    }]
+                }, {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 21
+                    }]
+                }, {
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{
+                        "visibility": "on"
+                    }, {
+                        "color": "#000000"
+                    }, {
+                        "lightness": 16
+                    }]
+                }, {
+                    "elementType": "labels.text.fill",
+                    "stylers": [{
+                        "saturation": 36
+                    }, {
+                        "color": "#000000"
+                    }, {
+                        "lightness": 40
+                    }]
+                }, {
+                    "elementType": "labels.icon",
+                    "stylers": [{
+                        "visibility": "off"
+                    }]
+                }, {
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 19
+                    }]
+                }, {
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 20
+                    }]
+                }, {
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{
+                        "color": "#000000"
+                    }, {
+                        "lightness": 17
+                    }, {
+                        "weight": 1.2
+                    }]
+                }]
+            };
+
+            // Get the HTML DOM element that will contain your map
+            // We are using a div with id="map" seen below in the <body>
+            var mapElement = document.getElementById('map');
+
+            // Create the Google Map using out element and options defined above
+            var map = new google.maps.Map(mapElement, mapOptions);
+
+            // Custom Map Marker Icon - Customize the map-marker.png file to customize your icon
+            var image = 'http://ironsummitmedia.github.io/startbootstrap-grayscale/img/map-marker.png';
+            var myLatLng = new google.maps.LatLng(40.6700, -73.9400);
+            var beachMarker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                icon: image
+            });
+        }
+    </script>
+</body>
+</html>

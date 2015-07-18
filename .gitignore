@@ -2,4 +2,7 @@
 *.cache
 *.suo
 *.user
+*.dat
 **/node_modules/
+**/postal/
+TestOrchestrator/node_modules/postal/
