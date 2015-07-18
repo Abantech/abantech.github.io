@@ -148,10 +148,12 @@ function moveTab(nextOrPrev) {
     }
 }
 
+
 AudioCommands = {
-    "make :size (foot) container": MakeSizeContainer,
+    "google :search": search,
 }
 
-function MakeSizeContainer(size) {
-    alert(size);
+function search(search) {
+    search = encodeURIComponent(search);
+    window.open("https://google.com/?q=" + search);
 }

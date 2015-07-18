@@ -139,3 +139,13 @@ function moveTab(nextOrPrev)
         { } //do nothing for now 
     }
 }
+
+AudioCommands = {
+    "google :search": search,
+}
+
+function search(search)
+{
+    search = encodeURIComponent(search);
+    window.open("https://google.com/?q=" + search);
+}

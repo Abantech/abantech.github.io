@@ -36,3 +36,7 @@
             frameActions.RunAllActions(Frame);
     }
 }
+
+AudioCommands = {
+    "make :size (foot) container": makeContainerByVoice,
+}

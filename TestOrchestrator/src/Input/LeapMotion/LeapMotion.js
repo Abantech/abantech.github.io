@@ -2,6 +2,8 @@
 var bus = require('postal');
 var source = 'Leap Motion';
 
+require('leapjs-plugins');
+
 var controller;
 
 module.exports =
@@ -35,7 +37,7 @@ module.exports =
                 }
             });
         });
-        
+
 
         controller.connect();
     },

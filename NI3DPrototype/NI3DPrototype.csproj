@@ -87,6 +87,7 @@
     <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
     <Content Include="Scripts\AudioFeedback.js" />
+    <Content Include="Scripts\CharetPlugin.js" />
     <Content Include="Scripts\Controls\FlyControls.js" />
     <Content Include="Scripts\Assets\CollisionDetection.js" />
     <Content Include="Scripts\info.js" />
