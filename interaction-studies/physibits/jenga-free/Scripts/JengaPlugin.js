@@ -25,6 +25,7 @@ JengaPlugin = {
             pointer.style.left = screenPosition.x + 'px';
             pointer.style.top = $(window).scrollTop() + screenPosition.y + 'px';
             pointer.style.opacity = (((1 - normalizedPosition[2]) < .5) ? ((1 - normalizedPosition[2])) : normalizedPosition[2]) * .7;
+            pointer.style.width = pointer.style.height = (((1 - normalizedPosition[2]) < .5) ? (((1 - normalizedPosition[2])) * 100) + 'px' : (normalizedPosition[2] * 100) + 'px');
 
             if (isMouseDown) {
                 triggerMouseEvent(renderer.domElement, "mouseup", screenPosition.x, screenPosition.y)
@@ -51,6 +52,7 @@ JengaPlugin = {
             pointer.style.left = screenPosition.x + 'px';
             pointer.style.top = $(window).scrollTop() + screenPosition.y + 'px';
             pointer.style.opacity = (((1 - normalizedPosition[2]) < .5) ? ((1 - normalizedPosition[2])) : normalizedPosition[2]) * .7;
+            pointer.style.width = pointer.style.height = (((1 - normalizedPosition[2]) < .5) ? (((1 - normalizedPosition[2])) * 100) + 'px' : (normalizedPosition[2] * 100) + 'px');
 
             if (!isMouseDown) {
                 triggerMouseEvent(renderer.domElement, "mousedown", screenPosition.x, screenPosition.y)
@@ -64,7 +66,25 @@ JengaPlugin = {
         else {
             JengaPlugin.ClearPointer();
         }
+    },
+    Reset: function (message) {
+        message = CleanseMessage(message);
+        if (message == "RELOAD" || message == "REFRESH" || message == "START OVER" || message == "PLAY AGAIN") {
+            window.reload();
+        }
     }
+}
+
+function CleanseMessage(message) {
+    while (message.split('')[0] === ' ') {
+        message = message.substring(1, message.lenght);
+    }
+    
+    while (message.split('')[message.lenght] === ' ') {
+        message = message.substring(0, message.lenght - 1);
+    }
+    
+    return message.toUpperCase();
 }
 
 function triggerMouseEvent(node, eventType, xpos, ypos) {
