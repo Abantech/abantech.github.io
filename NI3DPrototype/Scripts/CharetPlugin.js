@@ -34,13 +34,9 @@
 
         if (frameActions)
             frameActions.RunAllActions(Frame);
-    },
-    MakeContainer: function(size)
-    {
-        makeContainerByVoice(size)
     }
 }
 
 AudioCommands = {
-    "make :size (foot) container": MakeContainer,
+    "make :size (foot) container": makeContainerByVoice,
 }
