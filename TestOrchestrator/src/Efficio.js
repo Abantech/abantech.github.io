@@ -10,6 +10,7 @@ var comm = require('./Command Issuance And Control/CommandIssuanceAndControl.js'
 var internalScene = require('./InternalScene.js');
 var sysNotificationListener = require('./Logging/SystemNotificationListener.js');
 var mic = require('./Input/Mic/Microphone.js');
+var physics = require('./Sequence Execution and Action Scheduling/CollisionDetectionAndGravitySimulation.js');
 
 var leap;
 var kinect;
@@ -29,12 +30,17 @@ module.exports =
         leap.Initialize();
         
         mic.Intitialize();
+
+        //physics.Initialize();
     },
     
     Start: function () {
         leap.Start();
         mic.Start();
+        //physics.Start();
     },
 
-    Debug: debug
+    Debug: debug,
+
+    MessagingSystem: bus
 }

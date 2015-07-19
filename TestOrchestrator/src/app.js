@@ -1,4 +1,5 @@
 ﻿var efficio = require('./Efficio.js');
 
-efficio.Initialize();
-efficio.Start();
+if (typeof window != 'undefined') {
+    window.Efficio = efficio
+}

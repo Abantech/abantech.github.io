@@ -7,7 +7,7 @@ function AssetManager()
 
     var createAssetAction;
 
-    this.CreateAsset = function (assetType, asset)
+    this.CreateAsset = function (assetType, asset, notPhysical)
     {
         window.scene.add(asset);
 
@@ -26,11 +26,28 @@ function AssetManager()
 
         collidableMeshList.push(asset);
         assets.push(asset);
+
+        Efficio.MessagingSystem.Bus.publish({
+            channel: 'Asset',
+            topic: 'Create',
+            source: "Charet",
+            data: {
+                asset: asset,
+                physics: !notPhysical
+            }
+        });
     }
 
     this.GetAssets = function ()
     {
         return assets;
+    }
+
+    this.UpdateAsset = function (asset)
+    {
+        var sceneAsset = scene.getObjectById(asset.name);
+
+        sceneAsset.position.copy(asset.position);
     }
 
     this.SelectAsset = function (asset)

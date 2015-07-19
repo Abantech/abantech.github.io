@@ -6,7 +6,7 @@
         browserify: {
             dist: {
                 src: ['./src/**/*.js'],
-                dest: '../Deployment/<%= pkg.name %>.js'
+                dest: '../Deployment/<%= pkg.name %>.js',
             }
         },
         copy: 
@@ -41,7 +41,9 @@
         watch: {
             scripts: {
                 files: ['src/**/*.js'],
-                tasks: ['browserify', 'uglify', 'copy:test'],
+                //tasks: ['browserify', 'uglify', 'copy:test'],
+                tasks: ['browserify', 'copy:test'],
+                
                 options: {
                     spawn: false,
                 },

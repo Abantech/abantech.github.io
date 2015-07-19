@@ -52,6 +52,10 @@
     <Compile Include="src\Logging\SystemNotificationListener.js" />
     <Compile Include="src\Message Bus\MessageBus.js" />
     <Compile Include="src\3D System Interface\SketchUp.js" />
+    <Compile Include="src\Sequence Execution and Action Scheduling\ammo.js" />
+    <Compile Include="src\Sequence Execution and Action Scheduling\CollisionDetectionAndGravitySimulation.js" />
+    <Compile Include="src\Sequence Execution and Action Scheduling\physi.js" />
+    <Compile Include="src\Sequence Execution and Action Scheduling\physijs_worker.js" />
     <Content Include="debug.html" />
     <Content Include="src\Human Input Recognition and Processing\EfficioGestureGrimore.json" />
     <Content Include="package.json" />

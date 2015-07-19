@@ -4,6 +4,8 @@ if (typeof window != 'undefined') {
     require('./annyang.js');
 }
 
+
+
 var source = 'Microphone';
 var recognition;
 var autoRestart = true;
