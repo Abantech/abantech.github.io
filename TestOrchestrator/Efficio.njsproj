@@ -46,6 +46,7 @@
     <Compile Include="src\Human Input Recognition and Processing\EfficioGestureGrimoire.js" />
     <Compile Include="src\Human Input Recognition and Processing\HumanInputRecognitionAndProcessing.js" />
     <Compile Include="src\Input\LeapMotion\LeapMotion.js" />
+    <Compile Include="src\Input\LeapMotion\Plugins\leap.rigged-hand-0.1.5.min.js" />
     <Compile Include="src\Input\Mic\Microphone.js" />
     <Compile Include="src\InternalScene.js" />
     <Compile Include="src\Logging\SystemNotificationListener.js" />
@@ -57,6 +58,7 @@
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="src\Input\LeapMotion\Plugins\" />
     <Folder Include="src\Input\Mic\" />
     <Folder Include="src\Message Bus\" />
     <Folder Include="src\Human Input Recognition and Processing\" />

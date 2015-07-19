@@ -92,7 +92,6 @@
     <Content Include="Scripts\Controls\FlyControls.js" />
     <Content Include="Scripts\Assets\CollisionDetection.js" />
     <Content Include="Scripts\Efficio.js" />
-    <Content Include="Scripts\Efficio.min.js" />
     <Content Include="Scripts\info.js" />
     <Content Include="Libs\JQuery\jquery-1.9.1.js" />
     <Content Include="Libs\JQuery\jquery-ui.js" />

@@ -50,6 +50,6 @@ function createAdjuster(dimension, minValue, maxValue, initialValue, setterCallb
 }
 
 //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work
-createAdjuster("x", -250, 250, -15, function (value) { xTranslation = value });
-createAdjuster("y", -300, 300, -100, function (value) { yTranslation = value });
-createAdjuster("z", -1000, 150, -15, function (value) { zTranslation = value });
+//createAdjuster("x", -250, 250, -15, function (value) { xTranslation = value });
+//createAdjuster("y", -300, 300, -100, function (value) { yTranslation = value });
+//createAdjuster("z", -1000, 150, -15, function (value) { zTranslation = value });

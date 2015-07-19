@@ -2,6 +2,7 @@
 
 var useRayCasterMethod = false;
 var currentPinchMinDistance = null;
+var pinchDistance = 120;
 
 function PinchGesture()
 {
@@ -262,7 +263,8 @@ function getPinchedObject(hand) {
             var sceneObject = window.scene.children[i];
             if (sceneObject.userData.isAsset && !assetManager.IsSelectedAsset(sceneObject)) {
                 var distance = indexTipVector.distanceTo(sceneObject.position);
-                if (distance < 50) {
+                if (distance < pinchDistance)
+                {
                     if (foundObject) {
                         if (distance < foundObject.distance) {
                             foundObject = sceneObject;

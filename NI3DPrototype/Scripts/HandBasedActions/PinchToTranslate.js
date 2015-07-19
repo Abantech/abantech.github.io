@@ -34,7 +34,7 @@ var TranslatePinchedObject = function (hand)
             var proposedPos = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
             var newPos = GetTranslationVector(originalPosition, proposedPos, snap);
 
-            pinchedObject.position.set(newPos.x, newPos.y, newPos.z);
+            pinchedObject.position.set(newPos.x - 20, newPos.y - 90, newPos.z);
 
             if (DetectCollision(pinchedObject))
             {

@@ -1,8 +1,10 @@
 ﻿var leap = require('leapjs');
-var bus = require('postal');
-var source = 'Leap Motion';
 
 require('leapjs-plugins');
+require('./plugins/leap.rigged-hand-0.1.5.min.js');
+
+var bus = require('postal');
+var source = 'Leap Motion';
 
 var controller;
 
@@ -25,6 +27,7 @@ module.exports =
             }
         });
 
+
         controller.on("connect", function () {
             bus.publish({
                 channel: 'Devices',
@@ -37,7 +40,6 @@ module.exports =
                 }
             });
         });
-
 
         controller.connect();
     },

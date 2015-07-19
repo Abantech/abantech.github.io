@@ -1,4 +1,5 @@
 ﻿var defaultColor = 0x36454f
+var voiceFeedback = true;
 
 function createBoxes()
 {
@@ -85,19 +86,25 @@ function createSkybox() {
 function makeContainerByVoice(size) {
     if (size.toUpperCase() == "SMALL" || size == "20")
     {
-        var box = makeContainer({ geo: new THREE.BoxGeometry(40, 19, 16) });
+        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 40) });
+        assetManager.CreateAsset("Cube", box);
+
         box.position.set(0,0,0);
     }
 
     if (size.toUpperCase() == "MEDIUM" || size == "30T")
     {
-        var box = makeContainer({ geo: new THREE.BoxGeometry(60, 19, 16) });
+        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 60) });
+        assetManager.CreateAsset("Cube", box);
+
         box.position.set(0,0,0);
     }
 
-    if (size.toUpperCase() == "LARGE" || size == "40" || size.toUppercase() == "FOURTY FOOT")
+    if (size.toUpperCase() == "LARGE" || size == "40" || size.toUpperCase() == "FOURTY FOOT")
     {
-        var box = makeContainer({ geo: new THREE.BoxGeometry(80, 19, 16) });
+        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 80) });
+        assetManager.CreateAsset("Cube", box);
+
         box.position.set(0,0,0);
     }
 }
@@ -128,3 +135,12 @@ function makeContainer(options) {
 }
 
 createBoxes();
+
+function Speak(message)
+{
+    if (voiceFeedback)
+    {
+        var utterance = new SpeechSynthesisUtterance(message);
+        window.speechSynthesis.speak(utterance);
+    }
+}
