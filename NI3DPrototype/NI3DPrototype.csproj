@@ -86,10 +86,13 @@
     <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
     <Content Include="Images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\ActionToFunctionMapping.js" />
     <Content Include="Scripts\AudioFeedback.js" />
     <Content Include="Scripts\CharetPlugin.js" />
     <Content Include="Scripts\Controls\FlyControls.js" />
     <Content Include="Scripts\Assets\CollisionDetection.js" />
+    <Content Include="Scripts\Efficio.js" />
+    <Content Include="Scripts\Efficio.min.js" />
     <Content Include="Scripts\info.js" />
     <Content Include="Libs\JQuery\jquery-1.9.1.js" />
     <Content Include="Libs\JQuery\jquery-ui.js" />
@@ -152,6 +155,7 @@
     <Content Include="Libs\Physics\physijs_worker.js" />
     <Content Include="Scripts\LeapLoopSetup-NoHandPlugins.js" />
     <Content Include="Scripts\references.js" />
+    <Content Include="Scripts\SceneSetup.js" />
     <Content Include="Scripts\Scene\AEC-DesignCharette.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverter.js" />
     <Content Include="Scripts\Scene\LEAPToSceneConverterInitializer.js" />
