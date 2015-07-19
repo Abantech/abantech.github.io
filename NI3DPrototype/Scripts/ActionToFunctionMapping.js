@@ -33,6 +33,18 @@
                     "MapTo": "Frame"
                 }
             ],
+        },
+        {
+            "Source": "Input.Audio.Raw",
+            "Topic": "Sound",
+            "Action": "MakeContainer",
+            "Arguments": [
+                {
+                    "Source": "Gesture",
+                    "Name": "message",
+                    "MapTo": "message"
+                }
+            ]
         }
     ]
 }
