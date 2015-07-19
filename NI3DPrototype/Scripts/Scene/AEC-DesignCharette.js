@@ -85,19 +85,19 @@ function createSkybox() {
 function makeContainerByVoice(size) {
     if (size.toUpperCase() == "SMALL" || size == "20")
     {
-        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 40) });
+        var box = makeContainer({ geo: new THREE.BoxGeometry(40, 19, 16) });
         box.position.set(0,0,0);
     }
 
     if (size.toUpperCase() == "MEDIUM" || size == "30T")
     {
-        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 60) });
+        var box = makeContainer({ geo: new THREE.BoxGeometry(60, 19, 16) });
         box.position.set(0,0,0);
     }
 
     if (size.toUpperCase() == "LARGE" || size == "40" || size.toUppercase() == "FOURTY FOOT")
     {
-        var box = makeContainer({ geo: new THREE.BoxGeometry(16, 19, 80) });
+        var box = makeContainer({ geo: new THREE.BoxGeometry(80, 19, 16) });
         box.position.set(0,0,0);
     }
 }
