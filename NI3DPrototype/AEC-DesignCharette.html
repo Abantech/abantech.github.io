@@ -57,7 +57,6 @@
         var useNUIConrols = false;
     </script>
     <script src="Scripts/Assets/CollisionDetection.js"></script>
-    <script src="Scripts/Scene/SceneSetup-refactoring.js"></script>
     <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
     <!--<script src="Scripts/LeapLoopSetup-refactoring.js"></script>-->
     <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
@@ -72,14 +71,13 @@
     <script src="Scripts/Gestures/SingleHandGesture.js"></script>
     <script src="Scripts/Gestures/Pinch.js"></script>
 
-    <script src="Scripts/HandBasedActions/PinchLine.js"></script>
+    <!--<script src="Scripts/HandBasedActions/PinchLine.js"></script>
     <script src="Scripts/HandBasedActions/MenuButtonChildOption.js"></script>
     <script src="Scripts/HandBasedActions/NewShapesMenuButton.js"></script>
-    <script src="Scripts/HandBasedActions/WearableMenu.js"></script>
+    <script src="Scripts/HandBasedActions/WearableMenu.js"></script>-->
 
     <!--Gesture Actions-->
-    <script src="Scripts/HandBasedActions/PinchToTranslate.js"></script>
-    <script src="Scripts/HandBasedActions/PinchToRotate.js"></script>
+
     <script src="Scripts/HandBasedActions/SelectHoveredAsset.js"></script>
     <script src="Scripts/HandBasedActions/ClearActionVariables.js"></script>
     <script src="Scripts/HandBasedActions/FreeScale.js"></script>
@@ -92,13 +90,18 @@
     <script src="Scripts/AssetManager.js"></script>
     <script src="Scripts/Gestures/GestureExtensionMethods.js"></script>
     <script src="Scripts/Scene/AEC-DesignCharette.js"></script>
+    <script src="Scripts/HandBasedActions/PinchToTranslate.js"></script>
+    <script src="Scripts/HandBasedActions/PinchToRotate.js"></script>
 
     <script src="Scripts/ActionToFunctionMapping.js"></script>
     <script src="Scripts/CharetPlugin.js"></script>
+    <script src="Scripts/Scene/SceneSetup-refactoring.js"></script>
 
     <script>
         Efficio.Initialize();
         Efficio.Start();
+
+        createGroundPlane();
         createBoxes();
     </script>
 

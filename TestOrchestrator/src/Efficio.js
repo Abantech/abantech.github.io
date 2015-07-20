@@ -31,13 +31,13 @@ module.exports =
         
         mic.Intitialize();
 
-        //physics.Initialize();
+        physics.Initialize();
     },
     
     Start: function () {
         leap.Start();
         mic.Start();
-        //physics.Start();
+        physics.Start();
     },
 
     Debug: debug,

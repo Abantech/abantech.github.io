@@ -134,5 +134,6 @@ module.exports = {
     
     DeleteAllAssets: DeleteAllAssets,
     
-    GetValueForProperty: GetValueForProperty
+    GetValueForProperty: GetValueForProperty,
+
 };

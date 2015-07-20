@@ -1,7 +1,66 @@
 ﻿// <reference path="../../Libs/THREEJS/three.js" />
 
 // Can be boolean, a number, or a function that returns a vector3;
-var snap = 0.1;
+var snap = 10;
+var snapTranslation = true;
+
+var translationAxis = 'all';
+
+//function setTranslationAxis(axis)
+//{
+//    switch (axis)
+//    {
+//        case 'X':
+//            {
+//                translationAxis = 'x';
+//                Speak('Translation axis set to x');
+//                break;
+//            }
+//        case 'Y':
+//            {
+//                translationAxis = 'y';
+//                Speak('Translation axis set to y');
+//                break;
+//            }
+//        case 'Z':
+//            {
+//                translationAxis = 'z';
+//                Speak('Translation axis set to z');
+//                break;
+//            }
+//        default:
+//            {
+//                translationAxis = 'all';
+//                Speak('Translation axis set to all');
+//                break;
+//            }
+//    }
+//}
+
+function toggleTranslationSnapping(snapping)
+{
+    if (snapping === 'on')
+    {
+        snapTranslation = true;
+        Speak('Translation snapping on');
+    }
+
+    if (snapping === 'off')
+    {
+        snapTranslation = false;
+        Speak('Translation snapping off');
+    }
+}
+
+function setSnapSize(pixels)
+{
+    snap = pixels;
+
+    if (snapTranslation)
+    {
+        Speak('Snap distance set to ' + pixels + ' pixels');
+    }
+}
 
 var TranslatePinchedObject = function (hand)
 {
@@ -32,7 +91,40 @@ var TranslatePinchedObject = function (hand)
 
             var originalPosition = pinchedObject.position.clone();
             var proposedPos = new THREE.Vector3((indexTipPos[0] + thumbTipPos[0]) / 2, (indexTipPos[1] + thumbTipPos[1]) / 2, (indexTipPos[2] + thumbTipPos[2]) / 2);
-            var newPos = GetTranslationVector(originalPosition, proposedPos, snap);
+
+            if (snapTranslation)
+            {
+                var newPos = GetTranslationVector(originalPosition, proposedPos, snap);
+            }
+            else
+            {
+                var newPos = GetTranslationVector(originalPosition, proposedPos, false);
+            }
+
+            //if (translationAxis != 'all')
+            //{
+            //    switch (translationAxis)
+            //    {
+            //        case 'x':
+            //            {
+            //                newPos.y = originalPosition.y;
+            //                newPos.z = originalPosition.z;
+            //                break;
+            //            }
+            //        case 'y':
+            //            {
+            //                newPos.x = originalPosition.x;
+            //                newPos.z = originalPosition.z;
+            //                break;
+            //            }
+            //        case 'z':
+            //            {
+            //                newPos.x = originalPosition.x;
+            //                newPos.y = originalPosition.y;
+            //                break;
+            //            }
+            //    }
+            //}
 
             pinchedObject.position.set(newPos.x - 20, newPos.y - 90, newPos.z);
 
@@ -43,7 +135,16 @@ var TranslatePinchedObject = function (hand)
 
             pinchedObject.userData.isPinched = true;
             pinchedObject.userData.hasBeenMoved = true;
-            
+
+            Efficio.MessagingSystem.Bus.publish({
+                channel: 'Asset',
+                topic: 'Update',
+                source: "Charet",
+                data: {
+                    asset: pinchedObject,
+                    physics: true
+                }
+            });
         }
     }
 }
@@ -108,33 +209,31 @@ function GetTranslationVector(currentPosition, proposedPosition, snap)
         {
             returnedVector = snap(currentPosition, proposedPosition);
         }
-        else
+
+        if (typeof snap !== 'number')
         {
-            if (typeof snap !== 'number')
-            {
-                throw new Exception('Snap value must be of type "number"');
-            }
+            throw new Exception('Snap value must be of type "number"');
+        }
 
-            // Checks if the distance difference on the x-axis is greater than the snap distance.
-            if (Math.abs(currentPosition.x - proposedPosition.x) > snap)
-            {
-                // Returns the position moved on the x-axis by the closest snap distance.
-                returnedVector.x = (proposedPosition.x - (proposedPosition.x % snap));
-            }
+        // Checks if the distance difference on the x-axis is greater than the snap distance.
+        if (Math.abs(currentPosition.x - proposedPosition.x) > snap)
+        {
+            // Returns the position moved on the x-axis by the closest snap distance.
+            returnedVector.x = (proposedPosition.x - (proposedPosition.x % snap));
+        }
 
-            // Checks if the distance difference on the y-axis is greater than the snap distance.
-            if (Math.abs(currentPosition.y - proposedPosition.y) > snap)
-            {
-                // Returns the position moved on the y-axis by the closest snap distance.
-                returnedVector.y = (proposedPosition.y - (proposedPosition.y % snap));
-            }
+        // Checks if the distance difference on the y-axis is greater than the snap distance.
+        if (Math.abs(currentPosition.y - proposedPosition.y) > snap)
+        {
+            // Returns the position moved on the y-axis by the closest snap distance.
+            returnedVector.y = (proposedPosition.y - (proposedPosition.y % snap));
+        }
 
-            // Checks if the distance difference on the z-axis is greater than the snap distance.
-            if (Math.abs(currentPosition.z - proposedPosition.z) > snap)
-            {
-                // Returns the position moved on the z-axis by the closest snap distance.
-                returnedVector.z = (proposedPosition.z - (proposedPosition.z % snap));
-            }
+        // Checks if the distance difference on the z-axis is greater than the snap distance.
+        if (Math.abs(currentPosition.z - proposedPosition.z) > snap)
+        {
+            // Returns the position moved on the z-axis by the closest snap distance.
+            returnedVector.z = (proposedPosition.z - (proposedPosition.z % snap));
         }
     }
     else

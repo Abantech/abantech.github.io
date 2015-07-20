@@ -1,6 +1,6 @@
 ﻿var axis = null;
 var rotationAction = null
-var snapRotation = false;
+var snapRotation = true;
 var snapAngle;
 var canRotateAfterSnap = true;
 var lastQuaternion;
@@ -9,17 +9,19 @@ var snapTimeout = 3000;
 var rotationAxis = "y"; //Possible Values: x, y, z, relative
 var allowRotation = true;
 
-function setSnapAngle(degrees)
+function setSnapAngle(degrees, announce)
 {
+    announce = typeof announce !== 'undefined' ? announce : true;
+
     snapAngle = degrees * (Math.PI / 180)
 
-    if (snapRotation)
+    if (snapRotation && announce)
     {
         Speak('Snap angle set to ' + degrees + ' degrees');
     }
 }
 
-function toggleSnapping(snapping)
+function toggleRotationSnapping(snapping)
 {
     if (snapping === 'on')
     {
@@ -197,6 +199,16 @@ var RotatePinchedObject = function (hand)
                     {
                         pinchedObject.quaternion.copy(originalQuaternion);
                     }
+
+                    Efficio.MessagingSystem.Bus.publish({
+                        channel: 'Asset',
+                        topic: 'Update',
+                        source: "Charet",
+                        data: {
+                            asset: pinchedObject,
+                            physics: true
+                        }
+                    });
                 }
             }
         }
@@ -222,7 +234,7 @@ var EndRotatePinchedObject = function (hand)
     axis = null;
 }
 
-setSnapAngle(30);
+setSnapAngle(90, false);
 
 rightHandPinchGesture.registerOnFullGesture(
     {

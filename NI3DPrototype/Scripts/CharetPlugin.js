@@ -30,7 +30,8 @@ CharetPlugin = {
     LeapInput: function (Frame)
     {
         Frame.hands.forEach(
-             function (hand) {
+             function (hand)
+             {
                  if (handController)
                      handController.RunAllActions(hand);
              }
@@ -38,6 +39,13 @@ CharetPlugin = {
 
         if (frameActions)
             frameActions.RunAllActions(Frame);
+    },
+    UpdateScene: function (Assets)
+    {
+        Assets.forEach(function (asset)
+        {
+            assetManager.UpdateAsset(asset);
+        });
     }
 }
 
@@ -49,10 +57,13 @@ AudioCommands = {
     "restart": Restart,
     "reload": Restart,
     "start over": Restart,
-    "turn snapping :snapping": toggleSnapping,
+    "turn rotation snapping :snapping": toggleRotationSnapping,
+    "turn snapping :snapping": toggleTranslationSnapping,
     "set snap to :degrees degrees": setSnapAngle,
+    "set snap to :pixels pixels": setSnapSize,
     "turn rotation :rotation": toggleRotation,
-    "set rotation axis to :axis": setRotationAxis
+    "set rotation axis to :axis": setRotationAxis,
+    //"set translation axis to :axis": setTranslationAxis
 }
 
 function Restart()

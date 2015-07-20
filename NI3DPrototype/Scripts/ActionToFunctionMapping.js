@@ -1,7 +1,6 @@
 ﻿ActionToFunctionMapping = {
     "PluginName": "CharetPlugin.js",
     "ActionMappings": [
-
         {
             "Source": "Devices",
             "Topic": "Connected",
@@ -12,9 +11,9 @@
                      "Name": "name",
                      "MapTo": "Name"
                  }, {
-                    "Source": "Gesture",
-                    "Name": "device",
-                    "MapTo": "Device"
+                     "Source": "Gesture",
+                     "Name": "device",
+                     "MapTo": "Device"
                  }, {
                      "Source": "Gesture",
                      "Name": "controller",
@@ -33,6 +32,18 @@
                     "MapTo": "Frame"
                 }
             ],
-        }
+        },
+                {
+                    "Source": "Scene",
+                    "Topic": "Update",
+                    "Action": "UpdateScene",
+                    "Arguments": [
+                         {
+                             "Source": "Gesture",
+                             "Name": "assets",
+                             "MapTo": "Assets"
+                         }
+                    ],
+                },
     ]
 }

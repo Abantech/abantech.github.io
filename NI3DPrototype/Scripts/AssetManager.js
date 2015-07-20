@@ -11,7 +11,12 @@ function AssetManager()
     {
         window.scene.add(asset);
 
-        asset.userData.isAsset = true;
+        if (!notPhysical)
+        {
+            asset.userData.isAsset = true;
+            collidableMeshList.push(asset);
+        }
+
         asset.name = assetType + " " + asset.id;
 
         if (!createAssetAction)
@@ -24,7 +29,7 @@ function AssetManager()
             createAssetAction = null;
         }
 
-        collidableMeshList.push(asset);
+
         assets.push(asset);
 
         Efficio.MessagingSystem.Bus.publish({

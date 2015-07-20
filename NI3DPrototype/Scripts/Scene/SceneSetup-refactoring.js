@@ -91,9 +91,8 @@ var createGroundPlane = function () {
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     scene.add(mesh);
+    assetManager.CreateAsset("ground", mesh, true);
 
-    // Add ground as a collidable mesh to prevent assets from intersecting it
-    collidableMeshList.push(mesh);
 
     var boxHelper = new THREE.BoxHelper(mesh);
     boxHelper.material.color.setRGB(1, 0, 1);
@@ -156,7 +155,6 @@ if (webglAvailable)
 
     initScene(container);
     createSceneLighting();
-    createGroundPlane();
 
     animate();
 }
