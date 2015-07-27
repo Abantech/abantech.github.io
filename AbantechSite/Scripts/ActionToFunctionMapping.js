@@ -68,6 +68,23 @@ ActionToFunctionMapping = {
                     "MapTo": "PointedFingers"
                 }
             ],
+        }, 
+        {
+            "Source": "Input.Processed.Efficio",
+            "Topic": "TwoFingersExtended",
+            "Action": "TwoFingerPoint",
+            "Arguments": [
+                {
+                    "Source": "Gesture",
+                    "Name": "frame",
+                    "MapTo": "Frame"
+                },
+                {
+                    "Source": "Gesture",
+                    "Name": "extendedFingers",
+                    "MapTo": "PointedFingers"
+                }
+            ],
         }
     ]
 }

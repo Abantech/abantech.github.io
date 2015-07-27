@@ -61119,7 +61119,7 @@ module.exports = {
 }
 
 },{"./CustomGestureLibrariesAccess.js":45,"./EfficioAudioGrimoire.js":46,"./EfficioGestureGrimoire.js":47,"postal":35}],50:[function(require,module,exports){
-var leap = require('leapjs');
+var Leap = require('leapjs');
 
 require('leapjs-plugins');
 require('./plugins/leap.rigged-hand-0.1.5.min.js');
@@ -61132,7 +61132,7 @@ var controller;
 module.exports =
 {
     Initialize: function () {
-        controller = new leap.Controller({ enableGestures: true});
+        controller = new Leap.Controller({ enableGestures: true});
 
         controller.on("gesture", function (gesture) {
             if (gesture.state == "stop") {
@@ -61156,7 +61156,7 @@ module.exports =
                 source: source,
                 data: {
                     name : source,
-                    device : leap,
+                    device : Leap,
                     controller: controller
                 }
             });
@@ -61899,7 +61899,9 @@ module.exports = {
                                 this.mass = 0;
 
                                 if (other_object.previousState) {
-
+                                    other_object.position.copy(other_object.previousState.position);
+                                    other_object.quaternion.copy(other_object.previousState.quaternion);
+                                    other_object.mass = 0;
                                 }
                             });
                             
@@ -61925,6 +61927,12 @@ module.exports = {
                                 this.position.copy(this.previousState.position);
                                 this.quaternion.copy(this.previousState.quaternion);
                                 this.mass = 0;
+
+                                if (other_object.previousState) {
+                                    other_object.position.copy(other_object.previousState.position);
+                                    other_object.quaternion.copy(other_object.previousState.quaternion);
+                                    other_object.mass = 0;
+                                }
                             });
 
                             physicsScene.add(newAsset);

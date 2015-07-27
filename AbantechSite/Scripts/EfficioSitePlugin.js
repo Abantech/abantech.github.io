@@ -28,13 +28,13 @@ EfficioSitePlugin = {
     LastSection: function () {
         moveTab("Previous");
     },
-
+    
     
     GoToSection: function (Message) {
         if (Message.toUpperCase() === "HOME") {
             $('.navbar-brand').click();
         }
-
+        
         if (Message.toUpperCase() === "OFFICIAL" || Message.toUpperCase() === "PHYSIO" || Message.toUpperCase() === "A PHYSIO" || Message.toUpperCase() === "A FISHY OH") {
             $('#Efficio').click();
         }
@@ -50,7 +50,12 @@ EfficioSitePlugin = {
             pointer = $('#pointer')[0];
         }
         
-        if (PointedFingers[0] === 1) {
+        if (PointedFingers.length === 1) {
+            pointer.style.background = "red";
+        }
+        
+        
+        if (PointedFingers.indexOf(1) != -1) {
             var interactionBox = Frame.interactionBox;
             var normalizedPosition = interactionBox.normalizePoint(Frame.hands[0].fingers[1].tipPosition, true);
             
@@ -100,9 +105,17 @@ EfficioSitePlugin = {
         else {
             pointer.style.opacity = 0;
         }
+    },
+    TwoFingerPoint: function (Frame, PointedFingers) {
+        if (!pointer) {
+            pointer = $('#pointer')[0];
+        }
+        
+        pointer.style.background = "blue";
+        
+        EfficioSitePlugin.Point(Frame, PointedFingers);
     }
 }
-
 
 
 function ClearBG() {
@@ -133,4 +146,14 @@ function moveTab(nextOrPrev) {
         }
         else { } //do nothing for now 
     }
+}
+
+
+AudioCommands = {
+    "google :search": search,
+}
+
+function search(search) {
+    search = encodeURIComponent(search);
+    window.open("https://google.com/?q=" + search);
 }

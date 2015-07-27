@@ -1,4 +1,4 @@
-﻿var leap = require('leapjs');
+﻿var Leap = require('leapjs');
 
 require('leapjs-plugins');
 require('./plugins/leap.rigged-hand-0.1.5.min.js');
@@ -11,7 +11,7 @@ var controller;
 module.exports =
 {
     Initialize: function () {
-        controller = new leap.Controller({ enableGestures: true});
+        controller = new Leap.Controller({ enableGestures: true});
 
         controller.on("gesture", function (gesture) {
             if (gesture.state == "stop") {
@@ -35,7 +35,7 @@ module.exports =
                 source: source,
                 data: {
                     name : source,
-                    device : leap,
+                    device : Leap,
                     controller: controller
                 }
             });
