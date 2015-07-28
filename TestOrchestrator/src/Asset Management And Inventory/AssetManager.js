@@ -1,5 +1,4 @@
-﻿var three = require('three');
-var internalScene = require('../InternalScene');
+﻿var internalScene = require('../InternalScene');
 var bus = require('postal');
 var source = "Efficio Asset Manager"
 

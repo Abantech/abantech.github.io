@@ -43,7 +43,7 @@ var initScene = function () {
 
     controls = new THREE.OrbitControls(window.camera);
     controls.damping = 0.2;
-    //   controls.addEventListener('change', renderer.render);
+    controls.addEventListener('change', renderer.render);
 
     window.addEventListener('resize', function () {
         camera.aspect = window.innerWidth / window.innerHeight;

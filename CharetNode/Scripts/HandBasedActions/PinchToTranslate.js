@@ -125,12 +125,41 @@ var TranslatePinchedObject = function (hand)
             //            }
             //    }
             //}
-
-            pinchedObject.position.set(newPos.x - 20, newPos.y - 90, newPos.z);
+            
+            //pinchedObject.position.set(newPos.x - 20, newPos.y - 90, newPos.z);
+            // Try x
+            
+            var tempPosition = {};
+            tempPosition.x = originalPosition.x;
+            tempPosition.y = originalPosition.y;
+            tempPosition.z = originalPosition.z;
+            
+            pinchedObject.position.set(newPos.x - 20, tempPosition.y, tempPosition.z);
 
             if (DetectCollision(pinchedObject))
             {
-                pinchedObject.position.set(originalPosition.x, originalPosition.y, originalPosition.z);
+                pinchedObject.position.set(tempPosition.x, tempPosition.y, tempPosition.z);
+            }
+            else {
+                tempPosition.x = newPos.x - 20;
+            }
+            
+            pinchedObject.position.set(tempPosition.x, newPos.y - 90, tempPosition.z);
+            
+            if (DetectCollision(pinchedObject)) {
+                pinchedObject.position.set(tempPosition.x, tempPosition.y, tempPosition.z);
+            }
+            else {
+                tempPosition.y = newPos.y - 90;
+            }
+            
+            pinchedObject.position.set(tempPosition.x, tempPosition.y, newPos.z);
+            
+            if (DetectCollision(pinchedObject)) {
+                pinchedObject.position.set(tempPosition.x, tempPosition.y, tempPosition.z);
+            }
+            else {
+                tempPosition.z = newPos.z;
             }
 
             pinchedObject.userData.isPinched = true;

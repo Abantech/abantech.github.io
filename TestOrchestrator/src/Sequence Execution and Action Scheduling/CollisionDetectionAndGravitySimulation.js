@@ -1,5 +1,5 @@
 ﻿var bus = require('postal');
-var THREE = require('three');
+//var THREE = require('three');
 
 var Ammo = require('./ammo.js');
 var Physijs = require('./physi.js')(THREE, Ammo);

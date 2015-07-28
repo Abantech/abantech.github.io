@@ -51,7 +51,6 @@
     <Compile Include="src\InternalScene.js" />
     <Compile Include="src\Logging\SystemNotificationListener.js" />
     <Compile Include="src\Message Bus\MessageBus.js" />
-    <Compile Include="src\3D System Interface\SketchUp.js" />
     <Compile Include="src\Sequence Execution and Action Scheduling\ammo.js" />
     <Compile Include="src\Sequence Execution and Action Scheduling\CollisionDetectionAndGravitySimulation.js" />
     <Compile Include="src\Sequence Execution and Action Scheduling\physi.js" />
@@ -70,7 +69,6 @@
     <Folder Include="src\Asset Management And Inventory\" />
     <Folder Include="src\Command Issuance And Control\" />
     <Folder Include="src\Constraints Engine\" />
-    <Folder Include="src\3D System Interface\" />
     <Folder Include="src\Logging\" />
     <Folder Include="src\Debug and Exceptions\" />
     <Folder Include="src\" />

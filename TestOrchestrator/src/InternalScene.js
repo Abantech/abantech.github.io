@@ -1,4 +1,4 @@
-﻿var THREE = require('three');
+﻿//var three = require('three');
 var scene = new THREE.Scene();
 
 

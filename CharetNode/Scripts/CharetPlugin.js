@@ -50,10 +50,10 @@ CharetPlugin = {
 }
 
 AudioCommands = {
-    "make :size (foot) container": makeContainerByVoice,
-    "create :size (foot) container": makeContainerByVoice,
-    "make :size (foot) box": makeContainerByVoice,
-    "create :size (foot) box": makeContainerByVoice,
+    "make :size (foot) :color container": makeContainerByVoice,
+    "create :size (foot) :color container": makeContainerByVoice,
+    "make :size (foot) :color box": makeContainerByVoice,
+    "create :size (foot) (:color) box": makeContainerByVoice,
     "restart": Restart,
     "reload": Restart,
     "start over": Restart,

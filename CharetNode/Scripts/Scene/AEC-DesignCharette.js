@@ -87,7 +87,7 @@ function createSkybox() {
     return new THREE.Mesh(new THREE.BoxGeometry(1000, 1000, 1000), new THREE.MeshFaceMaterial(materials));
 }
 
-function makeContainerByVoice(size) {
+function makeContainerByVoice(size, color) {
     if (size.toUpperCase() == "SMALL" || size == "20")
     {
         var box = makeContainer({ geo: new THREE.BoxGeometry(40, 19, 16) });
@@ -110,6 +110,38 @@ function makeContainerByVoice(size) {
         assetManager.CreateAsset("Cube", box);
 
         box.position.set(0,0,0);
+    }
+    
+    if (color) {
+        switch (color.toUpperCase()) {
+            case "GREEN":
+                {
+                    box.material.color.setRGB(0, 1, 0);
+                    break;
+                }
+            case "RED":
+                {
+                    box.material.color.setRGB(1, 0, 0);
+                    break;
+                }
+            case "BLUE":
+                {
+                    box.material.color.setRGB(0, 0, 1);
+                    break;
+                }
+            case "BLACK":
+                {
+                    box.material.color.setRGB(0, 0, 0);
+                    break;
+                }
+            default: {
+                box.material.color.setRGB(1, 1, 1);
+                break;
+            }
+        }
+    }
+    else {
+        box.material.color.setRGB(1, 1, 1);
     }
 }
 
