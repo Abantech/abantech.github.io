@@ -1,6 +1,7 @@
 ﻿var Leap = require('leapjs');
 
 require('leapjs-plugins');
+
 require('./plugins/leap.rigged-hand-0.1.5.min.js');
 
 var bus = require('postal');

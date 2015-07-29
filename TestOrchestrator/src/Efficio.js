@@ -1,5 +1,8 @@
 ﻿var debug = true;
 
+if (typeof THREE === 'undefined') {
+    THREE = require('three');
+}
 
 // Efficio Internal Components
 var bus = require('./Message Bus/MessageBus.js');

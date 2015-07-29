@@ -60498,6 +60498,9 @@ module.exports = {
 },{"postal":35}],42:[function(require,module,exports){
 var debug = true;
 
+if (typeof THREE === 'undefined') {
+    THREE = require('three');
+}
 
 // Efficio Internal Components
 var bus = require('./Message Bus/MessageBus.js');
@@ -60543,7 +60546,7 @@ module.exports =
     MessagingSystem: bus
 }
 
-},{"./Asset Management And Inventory/AssetManager.js":38,"./Command Issuance And Control/CommandIssuanceAndControl.js":39,"./Constraints Engine/ConstraintsEngine.js":40,"./Human Input Recognition and Processing/HumanInputRecognitionAndProcessing.js":48,"./Input/LeapMotion/LeapMotion.js":49,"./Input/Mic/Microphone.js":52,"./InternalScene.js":55,"./Logging/SystemNotificationListener.js":56,"./Message Bus/MessageBus.js":57,"./Sequence Execution and Action Scheduling/CollisionDetectionAndGravitySimulation.js":58}],43:[function(require,module,exports){
+},{"./Asset Management And Inventory/AssetManager.js":38,"./Command Issuance And Control/CommandIssuanceAndControl.js":39,"./Constraints Engine/ConstraintsEngine.js":40,"./Human Input Recognition and Processing/HumanInputRecognitionAndProcessing.js":48,"./Input/LeapMotion/LeapMotion.js":49,"./Input/Mic/Microphone.js":52,"./InternalScene.js":55,"./Logging/SystemNotificationListener.js":56,"./Message Bus/MessageBus.js":57,"./Sequence Execution and Action Scheduling/CollisionDetectionAndGravitySimulation.js":58,"three":37}],43:[function(require,module,exports){
 arguments[4][1][0].apply(exports,arguments)
 },{"dup":1}],44:[function(require,module,exports){
 var bus = require('postal');
@@ -61056,6 +61059,7 @@ module.exports = {
 var Leap = require('leapjs');
 
 require('leapjs-plugins');
+
 require('./plugins/leap.rigged-hand-0.1.5.min.js');
 
 var bus = require('postal');
