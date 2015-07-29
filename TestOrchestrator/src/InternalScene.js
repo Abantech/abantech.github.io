@@ -1,4 +1,7 @@
-﻿//var three = require('three');
+﻿if (typeof THREE === 'undefined') {
+    var THREE = require('three');
+}
+
 var scene = new THREE.Scene();
 
 

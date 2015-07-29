@@ -134,23 +134,23 @@ var TranslatePinchedObject = function (hand)
             tempPosition.y = originalPosition.y;
             tempPosition.z = originalPosition.z;
             
-            pinchedObject.position.set(newPos.x - 20, tempPosition.y, tempPosition.z);
+            pinchedObject.position.set(newPos.x, tempPosition.y, tempPosition.z);
 
             if (DetectCollision(pinchedObject))
             {
                 pinchedObject.position.set(tempPosition.x, tempPosition.y, tempPosition.z);
             }
             else {
-                tempPosition.x = newPos.x - 20;
+                tempPosition.x = newPos.x;
             }
             
-            pinchedObject.position.set(tempPosition.x, newPos.y - 90, tempPosition.z);
+            pinchedObject.position.set(tempPosition.x, newPos.y, tempPosition.z);
             
             if (DetectCollision(pinchedObject)) {
                 pinchedObject.position.set(tempPosition.x, tempPosition.y, tempPosition.z);
             }
             else {
-                tempPosition.y = newPos.y - 90;
+                tempPosition.y = newPos.y;
             }
             
             pinchedObject.position.set(tempPosition.x, tempPosition.y, newPos.z);
