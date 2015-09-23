@@ -10,3 +10,9 @@ C:\Development\abantech.github.io\NI3DPrototype\bin\NI3DPrototype.pdb
 C:\Development\abantech.github.io\NI3DPrototype\obj\Debug\NI3DPrototype.csprojResolveAssemblyReference.cache
 C:\Development\abantech.github.io\NI3DPrototype\obj\Debug\NI3DPrototype.dll
 C:\Development\abantech.github.io\NI3DPrototype\obj\Debug\NI3DPrototype.pdb
+C:\Users\Mastermind\Abantech\abantech.github.io\NI3DPrototype\bin\NI3DPrototype.dll.config
+C:\Users\Mastermind\Abantech\abantech.github.io\NI3DPrototype\bin\NI3DPrototype.dll
+C:\Users\Mastermind\Abantech\abantech.github.io\NI3DPrototype\bin\NI3DPrototype.pdb
+C:\Users\Mastermind\Abantech\abantech.github.io\NI3DPrototype\obj\Debug\NI3DPrototype.csprojResolveAssemblyReference.cache
+C:\Users\Mastermind\Abantech\abantech.github.io\NI3DPrototype\obj\Debug\NI3DPrototype.dll
+C:\Users\Mastermind\Abantech\abantech.github.io\NI3DPrototype\obj\Debug\NI3DPrototype.pdb

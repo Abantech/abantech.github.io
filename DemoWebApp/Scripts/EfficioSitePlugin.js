@@ -1,8 +1,9 @@
 ﻿var devices = [];
-
+alert("testing");
 EfficioSitePlugin = {
     DownDirectionDetected: function ()
     {
+        alert("testing");
         window.scrollBy(0, 20);
 
         $('#LeapModal').modal('hide')
@@ -15,10 +16,12 @@ EfficioSitePlugin = {
     },
     DeviceRegistered: function (Device)
     {
+
         devices.push(Device);
     },
     Hello: function ()
     {
+        
         $('#LeapModal').modal('hide')
         $('#NoDeviceModal').modal('hide')
     },

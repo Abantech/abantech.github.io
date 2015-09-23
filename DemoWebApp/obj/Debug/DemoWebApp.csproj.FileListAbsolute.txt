@@ -4,3 +4,9 @@ C:\Users\James\Source\Repos\abantech.github.io\DemoWebApp\bin\DemoWebApp.pdb
 C:\Users\James\Source\Repos\abantech.github.io\DemoWebApp\obj\Debug\DemoWebApp.dll
 C:\Users\James\Source\Repos\abantech.github.io\DemoWebApp\obj\Debug\DemoWebApp.pdb
 C:\Users\James\Source\Repos\abantech.github.io\DemoWebApp\obj\Debug\DemoWebApp.csprojResolveAssemblyReference.cache
+C:\Users\Mastermind\Abantech\abantech.github.io\DemoWebApp\obj\Debug\DemoWebApp.dll
+C:\Users\Mastermind\Abantech\abantech.github.io\DemoWebApp\obj\Debug\DemoWebApp.pdb
+C:\Users\Mastermind\Abantech\abantech.github.io\DemoWebApp\obj\Debug\DemoWebApp.csprojResolveAssemblyReference.cache
+C:\Users\Mastermind\Abantech\abantech.github.io\DemoWebApp\bin\DemoWebApp.dll.config
+C:\Users\Mastermind\Abantech\abantech.github.io\DemoWebApp\bin\DemoWebApp.dll
+C:\Users\Mastermind\Abantech\abantech.github.io\DemoWebApp\bin\DemoWebApp.pdb

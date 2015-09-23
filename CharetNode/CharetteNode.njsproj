@@ -113,7 +113,7 @@
     <Compile Include="Scripts\Utils\ThreeExtensions.js" />
     <Content Include="AbantechDev.pfx" />
     <Content Include="Styles\style1.css" />
-    <None Include="Scripts\_references.js" />
+    <Compile Include="Scripts\_references.js" />
     <Compile Include="server.js" />
     <Content Include="AEC-DesignCharette.html" />
     <Content Include="css\info.css" />

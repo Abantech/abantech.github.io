@@ -15,14 +15,33 @@ function CreateAsset(asset) {
     });
     
     internalScene.Scene.add(asset);
+    
 };
 
 function CreateAssets(assets) {
 
+    // Still figuring out how to debug
+    var i;
+    for (i = 0; i < assets.length; i++)
+    {
+        bus.publish({
+            channel: "UserNotification",
+            topic: "AssetCreated",
+            source: source,
+            data: {
+                message: "Asset created with data: " + assets[i]
+            }
+        });
+        
+        internalScene.Scene.add(assets[i]);
+    }
+
 };
 
 function RetrieveAsset(assetID) {
-
+    //Still figuring out how to debug
+    var asset = internalScene.Scene.getObjectById(assetID);
+    return asset;
 };
 
 function RetrieveAssets(assetIDs) {
@@ -53,22 +72,50 @@ function UpdateAsset(asset) {
             message: source + " - Asset Updated: \nID: " + asset.id + "\nPosition: (" + asset.position.x + " , " + asset.position.y + ", " + asset.position.z + ")" + "\nScale: (" + asset.scale.x + " , " + asset.scale.y + ", " + asset.scale.z + ")"
         }
     });
+ 
 };
 
 function UpdateAssets(assets) {
+    // Still figuring out how to debug
+    var i;
+    for (i = 0; i < assets.length; i++) {
 
+        var oldAsset = internalScene.Scene.getObjectById(assets[i].id);
+
+        internalScene.Scene.remove(oldAsset);
+        internalScene.Scene.add(assets[i]);
+
+        var asset = internalScene.Scene.getObjectById(assets[i].id);
+
+        bus.publish({
+            channel: "UserNotification",
+            topic: "AssetUpdated",
+            source: source,
+            data: {
+                message: source + " - Asset Updated: \nID: " + asset.id + "\nPosition: (" + asset.position.x + " , " + asset.position.y + ", " + asset.position.z + ")" + "\nScale: (" + asset.scale.x + " , " + asset.scale.y + ", " + asset.scale.z + ")"
+            }
+        });
+    }
 };
 
 function DeleteAsset(assetID) {
-
+    // Still figuring out how to debug
+    var asset = internalScene.Scene.getObjectById(assetID);
+    internalScene.Scene.remove(asset);
 };
 
 function DeleteAssets(assetIDs) {
+    // Still figuring out how to debug
+    var i;
+    for (i = 0; i < assetIDs.length; i++) {
 
+        var asset = internalScene.Scene.getObjectById(assetIDs[i].id);
+        internalScene.Scene.remove(asset);
+    }
 };
 
 function DeleteAllAssets() {
-
+    
 };
 
 function GetValueForProperty(property, data) {
