@@ -24,6 +24,8 @@ function CreateAssets(assets) {
     var i;
     for (i = 0; i < assets.length; i++)
     {
+        console.log("Publisihing UserNotification to bus - AssetCreated")
+
         bus.publish({
             channel: "UserNotification",
             topic: "AssetCreated",
