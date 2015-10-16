@@ -21,8 +21,9 @@ function CreateAsset(asset) {
 function CreateAssets(assets) {
 
     // Still figuring out how to debug
-    assets.forEach(function (asset) {
-
+    var i;
+    for (i = 0; i < assets.length; i++)
+    {
         console.log("Publisihing UserNotification to bus - AssetCreated")
 
         bus.publish({
@@ -30,49 +31,31 @@ function CreateAssets(assets) {
             topic: "AssetCreated",
             source: source,
             data: {
-                message: "Asset created with data: " + asset
+                message: "Asset created with data: " + assets[i]
             }
         });
-        internalScene.Scene.add(asset);
-    });
+        
+        internalScene.Scene.add(assets[i]);
+    }
 
 };
 
 function RetrieveAsset(assetID) {
     //Still figuring out how to debug
     var asset = internalScene.Scene.getObjectById(assetID);
-    console.log("Publisihing UserNotification to bus - AssetRetrieved")
     return asset;
 };
 
 function RetrieveAssets(assetIDs) {
-    var assets = [];
-    assetIDs.forEach(function (assetID) {
-        var asset = internalScene.Scene.getObjectById(assetID);
-        assets.push(asset)
-    });
-    return assets;
+
 };
 
 function RetrieveAllAssets() {
 
-    // Need to debug
-    var assets = [];
-
-    internalScene.Scene.Object.forEach(function (asset) {
-        assets.push(asset);
-    });
-    return assets;
 };
 
 function RetrieveAllAssetIDs() {
-    // Need to debug
-    var assetIDs = [];
 
-    internalScene.Scene.Object.forEach(function (asset) {
-        assetIDs.push(asset.assetID);
-    });
-    return assetIDs;
 };
 
 function UpdateAsset(asset) {
@@ -125,18 +108,15 @@ function DeleteAsset(assetID) {
 
 function DeleteAssets(assetIDs) {
     // Still figuring out how to debug
-    assetIDs.forEach(function (assetID) {
-        var asset = internalScene.Scene.getObjectById(assetID);
+    var i;
+    for (i = 0; i < assetIDs.length; i++) {
+
+        var asset = internalScene.Scene.getObjectById(assetIDs[i].id);
         internalScene.Scene.remove(asset);
-    });
+    }
 };
 
 function DeleteAllAssets() {
-
-    // Are assets the only objects being stored in the Scene?
-    internalScene.Scene.Object.forEach(function (asset) {
-        internalScene.Scene.remove(asset);
-    });
     
 };
 
