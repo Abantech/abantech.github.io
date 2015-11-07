@@ -3,7 +3,7 @@
 
 [Abantech]( http://abantech.net ) »
 
-[Abantech Interaction Studdies Read Me]( index.html )
+[Abantech Interaction Studies Read Me]( index.html )
 ===
 
 ## Mission
