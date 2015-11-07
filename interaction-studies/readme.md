@@ -1,7 +1,7 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://abantech.com/interaction-studies/ "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://abantech.net/interaction-studies/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/Abantech/abantech.github.io/tree/master/interaction-studies'; type=button value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Abantech]( http://abantech.com ) »
+[Abantech]( http://abantech.net ) »
 
 [Abantech Interaction Studdies Read Me]( index.html )
 ===
@@ -62,54 +62,56 @@ Sources:
 [Google Images]( https://www.google.com/search?q=skybox&tbm=isch&tbo=u&source=univ&sa=X&ei=sjz-VPmYHdbaoASxo4LACg&ved=0CEsQsAQ&biw=1855&bih=995 )
  
 
-Demo: [Three.js Leap Position Text to Voice]( http://abantech.github.io/threejs-leap-position-text-to-voice/r1/threejs-leap-position-text-to-voice.html )  
-Source code: [Three.js Leap Position Text to Voice]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-position-text-to-voice/ )  
+Demo: [Three.js Leap Position Text to Voice]( http://abantech.github.io/interaction-studies/threejs-leap-position-text-to-voice/r1/threejs-leap-position-text-to-voice.html )  
+Source code: [Three.js Leap Position Text to Voice]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-leap-position-text-to-voice/ )  
 Added: Theo ~ 2015-03-08 ~ the latest directional movement( left/right/up/down ) of one hand is detected and reported out load  
 
-Demo: [Game for Leo latest]( http://abantech.github.io/game-for-leo/latest/ )  
-Source code: [Game for Leo]( https://github.com/Abantech/abantech.github.io/blob/master/game-for-leo )  
+Demo: [Game for Leo latest]( http://abantech.github.io/interaction-studies/game-for-leo/latest/ )  
+Source code: [Game for Leo]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/game-for-leo )  
 R2: Theo ~ 2015-02-28 ~ Objects rotate instead of camera  
 Added: Theo ~ 2015-02-27 ~ The leap device as a birthday celebration enhancer.
 
-Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/threejs-leap-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
-Source code: [Three.js Camera in Palm]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-camera-in-palm )  
+Demo: [Three.js Leap Camera in Palm]( http://abantech.github.io/interaction-studies/threejs-leap-camera-in-palm/r1/threejs-leap-camera-in-palm.html )  
+Source code: [Three.js Camera in Palm]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-leap-camera-in-palm )  
 Added: Theo ~ 2015-02-23 ~ The camera as a Leap wearable.
 
-Demo: [Three.js Physijs Leap]( http://abantech.github.io/threejs-physijs-leap/r1/threejs-physijs-leap.html )  
-Source code: [Three.js Physijs Leap]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-physijs-leap )  
+Demo: [Three.js Physijs Leap]( http://abantech.github.io/interaction-studies/threejs-physijs-leap/r1/threejs-physijs-leap.html )  
+Source code: [Three.js Physijs Leap]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-physijs-leap )  
+Update: Theo ~ 2015-11-06 ~ not working latest Three.js ~ needs more investigation
 Added: Theo ~ 2015-01-30 ~ WIP Three.js Physi.js Leap demo.
 
-Demo: [Three.js Physijs Basic]( http://abantech.github.io/threejs-physijs-basic/r1/threejs-physijs-basic.html )  
-Source code: [Three.js Physijs Basic]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-physijs-basic )  
+Demo: [Three.js Physijs Basic]( http://abantech.github.io/interaction-studies/threejs-physijs-basic/r1/threejs-physijs-basic.html )  
+Source code: [Three.js Physijs Basic]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-physijs-basic )  
+Update: Theo ~ 2015-11-06 ~ not working latest Three.js ~ needs more investigation
 Added: Theo ~ 2015-01-30 ~ Very basic demo/template for Three.js with the Physijs/Ammo physics engine
 
-Demo: [Three.js Scale Sliders Leap]( http://abantech.github.io/threejs-scale-sliders-leap/r1/threejs-scale-sliders-leap.html )  
-Source code: [Three.js Scale Sliders Leap]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-scale-sliders-leap )  
+Demo: [Three.js Scale Sliders Leap]( http://abantech.github.io/interaction-studies/threejs-scale-sliders-leap/r1/threejs-scale-sliders-leap.html )  
+Source code: [Three.js Scale Sliders Leap]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-scale-sliders-leap )  
 Added: Theo ~ 2015-01-30 ~ X-axis 'knobs' follow camera. Right knob enlarges. Left knob shrinks.
 
-Demo: [Three.js Leap Wearable]( http://abantech.github.io/threejs-leap-wearable/r1/threejs-leap-wearable.html )  
-Source code: [Three.js Leap Wearable]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-wearable )  
+Demo: [Three.js Leap Wearable]( http://abantech.github.io/interaction-studies/threejs-leap-wearable/r1/threejs-leap-wearable.html )  
+Source code: [Three.js Leap Wearable]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-leap-wearable )  
 Added: Theo ~ 2015-01-25 ~ First pass at a Leap Wearable. Left arm only.
 
-Demo: [Three.js FingerOver Leap-Enabled]( http://abantech.github.io/threejs-mouseover-leap-enabled/r1/threejs-mouseover-leap-enabled.html )  
-Source code: [Three.js FingerOver Leap-Enabled]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover-leap-enabled/ )  
+Demo: [Three.js FingerOver Leap-Enabled]( http://abantech.github.io/interaction-studies/threejs-mouseover-leap-enabled/r1/threejs-mouseover-leap-enabled.html )  
+Source code: [Three.js FingerOver Leap-Enabled]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-mouseover-leap-enabled/ )  
 Added: Theo ~ 2015-01-24  
 Updated: Theo ~ 2015-01-25 ~ Minimum rig to get Three.js to highlight object a Leap finger is pointing at. Also begins to be a game for Leo. 
 
-Demo: [Three.js Camera Object Child]( http://abantech.github.io/threejs-camera-object-child/r1/threejs-camera-object-child.html )  
-Source code: [Three.js Camera Object Child]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-camera-object-child )  
+Demo: [Three.js Camera Object Child]( http://abantech.github.io/interaction-studies/threejs-camera-object-child/r1/threejs-camera-object-child.html )  
+Source code: [Three.js Camera Object Child]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-camera-object-child )  
 Added: Theo ~ 2015-01-25 ~ Three.js example of an object that remains at fixed position in relation to a camera.
 
-Demo: [Three.js Leap-Enabled Template]( http://abantech.github.io/threejs-leap-enabled-template/r1/threejs-leap-enabled-template.html )  
-Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-leap-enabled-template/ )  
+Demo: [Three.js Leap-Enabled Template]( http://abantech.github.io/interaction-studies/threejs-leap-enabled-template/r1/threejs-leap-enabled-template.html )  
+Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-leap-enabled-template/ )  
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js and Leap device playing together
 
-Demo: [Three.js Mouseover]( http://abantech.github.io/threejs-mouseover/r1/threejs-mouseover.html )  
-Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/threejs-mouseover/ )  
+Demo: [Three.js Mouseover]( http://abantech.github.io/interaction-studies/threejs-mouseover/r1/threejs-mouseover.html )  
+Source code: [Three.js Leap-Enabled Template]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/threejs-mouseover/ )  
 Added: Theo ~ 2015-01-24 ~ Minimum rig to get Three.js to get raycasting (finding the object under the cursor) going from camera position
 
-Demo: [Item Touched Add Handles]( http://abantech.github.io/item-touched-add-handles/r1/item-touched-add-handles-r1.html )  
-Source code: [Item Touched Add Handles]( https://github.com/Abantech/abantech.github.io/blob/master/item-touched-add-handles/r1/item-touched-add-handles-r1.html )  
+Demo: [Item Touched Add Handles]( http://abantech.github.io/interaction-studies/item-touched-add-handles/r1/item-touched-add-handles-r1.html )  
+Source code: [Item Touched Add Handles]( https://github.com/Abantech/abantech.github.io/blob/master/interaction-studies/item-touched-add-handles/r1/item-touched-add-handles-r1.html )  
 Added: Theo ~ 2015-01-22
 
 

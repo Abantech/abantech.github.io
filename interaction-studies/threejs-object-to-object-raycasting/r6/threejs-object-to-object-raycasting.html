@@ -171,25 +171,27 @@
 
 	function buildConvexObject() {
 
-		points = [];
+		var points = [];
 
-		for ( var i = 0; i < 10; i ++ ) {
+		for ( var i = 0; i < 12; i ++ ) {
 
 			points.push( new THREE.Vector3( ( Math.random() - 0.5 ), ( Math.random() - 0.5 ), ( Math.random() - 0.5 ) ) );
 
 		}
 
-		geometry = new THREE.ConvexGeometry( points );
+		geometry2 = new THREE.ConvexGeometry( points );
+
+		geometry = new THREE.BoxGeometry( 1, 1, 1 );
 		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
-		objectRandom = new THREE.Mesh( geometry, material );
+		objectRandom = new THREE.Mesh( geometry2, material );
 		objectRandom.castShadow = true;
 		objectRandom.receiveShadow = true;
 		scene.add( objectRandom );
 
 		touchables.push( objectRandom );
 
-		helper = new THREE.EdgesHelper( objectRandom, 0x444444 );
-		scene.add( helper );
+//		helper = new THREE.EdgesHelper( objectRandom, 0x444444 );
+//		scene.add( helper );
 
 		return objectRandom;
 
@@ -224,7 +226,7 @@
 		obj.add( mesh );
 
 		helper = new THREE.EdgesHelper( mesh, 0x444444 );
-		scene.add( helper );
+//		scene.add( helper );
 
 		geometry = new THREE.CylinderGeometry( 3, 3.5, -5, 15 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
@@ -238,7 +240,7 @@
 		obj.add( mesh );
 
 		helper = new THREE.EdgesHelper( mesh, 0x444444 );
-		scene.add( helper );
+//		scene.add( helper );
 
 		obj.scale.set( 5, 5, 5 );
 		scene.add( obj )
