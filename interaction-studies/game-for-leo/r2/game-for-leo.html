@@ -63,7 +63,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 
@@ -150,7 +150,7 @@
 			color = 0xffffff * Math.random();
 			material = new THREE.MeshPhongMaterial( {
 				color: color, 
-				ambient: color,
+//				ambient: color,
 //				specular: 0xffffff * Math.random(),
 				shininess: 50,
 				side: THREE.DoubleSide
@@ -164,7 +164,7 @@
 
 			helper = new THREE.EdgesHelper( mesh );
 			helper.material.color.setRGB( 1, 0, 0 );
-			mesh.add( helper );
+			scene.add( helper );
 
 			group.add( mesh );
 			cubes.push( mesh );
@@ -195,7 +195,7 @@
 			if ( intersects[0].object.material.color.g !== 0 ) {
 
 				intersects[0].object.material.color = new THREE.Color( 0xff0000 );
-				intersects[0].object.material.ambient = new THREE.Color( 0xff0000 );
+//				intersects[0].object.material.ambient = new THREE.Color( 0xff0000 );
 				points++;
 				soundMinus.play();
 

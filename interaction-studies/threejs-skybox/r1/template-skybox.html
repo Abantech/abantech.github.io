@@ -26,7 +26,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 		scene = new THREE.Scene();
@@ -59,7 +59,7 @@
 		light.shadowMapHeight = 2048;
 
 		light.castShadow = true;
-		light.shadowCameraVisible = true;
+//		light.shadowCameraVisible = true;
 		scene.add( light );
 
 		light = new THREE.PointLight( 0xffffff, 1);  // color intensity distance 0 = infinity
@@ -73,7 +73,7 @@
 //		material = new THREE.MeshNormalMaterial();
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 50,
 			side: THREE.DoubleSide

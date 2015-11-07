@@ -36,7 +36,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 
@@ -88,7 +88,7 @@
 //		var material = new THREE.MeshNormalMaterial();
 		var material = new THREE.MeshPhongMaterial( {
 			color: 0xD2B48C,
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 50,
 			side: THREE.DoubleSide
@@ -116,7 +116,7 @@
 		geometry = new THREE.SphereGeometry( 25, 50, 50 );
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 1
 		} );
@@ -129,7 +129,7 @@
 		geometry = new THREE.CylinderGeometry( 0, 8, 70, 3 );
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 1
 		} );

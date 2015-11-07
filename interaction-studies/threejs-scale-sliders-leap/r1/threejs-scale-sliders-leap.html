@@ -54,7 +54,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 
@@ -147,7 +147,7 @@
 
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff, 
-			ambient: 0xffffff,
+//			ambient: 0xffffff,
 			shininess: 0.001,
 			side: 2
 		} );
@@ -161,7 +161,7 @@
 		geometry = new THREE.BoxGeometry( 100, 100, 100 );
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xaa4444, 
-			ambient: 666666,
+//			ambient: 666666,
 			side: 2
 		} );
 
@@ -173,7 +173,7 @@
 		scene.add( selected );
 		selections.push( selected );
 
-		helper = new THREE.BoxHelper( selected );
+		helper = new THREE.EdgesHelper( selected );
 		helper.material.color.setRGB( 1, 0, 0 );
 		scene.add( helper );
 

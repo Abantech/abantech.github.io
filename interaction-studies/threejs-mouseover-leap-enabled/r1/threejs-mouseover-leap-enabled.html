@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>threejs-mouseover-leap-enabled.html</title>
+<title>threejs-mouseover-leap-enabled r1.1</title>
 <meta charset=utf-8 />
 <meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 />
 </head>
@@ -49,8 +49,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
-		renderer.shadowMapSoft = true;
+		renderer.shadowMap.enabled = true;
 		document.body.appendChild( renderer.domElement );
 
 		scene = new THREE.Scene();
@@ -110,7 +109,7 @@
 		var axis = new THREE.AxisHelper( 250 );
 		scene.add( axis );
 
-		helper = new THREE.BoxHelper( mesh );
+		helper = new THREE.EdgesHelper( mesh );
 		helper.material.color.setRGB( 1, 0, 1 );
 		scene.add( helper );
 
@@ -120,7 +119,7 @@
 
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff, 
-			ambient: 0xffffff,
+//			ambient: 0xffffff,
 			shininess: 0.001,
 			side: 2
 		} );
@@ -135,7 +134,7 @@
 		for (var i = 0; i < 50; i++) {
 			material = new THREE.MeshPhongMaterial( {
 				color: 0xffffff, 
-				ambient: 666666,
+//				ambient: 666666,
 				side: 2
 			} );
 
@@ -147,7 +146,7 @@
 			scene.add( mesh );
 			cubes.push( mesh );
 
-			helper = new THREE.BoxHelper( mesh );
+			helper = new THREE.EdgesHelper( mesh );
 			helper.material.color.setRGB( 1, 0, 0 );
 			scene.add( helper );
 

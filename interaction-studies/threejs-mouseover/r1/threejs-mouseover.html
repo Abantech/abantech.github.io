@@ -40,7 +40,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 
@@ -92,7 +92,7 @@
 //		var material = new THREE.MeshNormalMaterial();
 		var material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 50,
 			side: THREE.DoubleSide
@@ -117,7 +117,7 @@
 //		material = new THREE.MeshNormalMaterial();
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 50,
 			side: THREE.DoubleSide
@@ -127,7 +127,7 @@
 //		material = new THREE.MeshPhongMaterial( { ambient: 0x030303, color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } )
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 //			shading: THREE.FlatShading,
 			shininess: 0.001
@@ -143,7 +143,7 @@
 		for (var i = 0; i < 50; i++) {
 			material = new THREE.MeshPhongMaterial( {
 				color: 0xffffff * Math.random(), 
-				ambient: 0xffffff * Math.random(),
+	//			ambient: 0xffffff * Math.random(),
 				opacity: Math.random(),
 				specular: 0xffffff * Math.random(),
 				shading: THREE.FlatShading,
@@ -159,7 +159,7 @@
 			scene.add( mesh );
 			cubes.push( mesh );
 
-			helper = new THREE.BoxHelper( mesh );
+			helper = new THREE.EdgesHelper( mesh );
 			helper.material.color.setRGB( 1, 0, 0 );
 			scene.add( helper );
 

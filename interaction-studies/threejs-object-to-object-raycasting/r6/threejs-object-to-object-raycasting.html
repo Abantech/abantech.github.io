@@ -65,7 +65,7 @@
 		document.body.appendChild( stats.domElement );
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
@@ -99,7 +99,7 @@
 		light.shadowMapHeight = 2048;
 
 		light.castShadow = true;
-		light.shadowCameraVisible = true;
+//		light.shadowCameraVisible = true;
 		scene.add( light );
 
 		light = new THREE.PointLight( 0xffffff, 0.5 );
@@ -109,7 +109,7 @@
 
 // ground box
 		var geometry = new THREE.BoxGeometry( 500, 500, 500 );
-		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), ambient: 0xffffff * Math.random() } );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -250, 0 );
 		mesh.castShadow = true;
@@ -180,7 +180,7 @@
 		}
 
 		geometry = new THREE.ConvexGeometry( points );
-		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), ambient: 0xffffff * Math.random() } );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
 		objectRandom = new THREE.Mesh( geometry, material );
 		objectRandom.castShadow = true;
 		objectRandom.receiveShadow = true;
@@ -199,7 +199,7 @@
 
 		obj = new THREE.Object3D();
 		geometry = new THREE.CylinderGeometry( 5, 6, 1, 17 );
-		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), ambient: 0xffffff * Math.random() } );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
 
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.scale.y = 30;
@@ -215,7 +215,7 @@
 		geometry = new THREE.CylinderGeometry( 2, 1, 60, 10 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 20, 0, 0 ) );
-		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), ambient: 0xffffff * Math.random() } );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
 
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.castShadow = true;
@@ -229,7 +229,7 @@
 		geometry = new THREE.CylinderGeometry( 3, 3.5, -5, 15 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 50, 0, 0 ) );
-		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), ambient: 0xffffff * Math.random() } );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
 
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.castShadow = true;

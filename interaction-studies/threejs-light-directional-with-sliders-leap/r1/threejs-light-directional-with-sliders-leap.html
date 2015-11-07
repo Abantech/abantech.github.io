@@ -53,7 +53,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		document.body.appendChild( renderer.domElement );
 
 		scene = new THREE.Scene();
@@ -67,7 +67,7 @@
 // ground box
 		var geometry = new THREE.BoxGeometry( 500, 500, 500 );
 		var color = 0xffffff * Math.random();
-		var material = new THREE.MeshPhongMaterial( { ambient: color, color: color, side: 2 });
+		var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
@@ -125,7 +125,7 @@
 		lightDirectional.shadowMapHeight = 2048;
 
 		lightDirectional.castShadow = true;
-		lightDirectional.shadowCameraVisible = true;
+//		lightDirectional.shadowCameraVisible = true;
 		scene.add( lightDirectional );
 
 		pointLight = new THREE.PointLight( 0xffffff, 0.5 );
@@ -162,7 +162,7 @@
 				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
 				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
 				var color = 0xffffff * Math.random();
-				var material = new THREE.MeshPhongMaterial( { ambient: color, color: color, side: 2 });
+				var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
 				var mesh = new THREE.Mesh( geometry, material );
 				mesh.castShadow = true;
 				mesh.receiveShadow = true;
@@ -170,7 +170,7 @@
 				mesh.rotation.y = - angle * i;
 				scene.add( mesh );
 
-				helper = new THREE.BoxHelper( mesh );
+				helper = new THREE.EdgesHelper( mesh );
 				scene.add( helper );
 
 		}
@@ -184,7 +184,7 @@
 				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
 				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
 				var color = 0xffffff * Math.random();
-				var material = new THREE.MeshPhongMaterial( { ambient: color, color: color, side: 2 });
+				var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
 				var mesh = new THREE.Mesh( geometry, material );
 				mesh.castShadow = true;
 				mesh.receiveShadow = true;
@@ -192,7 +192,7 @@
 				mesh.rotation.y = - angle * i;
 				scene.add( mesh );
 
-				helper = new THREE.BoxHelper( mesh );
+				helper = new THREE.EdgesHelper( mesh );
 				scene.add( helper );
 
 		}
@@ -207,7 +207,7 @@
 		var geometry = new THREE.SphereGeometry( 25, 50, 50 );
 		var material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 10
 		} );
@@ -217,14 +217,14 @@
 		mesh.receiveShadow = true;
 		trylonPerisphere.add( mesh );
 
-				helper = new THREE.BoxHelper( mesh );
+				helper = new THREE.EdgesHelper( mesh );
 				scene.add( helper );
 
 // Trylon
 		geometry = new THREE.CylinderGeometry( 0, 8, 100, 3 );
 		material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(), 
-			ambient: 0xffffff * Math.random(),
+//			ambient: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 1
 		} );
@@ -234,7 +234,7 @@
 		mesh.receiveShadow = true;
 		trylonPerisphere.add( mesh );
 
-				helper = new THREE.BoxHelper( mesh );
+				helper = new THREE.EdgesHelper( mesh );
 				scene.add( helper );
 
 		scene.add( trylonPerisphere );

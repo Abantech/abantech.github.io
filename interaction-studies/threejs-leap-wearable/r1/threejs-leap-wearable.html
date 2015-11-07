@@ -52,7 +52,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 
@@ -125,7 +125,7 @@
 
 		material = new THREE.MeshPhongMaterial( {
 			color: currentColor,
-			ambient: 0x333333,
+//			ambient: 0x333333,
 			shininess: 0.001,
 			side: 2
 		} );
@@ -140,7 +140,7 @@
 		for (var i = 0; i < 50; i++) {
 			material = new THREE.MeshPhongMaterial( {
 				color: 0xffffff,
-				ambient: 666666,
+//				ambient: 666666,
 				side: 2
 			} );
 
@@ -152,7 +152,7 @@
 			scene.add( mesh );
 			cubes.push( mesh );
 
-			helper = new THREE.BoxHelper( mesh );
+			helper = new THREE.EdgesHelper( mesh );
 			helper.material.color.setRGB( 1, 0, 0 );
 			scene.add( helper );
 
@@ -200,7 +200,7 @@
 		geometry2 = new THREE.BoxGeometry( 15, 15, 15 );
 		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 5, -25 ) );
 		geometry.merge( geometry2 );
-		material = new THREE.MeshPhongMaterial( { color: 0xff0000, ambient: 666666, side: 2 } );
+		material = new THREE.MeshPhongMaterial( { color: 0xff0000, side: 2 } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 70, 0, 90 );
 		mesh.rotation.z = 0.3;
@@ -214,7 +214,7 @@
 		geometry2.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 ) );
 		geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( -0.25 ) );
 		geometry.merge( geometry2 );
-		material = new THREE.MeshPhongMaterial( { color: 0x00ff00, ambient: 666666, side: 2 } );
+		material = new THREE.MeshPhongMaterial( { color: 0x00ff00, side: 2 } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 70, 5, 150 );
 		mesh.rotation.z = 0.3;
@@ -226,7 +226,7 @@
 		geometry2 = new THREE.BoxGeometry( 10, 10, 10 );
 		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -25 ) );
 		geometry.merge( geometry2 );
-		material = new THREE.MeshPhongMaterial( { color: 0x0000ff, ambient: 666666, side: 2 } );
+		material = new THREE.MeshPhongMaterial( { color: 0x0000ff, side: 2 } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 70, 5, 210 );
 		mesh.rotation.z = 0.2;
