@@ -179,11 +179,9 @@
 
 		}
 
-		geometry2 = new THREE.ConvexGeometry( points );
-
-		geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		geometry = new THREE.ConvexGeometry( points );
 		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
-		objectRandom = new THREE.Mesh( geometry2, material );
+		objectRandom = new THREE.Mesh( geometry, material );
 		objectRandom.castShadow = true;
 		objectRandom.receiveShadow = true;
 		scene.add( objectRandom );
