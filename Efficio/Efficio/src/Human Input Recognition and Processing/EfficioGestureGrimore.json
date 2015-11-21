@@ -1,0 +1,104 @@
+{
+    "Gestures": [
+        {
+            "Name": "FiveFingersAbovePalm",
+            "Hands": [
+                {
+                    "Hand": "Right",
+                    "Fingers": [
+                        {
+                            "Name": "Index",
+                            "Extended": "true",
+                            "RelativeTo": {
+                                "Hand": "Self",
+                                "Part": "Palm",
+                                "Position": "Above",
+                                "Value": "1"
+                            }
+                        },
+                        {
+                            "Name": "Middle",
+                            "Extended": "true",
+                            "RelativeTo": {
+                                "Hand": "Self",
+                                "Part": "Palm",
+                                "Position": "Above",
+                                "Value": "1"
+                            }
+                        },
+                        {
+                            "Name": "Ring",
+                            "Extended": "true",
+                            "RelativeTo": {
+                                "Hand": "Self",
+                                "Part": "Palm",
+                                "Position": "Above",
+                                "Value": "1"
+                            }
+                        },
+                        {
+                            "Name": "Pinky",
+                            "Extended": "true",
+                            "RelativeTo": {
+                                "Hand": "Self",
+                                "Part": "Palm",
+                                "Position": "Above",
+                                "Value": "1"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "FiveFingersBelowPalm",
+            "Hands": [
+                {
+                    "Hand": "Either",
+                    "Fingers": [
+                        {
+                            "Name": "Index",
+                            "Extended": "true",
+                            "RelativeTo": {
+                                "Hand": "Self",
+                                "Part": "Palm",
+                                "Position": "Below",
+                                "Value": "2"
+                            }
+                        },
+                        {
+                            "Name": "Middle",
+                            "Extended": "true",
+                            "RelativeTo": {
+                                "Hand": "Self",
+                                "Part": "Palm",
+                                "Position": "Below",
+                                "Value": "2"
+                            }
+                        },
+                        {
+                            "Name": "Ring",
+                            "Extended": "true",
+                            "RelativeTo": {
+                                "Hand": "Self",
+                                "Part": "Palm",
+                                "Position": "Below",
+                                "Value": "2"
+                            }
+                        },
+                        {
+                            "Name": "Pinky",
+                            "Extended": "true",
+                            "RelativeTo": {
+                                "Hand": "Self",
+                                "Part": "Palm",
+                                "Position": "Below",
+                                "Value": "2"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ] 
+}

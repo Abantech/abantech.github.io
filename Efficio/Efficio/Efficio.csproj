@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D51C1B31-4CEE-4E27-9C34-8B41FA677900}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Efficio</RootNamespace>
+    <AssemblyName>Efficio</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'James|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ismael|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\Asset Management and Inventory\AssetManager.js" />
+    <Content Include="src\Human Input Recognition and Processing\Hand Gestures\HandGestureDetectionHandler.js" />
+    <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Helpers\FingerHelper.js" />
+    <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Helpers\HandHelper.js" />
+    <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Two Hand Gestures\TwoHandGestureDetection.js" />
+    <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandGestureDetection.js" />
+    <Content Include="src\InternalScene.js" />
+    <Content Include="src\main.js" />
+    <Content Include="src\Command Issuance and Control\CommandIssuanceAndControl.js" />
+    <Content Include="src\Constraints Engine\ConstraintsEngine.js" />
+    <Content Include="src\Debug and Exceptions\EfficioBasedExceptionHandler.js" />
+    <Content Include="src\Efficio.js" />
+    <Content Include="src\Hardware Abstraction Layer\Kinect\KinectToBVH.js" />
+    <Content Include="src\Hardware Abstraction Layer\LeapMotion\LeapToBVH.js" />
+    <Content Include="src\Human Input Recognition and Processing\CustomGestureLibrariesAccess.js" />
+    <Content Include="src\Human Input Recognition and Processing\EfficioAudioGrimoire.js" />
+    <Content Include="src\Human Input Recognition and Processing\EfficioGestureGrimoire.js" />
+    <Content Include="src\Human Input Recognition and Processing\EfficioGestureGrimoireTest.js" />
+    <Content Include="src\Human Input Recognition and Processing\HumanInputRecognitionAndProcessing.js" />
+    <Content Include="src\Input\LeapMotion\LeapMotion.js" />
+    <Content Include="src\Input\Microphone\Microphone.js" />
+    <Content Include="src\Logging\SystemNotificationListener.js" />
+    <Content Include="src\Message Bus\MessageBus.js" />
+    <Content Include="src\Sequence Execution and Action Scheduling\CollisionDetectionAndGravitySimulation.js" />
+    <Content Include="Test\Scripts\ActionToFunctionMapping.js" />
+    <Content Include="Test\Scripts\EfficioConfiguration.js" />
+    <Content Include="Test\Scripts\RequireConfiguration.js" />
+    <Content Include="Test\Test.html" />
+    <Content Include="Test\Test3D.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\Command Issuance and Control\ActionToFunctionMapping.json" />
+    <Content Include="src\Human Input Recognition and Processing\EfficioGestureGrimore.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\Input\Microsoft Kinect\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>18931</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:18931/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <PropertyGroup Condition="'$(Configuration)' == 'James'">
+    <Java8Home>C:\Program Files\Java\jre1.8.0_51\bin\</Java8Home>
+  </PropertyGroup>
+  <PropertyGroup>
+    <BuildDir>build</BuildDir>
+    <MinDir>Output\min</MinDir>
+  </PropertyGroup>
+  <Target Name="CleanJs">
+    <Message Text="Cleaning Directory" Importance="high" />
+    <RemoveDir Directories="$(MinDir)" Condition="Exists('$(MinDir)')" />
+  </Target>
+  <Target Name="InitJs">
+    <Message Text="Creating Directory" Importance="high" />
+    <MakeDir Directories="$(MinDir)" Condition="!Exists('$(MinDir)')" />
+  </Target>
+  <Target Name="Minify">
+    <Message Text="Minifying Js Files" Importance="high" />
+    <Exec Command="&quot;$(Java8Home)jjs.exe&quot;  -scripting build\r.js -- -o build\build.js" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>-->
+  <Target Name="AfterBuild">
+    <CallTarget Targets="CleanJs" />
+    <CallTarget Targets="InitJs" />
+    <CallTarget Targets="Minify" />
+  </Target>
+</Project>

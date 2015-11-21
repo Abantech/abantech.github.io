@@ -1,0 +1,63 @@
+{
+    "PluginName": "SketchUp.js",
+    "ActionMappings": [
+        {
+            "Topic": "Grasp",
+            "Source": "Input.Processed.Efficio",
+            "Action": "Create",
+            "Result": [
+                {
+                    "Channel": "Asset",
+                    "Topic": "Create",
+                    "Data": {
+                        "asset": "MyUpdatedAsset"
+                    }
+                }
+            ]
+        },
+        {
+            "Topic": "Pinch",
+            "Source": "Input.Processed.Efficio",
+            "Action": "Translate",
+             "Arguments":
+                [
+                    {
+                        "Source": "Gesture",
+                        "Name": "Location",
+                        "MapTo": "PinchPosition"
+                    },
+                    {
+                        "Source": "AssetManager",
+                        "Name": "ClosestAsset",
+                        "MapTo": "ClosestAsset"
+                    }
+                ],
+            "Result": [
+                {
+                    "Channel": "Asset",
+                    "Topic": "Update",
+                    "Data": {
+                        "asset": "MyUpdatedAsset"
+                    }
+                },
+                {
+                    "Channel": "SystemNotification",
+                    "Topic": "MyCustomMessage",
+                    "Data": {
+                        "message": "MyMessage"
+                    }
+                }
+            ]
+        },
+        {
+            "Topic": "*",
+            "Source": "UserNotification",
+            "Action": "Log"
+        },
+        {
+            "Source": "Input.Processed.Efficio",
+            "Topic": "NoHandsDetected",
+            "Action": "Log"
+        }
+    ]
+}
