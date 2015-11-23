@@ -10,9 +10,9 @@
 
             if (typeof annyang != 'undefined') {
                 
-                if (typeof AudioCommands != 'undefined') {
+                if (typeof ActionToFunctionMapping.AudioCommands != 'undefined') {
                     // Add our commands to annyang
-                    annyang.addCommands(AudioCommands);
+                    annyang.addCommands(ActionToFunctionMapping.AudioCommands);
                 }
             }
         },
@@ -25,7 +25,8 @@
                     topic: 'Connected',
                     source: source,
                     data: {
-                        name : source,
+                        name: source,
+                        test: 'test'
                     }
                 });
             }

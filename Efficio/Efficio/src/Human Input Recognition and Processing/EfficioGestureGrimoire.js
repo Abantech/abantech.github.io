@@ -1,5 +1,6 @@
 ﻿define(['postal'], function (bus) {
     var source = 'Efficio Gesture Grimoire';
+    var ActiveGesturesDictionaryCopy = {};
 
     function DetectPredefinedGestures(data, envelope) {
         var trackingType = data.trackingType || '';
@@ -7,7 +8,7 @@
         switch (trackingType) {
             case 'Hands': {
                 require(['Human Input Recognition and Processing/Hand Gestures/HandGestureDetectionHandler'], function (hgdh) {
-                    hgdh.ProcessInput(data)
+                    hgdh.ProcessInput(data, ActiveGesturesDictionaryCopy)
                 });
                 break;
             }
@@ -29,8 +30,8 @@
 
 
     return {
-        Initialize: function () {
-            
+        Initialize: function (ActiveGesturesDictionary) {
+            ActiveGesturesDictionaryCopy = ActiveGesturesDictionary;
         },
 
         ProcessInput: function (data, envelope) {

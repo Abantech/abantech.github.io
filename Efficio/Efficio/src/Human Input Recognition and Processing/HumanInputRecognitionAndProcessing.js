@@ -1,8 +1,10 @@
 ﻿define(['postal'], function (bus) {
     return {
         Initialize: function () {
+            var ActiveGesturesDictionary = {};
+
             require(['Human Input Recognition and Processing/CustomGestureLibrariesAccess'], function (customGestureLibraries) {
-                customGestureLibraries.Initialize();
+                customGestureLibraries.Initialize(ActiveGesturesDictionary);
 
                 bus.subscribe({
                     channel: "Input.Raw",
@@ -23,7 +25,7 @@
             };
 
             require(['Human Input Recognition and Processing/EfficioGestureGrimoire'], function (efficioGestureLibrary) {
-                efficioGestureLibrary.Initialize();
+                efficioGestureLibrary.Initialize(ActiveGesturesDictionary);
 
                 bus.subscribe({
                     channel: "Input.Raw",

@@ -1,5 +1,6 @@
 ﻿define(['postal'], function (bus) {
     var source = 'Custom Gesture Libraries';
+    var ActiveGesturesDictionaryCopy = {};
 
     function LoadCustomGestures() {
         // Custom Gestures created by the user will be loaded here
@@ -23,8 +24,8 @@
     }
 
     return {
-        Initialize: function () {
-            LoadCustomGestures();
+        Initialize: function (ActiveGesturesDictionary) {
+            ActiveGesturesDictionaryCopy = ActiveGesturesDictionary;
         },
         ProcessInput: function (data, envelope) {
 

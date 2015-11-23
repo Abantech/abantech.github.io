@@ -8,14 +8,9 @@
 </head>
 <body>
     <script type="text/javascript">
-        ActionToFunctionMapping = {
-            "PluginName": "Test.js",
-            "ActionMappings": [{
-                "Topic": "Leap",
-                "Source": "Input.Raw",
-                "Action": "leapAnimate",
-            }]
-        }
+        var messages = 0;
+        var startTime;
+        var cube;
 
         Test = {
             leapAnimate: function (data) {
@@ -61,87 +56,61 @@
 
                 }
 
-                var width = Math.round(container.offsetWidth / 2),
-          height = container.offsetHeight;
+                renderer.render(scene, camera);
+            },
+            CreateAndScale: function (data) {
+                if (!cube) {
+                    var geometry = new THREE.BoxGeometry(1, 1, 1);
+                    var material = new THREE.MeshNormalMaterial();
+                    cube = new THREE.Mesh(geometry, material);
+                    scene.add(cube);
+                }
 
-
-                renderer.setViewport(0, 0, width, height);
-                renderer.setScissor(0, 0, width, height);
-                renderer.enableScissorTest(true);
-
-                cameraLeft.aspect = width * 2 / height;
-                cameraLeft.updateProjectionMatrix();
-
-                renderer.render(scene, cameraLeft);
-
-                renderer.setViewport(width, 0, width, height);
-                renderer.setScissor(width, 0, width, height);
-                renderer.enableScissorTest(true);
-
-                cameraRight.aspect = width * 2 / height;
-                cameraRight.updateProjectionMatrix();
-
-                renderer.render(scene, cameraRight);
-            }
+                cube.scale.set(data.distance, data.distance, data.distance);
+            },
+            Destroy: function (data) {
+                if (cube) {
+                    scene.remove(cube);
+                    cube = null;
+                }
+            },
         }
     </script>
+    <script src="https://cdn.rawgit.com/leapmotion/leapjs/master/leap-0.6.4.js"></script>
 
-    <script src="https://cdn.rawgit.com/leapmotion/leapjs/master/leap-0.6.4.min.js"></script>
-    <script data-main="Output/min/Efficio.min.js" src="http://requirejs.org/docs/release/2.1.20/minified/require.js"></script>
+    <!-- Require Configuration-->
+    <script src="Scripts/RequireConfiguration.js"></script>
 
-    <div id="container" style="width:100%; height:100%; position:absolute;"></div>
+    <!-- Efficio Configuration-->
+    <script src="Scripts/ActionToFunctionMapping.js"></script>
+    <script src="Scripts/EfficioConfigurationRemote.js"></script>
+
+    <script src="http://requirejs.org/docs/release/2.1.20/minified/require.js"></script>
+
     <script>
-        var scene = null,
-   cameraLeft = null,
-   cameraRight = null,
-   cube = null,
-   separation = -0.04300000000000005,
-   incrementation = 0.001,
-   animating = false;
-
         var baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
         var armMeshes = [];
         var boneMeshes = [];
 
         var stats, renderer, scene, camera, controls;
 
-        require(['Efficio.min'], function () {
+        require(['Demo/Scripts/Efficio.min'], function (efficio) {
             require(['THREE'], function (three) {
                 init();
             });
-
         })
 
-
         function init() {
-            // Grab our containers div
-            var container = document.getElementById("container");
 
-            // Create the Three.js renderers, add them to our divs
-            renderer = new THREE.WebGLRenderer({ antialias: true });
-            renderer.setSize(container.offsetWidth, container.offsetHeight);
-            container.appendChild(renderer.domElement);
-
-            // Create a new Three.js scene
             scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-            // Put in two cameras
-            cameraLeft = new THREE.PerspectiveCamera(75, (container.offsetWidth / 2) / container.offsetHeight, .1, 1000);
-            cameraLeft.position.set(-300, 300, 300);
-            cameraLeft.lookAt(new THREE.Vector3(0, -10, 0));
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
 
-            cameraRight = new THREE.PerspectiveCamera(75, (container.offsetWidth / 2) / container.offsetHeight, .1, 1000);
-            cameraRight.position.set(-300, 300, 300);
-            cameraRight.lookAt(new THREE.Vector3(0, -10, 0));
-
-            // Create a directional light to show off the object
-            var light = new THREE.DirectionalLight(0xffffff, 1.5);
-            light.position.set(0, 0, 1);
-            scene.add(light);
-
-            var baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
-            var armMeshes = [];
-            var boneMeshes = [];
+            camera.position.set(-350, 350, 350);
+            camera.lookAt(new THREE.Vector3(0, -10, 0));
 
             // helpers
             var gridHelper = new THREE.GridHelper(150, 10);
@@ -155,9 +124,17 @@
             var mesh = new THREE.Mesh(geometry, material);
             mesh.position.set(0, -10, 0);
             scene.add(mesh);
-      }
+
+            window.addEventListener('resize', onWindowResize, false);
+
+        }
 
         function onWindowResize() {
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
 
         }
 

@@ -55,7 +55,8 @@
                     data: {
                         name: source,
                         device: Leap,
-                        controller: controller
+                        controller: controller,
+                        test: 'test'
                     }
                 });
             });

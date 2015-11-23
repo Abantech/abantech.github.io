@@ -1,0 +1,10 @@
+{
+  "name": "LeapBroadcaster",
+  "version": "0.0.0",
+  "description": "LeapBroadcaster",
+  "main": "server.js",
+  "author": {
+    "name": "James",
+    "email": ""
+  }
+}

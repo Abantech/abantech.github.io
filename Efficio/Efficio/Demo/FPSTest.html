@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+
+    <script src="https://cdn.rawgit.com/leapmotion/leapjs/master/leap-0.6.4.min.js"></script>
+</head>
+<body>
+    <p>Framerate: <span id="leapFPS">FPS</span></p>
+    <script>
+        var controller = Leap.loop({ frameEventName: 'deviceFrame' }, function (frame) {
+            var fpsDisplay = document.getElementById('leapFPS');
+            fpsDisplay.innerText = frame.currentFrameRate;
+        });
+
+        controller.connect();
+    </script>
+</body>
+</html>

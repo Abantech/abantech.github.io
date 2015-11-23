@@ -22,8 +22,6 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'James|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>false</IncludeIisSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ismael|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +46,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Demo\Remote.html" />
+    <Content Include="Demo\Scripts\EfficioConfigurationRemote.js" />
     <Content Include="src\Asset Management and Inventory\AssetManager.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\HandGestureDetectionHandler.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Helpers\FingerHelper.js" />
@@ -71,11 +72,13 @@
     <Content Include="src\Logging\SystemNotificationListener.js" />
     <Content Include="src\Message Bus\MessageBus.js" />
     <Content Include="src\Sequence Execution and Action Scheduling\CollisionDetectionAndGravitySimulation.js" />
-    <Content Include="Test\Scripts\ActionToFunctionMapping.js" />
-    <Content Include="Test\Scripts\EfficioConfiguration.js" />
-    <Content Include="Test\Scripts\RequireConfiguration.js" />
-    <Content Include="Test\Test.html" />
-    <Content Include="Test\Test3D.html" />
+    <Content Include="Demo\FPSTest.html" />
+    <Content Include="Demo\Scripts\ActionToFunctionMapping.js" />
+    <Content Include="Demo\Scripts\Efficio.min.js" />
+    <Content Include="Demo\Scripts\EfficioConfiguration.js" />
+    <Content Include="Demo\Scripts\RequireConfiguration.js" />
+    <Content Include="Demo\Basic.html" />
+    <Content Include="Demo\3D.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="src\Command Issuance and Control\ActionToFunctionMapping.json" />
@@ -95,27 +98,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>18931</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:18931/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
   <PropertyGroup Condition="'$(Configuration)' == 'James'">
     <Java8Home>C:\Program Files\Java\jre1.8.0_51\bin\</Java8Home>
   </PropertyGroup>
@@ -143,5 +130,6 @@
     <CallTarget Targets="CleanJs" />
     <CallTarget Targets="InitJs" />
     <CallTarget Targets="Minify" />
+    <Copy SourceFiles="Output\min\Efficio.min.js" DestinationFolder="Test\Scripts" />
   </Target>
 </Project>

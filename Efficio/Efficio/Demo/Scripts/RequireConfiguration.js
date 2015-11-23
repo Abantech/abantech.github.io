@@ -11,7 +11,7 @@
         postal: 'https://cdn.rawgit.com/postaljs/postal.js/master/lib/postal.min',
         THREE: 'http://threejs.org/build/three.min',
         leapjs: 'https://cdn.rawgit.com/leapmotion/leapjs/master/leap-0.6.4.min',
-        annyang: 'https://cdn.rawgit.com/TalAter/annyang/master/annyang.min',
+        annyang: 'https://cdn.rawgit.com/TalAter/annyang/master/annyang',
     },
     shim: {
         'leapjs': { exports: 'Leap' },
