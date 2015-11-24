@@ -1,7 +1,7 @@
-﻿define(function () {
+﻿define(['Helpers/Math'], function (math) {
     var configuration = {
-        ExtensionMeasure: .5,
-        FlexionMeasure: -.5,
+        ExtensionAngle: 30,
+        FlexionAngle: 30,
         SupinationMeasure: 145,
         PronationMeasure: {
             Min: -35,
@@ -31,7 +31,7 @@
         var neutral;
 
         if (!Supination(hand) && !Pronation(hand) && !HyperPronation(hand)) {
-            neutral = { };
+            neutral = {};
         }
 
         return neutral;
@@ -39,28 +39,84 @@
 
     function Extension(hand) {
         var extension;
-        var measure = hand.direction[1] - hand.arm.direction()[1];
+        var angle = ExtensionAngle(hand);
 
-        if (measure > configuration.ExtensionMeasure) {
+        if (angle > configuration.ExtensionAngle) {
             extension = {
-                TBD: measure
+                angle: angle
             }
         }
 
         return extension;
     }
 
+    function ExtensionAngle(hand) {
+        var angleCorrector = 1;
+        var measure = hand.roll() * (180 / Math.PI);
+
+        if (GetSide(hand) === 'Right') {
+            measure = -measure;
+
+            if (measure > 0) {
+                angleCorrector = hand.direction[0] > 0 ? 1 : -1;
+            }
+            else {
+                angleCorrector = hand.direction[0] < 0 ? 1 : -1;
+            }
+        }
+        else {
+            if (measure > 0) {
+                angleCorrector = hand.direction[0] < 0 ? 1 : -1;
+            }
+            else {
+                angleCorrector = hand.direction[0] > 0 ? 1 : -1;
+            }
+        }
+
+        var angle = math.GetAngleBetweenVectors(hand.direction, hand.arm.direction());
+
+        return angle * angleCorrector;
+    }
+
     function Flexion(hand) {
         var flexion;
-        var measure = hand.direction[1] - hand.arm.direction()[1];
+        var angle = FlexionAngle(hand);
 
-        if (measure < configuration.FlexionMeasure) {
+        if (angle > configuration.FlexionAngle) {
             flexion = {
-                TBD: measure
+                TBD: angle
             }
         }
 
         return flexion;
+    }
+
+    function FlexionAngle(hand) {
+        var angleCorrector = 1;
+        var measure = hand.roll() * (180 / Math.PI);
+
+        if (GetSide(hand) === 'Right') {
+            measure = -measure;
+
+            if (measure > 0) {
+                angleCorrector = hand.direction[0] < 0 ? 1 : -1;
+            }
+            else {
+                angleCorrector = hand.direction[0] > 0 ? 1 : -1;
+            }
+        }
+        else {
+            if (measure > 0) {
+                angleCorrector = hand.direction[0] > 0 ? 1 : -1;
+            }
+            else {
+                angleCorrector = hand.direction[0] < 0 ? 1 : -1;
+            }
+        }
+
+        var angle = math.GetAngleBetweenVectors(hand.direction, hand.arm.direction());
+
+        return angle * angleCorrector;
     }
 
     function Supination(hand) {
@@ -131,13 +187,16 @@
         return deviation;
     }
 
+
     return {
         Configure: Configure,
         GetSide: GetSide,
         GetAngle: GetAngle,
         Neutral: Neutral,
         Extension: Extension,
+        ExtensionAngle: ExtensionAngle,
         Flexion: Flexion,
+        FlexionAngle: FlexionAngle,
         Supination: Supination,
         Pronation: Pronation,
         HyperPronation: HyperPronation,

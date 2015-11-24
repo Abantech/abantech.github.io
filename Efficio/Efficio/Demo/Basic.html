@@ -96,8 +96,10 @@
         var baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
         var armMeshes = [];
         var boneMeshes = [];
+        var colors = ["rgb(255, 0, 0)", "rgb(0, 255, 0)", "rgb(255, 255, 0)", "rgb(255, 255, 255)"];
+        var colorIndex = 0;
 
-        var stats, renderer, scene, camera, controls;
+        var stats, renderer, scene, camera, controls, light;
 
         require(['Demo/Scripts/Efficio.min'], function (efficio) {
             require(['THREE'], function (three) {
@@ -109,6 +111,9 @@
 
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            light = new THREE.AmbientLight(0x404040);
+            scene.add(light);
 
             renderer = new THREE.WebGLRenderer();
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -146,7 +151,7 @@
         function addMesh(meshes) {
 
             var geometry = new THREE.BoxGeometry(1, 1, 1);
-            var material = new THREE.MeshNormalMaterial();
+            var material = new THREE.MeshPhongMaterial();
             var mesh = new THREE.Mesh(geometry, material);
             meshes.push(mesh);
 
@@ -160,6 +165,8 @@
             mesh.setRotationFromMatrix((new THREE.Matrix4).fromArray(bone.matrix()));
             mesh.quaternion.multiply(baseBoneRotation);
             mesh.scale.set(bone.width, bone.width, bone.length);
+
+            mesh.material.color = new THREE.Color(colors[colorIndex]);
 
             scene.add(mesh);
 

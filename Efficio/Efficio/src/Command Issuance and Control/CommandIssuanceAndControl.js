@@ -1,16 +1,4 @@
 ﻿define(['postal', 'Asset Management and Inventory/AssetManager'], function (bus, ami) {
-    var ThreeDSystem;
-
-    var subscriptions = [];
-
-    function RegisterSubscriber(subscription) {
-        subscriptions.push(subscription);
-    }
-
-    function CallDynamicFunction(func, data, returnedFromFunction) {
-        return ThreeDSystem[func](data, returnedFromFunction);
-    }
-
     return {
         Initialize: function () {
             var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;

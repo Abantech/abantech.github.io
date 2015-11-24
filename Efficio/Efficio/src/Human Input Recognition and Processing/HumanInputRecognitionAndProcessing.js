@@ -1,10 +1,8 @@
-﻿define(['postal'], function (bus) {
+﻿define(['postal', 'Human Input Recognition and Processing/ActiveGestureDictionary'], function (bus, agd) {
     return {
         Initialize: function () {
-            var ActiveGesturesDictionary = {};
-
             require(['Human Input Recognition and Processing/CustomGestureLibrariesAccess'], function (customGestureLibraries) {
-                customGestureLibraries.Initialize(ActiveGesturesDictionary);
+                customGestureLibraries.Initialize(agd);
 
                 bus.subscribe({
                     channel: "Input.Raw",
@@ -25,7 +23,7 @@
             };
 
             require(['Human Input Recognition and Processing/EfficioGestureGrimoire'], function (efficioGestureLibrary) {
-                efficioGestureLibrary.Initialize(ActiveGesturesDictionary);
+                efficioGestureLibrary.Initialize(agd);
 
                 bus.subscribe({
                     channel: "Input.Raw",
@@ -36,17 +34,17 @@
                 });
             });
 
-            require(['Human Input Recognition and Processing/EfficioAudioGrimoire'], function (efficioAudioGrimoire) {
-                efficioAudioGrimoire.Initialize();
+            //require(['Human Input Recognition and Processing/EfficioAudioGrimoire'], function (efficioAudioGrimoire) {
+            //    efficioAudioGrimoire.Initialize();
 
-                bus.subscribe({
-                    channel: "Input.Audio.Raw",
-                    topic: "*",
-                    callback: function (data, envelope) {
-                        efficioAudioGrimoire.ProcessInput(data, envelope);
-                    }
-                });
-            });
+            //    bus.subscribe({
+            //        channel: "Input.Audio.Raw",
+            //        topic: "*",
+            //        callback: function (data, envelope) {
+            //            efficioAudioGrimoire.ProcessInput(data, envelope);
+            //        }
+            //    });
+            //});
         }
     }
 });

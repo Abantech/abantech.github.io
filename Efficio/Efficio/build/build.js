@@ -9,5 +9,5 @@
 		'leapjs': 'empty:',
 		'annyang': 'empty:',
     },
-    //optimize: "none"
+    optimize: "none"
 })

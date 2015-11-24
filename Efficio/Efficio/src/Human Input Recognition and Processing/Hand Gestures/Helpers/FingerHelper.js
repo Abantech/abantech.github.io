@@ -9,9 +9,7 @@
     }
 
     function GetExtendedFingersIndicies(hand) {
-        return hand.fingers.filter(function (finger) {
-            return finger.extended;
-        }).map(function (finger) {
+        return GetExtendedFingers(hand).map(function (finger) {
             return finger.type
         });
     }
@@ -28,12 +26,12 @@
         return fingerCountLabelsMap[GetExtendedFingersCount(hand)];
     }
 
-    function AreRequisiteFingersExtended(hand, neededFingersArray) {
-        var extendedFingers = GetExtendedFingers(hand);
+    function AreRequisiteFingersExtended(neededFingersArray, hand) {
+        var extendedFingers = GetExtendedFingersIndicies(hand);
 
-        return extendedFingers.filter(function (n) {
-            return neededFingersArray.indexOf(n) != -1
-        }).length === neededFingersArray.length;
+        return extendedFingers.filter(function (finger) {
+            return neededFingersArray.indexOf(finger) != -1
+        }).length === neededFingersArray.length && extendedFingers.length === neededFingersArray.length;
     }
     
     function DistanceBetweenFingers(finger1, finger2) {

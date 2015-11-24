@@ -8,7 +8,7 @@
         switch (trackingType) {
             case 'Hands': {
                 require(['Human Input Recognition and Processing/Hand Gestures/HandGestureDetectionHandler'], function (hgdh) {
-                    hgdh.ProcessInput(data, ActiveGesturesDictionaryCopy)
+                    hgdh.ProcessInput(data, ActiveGesturesDictionary)
                 });
                 break;
             }
@@ -30,8 +30,8 @@
 
 
     return {
-        Initialize: function (ActiveGesturesDictionary) {
-            ActiveGesturesDictionaryCopy = ActiveGesturesDictionary;
+        Initialize: function (agd) {
+            ActiveGesturesDictionary = agd;
         },
 
         ProcessInput: function (data, envelope) {

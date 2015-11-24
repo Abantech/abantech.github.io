@@ -13,11 +13,7 @@
                 var gestureName = 'NoHandsDetected'
 
                 if (hands.length === 0) {
-                    if (!ActiveGesturesDictionary[gestureName]) {
-                        ActiveGesturesDictionary[gestureName] = {
-                            StartTime: new Date()
-                        }
-                    }
+                    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName)
 
                     bus.publish({
                         channel: channel,
@@ -25,77 +21,43 @@
                         source: source,
                         data: {
                             message: 'No hands detected',
-                            gestureLength: Math.abs((ActiveGesturesDictionary[gestureName].StartTime - new Date()) / 1000)
+                            gestureInformation: gestureInformation
                         }
                     });
 
                     // Clear gesture dictionary for one and two hand gestures
-                    ActiveGesturesDictionary['OneHandGesture'] = null;
-                    ActiveGesturesDictionary['TwoHandGesture'] = null;
-                    
+                    ActiveGesturesDictionary.DeleteEntry(null, 'OneHandPosition');
+                    ActiveGesturesDictionary.DeleteEntry(null, 'OneHandGesture');
+                    ActiveGesturesDictionary.DeleteEntry(null, 'TwoHandPositione');
+                    ActiveGesturesDictionary.DeleteEntry(null, 'TwoHandGesture');
+
                     // No need for processing any further
                     return;
                 }
                 else {
-                    ActiveGesturesDictionary[gestureName] = null;
+                    ActiveGesturesDictionary.DeleteEntry(gestureName);
                 }
             })();
 
-            // Check if one hand is present
-            (function OneHandDetected() {
-                if (hands.length === 1) {
-                    var side = hh.GetSide(hands[0]);
-                    var gestureName = 'OneHandDetected'
-
-                    if (!ActiveGesturesDictionary[gestureName]) {
-                        ActiveGesturesDictionary[gestureName] = {
-                            StartTime: new Date()
-                        }
-                    }
-
-                    var oppositeHand = side === 'Right' ? 'Left' : 'Right'
-
-                    // Clear other hand gesture dictionary entries
-                    if (ActiveGesturesDictionary['OneHandGesture']) {
-                        ActiveGesturesDictionary['OneHandGesture'][oppositeHand] = null;
-                    }
-
-                    // Clear two hand gesture dictionary entries
-                    if (ActiveGesturesDictionary['TwoHandGesture']) {
-                        ActiveGesturesDictionary['TwoHandGesture'] = null;
-                    }
-
-                    // Send Message saying that a hand was detected
-                    bus.publish({
-                        channel: channel,
-                        topic: gestureName,
-                        source: source,
-                        data: {
-                            handCount: hands[0],
-                            gestureLength: Math.abs((ActiveGesturesDictionary[gestureName].StartTime - new Date()) / 1000)
-                        }
-                    });
-                }
-                else {
-                    ActiveGesturesDictionary[gestureName] = null;
-                }
-            })();
-
-            // Check if any hand present
+            // Detects each hand's presence independently
             if (hands.length > 0) {
-
-                // Process Gestures for each hand
                 hands.forEach(function (hand) {
+                    var gestureName = type + 'HandDetected';
 
                     // Send Message saying what hand was detected
                     var type = hand.type;
                     bus.publish({
                         channel: channel,
-                        topic: type + 'HandDetected',
+                        topic: gestureName,
                         source: source,
                         data: {
                             hand: hand
                         }
+                    });
+
+                    // Send data to the one hand position gesture detection libraries
+                    require(['Human Input Recognition and Processing/Hand Gestures/One Hand Gestures/OneHandPositionDetection'], function (ohgd) {
+                        ohgd.ProcessInput(data, hand, ActiveGesturesDictionary);
                     });
 
                     // Send data to the one hand gesture detection library
@@ -103,28 +65,72 @@
                         ohgd.ProcessInput(data, hand, ActiveGesturesDictionary);
                     });
                 });
+            }
 
-                // Send Message saying that two hands were detected
-                bus.publish({
-                    channel: channel,
-                    topic: 'TwoHandDetected',
-                    source: source,
-                    data: {
+                // Check if one hand is present
+                (function OneHandDetected() {
+                    if (hands.length === 1) {
+                        var side = hh.GetSide(hands[0]);
+                        var gestureName = 'OneHandDetected'
+                        var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName)
+
+                        var oppositeHand = side === 'Right' ? 'Left' : 'Right'
+
+                        // Clear other hand gesture dictionary entries
+                        ActiveGesturesDictionary.DeleteEntry(null, 'OneHandPosition', oppositeHand);
+                        ActiveGesturesDictionary.DeleteEntry(null, 'OneHandGesture', oppositeHand);
+
+                        // Clear two hand gesture dictionary entries
+                        ActiveGesturesDictionary.DeleteEntry(null, 'TwoHandGesture');
+
+                        // Send Message saying that a hand was detected
+                        bus.publish({
+                            channel: channel,
+                            topic: gestureName,
+                            source: source,
+                            data: {
+                                handCount: hands[0],
+                                gestureInformation: gestureInformation
+                            }
+                        });
                     }
-                });
+                    else {
+                        ActiveGesturesDictionary.DeleteEntry(gestureName);
+                    }
+                })();
 
-                if (hands.length === 2) {
-                    // Send data to the two hand gesture detection library
-                    require(['Human Input Recognition and Processing/Hand Gestures/Two Hand Gestures/TwoHandGestureDetection'], function (thgd) {
-                        thgd.ProcessInput(data, hands, ActiveGesturesDictionary);
-                    });
+                // Check if any hand present
+                if (hands.length  == 2) {
+                    (function TwoHandsDetected(){
+                        if (hands.length === 2) {
+                            var gestureName = 'TwoHandDetected'
+                            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName)
+
+                            // Send Message saying that two hands were detected
+                            bus.publish({
+                                channel: channel,
+                                topic: gestureName,
+                                source: source,
+                                data: {
+                                    gestureInformation: gestureInformation
+                                }
+                            });
+
+                            // Send data to the two hand gesture detection library
+                            require(['Human Input Recognition and Processing/Hand Gestures/Two Hand Gestures/TwoHandPositionDetection'], function (thgd) {
+                                thgd.ProcessInput(data, hands, ActiveGesturesDictionary);
+                            });
+                        }
+                        else {
+
+                        }
+                    })();
                 }
             }
         }
-    }
 
 
-    return {
-        ProcessInput: ProcessInput
-    }
-})
+        return {
+            ProcessInput: ProcessInput
+        }
+    })
