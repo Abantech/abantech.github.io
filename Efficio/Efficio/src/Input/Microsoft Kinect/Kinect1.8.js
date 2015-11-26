@@ -4,16 +4,31 @@
     var controller;
     var device = "Kinect1.8";
 
+    function configure(KinectConfiguration) {
+        KinectConfiguration = {
+            Server: KinectConfiguration.Host || "ws://localhost:8181",
+            LogActions: KinectConfiguration.LogActions || false
+        }
+
+        return KinectConfiguration;
+    }
 
     return {
-        Initialize: function () {
+        Initialize: function (KinectConfiguration) {
 
             // Create Controller
-            controller = new WebSocket("ws://localhost:8181");
+            controller = new WebSocket(KinectConfiguration.Server);
 
             // Sends message when controller is connected
             controller.onopen = function () {
-                bus.publish({
+
+                if (KinectConfiguration.LogActions == true)
+                {
+                    console.log("Connection successful.");
+                }
+                
+                bus.publish
+                ({
                     channel: 'Devices',
                     topic: 'Connected',
                     source: source,
@@ -28,22 +43,39 @@
 
             // Connection closed.
             controller.onclose = function () {
-                console.log("Connection closed.");
+                if (KinectConfiguration.LogActions == true)
+                {
+                    console.log("Connection closed.");
+                } 
             }
         },
 
         Start: function () {
 
             // Listens for input from device
-            controller.onmessage = function (frame) {
+            controller.onmessage = function (frame)
+            {
+
+                if (KinectConfiguration.LogActions == true)
+                {
+                    console.log("received data from socket");
+                }
+                
                 // SKELETON DATA
                 var jsonObject = JSON.parse(frame.data);
 
-                bus.publish({
+                if (KinectConfiguration.LogActions == true)
+                {
+                    console.log(frame);
+                }
+
+                bus.publish
+                ({
                     channel: 'Input.Raw',
                     topic: device,
                     source: source,
-                    data: {
+                    data:
+                    {
                         trackingType: trackingType,
                         input: frame
                     }

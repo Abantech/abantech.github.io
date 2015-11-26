@@ -37,6 +37,16 @@ function (bus, hirp, ami, constraintsEngine, comm, internalScene, sysNotificatio
                 });
             }
 
+            console.log("Kinect is: " + EfficioConfiguration.kinect)
+
+            if (EfficioConfiguration.kinect == true) {
+                require(['Input/Microsoft Kinect/Kinect1.8'], function (kin) {
+                    kinect = kin;
+                    kinect.Initialize(EfficioConfiguration.devices.kinect);
+                    kinect.Start();
+                });
+            }
+
             if (EfficioConfiguration.devices.microphone) {
                 require(['Input/Microphone/Microphone'], function (mic) {
                     microphone = mic;

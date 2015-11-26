@@ -57,6 +57,7 @@
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandGestureDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Two Hand Gestures\TwoHandPositionDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandPositionDetection.js" />
+    <Content Include="src\Input\Microsoft Kinect\Kinect1.8.js" />
     <Content Include="src\InternalScene.js" />
     <Content Include="src\main.js" />
     <Content Include="src\Command Issuance and Control\CommandIssuanceAndControl.js" />
@@ -85,9 +86,7 @@
   <ItemGroup>
     <Content Include="src\Human Input Recognition and Processing\EfficioGestureGrimore.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Input\Microsoft Kinect\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
