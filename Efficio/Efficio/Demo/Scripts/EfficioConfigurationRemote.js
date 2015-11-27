@@ -2,8 +2,7 @@
     devices: {
         microphone: true,
         kinect: {
-            Server: "ws://localhost:8181",
-            LogActions: true
+            Host: "ws://localhost:8181"
         },
         leapmotion: {
             Port: 6437,

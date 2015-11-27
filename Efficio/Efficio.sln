@@ -10,18 +10,23 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Ismael|Any CPU = Ismael|Any CPU
 		James|Any CPU = James|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.Debug|Any CPU.ActiveCfg = Ismael|Any CPU
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.Debug|Any CPU.Build.0 = Ismael|Any CPU
+		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.Ismael|Any CPU.ActiveCfg = Ismael|Any CPU
+		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.Ismael|Any CPU.Build.0 = Ismael|Any CPU
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.James|Any CPU.ActiveCfg = James|Any CPU
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.James|Any CPU.Build.0 = James|Any CPU
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D3958C7-74D8-4AEA-8738-6D940C8C9F1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D3958C7-74D8-4AEA-8738-6D940C8C9F1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D3958C7-74D8-4AEA-8738-6D940C8C9F1C}.Ismael|Any CPU.ActiveCfg = Ismael|Any CPU
+		{8D3958C7-74D8-4AEA-8738-6D940C8C9F1C}.Ismael|Any CPU.Build.0 = Ismael|Any CPU
 		{8D3958C7-74D8-4AEA-8738-6D940C8C9F1C}.James|Any CPU.ActiveCfg = Release|Any CPU
 		{8D3958C7-74D8-4AEA-8738-6D940C8C9F1C}.James|Any CPU.Build.0 = Release|Any CPU
 		{8D3958C7-74D8-4AEA-8738-6D940C8C9F1C}.Release|Any CPU.ActiveCfg = Release|Any CPU

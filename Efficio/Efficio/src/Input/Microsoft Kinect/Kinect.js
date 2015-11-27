@@ -2,12 +2,11 @@
     var source = 'Kinect';
     var trackingType = 'Seated';
     var controller;
-    var device = "Kinect1.8";
+    var device = "KinectV1";
 
     function configure(KinectConfiguration) {
         KinectConfiguration = {
-            Server: KinectConfiguration.Host || "ws://localhost:8181",
-            LogActions: KinectConfiguration.LogActions || false
+            Host: KinectConfiguration.Host || "ws://localhost:8181"
         }
 
         return KinectConfiguration;
@@ -16,16 +15,17 @@
     return {
         Initialize: function (KinectConfiguration) {
 
+            // Load Configuration
+            KinectConfiguration = configure(KinectConfiguration);
+
+            console.log("Attempting Connection.");
             // Create Controller
-            controller = new WebSocket(KinectConfiguration.Server);
+            controller = new WebSocket(KinectConfiguration.Host);
 
             // Sends message when controller is connected
             controller.onopen = function () {
+            console.log("Connection successful.");
 
-                if (KinectConfiguration.LogActions == true)
-                {
-                    console.log("Connection successful.");
-                }
                 
                 bus.publish
                 ({
@@ -43,10 +43,8 @@
 
             // Connection closed.
             controller.onclose = function () {
-                if (KinectConfiguration.LogActions == true)
-                {
                     console.log("Connection closed.");
-                } 
+
             }
         },
 
@@ -56,18 +54,11 @@
             controller.onmessage = function (frame)
             {
 
-                if (KinectConfiguration.LogActions == true)
-                {
-                    console.log("received data from socket");
-                }
-                
+               console.log("received data from socket");              
                 // SKELETON DATA
-                var jsonObject = JSON.parse(frame.data);
+                //var jsonObject = JSON.parse(frame.data);
 
-                if (KinectConfiguration.LogActions == true)
-                {
-                    console.log(frame);
-                }
+                console.log(frame);
 
                 bus.publish
                 ({

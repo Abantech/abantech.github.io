@@ -12,6 +12,7 @@
 function (bus, hirp, ami, constraintsEngine, comm, internalScene, sysNotificationListener) {
     var leapmotion;
     var microphone;
+    var kinect;
 
     function configure(EfficioConfiguration) {
         EfficioConfiguration.devices = EfficioConfiguration.devices || { microphone: false, kinect: false, leapmotion: false };
@@ -37,15 +38,14 @@ function (bus, hirp, ami, constraintsEngine, comm, internalScene, sysNotificatio
                 });
             }
 
-            console.log("Kinect is: " + EfficioConfiguration.kinect)
-
-            if (EfficioConfiguration.kinect == true) {
-                require(['Input/Microsoft Kinect/Kinect1.8'], function (kin) {
+            
+            //if (EfficioConfiguration.devices.kinect) {
+                require(['Input/Microsoft Kinect/Kinect'], function (kin) {
                     kinect = kin;
                     kinect.Initialize(EfficioConfiguration.devices.kinect);
                     kinect.Start();
                 });
-            }
+            //}
 
             if (EfficioConfiguration.devices.microphone) {
                 require(['Input/Microphone/Microphone'], function (mic) {
