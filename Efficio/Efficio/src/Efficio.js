@@ -39,13 +39,17 @@ function (bus, hirp, ami, constraintsEngine, comm, internalScene, sysNotificatio
             }
 
             
-            //if (EfficioConfiguration.devices.kinect) {
+            if (EfficioConfiguration.devices.kinect) {
                 require(['Input/Microsoft Kinect/Kinect'], function (kin) {
                     kinect = kin;
                     kinect.Initialize(EfficioConfiguration.devices.kinect);
                     kinect.Start();
                 });
-            //}
+
+                require(['Input/Microsoft Kinect/JointHelper'], function (jh) {
+                    console.log("Joint Helper: " + jh);
+                });
+            }
 
             if (EfficioConfiguration.devices.microphone) {
                 require(['Input/Microphone/Microphone'], function (mic) {

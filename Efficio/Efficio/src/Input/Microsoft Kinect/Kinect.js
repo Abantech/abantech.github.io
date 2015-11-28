@@ -1,8 +1,9 @@
 ﻿define(['postal'], function (bus) {
     var source = 'Kinect';
-    var trackingType = 'Seated';
+    var trackingType = 'Body';
     var controller;
     var device = "KinectV1";
+    var jointHelper;
 
     function configure(KinectConfiguration) {
         KinectConfiguration = {
@@ -15,6 +16,10 @@
     return {
         Initialize: function (KinectConfiguration) {
 
+            require(['Input/Microsoft Kinect/JointHelper'], function (jh) {
+                jointHelper = jh;
+            });
+
             // Load Configuration
             KinectConfiguration = configure(KinectConfiguration);
 
@@ -23,8 +28,9 @@
             controller = new WebSocket(KinectConfiguration.Host);
 
             // Sends message when controller is connected
-            controller.onopen = function () {
-            console.log("Connection successful.");
+            controller.onopen = function ()
+            {
+                console.log("Connection successful.");
 
                 
                 bus.publish
@@ -54,11 +60,21 @@
             controller.onmessage = function (frame)
             {
 
-               console.log("received data from socket");              
-                // SKELETON DATA
-                //var jsonObject = JSON.parse(frame.data);
+                console.log("received data from socket");
 
-                console.log(frame);
+                var kinectFriendly = [];
+               
+               var skeleton = JSON.parse(frame.data);
+               skeleton.Joints.forEach(function (joint) {
+                   var jointType = jointHelper.GetJointName(joint.JointType);
+                   var jointTracking = jointHelper.GetJointTrackingStatus(joint.TrackingState);
+
+                   var jointFriendly = { JointType: jointType, TrackingState: jointTracking, Joint: joint };
+
+                   kinectFriendly.push(jointFriendly);
+                   
+                   console.log(jointFriendly);
+               });
 
                 bus.publish
                 ({
@@ -68,7 +84,7 @@
                     data:
                     {
                         trackingType: trackingType,
-                        input: frame
+                        input: skeleton
                     }
                 });
             };

@@ -55,6 +55,7 @@
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandGestureDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Two Hand Gestures\TwoHandPositionDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandPositionDetection.js" />
+    <Content Include="src\Input\Microsoft Kinect\JointHelper.js" />
     <Content Include="src\Input\Microsoft Kinect\Kinect.js" />
     <Content Include="src\InternalScene.js" />
     <Content Include="src\main.js" />
