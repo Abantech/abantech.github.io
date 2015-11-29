@@ -49,6 +49,7 @@
     <Content Include="src\Asset Management and Inventory\AssetManager.js" />
     <Content Include="src\Helpers\Math.js" />
     <Content Include="src\Human Input Recognition and Processing\ActiveGestureDictionary.js" />
+    <Content Include="src\Human Input Recognition and Processing\Body Positions\BodyPositionDetectionHandler.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\HandGestureDetectionHandler.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Helpers\FingerHelper.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Helpers\HandHelper.js" />

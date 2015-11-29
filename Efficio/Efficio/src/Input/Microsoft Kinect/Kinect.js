@@ -1,8 +1,8 @@
 ﻿define(['postal'], function (bus) {
-    var source = 'Kinect';
+    var source = 'Microsoft Kinect';
     var trackingType = 'Body';
     var controller;
-    var device = "KinectV1";
+    var device = "Kinect";
     var jointHelper;
 
     function configure(KinectConfiguration) {
@@ -16,6 +16,7 @@
     return {
         Initialize: function (KinectConfiguration) {
 
+            // Retrieve Joint Helper
             require(['Input/Microsoft Kinect/JointHelper'], function (jh) {
                 jointHelper = jh;
             });
@@ -23,7 +24,6 @@
             // Load Configuration
             KinectConfiguration = configure(KinectConfiguration);
 
-            console.log("Attempting Connection.");
             // Create Controller
             controller = new WebSocket(KinectConfiguration.Host);
 
@@ -31,8 +31,6 @@
             controller.onopen = function ()
             {
                 console.log("Connection successful.");
-
-                
                 bus.publish
                 ({
                     channel: 'Devices',
@@ -40,7 +38,7 @@
                     source: source,
                     data: {
                         name: source,
-                        device: "Kinect",
+                        device: device,
                         controller: controller,
                         test: 'test'
                     }
@@ -59,22 +57,19 @@
             // Listens for input from device
             controller.onmessage = function (frame)
             {
-
-                console.log("received data from socket");
-
                 var kinectFriendly = [];
                
                var skeleton = JSON.parse(frame.data);
-               skeleton.Joints.forEach(function (joint) {
+               skeleton.Joints.forEach(function (joint)
+               {
+                   // Get the Joint Type and Tracking Status
                    var jointType = jointHelper.GetJointName(joint.JointType);
                    var jointTracking = jointHelper.GetJointTrackingStatus(joint.TrackingState);
-
                    var jointFriendly = { JointType: jointType, TrackingState: jointTracking, Joint: joint };
 
                    kinectFriendly.push(jointFriendly);
-                   
-                   console.log(jointFriendly);
                });
+
 
                 bus.publish
                 ({
@@ -84,7 +79,7 @@
                     data:
                     {
                         trackingType: trackingType,
-                        input: skeleton
+                        input: kinectFriendly
                     }
                 });
             };
