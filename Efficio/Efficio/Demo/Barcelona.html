@@ -26,9 +26,6 @@
         //var texturesURL = 'http://jaanga.github.io/gestification/projects/flying-leap-3d/barfolina-pavillion/textures';
         var texturesURL = 'images';
 
-        init();
-        animate();
-
         function init() {
             var css, light, geometry, material, mesh;
 
@@ -481,7 +478,7 @@
             controls.update(delta);
             renderer.render(scene, camera);
             //		stats.update();
-            stopAllMovement(movementStopInterval);
+            stopAllMovement();
 
         }
 
@@ -604,72 +601,59 @@
             controls.lon = -40;
         }
 
-        
-        var stepForward = function()
-        {
-            console.log("Stepping Forward")
-            controls.freeze = false;
-            controls.moveForward = true;
+        var Barcelona = {
+            stepForward: function () {
+                controls.freeze = false;
+                controls.moveForward = true;
+            },
+
+            stepBackward: function () {
+                controls.freeze = false;
+                controls.moveBackward = true;
+            },
+
+            stepLeft: function () {
+                controls.freeze = false;
+                controls.moveLeft = true;
+            },
+
+            stepRight: function () {
+                controls.freeze = false;
+                controls.moveRight = true;
+            },
+
+            stepInDirection: function (forward, backward, left, right) {
+                controls.freeze = false;
+                controls.moveForward = forward;
+                controls.moveBackward = backward;
+                controls.moveLeft = left;
+                controls.moveRight = right;
+            }
         }
 
-        var stepBackward = function() {
-            console.log("Stepping Backward")
-            controls.freeze = false;
-            controls.moveBackward = true;
-        }
-
-        var stepLeft = function() {
-            console.log("Stepping Left")
-            controls.freeze = false;
-            controls.moveLeft = true;
-        }
-
-        var stepRight = function() {
-            console.log("Stepping Right")
-            controls.freeze = false;
-            controls.moveRight = true;
-        }
-
-        var stepInDirection = function(forward, backward, left, right)
-        {
-            controls.freeze = false;
-            controls.moveForward = forward;
-            controls.moveBackward = backward;
-            controls.moveLeft = left;
-            controls.moveRight = right;
-        }
-
-
-        function autoTestMovement()
-        {
-            //stepForward();
-            //stepRight();
-            stepInDirection(true, false, false, true);
-        }
-
-        function stopAllMovement(interval)
-        {
-            if (!controls.freeze)
-            {
-                var timeDiff = (new Date().getTime() - globalStartTime) / interval;
-                if (timeDiff >= 1) {
-                    console.log("Stopping movement")
+        var movementCounter = 0;
+        function stopAllMovement() {
+            if (!controls.freeze) {
+                if (movementCounter % 5 === 0) {
                     controls.freeze = true;
                     controls.moveForward = false;
                     controls.moveBackward = false;
                     controls.moveLeft = false;
                     controls.moveRight = false;
+                    movementCounter = 0;
+                }
+                else {
+                    movementCounter++;
                 }
             }
         }
 
-        autoTestMovement();
-        
+        //autoTestMovement();
+
         var useLeapLoopDirectly = false;
 
-        //TODO: Make this a auto-executing function 
-        if (useLeapLoopDirectly)
-        {
+        //TODO: Make this a auto-executing function
+        if (useLeapLoopDirectly) {
             Leap.loop({ enableGestures: true }, function (frame) {
                 var hand, pitchAng, yawAng;
 
@@ -771,6 +755,20 @@
             });
         }
 
+    </script>
+    <script src="Scripts/BarcelonaA2FMapping.js"></script>
+    <script src="Scripts/BarcelonaEfficioConfiguration.js"></script>
+    <!-- Require Configuration-->
+    <script src="Scripts/RequireConfiguration.js"></script>
+    <script src="http://requirejs.org/docs/release/2.1.20/minified/require.js"></script>
+
+    <script>
+        require(['Demo/Scripts/Efficio.min'], function (efficio) {
+            require(['THREE'], function (three) {
+                init();
+                animate();
+            })
+        });
     </script>
 </body>
 </html>

@@ -51,7 +51,7 @@
                     source: source,
                     data: {
                         input: data,
-                        hand: hand,
+                        hand: hands,
                     }
                 });
             }

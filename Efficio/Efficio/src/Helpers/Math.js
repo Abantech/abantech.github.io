@@ -10,8 +10,8 @@
 
         b = {
             x: vector2[0],
-            y: hand.arm.direction()[1],
-            z: hand.arm.direction()[2]
+            y: vector2[1],
+            z: vector2[2]
         }
         var axb = vector1[0] * vector2[0] + vector1[1] * vector2[1] + vector1[2] * vector2[2];
         var vector1Length = Math.sqrt(vector1[0] * vector1[0] + vector1[1] * vector1[1] + vector1[2] * vector1[2]);

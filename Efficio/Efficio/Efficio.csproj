@@ -78,6 +78,8 @@
     <Content Include="Demo\images\water.jpg" />
     <Content Include="Demo\Barcelona.html" />
     <Content Include="Demo\Remote.html" />
+    <Content Include="Demo\Scripts\BarcelonaA2FMapping.js" />
+    <Content Include="Demo\Scripts\BarcelonaEfficioConfiguration.js" />
     <Content Include="Demo\Scripts\EfficioConfigurationRemote.js" />
     <Content Include="Demo\Scripts\FirstPersonControls.js" />
     <Content Include="Output\min\Efficio.min.js" />

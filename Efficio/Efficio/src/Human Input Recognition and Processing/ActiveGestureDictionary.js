@@ -13,6 +13,10 @@
         var entry;
         var agd = GetActiveGestureDictionary();
 
+        if (!agd[trackingType]) {
+            agd[trackingType] = {};
+        }
+
         if (dictionary) {
             if (!agd[trackingType][dictionary]) {
                 agd[trackingType][dictionary] = {};

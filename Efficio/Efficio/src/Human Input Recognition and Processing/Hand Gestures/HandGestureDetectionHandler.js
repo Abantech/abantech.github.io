@@ -73,6 +73,7 @@
             // Check if one hand is present
             (function OneHandDetected() {
                 if (hands.length === 1) {
+                    var hand = hands[0];
                     var side = hand.type == 'right' ? 'Right' : 'Left'
                     var gestureName = 'OneHandDetected'
                     var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName)
