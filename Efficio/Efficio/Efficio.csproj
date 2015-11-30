@@ -43,26 +43,60 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Demo\Accelerometer\Accelerometer.html" />
-    <Content Include="Demo\Accelerometer\Scripts\ActionToFunctionMapping.js" />
-    <Content Include="Demo\Accelerometer\Scripts\Efficio.min.js" />
-    <Content Include="Demo\Accelerometer\Scripts\EfficioConfiguration.js" />
-    <Content Include="Demo\Accelerometer\Scripts\RequireConfiguration.js" />
+    <Content Include="Demo\images\floor-tile-100.jpg" />
+    <Content Include="Demo\images\floor-tile-2-100.jpg" />
+    <Content Include="Demo\images\floor-tile-3-100.jpg" />
+    <Content Include="Demo\images\floor-tile-4-100.jpg" />
+    <Content Include="Demo\images\grass.jpg" />
+    <Content Include="Demo\images\grass_mid_seamless.jpg" />
+    <Content Include="Demo\images\Mies-BCN_M01.jpg" />
+    <Content Include="Demo\images\Mies-BCN_M081-512.jpg" />
+    <Content Include="Demo\images\Mies-BCN_M081.jpg" />
+    <Content Include="Demo\images\Mies-BCN_M11-512.jpg" />
+    <Content Include="Demo\images\Mies-BCN_M121-512.jpg" />
+    <Content Include="Demo\images\rocks-512.jpg" />
+    <Content Include="Demo\images\rocks.jpg" />
+    <Content Include="Demo\images\sculpture\alba-simplified.js" />
+    <Content Include="Demo\images\sculpture\alba.js" />
+    <Content Include="Demo\images\sculpture\load-alba.html" />
+    <Content Include="Demo\images\skybox\nx.jpg" />
+    <Content Include="Demo\images\skybox\ny.jpg" />
+    <Content Include="Demo\images\skybox\nz.jpg" />
+    <Content Include="Demo\images\skybox\px.jpg" />
+    <Content Include="Demo\images\skybox\py.jpg" />
+    <Content Include="Demo\images\skybox\pz.jpg" />
+    <Content Include="Demo\images\trees\originals\beech.png" />
+    <Content Include="Demo\images\trees\originals\tree3.jpg" />
+    <Content Include="Demo\images\trees\originals\tree4.jpg" />
+    <Content Include="Demo\images\trees\tree0.png" />
+    <Content Include="Demo\images\trees\tree1.png" />
+    <Content Include="Demo\images\trees\tree2.png" />
+    <Content Include="Demo\images\trees\tree3.png" />
+    <Content Include="Demo\images\trees\tree4.png" />
+    <Content Include="Demo\images\trees\tree5.png" />
+    <Content Include="Demo\images\water-bump.jpg" />
+    <Content Include="Demo\images\water.jpg" />
+    <Content Include="Demo\Barcelona.html" />
     <Content Include="Demo\Remote.html" />
     <Content Include="Demo\Scripts\EfficioConfigurationRemote.js" />
+    <Content Include="Demo\Scripts\FirstPersonControls.js" />
+    <Content Include="Output\min\Efficio.min.js" />
     <Content Include="src\Asset Management and Inventory\AssetManager.js" />
     <Content Include="src\Helpers\Math.js" />
     <Content Include="src\Human Input Recognition and Processing\ActiveGestureDictionary.js" />
+    <Content Include="src\Human Input Recognition and Processing\Body Positions\BodyPositionDetectionHandler.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\HandGestureDetectionHandler.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Helpers\FingerHelper.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandGestureDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Two Hand Gestures\TwoHandPositionDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandPositionDetection.js" />
-    <Content Include="src\Human Input Recognition and Processing\Input Extensions\LeapMotionHandExtensions.js" />
+    <Content Include="src\Human Input Recognition and Processing\Input Extensions\LeapMotion\LeapMotionHandExtensions.js" />
     <Content Include="src\Input\Accelerometer\Browser.js" />
     <Content Include="src\Input\Accelerometer\Browser2.js" />
     <Content Include="src\Input\DeviceManager.js" />
     <Content Include="src\Input\Geolocation\Browser.js" />
+    <Content Include="src\Input\Microsoft Kinect\JointHelper.js" />
+    <Content Include="src\Input\Microsoft Kinect\Kinect.js" />
     <Content Include="src\InternalScene.js" />
     <Content Include="src\main.js" />
     <Content Include="src\Command Issuance and Control\CommandIssuanceAndControl.js" />
@@ -93,7 +127,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="src\Input\Microsoft Kinect\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Demo\images\sculpture\alba-simplified.blend" />
+    <Content Include="Demo\images\sculpture\alba.blend" />
+    <Content Include="Demo\images\sculpture\doc.kml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Demo\images\sculpture\files\untitled.dae" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -113,6 +154,9 @@
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'James'">
     <Java8Home>C:\Program Files\Java\jre1.8.0_51\bin\</Java8Home>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Ismael'">
+    <Java8Home>C:\Program Files\Java\jre1.8.0_66\bin\</Java8Home>
   </PropertyGroup>
   <PropertyGroup>
     <BuildDir>build</BuildDir>

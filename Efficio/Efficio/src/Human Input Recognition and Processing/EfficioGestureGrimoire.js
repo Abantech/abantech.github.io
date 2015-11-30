@@ -15,6 +15,9 @@
             }
             case 'Body': {
                 // Body tracking library here
+                require(['Human Input Recognition and Processing/Body Positions/BodyPositionDetectionHandler'], function (bpdh) {
+                    bpdh.ProcessInput(data, ActiveGesturesDictionary)
+                });
                 break;
             }
             case 'Head': {

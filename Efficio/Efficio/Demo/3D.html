@@ -82,7 +82,7 @@
                     scene.add(cube);
                 }
 
-                cube.scale.set(data.distance, data.distance, data.distance);
+                cube.scale.set(data.gestureInformation.distance, data.gestureInformation.distance, data.gestureInformation.distance);
             },
             Destroy: function (data) {
                 if (cube) {
@@ -117,6 +117,8 @@
         var baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
         var armMeshes = [];
         var boneMeshes = [];
+        var colors = ["rgb(255, 0, 0)", "rgb(0, 255, 0)", "rgb(255, 255, 0)", "rgb(255, 255, 255)"];
+        var colorIndex = 0;
 
         var stats, renderer, scene, camera, controls;
 

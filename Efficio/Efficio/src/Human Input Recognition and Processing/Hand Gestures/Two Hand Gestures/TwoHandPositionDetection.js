@@ -4,13 +4,14 @@
     var FireCountMinimum = 15;
     var trackingType = 'Hands';
     var twoHandsGestureDetector;
+    var ActiveGesturesDictionary;
 
     function BothHandsNeutral(data) {
-        var hands = data.hands;
+        var hands = data.Input.hands;
         var gestureName = 'BothHandsNeutral'
 
         if (hands[0].IsNeutral() && hands[1].IsNeutral()) {
-            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trakcingType, gestureName, dictionary);
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary);
 
             if (gestureInformation.FireCount > FireCountMinimum) {
                 gestureInformation.distance = math.DistanceBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
@@ -29,11 +30,12 @@
             }
         }
         else {
-            ActiveGesturesDictionary.DeleteEntry(trakcingType, gestureName, dictionary);
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary);
         }
     };// END Both Hands Neutral
 
     function BothHandsPronation(data) {
+        var hands = data.Input.hands;
         var gestureName = 'BothHandsPronation'
 
         if (hands[0].IsProne() && hands[1].IsProne()) {
@@ -59,16 +61,23 @@
         }
     };// END Both Hand Pronation
 
-    function ProcessInput(data, ActiveGesturesDictionary) {
+    function ProcessInput(data, agd) {
+        ActiveGesturesDictionary = agd;
+
         if (!twoHandsGestureDetector) {
-            twoHandsGestureDetector = { Name: name };
-            twoHandsGestureDetector.BothHandsNeutral = BothHandsNeutral;
-            twoHandsGestureDetector.BothHandsPronation = BothHandsPronation;
+            twoHandsGestureDetector = {
+                Name: name,
+                Gestures: {
+                    BothHandsNeutral: BothHandsNeutral,
+                    BothHandsPronation: BothHandsPronation
+                }
+            };
         }
 
-        twoHandsGestureDetector.forEach(function (gesture) {
-            position(data);
-        });
+
+        for (gesture in twoHandsGestureDetector.Gestures) {
+            twoHandsGestureDetector.Gestures[gesture](data);
+        }
 
         return twoHandsGestureDetector;
     }

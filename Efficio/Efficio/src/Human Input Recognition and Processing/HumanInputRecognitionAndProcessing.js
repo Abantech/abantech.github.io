@@ -4,7 +4,7 @@
 
     function Initialize() {
         // Extend input models for easier processing and to make them more informative
-        require(['Human Input Recognition and Processing/Input Extensions/LeapMotionHandExtensions'], function (LMHE) {
+        require(['Human Input Recognition and Processing/Input Extensions/LeapMotion/LeapMotionHandExtensions'], function (LMHE) {
             LMHE.ExtendClasses();
         });
 

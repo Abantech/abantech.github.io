@@ -50,9 +50,21 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
                 });
             }
 
+            
+            if (EfficioConfiguration.Devices.Kinect) {
+                require(['Input/Microsoft Kinect/Kinect'], function (kinect) {
+                    kinect.Initialize(EfficioConfiguration);
+                    kinect.Start();
+                });
+
+                require(['Input/Microsoft Kinect/JointHelper'], function (jh) {
+                    console.log("Joint Helper: " + jh);
+                });
+            }
+
             if (EfficioConfiguration.Devices.Microphone) {
                 require(['Input/Microphone/Microphone'], function (microphone) {
-                    microphone.Intitialize(EfficioConfiguration);
+                    microphone.Intitialize();
                     microphone.Start();
                 });
             }
