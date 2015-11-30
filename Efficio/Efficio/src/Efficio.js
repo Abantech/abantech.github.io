@@ -1,52 +1,77 @@
 ﻿define([
-    'Message Bus/MessageBus',
     'Human Input Recognition and Processing/HumanInputRecognitionAndProcessing',
     'Asset Management and Inventory/AssetManager',
     'Constraints Engine/ConstraintsEngine',
     'Command Issuance and Control/CommandIssuanceAndControl',
     'InternalScene',
     'Logging/SystemNotificationListener',
+    'Input/DeviceManager',
+    'Metrics/Metrics'
     //'Sequence Execution and Action Scheduling/CollisionDetectionAndGravitySimulation',
 ],
 
-function (bus, hirp, ami, constraintsEngine, comm, internalScene, sysNotificationListener) {
-    var leapmotion;
-    var microphone;
+function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationListener, deviceManager, metrics) {
+    var Efficio;
 
     function configure(EfficioConfiguration) {
-        EfficioConfiguration.devices = EfficioConfiguration.devices || { microphone: false, kinect: false, leapmotion: false };
-        EfficioConfiguration.debug = EfficioConfiguration.debug || false;
+        EfficioConfiguration.Devices = EfficioConfiguration.Devices || { Microphone: false, Kinect: false, LeapMotion: false };
+        EfficioConfiguration.Debug = EfficioConfiguration.Debug || false;
+
+        Efficio.Configuration = EfficioConfiguration;
     }
 
     return {
         Initialize: function (EfficioConfiguration) {
+
+            if (typeof Efficio === 'undefined' || Efficio === null) {
+                Efficio = {};
+            }
+
+            if (window && (window.Efficio === null || typeof window.Efficio === 'undefined')) {
+                window.Efficio = Efficio
+            }
+
             configure(EfficioConfiguration);
-            bus.Initialize();
-            hirp.Initialize();
+
+            Efficio.Metrics = metrics.Initialize();
+
+            Efficio.HumanInputAndGestureRecognition =  hirp.Initialize();
             ami.Initialize();
             constraintsEngine.Initialize();
             comm.Initialize();
             internalScene.Initialize();
             sysNotificationListener.Initialize();
+            Efficio.DeviceManager = deviceManager.Initialize();
 
-            if (EfficioConfiguration.devices.leapmotion) {
+            if (EfficioConfiguration.Devices.LeapMotion) {
                 require(['Input/LeapMotion/LeapMotion'], function (leap) {
-                    leapmotion = leap;
-                    leapmotion.Initialize(EfficioConfiguration.devices.leapmotion);
-                    leapmotion.Start();
+                    leap.Initialize(EfficioConfiguration);
+                    leap.Start();
                 });
             }
 
-            if (EfficioConfiguration.devices.microphone) {
-                require(['Input/Microphone/Microphone'], function (mic) {
-                    microphone = mic;
-                    microphone.Intitialize();
+            if (EfficioConfiguration.Devices.Microphone) {
+                require(['Input/Microphone/Microphone'], function (microphone) {
+                    microphone.Intitialize(EfficioConfiguration);
                     microphone.Start();
                 });
             }
+
+            if (window) {
+                // Accelerometer
+                require(['Input/Accelerometer/Browser2'], function (browser) {
+                    browser.Initialize(EfficioConfiguration);
+                    browser.Start();
+                })
+
+                require(['Input/Geolocation/Browser'], function (browser) {
+                    browser.Initialize(EfficioConfiguration);
+                    browser.Start();
+                })
+            }
         },
         Start: function () {
-
+            metrics.Start();
         }
     }
 });

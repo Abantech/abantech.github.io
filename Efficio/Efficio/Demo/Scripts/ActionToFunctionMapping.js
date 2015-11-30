@@ -13,24 +13,70 @@
         "Topic": "BothHandsPronation",
         "Source": "Input.Processed.Efficio",
         "Action": "Destroy",
-    },
-    {
-        "Topic": "RightThumbsUp",
+    }, {
+        "Topic": "LeftHandNeutralAndProne",
         "Source": "Input.Processed.Efficio",
         "Action": function (data) {
-            if (data.gestureInformation.GestureDuration() > 1 && !data.gestureInformation.Fired) {
-                alert('Good Color!');
-                data.gestureInformation.Fired = true;
-            }
+            console.log('LeftHandNeutralAndProne');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
         }
     }, {
-        "Topic": "RightHandSwipe",
+        "Topic": "LeftHandFlexedAndProne",
         "Source": "Input.Processed.Efficio",
         "Action": function (data) {
-            console.log('RightHandSwipe')
-            console.log(data.gestureInformation.SwipeVelocity)
-            console.log(data.gestureInformation.GestureDuration())
-
+            console.log('LeftHandFlexedAndProne');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
+        }
+    }, {
+        "Topic": "LeftHandExtendedAndProne",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandExtendedAndProne');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
+        }
+    }, {
+        "Topic": "LeftHandNeutralAndNeutral",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandNeutralAndNeutral');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
+        }
+    }, {
+        "Topic": "LeftHandFlexedAndNeutral",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandFlexedAndNeutral');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
+        }
+    }, {
+        "Topic": "LeftHandExtendedAndNeutral",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandExtendedAndNeutral');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
+        }
+    }, {
+        "Topic": "LeftHandSwipe",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
             if (colorIndex == 3) {
                 colorIndex = 0
             }
@@ -38,34 +84,5 @@
                 colorIndex++;
             }
         }
-    }, {
-        "Topic": "LeftHandSwipe",
-        "Source": "Input.Processed.Efficio",
-        "Action": function (data) {
-            console.log('LeftHandSwipe')
-
-        }
-    },
-        {
-            "Source": "Devices",
-            "Topic": "Connected",
-            "Action": function (Data, Device) {
-
-            },
-            "Arguments":
-            [
-                {
-                    "Name": "name",
-                    "MapTo": "Device"
-                },
-                {
-                    "Source": "Gesture",
-                    "Name": "test",
-                    "MapTo": "Data"
-                },
-            ],
-        }, ],
-    AudioCommands: {
-        "make :size (foot) :color container": Test.makeContainerByVoice,
-    }
+    }]
 }

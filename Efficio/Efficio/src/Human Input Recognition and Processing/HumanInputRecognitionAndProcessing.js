@@ -1,50 +1,62 @@
 ﻿define(['postal', 'Human Input Recognition and Processing/ActiveGestureDictionary'], function (bus, agd) {
-    return {
-        Initialize: function () {
-            require(['Human Input Recognition and Processing/CustomGestureLibrariesAccess'], function (customGestureLibraries) {
-                customGestureLibraries.Initialize(agd);
 
-                bus.subscribe({
-                    channel: "Input.Raw",
-                    topic: "*",
-                    callback: function (data, envelope) {
-                        customGestureLibraries.ProcessInput(data, envelope);
-                    }
-                });
-            }), function (err) {
-                bus.publish({
-                    channel: 'UserNotification',
-                    topic: 'Warn',
-                    source: source,
-                    data: {
-                        message: 'No custom gesture library configured'
-                    }
-                });
-            };
+    var hipr = {};
 
-            require(['Human Input Recognition and Processing/EfficioGestureGrimoire'], function (efficioGestureLibrary) {
-                efficioGestureLibrary.Initialize(agd);
+    function Initialize() {
+        // Extend input models for easier processing and to make them more informative
+        require(['Human Input Recognition and Processing/Input Extensions/LeapMotionHandExtensions'], function (LMHE) {
+            LMHE.ExtendClasses();
+        });
 
-                bus.subscribe({
-                    channel: "Input.Raw",
-                    topic: "*",
-                    callback: function (data, envelope) {
-                        efficioGestureLibrary.ProcessInput(data, envelope);
-                    }
-                });
+        require(['Human Input Recognition and Processing/CustomGestureLibrariesAccess'], function (customGestureLibraries) {
+            hipr.CustomGestureLibrary  = customGestureLibraries.Initialize(agd);
+
+            bus.subscribe({
+                channel: "Input.Raw",
+                topic: "*",
+                callback: function (data, envelope) {
+                    customGestureLibraries.ProcessInput(data, envelope);
+                }
             });
+        }), function (err) {
+            bus.publish({
+                channel: 'UserNotification',
+                topic: 'Warn',
+                source: source,
+                data: {
+                    message: 'No custom gesture library configured'
+                }
+            });
+        };
 
-            //require(['Human Input Recognition and Processing/EfficioAudioGrimoire'], function (efficioAudioGrimoire) {
-            //    efficioAudioGrimoire.Initialize();
+        require(['Human Input Recognition and Processing/EfficioGestureGrimoire'], function (efficioGestureLibrary) {
+            hipr.EfficioGestureLibrary = efficioGestureLibrary.Initialize(agd);
 
-            //    bus.subscribe({
-            //        channel: "Input.Audio.Raw",
-            //        topic: "*",
-            //        callback: function (data, envelope) {
-            //            efficioAudioGrimoire.ProcessInput(data, envelope);
-            //        }
-            //    });
-            //});
-        }
+            bus.subscribe({
+                channel: "Input.Raw",
+                topic: "*",
+                callback: function (data, envelope) {
+                    efficioGestureLibrary.ProcessInput(data, envelope);
+                }
+            });
+        });
+
+        //require(['Human Input Recognition and Processing/EfficioAudioGrimoire'], function (efficioAudioGrimoire) {
+        //    efficioAudioGrimoire.Initialize();
+
+        //    bus.subscribe({
+        //        channel: "Input.Audio.Raw",
+        //        topic: "*",
+        //        callback: function (data, envelope) {
+        //            efficioAudioGrimoire.ProcessInput(data, envelope);
+        //        }
+        //    });
+        //});
+
+        return hipr;
+    }
+
+    return {
+        Initialize: Initialize
     }
 });

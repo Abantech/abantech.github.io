@@ -1,10 +1,10 @@
-﻿define(['postal', 'leapjs'], function (bus, Leap) {
+﻿define(['postal', 'leapjs', 'Input/DeviceManager'], function (bus, Leap, deviceManager) {
     var source = 'Leap Motion';
     var trackingType = 'Hands';
     var controller;
 
-    function configure(LeapConfiguration)
-    {
+    function configure(EfficioConfiguration) {
+        var LeapConfiguration = EfficioConfiguration.Devices.LeapMotion;
         LeapConfiguration = {
             Host: LeapConfiguration.Host || 'localhost',
             Port: LeapConfiguration.Port || 6437,
@@ -21,7 +21,7 @@
 
             // Load Configuration
             LeapConfiguration = configure(LeapConfiguration);
-            
+
             // Create Controller
             controller = new Leap.Controller({
                 host: LeapConfiguration.Host,
@@ -31,7 +31,7 @@
                 useAllPlugins: LeapConfiguration.UseAllPlugins
             });
 
-            // Register Leap's native gesture recognition
+            // Register Leap Motion's native gesture recognition
             controller.on("gesture", function (gesture) {
                 if (gesture.state == "stop") {
                     bus.publish({
@@ -39,29 +39,20 @@
                         topic: 'Gesture',
                         source: source,
                         data: {
-                            name: gesture.type,
-                            gesture: gesture
+                            Name: gesture.type,
+                            Gesture: gesture
                         }
                     });
                 }
             });
 
-            // Sends message when controller is connected
-            controller.on("connect", function () {
-                bus.publish({
-                    channel: 'Devices',
-                    topic: 'Connected',
-                    source: source,
-                    data: {
-                        name: source,
-                        device: Leap,
-                        controller: controller,
-                        test: 'test'
-                    }
-                });
-            });
-
             controller.connect();
+
+            // Add Leap Motion to Device Manager
+            deviceManager.Add(source, controller);
+            deviceManager.Devices[source].IsConnected = function () {
+                return controller.connected();
+            }
         },
 
         Start: function () {
@@ -74,8 +65,8 @@
                         topic: 'Leap',
                         source: source,
                         data: {
-                            trackingType: trackingType,
-                            input: frame
+                            TrackingType: trackingType,
+                            Input: frame
                         }
                     });
                 }

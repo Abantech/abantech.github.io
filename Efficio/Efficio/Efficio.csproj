@@ -43,9 +43,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Demo\Accelerometer\Accelerometer.html" />
+    <Content Include="Demo\Accelerometer\Scripts\ActionToFunctionMapping.js" />
+    <Content Include="Demo\Accelerometer\Scripts\Efficio.min.js" />
+    <Content Include="Demo\Accelerometer\Scripts\EfficioConfiguration.js" />
+    <Content Include="Demo\Accelerometer\Scripts\RequireConfiguration.js" />
     <Content Include="Demo\Remote.html" />
     <Content Include="Demo\Scripts\EfficioConfigurationRemote.js" />
     <Content Include="src\Asset Management and Inventory\AssetManager.js" />
@@ -53,10 +55,14 @@
     <Content Include="src\Human Input Recognition and Processing\ActiveGestureDictionary.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\HandGestureDetectionHandler.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Helpers\FingerHelper.js" />
-    <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Helpers\HandHelper.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandGestureDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Two Hand Gestures\TwoHandPositionDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandPositionDetection.js" />
+    <Content Include="src\Human Input Recognition and Processing\Input Extensions\LeapMotionHandExtensions.js" />
+    <Content Include="src\Input\Accelerometer\Browser.js" />
+    <Content Include="src\Input\Accelerometer\Browser2.js" />
+    <Content Include="src\Input\DeviceManager.js" />
+    <Content Include="src\Input\Geolocation\Browser.js" />
     <Content Include="src\InternalScene.js" />
     <Content Include="src\main.js" />
     <Content Include="src\Command Issuance and Control\CommandIssuanceAndControl.js" />
@@ -72,7 +78,7 @@
     <Content Include="src\Input\LeapMotion\LeapMotion.js" />
     <Content Include="src\Input\Microphone\Microphone.js" />
     <Content Include="src\Logging\SystemNotificationListener.js" />
-    <Content Include="src\Message Bus\MessageBus.js" />
+    <Content Include="src\Metrics\Metrics.js" />
     <Content Include="src\Sequence Execution and Action Scheduling\CollisionDetectionAndGravitySimulation.js" />
     <Content Include="Demo\FPSTest.html" />
     <Content Include="Demo\Scripts\ActionToFunctionMapping.js" />
@@ -86,6 +92,7 @@
     <Content Include="src\Human Input Recognition and Processing\EfficioGestureGrimore.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Properties\" />
     <Folder Include="src\Input\Microsoft Kinect\" />
   </ItemGroup>
   <PropertyGroup>

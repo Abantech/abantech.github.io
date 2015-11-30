@@ -4,7 +4,8 @@
     <title></title>
     <meta charset="utf-8" />
     <script src="http://threejs.org/build/three.min.js"></script>
-
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/656d05324c809a299359046196b66881c47d286e/examples/js/controls/DeviceOrientationControls.js"></script>
+    <script src="https://cdn.rawgit.com/dorukeker/gyronorm.js/master/dist/gyronorm.complete.min.js"></script>
 </head>
 <body>
     <p>Framerate: <span id="leapFPS">FPS</span></p>
@@ -16,10 +17,8 @@
 
         Test = {
             leapAnimate: function (data) {
-                
-                fpsDisplay.innerText = data.input.currentFrameRate;
 
-                var frame = data.input;
+                var frame = data.Input;
                 var count = 0;
 
                 for (i = 0; i < armMeshes.length; i++) {
@@ -79,6 +78,9 @@
                     cube = null;
                 }
             },
+            UpdateDeviceOrientation: function (data) {
+                controls.registerOrientationData(data.DeviceOrientation);
+            }
         }
     </script>
     <script src="Scripts/ActionToFunctionMapping.js"></script>
@@ -98,6 +100,7 @@
         var boneMeshes = [];
         var colors = ["rgb(255, 0, 0)", "rgb(0, 255, 0)", "rgb(255, 255, 0)", "rgb(255, 255, 255)"];
         var colorIndex = 0;
+
 
         var stats, renderer, scene, camera, controls, light;
 
@@ -121,6 +124,8 @@
 
             camera.position.set(-350, 350, 350);
             camera.lookAt(new THREE.Vector3(0, -10, 0));
+
+            controls = new THREE.DeviceOrientationControls(camera);
 
             // helpers
             var gridHelper = new THREE.GridHelper(150, 10);

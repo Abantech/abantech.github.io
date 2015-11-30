@@ -9,51 +9,81 @@
         return ActiveGesturesDictionary;
     }
 
-    function RetrieveEntry(gestureName, dictionary, side) {
+    function RetrieveEntry(trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
         var entry;
         var agd = GetActiveGestureDictionary();
 
         if (dictionary) {
-            if (!agd[dictionary]) {
-                agd[dictionary] = {};
+            if (!agd[trackingType][dictionary]) {
+                agd[trackingType][dictionary] = {};
             }
 
-            if (side) {
-                if (!agd[dictionary][side]) {
-                    agd[dictionary][side] = {};
+            if (subdictionary1) {
+                if (!agd[trackingType][dictionary][subdictionary1]) {
+                    agd[trackingType][dictionary][subdictionary1] = {};
                 }
 
-                entry = agd[dictionary][side][gestureName];
+                if (subdictionary2) {
+                    if (!agd[trackingType][dictionary][subdictionary1][subdictionary2]) {
+                        agd[trackingType][dictionary][subdictionary1][subdictionary2] = {};
+                    }
+
+                    entry = agd[trackingType][dictionary][subdictionary1][subdictionary2][gestureName];
+                } else {
+                    entry = agd[trackingType][dictionary][subdictionary1][gestureName];
+                }
             }
             else {
-                entry = agd[dictionary][gestureName];
+                entry = agd[trackingType][dictionary][gestureName];
             }
         }
         else {
-            entry = agd[gestureName];
+            if (agd[trackingType]) {
+                entry = agd[trackingType][gestureName];
+            }
         }
 
         return entry;
     }
 
-    function AddEntry(entry, gestureName, dictionary, side){
+    function AddEntry(entry, trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
         var agd = GetActiveGestureDictionary();
 
+        if (!agd[trackingType]) {
+            agd[trackingType] = {};
+        }
+
         if (dictionary) {
-            if (side) {
-                agd[dictionary][side][gestureName] = entry;
+            if (!agd[trackingType][dictionary]) {
+                agd[trackingType][dictionary] = {};
+            }
+
+            if (subdictionary1) {
+                if (!agd[trackingType][dictionary][subdictionary1]) {
+                    agd[trackingType][dictionary][subdictionary1] = {};
+                }
+
+                if (subdictionary2) {
+                    if (!agd[trackingType][dictionary][subdictionary1][subdictionary2]) {
+                        agd[trackingType][dictionary][subdictionary1][subdictionary2] = {};
+                    }
+
+                    agd[trackingType][dictionary][subdictionary1][subdictionary2][gestureName] = entry;
+                }
+
+                agd[trackingType][dictionary][subdictionary1][gestureName] = entry;
             }
             else {
-                agd[dictionary][gestureName] = entry;
+                agd[trackingType][dictionary][gestureName] = entry;
             }
         }
         else {
-            agd[gestureName] = entry;
+            agd[trackingType][gestureName] = entry;
         }
     }
 
-    function CreateOrUpdateEntry(gestureName, dictionary, side) {
-        var entry = RetrieveEntry(gestureName, dictionary, side);
+    function CreateOrUpdateEntry(trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
+        var entry = RetrieveEntry(trackingType, gestureName, dictionary, subdictionary1, subdictionary2);
 
         if (!entry) {
             entry = {
@@ -71,7 +101,7 @@
                 FirstFire: function () { return this.FireCount === 0 }
             }
 
-            AddEntry(entry, gestureName, dictionary, side);
+            AddEntry(entry, trackingType, gestureName, dictionary, subdictionary1, subdictionary2);
         }
         else {
             entry.FireCount++;
@@ -80,33 +110,80 @@
         return entry;
     }
 
-    function DeleteEntry(gestureName, dictionary, side) {
+    function DeleteEntry(trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
         var agd = GetActiveGestureDictionary();
+        var toDelete;
+
+        if (!agd[trackingType]) {
+            return;
+        }
 
         if (dictionary) {
-            if (agd[dictionary]) {
-                if (side) {
-                    if (agd[dictionary][side]) {
-                        if (gestureName) {
-                            agd[dictionary][side][gestureName] = null;
+            if (agd[trackingType][dictionary]) {
+                if (subdictionary1) {
+                    if (agd[trackingType][dictionary][subdictionary1]) {
+                        if (subdictionary2) {
+                            if (agd[trackingType][dictionary][subdictionary1][subdictionary2]) {
+                                toDelete = agd[trackingType][dictionary][subdictionary1][subdictionary2];
+                            }
                         }
                         else {
-                            agd[dictionary][side] = null;
+                            toDelete = agd[trackingType][dictionary][subdictionary1];
                         }
                     }
                 }
                 else {
-                    if (gestureName) {
-                        agd[dictionary][gestureName] = null;
-                    }
-                    else {
-                        agd[dictionary] = null;
-                    }
+                    toDelete = agd[trackingType][dictionary];
                 }
             }
         }
         else {
-            agd[gestureName] = null;
+            toDelete = agd[trackingType];
+        }
+
+        if (gestureName && toDelete) {
+            toDelete[gestureName] = null;
+        }
+        else {
+            toDelete = null;
+        }
+    }
+
+    function DeleteAllBut(trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
+        var agd = GetActiveGestureDictionary();
+        var toDelete;
+
+        if (!agd[trackingType]) {
+            return;
+        }
+
+        if (dictionary) {
+            if (agd[trackingType][dictionary]) {
+                if (subdictionary1) {
+                    if (agd[trackingType][dictionary][subdictionary1]) {
+                        if (subdictionary2) {
+                            if (agd[trackingType][dictionary][subdictionary1][subdictionary2]) {
+                                toDelete = agd[trackingType][dictionary][subdictionary1][subdictionary2];
+                            }
+                        }
+                        else {
+                            toDelete = agd[trackingType][dictionary][subdictionary1];
+                        }
+                    }
+                }
+                else {
+                    toDelete = agd[trackingType][dictionary];
+                }
+            }
+        }
+        else {
+            toDelete = agd[trackingType];
+        }
+
+        for(prop in toDelete){
+            if (prop != gestureName){
+                toDelete[prop] = null;
+            }
         }
     }
 
@@ -114,6 +191,7 @@
         GetActiveGesturesDictionary: GetActiveGestureDictionary,
         CreateOrUpdateEntry: CreateOrUpdateEntry,
         RetrieveEntry: RetrieveEntry,
-        DeleteEntry: DeleteEntry
+        DeleteEntry: DeleteEntry,
+        DeleteAllBut: DeleteAllBut
     }
 });

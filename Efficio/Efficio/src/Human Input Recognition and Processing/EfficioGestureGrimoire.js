@@ -1,14 +1,15 @@
 ﻿define(['postal'], function (bus) {
     var source = 'Efficio Gesture Grimoire';
-    var ActiveGesturesDictionaryCopy = {};
+    var ActiveGesturesDictionary;
+    var efficioGestureGrimoire = { Name: source };
 
     function DetectPredefinedGestures(data, envelope) {
-        var trackingType = data.trackingType || '';
+        var trackingType = data.TrackingType || '';
 
         switch (trackingType) {
             case 'Hands': {
                 require(['Human Input Recognition and Processing/Hand Gestures/HandGestureDetectionHandler'], function (hgdh) {
-                    hgdh.ProcessInput(data, ActiveGesturesDictionary)
+                    efficioGestureGrimoire.HandProcessor = hgdh.ProcessInput(data, ActiveGesturesDictionary)
                 });
                 break;
             }
@@ -16,15 +17,21 @@
                 // Body tracking library here
                 break;
             }
-            case 'Face': {
-                // Face tracking library here
+            case 'Head': {
+                // Head tracking library here
                 break;
             }
             case 'Brain': {
                 // Brain tracking library here
                 break;
             }
+            case 'Sensor': {
+                // Other sensory input library here
+                break;
+            }
         }
+
+        return efficioGestureGrimoire;
     }
 
 

@@ -8,6 +8,7 @@
 		'THREE': 'empty:',
 		'leapjs': 'empty:',
 		'annyang': 'empty:',
+		'gyronorm': 'empty:',
     },
     optimize: "none"
 })

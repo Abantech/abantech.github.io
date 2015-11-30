@@ -12,8 +12,7 @@
                 return result;
             }
 
-            ActionToFunctionMapping.ActionMappings.forEach(function (mapping) 
-            {
+            ActionToFunctionMapping.ActionMappings.forEach(function (mapping) {
                 bus.subscribe({
                     channel: mapping.Source,
                     topic: mapping.Topic,
@@ -54,12 +53,34 @@
                                     args.push(null);
                                 }
                             });
+
+                            args[args.length] = data;
                         }
                         else {
                             args = [data];
                         }
-                       
+
+                        if (mapping.FireRestrictions) {
+                            var execute = [];
+                            var restrictions = mapping.FireRestrictions;
+                            if (restrictions.FireOnce) {
+                                if (data.gestureInformation.Fired) {
+                                    return;
+                                }
+                            }
+
+                            if (restrictions.FireAfterXFrames) {
+                                if (data.gestureInformation.FireCount < restrictions.FireAfterXFrames) {
+                                    return;
+                                }
+                            }
+                        }
+
                         func.apply(null, args);
+
+                        if (data.gestureInformation) {
+                            data.gestureInformation.Fired = true;
+                        }
                     }
                 })
             });

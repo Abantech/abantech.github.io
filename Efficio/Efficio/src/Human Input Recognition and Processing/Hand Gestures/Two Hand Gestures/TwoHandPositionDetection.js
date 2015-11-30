@@ -1,66 +1,76 @@
-﻿define(['postal', 'Human Input Recognition and Processing/Hand Gestures/Helpers/HandHelper', 'Human Input Recognition and Processing/Hand Gestures/Helpers/FingerHelper', 'Helpers/Math'], function (bus, hh, fh, math) {
-    function ProcessInput(data, hands, ActiveGesturesDictionary) {
+﻿define(['postal', 'Human Input Recognition and Processing/Hand Gestures/Helpers/FingerHelper', 'Helpers/Math'], function (bus, fh, math) {
+    var source = 'Efficio Gesture Grimoire';
+    var dictionary = 'TwoHandPosition';
+    var FireCountMinimum = 15;
+    var trackingType = 'Hands';
+    var twoHandsGestureDetector;
 
-        var source = 'Efficio Gesture Grimoire';
-        var dictionary = 'TwoHandPosition';
-        var FireCountMinimum = 15;
+    function BothHandsNeutral(data) {
+        var hands = data.hands;
+        var gestureName = 'BothHandsNeutral'
 
-        (function BothHandsNeutral() {
-            var gestureName = 'BothHandsNeutral'
-            var neutrals = [hh.Neutral(hands[0]), hh.Neutral(hands[1])]
+        if (hands[0].IsNeutral() && hands[1].IsNeutral()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trakcingType, gestureName, dictionary);
 
-            if (neutrals[0] && neutrals[1]) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary);
+            if (gestureInformation.FireCount > FireCountMinimum) {
+                gestureInformation.distance = math.DistanceBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
+                gestureInformation.midpoint = math.MidpointBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
 
-                if (gestureInformation.FireCount > FireCountMinimum) {
-                    gestureInformation.distance = math.DistanceBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
-                    gestureInformation.midpoint = math.MidpointBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
-
-                    bus.publish({
-                        channel: "Input.Processed.Efficio",
-                        topic: gestureName,
-                        source: source,
-                        data: {
-                            input: data,
-                            hand: hand,
-                            neutrals: neutrals,
-                            gestureInformation: gestureInformation
-                        }
-                    });
-                }
+                bus.publish({
+                    channel: "Input.Processed.Efficio",
+                    topic: gestureName,
+                    source: source,
+                    data: {
+                        input: data,
+                        hand: hand,
+                        gestureInformation: gestureInformation
+                    }
+                });
             }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary);
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trakcingType, gestureName, dictionary);
+        }
+    };// END Both Hands Neutral
+
+    function BothHandsPronation(data) {
+        var gestureName = 'BothHandsPronation'
+
+        if (hands[0].IsProne() && hands[1].IsProne()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary);
+
+            if (gestureInformation.FireCount > FireCountMinimum) {
+                gestureInformation.distance = math.DistanceBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
+                gestureInformation.midpoint = math.MidpointBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
+
+                bus.publish({
+                    channel: "Input.Processed.Efficio",
+                    topic: gestureName,
+                    source: source,
+                    data: {
+                        input: data,
+                        hand: hand,
+                    }
+                });
             }
-        })();// END Both Hands Neutral
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary);
+        }
+    };// END Both Hand Pronation
 
-        (function BothHandsPronation() {
-            var gestureName = 'BothHandsPronation'
-            var pronations = [hh.Pronation(hands[0]), hh.Pronation(hands[1])]
+    function ProcessInput(data, ActiveGesturesDictionary) {
+        if (!twoHandsGestureDetector) {
+            twoHandsGestureDetector = { Name: name };
+            twoHandsGestureDetector.BothHandsNeutral = BothHandsNeutral;
+            twoHandsGestureDetector.BothHandsPronation = BothHandsPronation;
+        }
 
-            if (pronations[0] && pronations[1]) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary);
+        twoHandsGestureDetector.forEach(function (gesture) {
+            position(data);
+        });
 
-                if (gestureInformation.FireCount > FireCountMinimum) {
-                    gestureInformation.distance = math.DistanceBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
-                    gestureInformation.midpoint = math.MidpointBetweenTwoPoints(hands[0].palmPosition, hands[1].palmPosition);
-
-                    bus.publish({
-                        channel: "Input.Processed.Efficio",
-                        topic: gestureName,
-                        source: source,
-                        data: {
-                            input: data,
-                            hand: hand,
-                            neutrals: pronations,
-                        }
-                    });
-                }
-            }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary);
-            }
-        })();// END Both Hand Pronation
+        return twoHandsGestureDetector;
     }
 
     return {

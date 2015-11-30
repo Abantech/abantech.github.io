@@ -1,15 +1,13 @@
-﻿define(['postal', 'Human Input Recognition and Processing/Hand Gestures/Helpers/HandHelper', 'Human Input Recognition and Processing/Hand Gestures/Helpers/FingerHelper'], function (bus, hh, fh) {
-    function ProcessInput(data, hand, ActiveGesturesDictionary) {
-        var source = 'Efficio Gesture Grimoire';
-        var dictionary = 'OneHandPosition';
-        var side;
+﻿define(['postal', 'Human Input Recognition and Processing/Hand Gestures/Helpers/FingerHelper'], function (bus, fh) {
+    var source = 'Efficio Gesture Grimoire';
+    var name = 'One Hand Gesture Detector';
+    var dictionary = 'OneHandPosition';
+    var trackingType = 'Hands';
+    var side;
+    var oneHandPositionDetector;
+    var ActiveGesturesDictionary;
 
-        // Hand information
-        (function HandInformation() {
-            side = hh.GetSide(hand);
-        })();
-
-        /*
+    /*
           Name:           {Side} Hand Detected
    
           Outputs:        RightHandDetected
@@ -17,23 +15,25 @@
            
           Description:    Informs consumer how many fingers fingers are extended and on which hand 
        */
-        (function SideHandCountFingersExtended() {
-            var gestureName = side + 'HandDetected';
-            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
+    function SideHandDetected(hand, data) {
+        var gestureName = side + 'HandDetected';
 
-            bus.publish({
-                channel: "Input.Processed.Efficio",
-                topic: gestureName,
-                source: source,
-                data: {
-                    input: data,
-                    hand: hand,
-                    gestureInformation: gestureInformation
-                }
-            });
-        })();
+        //TODO: Clear all entries in agd
+        var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-        /*
+        bus.publish({
+            channel: "Input.Processed.Efficio",
+            topic: gestureName,
+            source: source,
+            data: {
+                input: data,
+                hand: hand,
+                gestureInformation: gestureInformation
+            }
+        });
+    }
+
+    /*
           Name:           {Side} Hand {Count} Fingers Extended
    
           Outputs:        RightHandZeroFingersExtended
@@ -51,349 +51,391 @@
            
           Description:    Informs consumer how many fingers fingers are extended and on which hand 
        */
-        (function SideHandCountFingersExtended() {
-            var extendedFingerCountLabel = fh.GetExtendedFingersCountLabel(hand);
-            var extendedFingersIndicies = fh.GetExtendedFingersIndicies(hand);
+    function SideHandCountFingersExtended(hand, data) {
+        var extendedFingerCountLabel = fh.GetExtendedFingersCountLabel(hand);
+        var extendedFingersIndicies = fh.GetExtendedFingersIndicies(hand);
+
+        //TODO: Clear all entries in agd and add new entry
+
+        bus.publish({
+            channel: "Input.Processed.Efficio",
+            topic: side + 'Hand' + extendedFingerCountLabel + 'FingersExtended',
+            source: source,
+            data: {
+                input: data,
+                hand: hand,
+                extendedFingers: extendedFingersIndicies
+            }
+        });
+    }; // END {Side} Hand {Count} Fingers Extended
+
+    /*
+   Name:           {Side} Hand {Finger} Extended
+
+   Outputs:        RightHandThumbFingerExtended
+                   RightHandIndexFingerExtended
+                   RightHandMiddleFingerExtended
+                   RightHandRingFingerExtended
+                   RightHandPinkyFingerExtended
+                   LeftHandThumbFingerExtended
+                   LeftHandIndexFingerExtended
+                   LeftHandMiddleFingerExtended
+                   LeftHandRingFingerExtended
+                   LeftHandPinkyFingerExtended
+   
+   Description:    Informs consumer which fingers are extended and on which hand 
+*/
+    function SideHandFingerDetected(hand, data) {
+        hand.fingers.forEach(function (finger) {
+            var fingerName = fh.GetFingerLabel(finger.type);
+            var gestureName = side + 'Hand' + fingerName + 'FingerExtended'
+
+            if (finger.extended) {
+                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+
+                bus.publish({
+                    channel: "Input.Processed.Efficio",
+                    topic: gestureName,
+                    source: source,
+                    data: {
+                        input: data,
+                        hand: hand,
+                        finger: finger.type,
+                        gestureInformation: gestureInformation
+                    }
+                });
+            }
+            else {
+                ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+            }
+        });
+    }; // END {Side} Hand {Finger} 
+
+    /*
+    Name:           {Side} Hand Flexion Detected
+
+    Outputs:        RightHandFlexion
+                    LeftHandFlexion
+*/
+    function SideHandFlexionDetected(hand, data) {
+        var gestureName = side + 'HandFlexion'
+        if (hand.IsFlexed()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+
+            if (gestureInformation.FireCount > 10) {
+                bus.publish({
+                    channel: "Input.Processed.Efficio",
+                    topic: gestureName,
+                    source: source,
+                    data: {
+                        input: data,
+                        hand: hand,
+                        gestureInformation: gestureInformation
+                    }
+                });
+            }
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END {Side} Hand Flexion
+
+    /*
+    Name:           {Side} Hand Extension Detected
+
+    Outputs:        RightHandExtension
+                    LeftHandExtension
+*/
+    function SideHandExtensionDetected(hand, data) {
+        var gestureName = side + 'HandExtension'
+        if (hand.IsExtended()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+
+            if (gestureInformation.FireCount > 10) {
+                bus.publish({
+                    channel: "Input.Processed.Efficio",
+                    topic: gestureName,
+                    source: source,
+                    data: {
+                        input: data,
+                        hand: hand,
+                        gestureInformation: gestureInformation
+                    }
+                });
+            }
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END {Side} Hand Extension
+
+    /*
+    Name:           {Side} Hand Radial Deviation
+
+    Outputs:        RightHandRadialDeviation
+                    LeftHandRadialDeviation
+*/
+    function SideHandRadialDeviation(hand, data) {
+        var gestureName = side + 'HandRadialDeviation'
+        if (hand.IsRadialDeviated()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
             bus.publish({
                 channel: "Input.Processed.Efficio",
-                topic: side + 'Hand' + extendedFingerCountLabel + 'FingersExtended',
+                topic: gestureName,
                 source: source,
                 data: {
                     input: data,
                     hand: hand,
-                    extendedFingers: extendedFingersIndicies
+                    gestureInformation: gestureInformation
                 }
             });
-        })(); // END {Side} Hand {Count} Fingers Extended
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END {Side} Hand Radial Deviation
 
-        /*
-           Name:           {Side} Hand {Finger} Extended
-   
-           Outputs:        RightHandThumbFingerExtended
-                           RightHandIndexFingerExtended
-                           RightHandMiddleFingerExtended
-                           RightHandRingFingerExtended
-                           RightHandPinkyFingerExtended
-                           LeftHandThumbFingerExtended
-                           LeftHandIndexFingerExtended
-                           LeftHandMiddleFingerExtended
-                           LeftHandRingFingerExtended
-                           LeftHandPinkyFingerExtended
-           
-           Description:    Informs consumer which fingers are extended and on which hand 
+    /*
+           Name:           {Side} Hand Ulnar Deviation
+
+           Outputs:        RightHandUlnarDeviation
+                           LeftHandUlnarDeviation
        */
-        (function SideHandFingerDetected() {
-            hand.fingers.forEach(function (finger) {
-                var fingerName = fh.GetFingerLabel(finger.type);
-                var gestureName = side + 'Hand' + fingerName + 'FingerExtended'
+    function SideHandUlnarDeviation(hand, data) {
+        var gestureName = side + 'HandUlnarDeviation';
+        if (hand.IsUlnarDeviated()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-                if (finger.extended) {
-                    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
-
-                    bus.publish({
-                        channel: "Input.Processed.Efficio",
-                        topic: gestureName,
-                        source: source,
-                        data: {
-                            input: data,
-                            hand: hand,
-                            finger: finger.type,
-                            gestureInformation: gestureInformation
-                        }
-                    });
-                }
-                else {
-                    ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
+            bus.publish({
+                channel: "Input.Processed.Efficio",
+                topic: gestureName,
+                source: source,
+                data: {
+                    input: data,
+                    hand: hand,
+                    gestureInformation: gestureInformation
                 }
             });
-        })(); // END {Side} Hand {Finger} Extended
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END {Side} Hand Ulnar Deviation
 
-        /*
-            Name:           {Side} Hand Flexion Detected
-    
-            Outputs:        RightHandFlexion
-                            LeftHandFlexion
-        */
-        (function SideHandFlexionDetected() {
-            var gestureName = side + 'HandFlexion'
-            var flexion = hh.Flexion(hand);
-            if (flexion) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
-
-                if (gestureInformation.FireCount > 10) {
-                    bus.publish({
-                        channel: "Input.Processed.Efficio",
-                        topic: gestureName,
-                        source: source,
-                        data: {
-                            input: data,
-                            hand: hand,
-                            flexion: flexion,
-                            gestureInformation: gestureInformation
-                        }
-                    });
-                }
-            }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END {Side} Hand Flexion
-
-        /*
-            Name:           {Side} Hand Extension Detected
-    
-            Outputs:        RightHandExtension
-                            LeftHandExtension
-        */
-        (function SideHandExtensionDetected() {
-            var gestureName = side + 'HandExtension'
-            var extension = hh.Extension(hand);
-            if (extension) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
-
-                if (gestureInformation.FireCount > 10) {
-                    bus.publish({
-                        channel: "Input.Processed.Efficio",
-                        topic: gestureName,
-                        source: source,
-                        data: {
-                            input: data,
-                            hand: hand,
-                            extension: extension,
-                            gestureInformation: gestureInformation
-                        }
-                    });
-                }
-            }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END {Side} Hand Extension
-
-        /*
-            Name:           {Side} Hand Radial Deviation
-
-            Outputs:        RightHandRadialDeviation
-                            LeftHandRadialDeviation
-        */
-        (function SideHandRadialDeviation() {
-            var gestureName = side + 'HandRadialDeviation'
-            var deviation = hh.RadialDeviation(hand);
-            if (deviation) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
-
-                bus.publish({
-                    channel: "Input.Processed.Efficio",
-                    topic: gestureName,
-                    source: source,
-                    data: {
-                        input: data,
-                        hand: hand,
-                        deviation: deviation,
-                        gestureInformation: gestureInformation
-                    }
-                });
-            }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END {Side} Hand Radial Deviation
-
-        /*
-            Name:           {Side} Hand Ulnar Deviation
-
-            Outputs:        RightHandUlnarDeviation
-                            LeftHandUlnarDeviation
-        */
-        (function SideHandUlnarDeviation() {
-            var gestureName = side + 'HandUlnarDeviation'
-            var deviation = hh.UlnarDeviation(hand);
-            if (deviation) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
-
-                bus.publish({
-                    channel: "Input.Processed.Efficio",
-                    topic: gestureName,
-                    source: source,
-                    data: {
-                        input: data,
-                        hand: hand,
-                        deviation: deviation,
-                        gestureInformation: gestureInformation
-                    }
-                });
-            }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END {Side} Hand Ulnar Deviation
-
-        /*
+    /*
             Name:           {Side} Hand Supenation
 
             Outputs:        RightHandSupenation
                             LeftHandSupenation
         */
-        (function SideHandSupenation() {
-            var gestureName = side + 'HandSupenation'
-            var supenation = hh.Supination(hand);
-            if (supenation) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
+    function SideHandSupenation(hand, data) {
+        var gestureName = side + 'HandSupenation'
+        if (hand.IsSupine()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-                bus.publish({
-                    channel: "Input.Processed.Efficio",
-                    topic: gestureName,
-                    source: source,
-                    data: {
-                        input: data,
-                        hand: hand,
-                        supenation: supenation,
-                        gestureInformation: gestureInformation
-                    }
-                });
-            }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END {Side} Hand Supenation
+            bus.publish({
+                channel: "Input.Processed.Efficio",
+                topic: gestureName,
+                source: source,
+                data: {
+                    input: data,
+                    hand: hand,
+                    gestureInformation: gestureInformation
+                }
+            });
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END {Side} Hand Supenation
 
-        /*
+    /*
             Name:           {Side} Hand Pronation
 
             Outputs:        RightHandPronation
                             LeftHandPronation
         */
-        (function SideHanPronation() {
-            var gestureName = side + 'HandPronation'
-            var pronation = hh.Pronation(hand);
-            if (pronation) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
+    function SideHandPronation(hand, data) {
+        var gestureName = side + 'HandPronation'
+        if (hand.IsProne()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-                bus.publish({
-                    channel: "Input.Processed.Efficio",
-                    topic: gestureName,
-                    source: source,
-                    data: {
-                        input: data,
-                        hand: hand,
-                        pronation: pronation,
-                        gestureInformation: gestureInformation
-                    }
-                });
-            }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END {Side} Hand Pronation
+            bus.publish({
+                channel: "Input.Processed.Efficio",
+                topic: gestureName,
+                source: source,
+                data: {
+                    input: data,
+                    hand: hand,
+                    gestureInformation: gestureInformation
+                }
+            });
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END {Side} Hand Pronation
 
-        /*
+    /*
            Name:           {Side} Hand Hyper Pronation
 
-           Outputs:        RightHandHyperPronation
-                           LeftHandHyperPronation
+           Outputs:        RightHandHyperRotated
+                           LeftHandHyperRotated
        */
-        (function SideHandHyperPronation() {
-            var gestureName = side + 'HandHyperPronation'
-            var pronation = hh.HyperPronation(hand);
-            if (pronation) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
+    function SideHandHyperRotated(hand, data) {
+        var gestureName = side + 'HandHyperRotated'
+        if (hand.IsHyperRotated()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-                bus.publish({
-                    channel: "Input.Processed.Efficio",
-                    topic: gestureName,
-                    source: source,
-                    data: {
-                        input: data,
-                        hand: hand,
-                        pronation: pronation,
-                        gestureInformation: gestureInformation
-                    }
-                });
-            }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END {Side} Hand Hyper Pronation
+            bus.publish({
+                channel: "Input.Processed.Efficio",
+                topic: gestureName,
+                source: source,
+                data: {
+                    input: data,
+                    hand: hand,
+                    gestureInformation: gestureInformation
+                }
+            });
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END {Side} Hand Hyper Pronation
 
-        /*
+    /*
            Name:           {Side} Hand Neutral
 
            Outputs:        RightHandNeutral
                            LeftHandNeutral
         */
-        (function SideHandNeutral() {
-            var gestureName = side + 'HandNeutral'
-            var neutral = hh.Neutral(hand);
-            if (neutral) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
+    function SideHandNeutral(hand, data) {
+        var gestureName = side + 'HandNeutral';
+        if (hand.IsNeutral()) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-                bus.publish({
-                    channel: "Input.Processed.Efficio",
-                    topic: gestureName,
-                    source: source,
-                    data: {
-                        input: data,
-                        hand: hand,
-                        neutral: neutral,
-                        gestureInformation: gestureInformation
-                    }
-                });
+            bus.publish({
+                channel: "Input.Processed.Efficio",
+                topic: gestureName,
+                source: source,
+                data: {
+                    input: data,
+                    hand: hand,
+                    gestureInformation: gestureInformation
+                }
+            });
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END {Side} Hand Neutral
+
+    function SideHandFlexAndRotation(hand, data) {
+        var rotation = hand.IsSupine() ? 'Supine' : hand.IsNeutral() ? 'Neutral' : hand.IsProne() ? 'Prone' : 'Hyperrotated';
+        var flex = hand.IsFlexed() ? 'Flexed' : hand.IsExtended() ? 'Extended' : 'Neutral';
+        var gestureName = side + 'Hand' + flex + 'And' + rotation;
+
+        var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side, "Combined");
+        ActiveGesturesDictionary.DeleteAllBut(trackingType, gestureName, dictionary, side, "Combined")
+
+        bus.publish({
+            channel: "Input.Processed.Efficio",
+            topic: gestureName,
+            source: source,
+            data: {
+                input: data,
+                hand: hand,
+                gestureInformation: gestureInformation
             }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END {Side} Hand Neutral
+        });
+    }
 
-        (function Pinch() {
-            for (var i = 0; i < hand.fingers.length - 1; i++) {
-                for (var j = i + 1; j < hand.fingers.length; j++) {
-                    var gestureName = side + 'Hand' + fh.GetFingerLabel(i) + fh.GetFingerLabel(j) + 'Pinch';
-                    var pinchDistance = fh.DistanceBetweenFingers(hand.fingers[i], hand.fingers[j]);
+    function Pinch(hand, data) {
+        for (var i = 0; i < hand.fingers.length - 1; i++) {
+            for (var j = i + 1; j < hand.fingers.length; j++) {
+                var gestureName = side + 'Hand' + fh.GetFingerLabel(i) + fh.GetFingerLabel(j) + 'Pinch';
+                var pinchDistance = fh.DistanceBetweenFingers(hand.fingers[i], hand.fingers[j]);
 
-                    if (pinchDistance < 23) {
-                        var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
+                if (pinchDistance < 23) {
+                    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-                        bus.publish({
-                            channel: "Input.Processed.Efficio",
-                            topic: gestureName,
-                            source: source,
-                            data: {
-                                input: data,
-                                hand: hand,
-                                pinchDistance: pinchDistance,
-                                pinchFingersIndicies: [i, j],
-                                gestureInformation: gestureInformation
-                            }
-                        });
-                    }
-                    else {
-                        ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-                    }
+                    bus.publish({
+                        channel: "Input.Processed.Efficio",
+                        topic: gestureName,
+                        source: source,
+                        data: {
+                            input: data,
+                            hand: hand,
+                            pinchDistance: pinchDistance,
+                            pinchFingersIndicies: [i, j],
+                            gestureInformation: gestureInformation
+                        }
+                    });
+                }
+                else {
+                    ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
                 }
             }
-        })();// END Pinch
+        }
+    };// END Pinch
 
-        (function ThumbsUp() {
-            var gestureName = side + 'ThumbsUp';
-            if (hh.Neutral(hand) && fh.AreRequisiteFingersExtended([0], hand)) {
-                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName, dictionary, side);
+    function ThumbsUp(hand, data) {
+        var gestureName = side + 'ThumbsUp';
+        if (hand.IsNeutral() && fh.AreRequisiteFingersExtended([0], hand)) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-                bus.publish({
-                    channel: "Input.Processed.Efficio",
-                    topic: gestureName,
-                    source: source,
-                    data: {
-                        input: data,
-                        hand: hand,
-                        gestureInformation: gestureInformation
-                    }
-                });
+            bus.publish({
+                channel: "Input.Processed.Efficio",
+                topic: gestureName,
+                source: source,
+                data: {
+                    input: data,
+                    hand: hand,
+                    gestureInformation: gestureInformation
+                }
+            });
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    };// END ThumbsUp
+
+    function ProcessInput(data, hand, agd) {
+        // Hand information
+        (function HandInformation() {
+            side = hand.GetType();
+        })();
+
+        ActiveGesturesDictionary = agd;
+
+        if (!oneHandPositionDetector) {
+            oneHandPositionDetector = {
+                Name: name,
+                Positions: {
+                    SideHandDetected: SideHandDetected,
+                    SideHandCountFingersExtended: SideHandCountFingersExtended,
+                    SideHandFingerDetected: SideHandFingerDetected,
+                    SideHandFlexionDetected: SideHandFlexionDetected,
+                    SideHandExtensionDetected: SideHandExtensionDetected,
+                    SideHandRadialDeviation: SideHandRadialDeviation,
+                    SideHandUlnarDeviation: SideHandUlnarDeviation,
+                    SideHandSupenation: SideHandSupenation,
+                    SideHandPronation: SideHandPronation,
+                    SideHandHyperRotated: SideHandHyperRotated,
+                    SideHandNeutral: SideHandNeutral,
+                    SideHandFlexAndRotation: SideHandFlexAndRotation,
+                    Pinch: Pinch,
+                    ThumbsUp: ThumbsUp
+                }
             }
-            else {
-                ActiveGesturesDictionary.DeleteEntry(gestureName, dictionary, side);
-            }
-        })();// END ThumbsUp
+        }
+
+        for(position in oneHandPositionDetector.Positions) {
+            oneHandPositionDetector.Positions[position](hand, data);
+        }
+
+        return oneHandPositionDetector;
     }
 
     return {
