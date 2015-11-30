@@ -36,7 +36,7 @@
 
         // Check for left navigation
         (function LeftNavigateDetected() {
-
+            // ISMAEL Gesture names should reflect the description of the position of the body, not the intended action it is to cause
             var gestureName = "LeftNavigationDetected";
             if (handRight.Joint.Position.X < shoulderLeft.Joint.Position.X && handRight.TrackingState == "Tracked" && shoulderLeft.TrackingState == "Tracked")
             {
