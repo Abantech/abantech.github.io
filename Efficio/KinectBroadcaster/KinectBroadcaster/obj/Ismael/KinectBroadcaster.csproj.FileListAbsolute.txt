@@ -2,3 +2,4 @@ C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\Kinect
 C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\bin\Ismael\KinectBroadcaster.exe
 C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\bin\Ismael\Fleck.dll
 C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\obj\Ismael\KinectBroadcaster.exe
+C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\obj\Ismael\KinectBroadcaster.csprojResolveAssemblyReference.cache
