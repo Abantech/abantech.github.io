@@ -132,45 +132,52 @@
     }
 
     function ExtendClasses() {
+        var extensions = {
+            // Flex Helpers
+            IsFlexed: IsFlexed,
+            FlexedAngle: 30,
+            FlexionAngle: FlexionAngle,
 
-        // Flex Helpers
-        Leap.Hand.prototype.IsFlexed = IsFlexed;
-        Leap.Hand.prototype.FlexedAngle = 30;
-        Leap.Hand.prototype.FlexionAngle = FlexionAngle;
+            // Extension Helpers
+            IsExtended: IsExtended,
+            ExtendedAngle: 30,
+            ExtensionAngle: ExtensionAngle,
 
-        // Extension Helpers
-        Leap.Hand.prototype.IsExtended = IsExtended;
-        Leap.Hand.prototype.ExtendedAngle = 30;
-        Leap.Hand.prototype.ExtensionAngle = ExtensionAngle;
+            // Supination
+            IsSupine: IsSupine,
+            SupineAngle: 145,
+            SupinationAngle: SupinationAngle,
 
-        // Supination
-        Leap.Hand.prototype.IsSupine = IsSupine;
-        Leap.Hand.prototype.SupineAngle = 145;
-        Leap.Hand.prototype.SupinationAngle = SupinationAngle;
+            // Neutral
+            IsNeutral: IsNeutral,
 
-        // Neutral
-        Leap.Hand.prototype.IsNeutral = IsNeutral;
+            // Pronation
+            IsProne: IsProne,
+            ProneAngleTolerance: 15,
+            PronationAngle: PronationAngle,
 
-        // Pronation
-        Leap.Hand.prototype.IsProne = IsProne;
-        Leap.Hand.prototype.ProneAngleTolerance = 15;
-        Leap.Hand.prototype.PronationAngle = PronationAngle;
+            // Hyper Rotation
+            IsHyperRotated: IsHyperRotated,
+            HyperRotationAngle: HyperRotationAngle,
 
-        // Hyper Rotation
-        Leap.Hand.prototype.IsHyperRotated = IsHyperRotated;
-        Leap.Hand.prototype.HyperRotationAngle = HyperRotationAngle;
+            // Ulnar Deviation
+            IsUlnarDeviated: IsUlnarDeviated,
+            UlnarDeviatedMeasure: .5,
+            DeviatedMeasurment: DeviatedMeasurment,
 
-        // Ulnar Deviation
-        Leap.Hand.prototype.IsUlnarDeviated = IsUlnarDeviated;
-        Leap.Hand.prototype.UlnarDeviatedMeasure = .5;
-        Leap.Hand.prototype.DeviatedMeasurment = DeviatedMeasurment;
+            // Radial Deviation
+            IsRadialDeviated: IsRadialDeviated,
+            RadialDeviatedMeasure: -.2,
 
-        // Radial Deviation
-        Leap.Hand.prototype.IsRadialDeviated = IsRadialDeviated;
-        Leap.Hand.prototype.RadialDeviatedMeasure = -.2;
+            // Others
+            GetType: GetType
+        }
 
-        // Others
-        Leap.Hand.prototype.GetType = GetType
+        for (var property in extensions) {
+            Leap.Hand.prototype[property] = extensions[property];
+        }
+
+        return extensions;
     }
 
     return {

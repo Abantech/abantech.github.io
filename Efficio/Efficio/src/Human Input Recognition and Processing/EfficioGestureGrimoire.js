@@ -33,8 +33,6 @@
                 break;
             }
         }
-
-        return efficioGestureGrimoire;
     }
 
 
@@ -42,6 +40,7 @@
     return {
         Initialize: function (agd) {
             ActiveGesturesDictionary = agd;
+            return efficioGestureGrimoire;
         },
 
         ProcessInput: function (data, envelope) {

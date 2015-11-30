@@ -76,7 +76,7 @@
                     var hand = hands[0];
                     var side = hand.type == 'right' ? 'Right' : 'Left'
                     var gestureName = 'OneHandDetected'
-                    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName)
+                    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName)
 
                     var oppositeHand = side === 'Right' ? 'Left' : 'Right'
 
@@ -108,7 +108,7 @@
                 (function TwoHandsDetected() {
                     if (hands.length === 2) {
                         var gestureName = 'TwoHandDetected'
-                        var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(gestureName)
+                        var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName)
 
                         // Send Message saying that two hands were detected
                         bus.publish({

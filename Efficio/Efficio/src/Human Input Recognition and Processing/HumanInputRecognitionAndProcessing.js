@@ -1,12 +1,17 @@
 ﻿define(['postal', 'Human Input Recognition and Processing/ActiveGestureDictionary'], function (bus, agd) {
 
-    var hipr = {};
+    var hipr = {  ActiveGesturesDictionary: agd, PrototypeExtensions: { }, };
 
     function Initialize() {
         // Extend input models for easier processing and to make them more informative
-        require(['Human Input Recognition and Processing/Input Extensions/LeapMotion/LeapMotionHandExtensions'], function (LMHE) {
-            LMHE.ExtendClasses();
-        });
+        (function LeapMotionPrototypeExtensions() {
+            hipr.PrototypeExtensions.LeapMotion = {};
+
+            require(['Human Input Recognition and Processing/Input Extensions/LeapMotion/LeapMotionHandExtensions'], function (LMHE) {
+                hipr.PrototypeExtensions.LeapMotion.Hand = LMHE.ExtendClasses();
+            });
+        })();
+
 
         require(['Human Input Recognition and Processing/CustomGestureLibrariesAccess'], function (customGestureLibraries) {
             hipr.CustomGestureLibrary  = customGestureLibraries.Initialize(agd);
