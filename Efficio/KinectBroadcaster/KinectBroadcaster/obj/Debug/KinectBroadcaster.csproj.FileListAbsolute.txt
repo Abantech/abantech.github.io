@@ -1,0 +1,16 @@
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\bin\Debug\KinectBroadcaster.exe.config
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\bin\Debug\KinectBroadcaster.exe
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\bin\Debug\KinectBroadcaster.pdb
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\bin\Debug\Fleck.dll
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\bin\Debug\Microsoft.Kinect.dll
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\bin\Debug\Microsoft.Kinect.xml
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\obj\Debug\KinectBroadcaster.csprojResolveAssemblyReference.cache
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\obj\Debug\KinectBroadcaster.exe
+C:\Users\Mastermind\Desktop\KinectBroadcaster\KinectBroadcaster\obj\Debug\KinectBroadcaster.pdb
+C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\bin\Debug\KinectBroadcaster.exe.config
+C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\bin\Debug\KinectBroadcaster.exe
+C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\bin\Debug\KinectBroadcaster.pdb
+C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\bin\Debug\Fleck.dll
+C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\obj\Debug\KinectBroadcaster.csprojResolveAssemblyReference.cache
+C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\obj\Debug\KinectBroadcaster.exe
+C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\KinectBroadcaster\obj\Debug\KinectBroadcaster.pdb
