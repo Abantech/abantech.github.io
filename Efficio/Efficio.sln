@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efficio", "Efficio\Efficio.csproj", "{D51C1B31-4CEE-4E27-9C34-8B41FA677900}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectBroadcaster", "KinectBroadcaster\KinectBroadcaster.csproj", "{25EFBED2-76B1-48C9-AD49-6924BD156F8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.James|Any CPU.Build.0 = James|Any CPU
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D51C1B31-4CEE-4E27-9C34-8B41FA677900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.Ismael|Any CPU.ActiveCfg = Release|Any CPU
+		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.Ismael|Any CPU.Build.0 = Release|Any CPU
+		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.James|Any CPU.ActiveCfg = Release|Any CPU
+		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.James|Any CPU.Build.0 = Release|Any CPU
+		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
