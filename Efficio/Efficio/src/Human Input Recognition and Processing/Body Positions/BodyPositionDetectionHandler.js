@@ -37,18 +37,18 @@
         // Check for left navigation
         (function LeftNavigateDetected() {
             // ISMAEL Gesture names should reflect the description of the position of the body, not the intended action it is to cause
-            var gestureName = "RightWristAcrossBodyDetected";
+            var gestureName = "RightWristAcrossBody";
             if (wristRight.Joint.Position.X < shoulderLeft.Joint.Position.X && wristRight.TrackingState == "Tracked" && shoulderLeft.TrackingState == "Tracked")
             {
-                //bus.publish({
-                //    channel: channel,
-                //    topic: gestureName,
-                //    source: source,
-                //    data: {
-                //        message: 'Left movement detected',
-                //        gestureInformation: gestureInformation
-                //    }
-                //});
+                bus.publish({
+                    channel: channel,
+                    topic: gestureName,
+                    source: source,
+                    data: {
+                        message: 'Right wrist across body detected',
+                        //gestureInformation: gestureInformation
+                    }
+                });
 
                 console.log(gestureName);
             }
@@ -57,17 +57,17 @@
         // Check for right navigation
         (function RightNavigateDetected() {
 
-            var gestureName = "LeftWristAcrossBodyDetected";
+            var gestureName = "LeftWristAcrossBody";
             if (wristLeft.Joint.Position.X > shoulderRight.Joint.Position.X && wristLeft.TrackingState == "Tracked" && shoulderRight.TrackingState == "Tracked") {
-                //bus.publish({
-                //    channel: channel,
-                //    topic: gestureName,
-                //    source: source,
-                //    data: {
-                //        message: 'Right movement detected',
-                //        gestureInformation: gestureInformation
-                //    }
-                //});
+                bus.publish({
+                    channel: channel,
+                    topic: gestureName,
+                    source: source,
+                    data: {
+                        message: 'Right movement detected',
+                        //gestureInformation: gestureInformation
+                    }
+                });
 
                 console.log(gestureName);
             }

@@ -1,6 +1,6 @@
 ﻿define(['postal', 'Input/DeviceManager'], function (bus, deviceManager) {
     var source = 'Microsoft Kinect';
-    var trackingType = 'Body';
+    var TrackingType = 'Body';
     var controller;
     var device = "Kinect";
     var jointHelper;
@@ -95,7 +95,7 @@
                     source: source,
                     data:
                     {
-                        trackingType: trackingType,
+                        TrackingType: TrackingType,
                         input: kinectFriendly
                     }
                 });

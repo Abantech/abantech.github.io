@@ -10,6 +10,20 @@
         "Action": "CreateAndScale",
     },
     {
+        "Topic": "RightWristAcrossBody",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('RightWristAcrossBody');
+        }
+    },
+    {
+        "Topic": "LeftWristAcrossBody",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftWristAcrossBody');
+        }
+    },
+    {
         "Topic": "BothHandsPronation",
         "Source": "Input.Processed.Efficio",
         "Action": "Destroy",
