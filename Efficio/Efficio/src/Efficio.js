@@ -50,15 +50,11 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
                 });
             }
 
-            
-            if (EfficioConfiguration.Devices.Kinect) {
+            // JAMES -- I had to change this to get it to work
+            if (Efficio.Configuration.devices.Kinect) {
                 require(['Input/Microsoft Kinect/Kinect'], function (kinect) {
                     kinect.Initialize(EfficioConfiguration);
                     kinect.Start();
-                });
-
-                require(['Input/Microsoft Kinect/JointHelper'], function (jh) {
-                    console.log("Joint Helper: " + jh);
                 });
             }
 

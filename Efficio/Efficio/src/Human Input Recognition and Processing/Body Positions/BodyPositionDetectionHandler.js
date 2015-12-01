@@ -8,9 +8,9 @@
 
         // Check if there is any input and if the input contains hands
 
-        var handRight;
+        var wristRight;
         var shoulderRight;
-        var handLeft;
+        var wristLeft;
         var shoulderLeft;
 
         data.input.forEach(function (jointFriendly) {
@@ -24,12 +24,12 @@
                 shoulderLeft = jointFriendly;
             }
 
-            if (jointFriendly.JointType == "HandRight") {
-                handRight = jointFriendly;
+            if (jointFriendly.JointType == "WristRight") {
+                wristRight = jointFriendly;
             }
 
-            if (jointFriendly.JointType == "HandLeft") {
-                handLeft = jointFriendly;
+            if (jointFriendly.JointType == "WristLeft") {
+                wristLeft = jointFriendly;
             }
 
         });
@@ -37,8 +37,8 @@
         // Check for left navigation
         (function LeftNavigateDetected() {
             // ISMAEL Gesture names should reflect the description of the position of the body, not the intended action it is to cause
-            var gestureName = "LeftNavigationDetected";
-            if (handRight.Joint.Position.X < shoulderLeft.Joint.Position.X && handRight.TrackingState == "Tracked" && shoulderLeft.TrackingState == "Tracked")
+            var gestureName = "RightWristAcrossBodyDetected";
+            if (wristRight.Joint.Position.X < shoulderLeft.Joint.Position.X && wristRight.TrackingState == "Tracked" && shoulderLeft.TrackingState == "Tracked")
             {
                 //bus.publish({
                 //    channel: channel,
@@ -57,8 +57,8 @@
         // Check for right navigation
         (function RightNavigateDetected() {
 
-            var gestureName = "RightNavigationDetected";
-            if (handLeft.Joint.Position.X > shoulderRight.Joint.Position.X && handLeft.TrackingState == "Tracked" && shoulderRight.TrackingState == "Tracked") {
+            var gestureName = "LeftWristAcrossBodyDetected";
+            if (wristLeft.Joint.Position.X > shoulderRight.Joint.Position.X && wristLeft.TrackingState == "Tracked" && shoulderRight.TrackingState == "Tracked") {
                 //bus.publish({
                 //    channel: channel,
                 //    topic: gestureName,
