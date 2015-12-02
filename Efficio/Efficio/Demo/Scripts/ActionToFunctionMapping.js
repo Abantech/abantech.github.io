@@ -10,24 +10,11 @@
         "Action": "CreateAndScale",
     },
     {
-        "Topic": "RightWristAcrossBody",
-        "Source": "Input.Processed.Efficio",
-        "Action": function (data) {
-            console.log('RightWristAcrossBody');
-        }
-    },
-    {
-        "Topic": "LeftWristAcrossBody",
-        "Source": "Input.Processed.Efficio",
-        "Action": function (data) {
-            console.log('LeftWristAcrossBody');
-        }
-    },
-    {
         "Topic": "BothHandsPronation",
         "Source": "Input.Processed.Efficio",
         "Action": "Destroy",
-    }, {
+    },
+    {
         "Topic": "LeftHandNeutralAndProne",
         "Source": "Input.Processed.Efficio",
         "Action": function (data) {
@@ -97,6 +84,50 @@
             else {
                 colorIndex++;
             }
+        }
+    },
+    {
+        "Topic": "RightWristAcrossBody",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('RightWristAcrossBody');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 5
+        }
+    },
+    {
+        "Topic": "LeftWristAcrossBody",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftWristAcrossBody');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 5
+        }
+    },
+    {
+        "Topic": "LeftWristAboveHead",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftWristAboveHead');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 5
+        }
+    },
+    {
+        "Topic": "RightWristAboveHead",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('RightWristAboveHead');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 5
         }
     }]
 }
