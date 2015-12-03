@@ -51,7 +51,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
             }
 
             // JAMES -- I had to change this to get it to work
-            if (Efficio.Configuration.devices.Kinect) {
+            if (EfficioConfiguration.Devices.Kinect) {
                 require(['Input/Microsoft Kinect/Kinect'], function (kinect) {
                     kinect.Initialize(EfficioConfiguration);
                     kinect.Start();
