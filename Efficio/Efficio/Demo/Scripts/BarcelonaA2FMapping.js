@@ -68,6 +68,17 @@
             FireOnce: false,
             FireAfterXFrames: 3
         }
+    },
+    {
+        Topic: "Device Orientation",
+        Source: "Input.Raw",
+        Action: function(data) {
+            controller.onDeviceOrientationChangeEvent( {
+                gamma: data.DeviceOrientation.gamma,
+                beta: data.DeviceOrientation.beta,
+                alpha: data.DeviceOrientation.alpha
+            } )
+        }
     }
     ]
 }

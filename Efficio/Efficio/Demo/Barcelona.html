@@ -14,8 +14,9 @@
     <script src=http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js></script>
     <script src='Scripts/FirstPersonControls.js'></script>
     <script src=http://js.leapmotion.com/0.2.2/leap.min.js></script>
+    <script src="Scripts/DeviceOrientationControls.js"></script>
     <script>
-        var info, info2, renderer, scene, camera, controls, stats;
+        var info, info2, renderer, scene, camera, controls, stats, lookController
 
         var globalStartTime = new Date().getTime();
         var movementStopInterval = 3000;
