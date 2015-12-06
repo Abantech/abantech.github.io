@@ -1,0 +1,111 @@
+<form class="bg-info container" action="" id="form_overrideColor">
+    <div class="form-group">
+        <h4>Override Color/Material</h4>
+        <h5>NOTE: this uses an internal API and may change in future versions.</h5>
+
+        <button id="bn_override" class="btn btn-primary">Override</button>
+        <button id="bn_overrideRestore" class="btn btn-primary">Restore</button>
+    </div>
+</form>
+
+<script>
+        // CREDIT: to Jon Smith at COINS, Inc. for this solution.  I started with
+        // his example and morphed it for this test.
+    var _overrideFragIds = {};
+    var _overlayRed = "LmvDbgRedOverlay";
+    var _overlayGreen = "LmvDbgGreenOverlay";
+    
+    initOverlays(); // set up the Overlays one time
+    
+    $("#bn_override").click(function(evt) {  
+        evt.preventDefault();
+        
+            // don't add these overlays twice
+        if (_overrideFragIds.length > 0) {
+            alert("Colos are already overridden.  Restore first.");
+            return;
+        }
+        
+            // arbitrarily divide up all objects into two sets to do this test.
+            // We will just do a simple Odd or Even on the dbID.
+        var objs1 = [];
+        var objs2 = [];
+        getObjsBasedOnSomeCondition(objs1, objs2);
+        overrideColorOnObj(objs1, _overlayRed);
+        overrideColorOnObj(objs2, _overlayGreen);
+    });
+    
+    $("#bn_overrideRestore").click(function(evt) {  
+        evt.preventDefault();
+                
+        for (var p in _overrideFragIds) {
+            var mesh = _overrideFragIds[p];
+            if (mesh) {
+                _viewer.impl.removeOverlay(_overlayRed, mesh);
+                _viewer.impl.removeOverlay(_overlayGreen, mesh);
+            }
+        }
+        _overrideFragIds = {};      // reset the fragIds array
+    });
+    
+        // add the two overlays to the system
+    function initOverlays() {
+           // create Color overlay for Red and assign to all even objects
+        var matRed = new THREE.MeshBasicMaterial({ color: 'red' });
+        _viewer.impl.createOverlayScene(_overlayRed, matRed);
+            // create Color overlay for Green and assign to all odd objects
+        var matGreen = new THREE.MeshBasicMaterial({ color: 'green' });
+        _viewer.impl.createOverlayScene(_overlayGreen, matGreen);
+    } 
+    
+        // walk the list of objects that have geometry and get their fragments.
+    function overrideColorOnObj(objs, colorOverlayName) {
+        _viewer.getObjectTree(function(objTree) {
+            for (i=0; i<objs.length; i++) {
+                var frags = [];
+                objTree.enumNodeFragments(objs[i], function(fragId) {
+                    frags.push(fragId);
+                });
+                overrideColorOnFragments(frags, colorOverlayName);
+            }
+        });
+    }
+    
+        // walk the list of fragments and add the overlay to its geometry
+    function overrideColorOnFragments(fragIds, overlayName) {
+        for (j=0; j<fragIds.length; j++) {
+            var mesh = _viewer.impl.getRenderProxy(_viewer.impl.model, fragIds[j]);
+            
+            var myProxy = new THREE.Mesh(mesh.geometry, mesh.material);
+            myProxy.matrix.copy(mesh.matrixWorld);
+            myProxy.matrixAutoUpdate = false;
+            myProxy.matrixWorldNeedsUpdate = true;
+            myProxy.frustumCulled = false;
+            _viewer.impl.addOverlay(overlayName, myProxy);
+            _overrideFragIds[fragIds[j]] = myProxy;  // keep track of the frags so that we can remove later
+        }
+    }
+    
+        // arbitrary way to split the objects into separate groups to color code
+        // recursively walk through all the objects and divide graphical elements
+        // by whether their ID is odd or even
+    function getObjsBasedOnSomeCondition(objs1, objs2) {
+        _viewer.getObjectTree(function(objTree) {
+            var root = objTree.getRootId();
+            objTree.enumNodeChildren(root, function(dbId) {
+                
+                    //skip non-leaf tree nodes
+                if (objTree.getChildCount() > 0)
+                    return;
+                if (dbId&1) {
+                    objs2.push(dbId);
+                } else {
+                    objs1.push(dbId);
+                }
+            }, true);
+        });
+    }
+    
+    
+    console.log("LmvDbg: loaded code snippet [click to see source in debugger -->]");
+</script>
