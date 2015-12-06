@@ -1,0 +1,106 @@
+
+<form class="bg-info container" action="" id="form_applyCamera">
+    <div class="form-group">
+        <h4>Viewer3d.setView(newPosition, newTarget);</h4>
+        <h5>(in this case, one of the standard ISO views)</h5>
+        <button id="bn_cameraTop" class="btn btn-primary">Top</button>
+        <button id="bn_cameraBottom" class="btn btn-primary">Bottom</button>
+        <button id="bn_cameraFront" class="btn btn-primary">Front</button>
+        <button id="bn_cameraBack" class="btn btn-primary">Back</button>
+        <button id="bn_cameraLeft" class="btn btn-primary">Left</button>
+        <button id="bn_cameraRight" class="btn btn-primary">Right</button>
+        <h4>Viewer3d.setViewFromFile();</h4>
+        <h5>set to default home view stored in the file</h5>
+        <button id="bn_setViewFromFile" class="btn btn-primary">Set View From File</button>
+        <h4>Viewer3d.setViewFromViewBox(viewbox2D, layerStateName);</h4>
+        <h5>set to a visible box on 2D sheet</h5>
+        <h5>param viewbox2d = Array: [min-x, min-y, max-x, max-y]</h5>
+        <h5>param name = optional layer state name</h5>
+        <button id="bn_setViewFromViewBox" class="btn btn-primary">Set View From View Box</button>
+    </div>
+</form>
+
+
+<script>
+    $("#bn_cameraTop").click(function(evt) {  
+        evt.preventDefault();
+        
+        _viewer.navigation.setWorldUpVector(new THREE.Vector3(0, 0, 1));
+
+
+        var newPos = new THREE.Vector3(0, 0, 100);     // TBD: for some reason top and bottom views need vector to have greater length.
+        var newTarget = new THREE.Vector3(0, 0, 0);
+        _viewer.navigation.setView(newPos, newTarget);
+        
+        _viewer.fitToView(true);
+    });
+
+    $("#bn_cameraBottom").click(function(evt) {  
+        evt.preventDefault();
+        
+        _viewer.navigation.setWorldUpVector(new THREE.Vector3(0, 0, 1));
+
+        var newPos = new THREE.Vector3(0, 0, -100);
+        var newTarget = new THREE.Vector3(0, 0, 0);
+        _viewer.navigation.setView(newPos, newTarget);
+
+        _viewer.fitToView(true);
+    });
+
+    $("#bn_cameraFront").click(function(evt) {  
+        evt.preventDefault();
+
+        var newPos = new THREE.Vector3(0, -100, 0);
+        var newTarget = new THREE.Vector3(0, 0, 0);
+        _viewer.navigation.setView(newPos, newTarget);
+
+        _viewer.fitToView(true);
+    });
+
+    $("#bn_cameraBack").click(function(evt) {  
+        evt.preventDefault();
+
+        var newPos = new THREE.Vector3(0, 100, 0);
+        var newTarget = new THREE.Vector3(0, 0, 0);
+        _viewer.navigation.setView(newPos, newTarget);
+
+        _viewer.fitToView(true);
+    });
+
+    $("#bn_cameraLeft").click(function(evt) {  
+        evt.preventDefault();
+
+        var newPos = new THREE.Vector3(-100, 0, 0);
+        var newTarget = new THREE.Vector3(0, 0, 0);
+        _viewer.navigation.setView(newPos, newTarget);
+
+        _viewer.fitToView(true);
+    });
+
+    $("#bn_cameraRight").click(function(evt) {  
+        evt.preventDefault();
+
+        var newPos = new THREE.Vector3(100, 0, 0);
+        var newTarget = new THREE.Vector3(0, 0, 0);
+        _viewer.navigation.setView(newPos, newTarget);
+
+        _viewer.fitToView(true);
+    });
+    
+    $("#bn_setViewFromFile").click(function(evt) {  
+        evt.preventDefault();
+
+        _viewer.setViewFromFile();
+    });
+    
+    $("#bn_setViewFromViewBox").click(function(evt) {  
+        evt.preventDefault();
+
+        var viewBox = [0, 0, 20, 15];
+        
+        _viewer.setViewFromViewBox(viewBox);
+    });
+    
+    console.log("LmvDbg: loaded code snippet [click to see source in debugger -->]");
+
+</script>

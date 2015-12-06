@@ -58,10 +58,7 @@
             camera.position.set(0, 10, 0);
             camera.lookAt(new THREE.Vector3(10, 10, 10));
 
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
-            {
-                controls = new THREE.DeviceOrientationControls(camera);
-            }
+            controls = new THREE.DeviceOrientationControls(camera);
 
             // helpers
             var gridHelper = new THREE.GridHelper(150, 10);

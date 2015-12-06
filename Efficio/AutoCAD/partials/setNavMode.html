@@ -1,0 +1,57 @@
+
+<form class="bg-info container" action="" id="form_setNavMode">
+    <div class="form-group">
+        
+        <h4>Viewer3d.getActiveNavigationTool(); --> {string}</h4>
+        <h5>Returns the name of the active navigation tool.</h5>
+        <button id="bn_getActiveNavigationTool" class="btn btn-primary">Get Active Navigation Tool</button>
+        
+        <h4>Viewer3d.getDefaultNavigationToolName(); --> {string}</h4>
+        <h5>Returns the default navigation tool.</h5>
+        <button id="bn_getDefaultNavigationToolName" class="btn btn-primary">Get Default Navigation Tool</button>
+        
+        <h4>Viewer3d.setActiveNavigationTool(toolName);</h4>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="pu_setNavigationMode">Navigation Mode</label>
+                <select id="pu_setNavigationMode" class="form-control" name="navigationMode">
+                    <option value="0">orbit</option>
+                    <option value="1">pan</option>
+                    <option value="2">dolly</option>
+                    <option value="3">worldup</option>
+                    <option value="4">fov</option>
+                    <option value="5">** bad value **</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $("#bn_getActiveNavigationTool").click(function(evt) {  
+        evt.preventDefault();
+
+        var activeToolStr = _viewer.getActiveNavigationTool();
+        alert("Active Navigation Tool: " + activeToolStr);
+    });
+    
+    $("#bn_getDefaultNavigationToolName").click(function(evt) {  
+        evt.preventDefault();
+
+        var defaultToolStr = _viewer.getDefaultNavigationToolName();
+        alert("Default Navigation Tool Name: " + defaultToolStr);
+    });
+
+    $("#pu_setNavigationMode").change(function(evt) {  
+        evt.preventDefault();
+
+        var toolName = $("#pu_setNavigationMode option:selected").text();
+        console.log("Setting Active Navigation Tool = " + toolName);
+        if (_viewer.setActiveNavigationTool(toolName) == false) {
+            alert("Could not set the specified Navigation Tool!");
+        }
+    });
+    
+    console.log("LmvDbg: loaded code snippet [click to see source in debugger -->]");
+
+</script>
