@@ -6,117 +6,125 @@
         var trackingType = 'Body';
         var side;
 
-        
-
-
-
-        // Check if there is any input and if the input contains hands
-
-        var wristRight;
-        var shoulderRight;
-        var wristLeft;
-        var shoulderLeft;
-        var head;
+        var handRight;
+        var handLeft;
 
         data.input.forEach(function (jointFriendly) {
 
-            // Get the 5 joints we are using to identify navigation
-            if (jointFriendly.JointType == "ShoulderRight") {
-                shoulderRight = jointFriendly;
+            // Get the joints we are using to identify navigation
+            if (jointFriendly.JointName == "HandRight") {
+                handRight = jointFriendly;
             }
 
-            if (jointFriendly.JointType == "ShoulderLeft") {
-                shoulderLeft = jointFriendly;
-            }
-
-            if (jointFriendly.JointType == "WristRight") {
-                wristRight = jointFriendly;
-            }
-
-            if (jointFriendly.JointType == "WristLeft") {
-                wristLeft = jointFriendly;
-            }
-
-            if (jointFriendly.JointType == "Head") {
-                head = jointFriendly;
+            if (jointFriendly.JointName == "HandLeft") {
+                handLeft = jointFriendly;
             }
 
         });
 
-        // Check for left navigation
-        (function LeftNavigateDetected() {
-            // ISMAEL Gesture names should reflect the description of the position of the body, not the intended action it is to cause
-            var gestureName = "RightWristAcrossBody";
-            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+        // only proceed with the checks if BOTH joints are tracked
+        if (handRight.IsTracked && handLeft.IsTracked) {
+           
 
-            if (wristRight.Joint.Position.X < shoulderLeft.Joint.Position.X && wristRight.TrackingState == "Tracked" && shoulderLeft.TrackingState == "Tracked")
-            {
+            //// Check if Right Wrist is above Left Wrist
+            //if (handRight.IsAboveOf(handLeft)) {
+            //    var gestureName = "RightWristAboveLeftWrist"; 
+            //    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+
+            //    bus.publish({
+            //        channel: channel,
+            //        topic: gestureName,
+            //        source: source,
+            //        data: {
+            //            message: 'Right wrist above left wrist detected',
+            //            gestureInformation: gestureInformation
+            //        }
+            //    });
+            //}
+
+            //// Check if Right Wrist is below Left Wrist
+            //if (handRight.IsBelowOf(handLeft)) {
+            //    var gestureName = "RightWristBelowLeftWrist";
+            //    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+
+            //    bus.publish({
+            //        channel: channel,
+            //        topic: gestureName,
+            //        source: source,
+            //        data: {
+            //            message: 'Right wrist below left wrist detected',
+            //            gestureInformation: gestureInformation
+            //        }
+            //    });
+            //}
+
+            // Check if Right Wrist is left of Left Wrist
+            if (handRight.IsLeftOf(handLeft)) {
+                var gestureName = "RighthandLeftOfLeftWrist";
+                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+
                 bus.publish({
                     channel: channel,
                     topic: gestureName,
                     source: source,
                     data: {
-                        message: 'Right wrist across body detected',
+                        message: 'Right wrist left of left wrist detected',
                         gestureInformation: gestureInformation
                     }
                 });
             }
-        })();
 
-        // Check for right navigation
-        (function RightNavigateDetected() {
+            // Check if Right Wrist is right of Left Wrist
+            if (handRight.IsRightOf(handLeft)) {
+                var gestureName = "RighthandRightOfLeftWrist";
+                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-            var gestureName = "LeftWristAcrossBody";
-            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
-
-            if (wristLeft.Joint.Position.X > shoulderRight.Joint.Position.X && wristLeft.TrackingState == "Tracked" && shoulderRight.TrackingState == "Tracked") {
                 bus.publish({
                     channel: channel,
                     topic: gestureName,
                     source: source,
                     data: {
-                        message: 'Right movement detected',
+                        message: 'Right wrist right of left wrist detected',
                         gestureInformation: gestureInformation
                     }
                 });
             }
-        })();
 
-        // Check for up navigation
-        (function LeftNavigateDetected() {
-            var gestureName = "RightWristAboveHead";
-            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+            // Check if Right Wrist is ahead of Left Wrist
+            if (handRight.IsForwardOf(handLeft)) {
+                var gestureName = "RightWristAheadOfLeftWrist";
+                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-            if (wristRight.Joint.Position.Y >= head.Joint.Position.Y && wristRight.TrackingState == "Tracked" && head.TrackingState == "Tracked") {
                 bus.publish({
                     channel: channel,
                     topic: gestureName,
                     source: source,
                     data: {
-                        message: 'Right wrist above head detected',
+                        message: 'Right wrist ahead of left wrist detected',
                         gestureInformation: gestureInformation
                     }
                 });
             }
-        })();
 
-        // Check for down navigation
-        (function LeftNavigateDetected() {
-            var gestureName = "LeftWristAboveHead";
-            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+            // Check if Right Wrist is behind of Left Wrist
+            if (handRight.IsBehindOf(handLeft)) {
+                var gestureName = "RightWristBehindLeftWrist";
+                var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-            if (wristLeft.Joint.Position.Y >= head.Joint.Position.Y && wristLeft.TrackingState == "Tracked" && head.TrackingState == "Tracked") {
                 bus.publish({
                     channel: channel,
                     topic: gestureName,
                     source: source,
                     data: {
-                        message: 'Left wrist above head detected',
+                        message: 'Right wrist behindleft wrist detected',
                         gestureInformation: gestureInformation
                     }
                 });
             }
-        })();
+
+
+        }// end if for tracking check
+
 
     }
 

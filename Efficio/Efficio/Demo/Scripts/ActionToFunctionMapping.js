@@ -86,48 +86,40 @@
             }
         }
     },
-    {
-        "Topic": "RightWristAcrossBody",
+     {
+        "Topic": "RightWristLeftOfLeftWrist",
         "Source": "Input.Processed.Efficio",
-        "Action": function (data) {
-            console.log('RightWristAcrossBody');
-        },
+        "Action": "stepLeft",
         FireRestrictions: {
-            FireOnce: true,
-            FireAfterXFrames: 5
+            FireOnce: false,
+            FireAfterXFrames: 3
         }
     },
-    {
-        "Topic": "LeftWristAcrossBody",
-        "Source": "Input.Processed.Efficio",
-        "Action": function (data) {
-            console.log('LeftWristAcrossBody');
+        {
+            "Topic": "RightWristRightOfLeftWrist",
+            "Source": "Input.Processed.Efficio",
+            "Action": "stepRight",
+            FireRestrictions: {
+                FireOnce: false,
+                FireAfterXFrames: 3
+            }
         },
-        FireRestrictions: {
-            FireOnce: true,
-            FireAfterXFrames: 5
-        }
-    },
-    {
-        "Topic": "LeftWristAboveHead",
-        "Source": "Input.Processed.Efficio",
-        "Action": function (data) {
-            console.log('LeftWristAboveHead');
+        {
+            "Topic": "RightWristBehindLeftWrist",
+            "Source": "Input.Processed.Efficio",
+            "Action": "stepBackward",
+            FireRestrictions: {
+                FireOnce: false,
+                FireAfterXFrames: 3
+            }
         },
-        FireRestrictions: {
-            FireOnce: true,
-            FireAfterXFrames: 5
-        }
-    },
-    {
-        "Topic": "RightWristAboveHead",
-        "Source": "Input.Processed.Efficio",
-        "Action": function (data) {
-            console.log('RightWristAboveHead');
-        },
-        FireRestrictions: {
-            FireOnce: true,
-            FireAfterXFrames: 5
-        }
-    }]
+        {
+            "Topic": "RightWristAheadOfLeftWrist",
+            "Source": "Input.Processed.Efficio",
+            "Action": "stepForward",
+            FireRestrictions: {
+                FireOnce: false,
+                FireAfterXFrames: 3
+            }
+        }]
 }

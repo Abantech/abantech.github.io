@@ -1,7 +1,7 @@
 ﻿ActionToFunctionMapping = {
     Bridge: Barcelona,
     ActionMappings: [{
-        Topic: "RightHandFlexedAndProne",
+        Topic: "BothHandsProne",
         Source: "Input.Processed.Efficio",
         Action: "stepForward",
         FireRestrictions: {
@@ -9,7 +9,7 @@
             FireAfterXFrames: 7
         }
     }, {
-        Topic: "RightHandExtendedAndProne",
+        Topic: "BothHandsSupine", //To be developed
         Source: "Input.Processed.Efficio",
         Action: "stepBackward",
         FireRestrictions: {
@@ -17,7 +17,7 @@
             FireAfterXFrames: 7
         }
     }, {
-        Topic: "LeftHandExtendedAndNeutral",
+        Topic: "RightHandsSupineLeftHandProne",
         Source: "Input.Processed.Efficio",
         Action: "stepLeft",
         FireRestrictions: {
@@ -25,7 +25,7 @@
             FireAfterXFrames: 7
         }
     }, {
-        Topic: "LeftHandFlexedAndNeutral",
+        Topic: "LeftHandSupineRightHandProne",
         Source: "Input.Processed.Efficio",
         Action: "stepRight",
         FireRestrictions: {
@@ -34,7 +34,7 @@
         }
     }
     , {
-        "Topic": "RightWristAcrossBody",
+        "Topic": "RightWristLeftOfLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepLeft",
         FireRestrictions: {
@@ -43,7 +43,7 @@
         }
     },
     {
-        "Topic": "LeftWristAcrossBody",
+        "Topic": "RightWristRightOfLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepRight",
         FireRestrictions: {
@@ -52,7 +52,7 @@
         }
     },
     {
-        "Topic": "LeftWristAboveHead",
+        "Topic": "RightWristBehindLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepBackward",
         FireRestrictions: {
@@ -61,24 +61,25 @@
         }
     },
     {
-        "Topic": "RightWristAboveHead",
+        "Topic": "RightWristAheadOfLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepForward",
         FireRestrictions: {
             FireOnce: false,
             FireAfterXFrames: 3
         }
-    },
-    {
-        Topic: "Device Orientation",
-        Source: "Input.Raw",
-        Action: function(data) {
-            controller.onDeviceOrientationChangeEvent( {
-                gamma: data.DeviceOrientation.gamma,
-                beta: data.DeviceOrientation.beta,
-                alpha: data.DeviceOrientation.alpha
-            } )
-        }
     }
+    //,
+    //{
+    //    Topic: "Device Orientation",
+    //    Source: "Input.Raw",
+    //    Action: function(data) {
+    //        controller.onDeviceOrientationChangeEvent( {
+    //            gamma: data.DeviceOrientation.gamma,
+    //            beta: data.DeviceOrientation.beta,
+    //            alpha: data.DeviceOrientation.alpha
+    //        } )
+    //    }
+    //}
     ]
 }
