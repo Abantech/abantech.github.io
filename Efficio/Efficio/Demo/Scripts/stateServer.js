@@ -2,16 +2,7 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 
-var stateStorage = [];
-
 console.log("Starting up Effcio demo app state server...");
-
-app.get('/stateServer', function (req, res) {
-
-    var data = "hello world"
-    console.log(data);
-    res.end(data);
-})
 
 app.get('/updateValues', function (req, res) {
 
