@@ -8,7 +8,9 @@
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    }, {
+    },
+
+    {
         Topic: "BothHandsSupine",
         Source: "Input.Processed.Efficio",
         Action: "stepBackward",
@@ -16,7 +18,9 @@
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    }, {
+    },
+
+    {
         Topic: "RightHandSupineLeftHandProne",
         Source: "Input.Processed.Efficio",
         Action: "stepLeft",
@@ -24,7 +28,9 @@
             FireOnce: false,
             FireAfterXFrames: 7
        }
-    }, {
+    },
+
+    {
         Topic: "LeftHandSupineRightHandProne",
         Source: "Input.Processed.Efficio",
         Action: "stepRight",
@@ -32,7 +38,9 @@
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    },  {
+    },
+
+    {
         Topic: "RightHandFlexedAndProne",
         Source: "Input.Processed.Efficio",
         Action: "lookDown",
@@ -40,7 +48,9 @@
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    }, {
+    },
+
+    {
         Topic: "RightHandExtendedAndProne",
         Source: "Input.Processed.Efficio",
         Action: "lookUp",
@@ -48,7 +58,9 @@
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    }, {
+    },
+
+    {
         Topic: "LeftHandExtendedAndNeutral",
         Source: "Input.Processed.Efficio",
         Action: "lookLeft",
@@ -56,15 +68,19 @@
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    }, {
-        Topic: "LeftHandFlexedAndNeutral",
+    },
+
+    {
+        Topic: "RighHandFlexedAndNeutral",
         Source: "Input.Processed.Efficio",
         Action: "lookRight",
         FireRestrictions: {
             FireOnce: false,
             FireAfterXFrames: 7
-        }
-    },  {
+         }
+    },
+
+    {
         "Topic": "RightWristLeftOfLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepLeft",
@@ -73,6 +89,7 @@
             FireAfterXFrames: 3
         }
     },
+
     {
         "Topic": "RightWristRightOfLeftWrist",
         "Source": "Input.Processed.Efficio",
@@ -82,6 +99,7 @@
             FireAfterXFrames: 3
         }
     },
+
     {
         "Topic": "RightWristBehindLeftWrist",
         "Source": "Input.Processed.Efficio",
@@ -91,6 +109,7 @@
             FireAfterXFrames: 3
         }
     },
+
     {
         "Topic": "RightWristAheadOfLeftWrist",
         "Source": "Input.Processed.Efficio",
