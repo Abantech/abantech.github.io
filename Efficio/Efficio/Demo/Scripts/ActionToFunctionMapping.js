@@ -1,44 +1,133 @@
 ﻿ActionToFunctionMapping = {
-    Bridge: Test,
-    ActionMappings: [{
-        Topic: "Leap",
-        Source: "Input.Raw",
-        Action: "leapAnimate",
+    "Bridge": Test,
+    "ActionMappings": [{
+        "Topic": "Leap",
+        "Source": "Input.Raw",
+        "Action": "leapAnimate",
     }, {
-        Topic: "RightHandExtended",
-        Source: "Input.Processed.Efficio",
-        Action: function () {
-            console.log("RightHandExtended")
+        "Topic": "BothHandsNeutral",
+        "Source": "Input.Processed.Efficio",
+        "Action": "CreateAndScale",
+    },
+    {
+        "Topic": "BothHandsPronation",
+        "Source": "Input.Processed.Efficio",
+        "Action": "Destroy",
+    },
+    {
+        "Topic": "LeftHandNeutralAndProne",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandNeutralAndProne');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
         }
     }, {
-        Topic: "LeftHandExtended",
-        Source: "Input.Processed.Efficio",
-        Action: function () {
-            console.log("LeftHandExtended")
+        "Topic": "LeftHandFlexedAndProne",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandFlexedAndProne');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
         }
     }, {
-        Topic: "RightHandFlexed",
-        Source: "Input.Processed.Efficio",
-        Action: function () {
-            console.log("RightHandFlexed")
+        "Topic": "LeftHandExtendedAndProne",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandExtendedAndProne');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
         }
     }, {
-        Topic: "LeftHandFlexed",
-        Source: "Input.Processed.Efficio",
-        Action: function () {
-            console.log("LeftHandFlexed")
+        "Topic": "LeftHandNeutralAndNeutral",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandNeutralAndNeutral');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
         }
     }, {
-        Topic: "Device Orientation",
-        Source: "Input.Raw",
-        Action: function (data) {
-            controls.registerOrientationData(data.DeviceOrientation);
+        "Topic": "LeftHandFlexedAndNeutral",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandFlexedAndNeutral');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
         }
     }, {
-        Topic: "Orientation Change",
-        Source: "Input.Raw",
-        Action: function () {
-            controls.onScreenOrientationChangeEvent(data.DeviceOrientation);
+        "Topic": "LeftHandExtendedAndNeutral",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftHandExtendedAndNeutral');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 15
         }
-    }, ]
+    }, {
+        "Topic": "LeftHandSwipe",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            if (colorIndex == 3) {
+                colorIndex = 0
+            }
+            else {
+                colorIndex++;
+            }
+        }
+    },
+    {
+        "Topic": "RightWristAcrossBody",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('RightWristAcrossBody');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 5
+        }
+    },
+    {
+        "Topic": "LeftWristAcrossBody",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftWristAcrossBody');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 5
+        }
+    },
+    {
+        "Topic": "LeftWristAboveHead",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('LeftWristAboveHead');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 5
+        }
+    },
+    {
+        "Topic": "RightWristAboveHead",
+        "Source": "Input.Processed.Efficio",
+        "Action": function (data) {
+            console.log('RightWristAboveHead');
+        },
+        FireRestrictions: {
+            FireOnce: true,
+            FireAfterXFrames: 5
+        }
+    }]
 }

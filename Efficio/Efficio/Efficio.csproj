@@ -86,6 +86,7 @@
     <Content Include="Demo\Scripts\OrientationA2FM.js" />
     <Content Include="Demo\Scripts\BarcelonaA2FMapping.js" />
     <Content Include="Demo\Scripts\BarcelonaEfficioConfiguration.js" />
+    <Content Include="Demo\Scripts\DeviceOrientationControls.js" />
     <Content Include="Demo\Scripts\EfficioConfigurationRemote.js" />
     <Content Include="Demo\Scripts\FirstPersonControls.js" />
     <Content Include="Output\min\Efficio.min.js" />

@@ -1,6 +1,6 @@
-﻿define(['postal'], function (bus) {
+﻿define(['postal', 'Input/DeviceManager'], function (bus, deviceManager) {
     var source = 'Microsoft Kinect';
-    var trackingType = 'Body';
+    var TrackingType = 'Body';
     var controller;
     var device = "Kinect";
     var jointHelper;
@@ -27,24 +27,20 @@
             // Create Controller
             controller = new WebSocket(KinectConfiguration.Host);
 
+           
+
             // Sends message when controller is connected
             controller.onopen = function ()
             {
                 console.log("Connection successful.");
 
                 // ISMAEL: Device connection notification has been migrated to the Device Manager. Use the leap motion input as an example on how to use it
-                bus.publish
-                ({
-                    channel: 'Devices',
-                    topic: 'Connected',
-                    source: source,
-                    data: {
-                        name: source,
-                        device: device,
-                        controller: controller,
-                        test: 'test'
-                    }
-                });
+                // Add WebSocket to Device Manager
+                deviceManager.Add(source, controller);
+                deviceManager.Devices[source].IsConnected = function () {
+                    return true;
+                }
+                
             };
 
             // Connection closed.
@@ -99,7 +95,7 @@
                     source: source,
                     data:
                     {
-                        trackingType: trackingType,
+                        TrackingType: TrackingType,
                         input: kinectFriendly
                     }
                 });
