@@ -23,7 +23,7 @@
                     source: source,
                     data: {
                         input: data,
-                        hand: hand,
+                        hand: hands,
                         gestureInformation: gestureInformation
                     }
                 });
@@ -52,6 +52,7 @@
                     data: {
                         input: data,
                         hand: hands,
+                        gestureInformation: gestureInformation
                     }
                 });
             }
@@ -79,6 +80,7 @@
                     data: {
                         input: data,
                         hand: hands,
+                        gestureInformation: gestureInformation
                     }
                 });
             }
@@ -106,6 +108,7 @@
                     data: {
                         input: data,
                         hand: hands,
+                        gestureInformation: gestureInformation
                     }
                 });
             }
@@ -115,9 +118,9 @@
         }
     };
 
-    function RightHandsSupineLeftHandProne(data) {
+    function RightHandSupineLeftHandProne(data) {
         var hands = data.Input.hands;
-        var gestureName = 'RightHandsSupineLeftHandProne'
+        var gestureName = 'RightHandSupineLeftHandProne'
 
         if (hands[0].IsProne() && hands[1].IsSupine()) {
             var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary);
@@ -133,6 +136,7 @@
                     data: {
                         input: data,
                         hand: hands,
+                        gestureInformation: gestureInformation
                     }
                 });
             }

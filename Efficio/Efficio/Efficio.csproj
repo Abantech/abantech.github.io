@@ -89,6 +89,7 @@
     <Content Include="Demo\Scripts\DeviceOrientationControls.js" />
     <Content Include="Demo\Scripts\EfficioConfigurationRemote.js" />
     <Content Include="Demo\Scripts\FirstPersonControls.js" />
+    <Content Include="Demo\Scripts\stateServer.js" />
     <Content Include="Output\min\Efficio.min.js" />
     <Content Include="src\Asset Management and Inventory\AssetManager.js" />
     <Content Include="src\Helpers\Math.js" />
@@ -145,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Demo\images\sculpture\files\untitled.dae" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Demo\Scripts\statedata.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
