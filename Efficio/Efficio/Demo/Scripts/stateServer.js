@@ -33,7 +33,7 @@ app.get('/getAllValues', function (req, response) {
         var message = "Camera current position is at x=" + values.cameraPosition.x + ", y=" + values["cameraPosition"].y + ", z= " + values["cameraPosition"].z;
         console.log(message);
         response.writeHead(200, { "Content-Type": "application/json" });
-        response.addHeader("Access-Control-Allow-Origin", "*");
+        //response.addHeader("Access-Control-Allow-Origin", "*");
         response.end(JSON.stringify(values));
     });
 });

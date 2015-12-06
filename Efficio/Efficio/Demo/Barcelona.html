@@ -478,7 +478,7 @@
             var delta = clock.getDelta()
             controls.update(delta);
             renderer.render(scene, camera);
-            //loadCameraPosition();
+            loadCameraPosition();
         }
 
         var saveThrottleCounterLimit = 30;
@@ -509,7 +509,7 @@
             {
                 $.ajax({
                     url: "http://192.168.1.8:8082/getAllValues.json",
-                    dataType: "jsonp",
+                    dataType: "json",
                     success: function (data) {
                         camera.position.set(data.cameraPosition.x, data.cameraPosition.y, data.cameraPosition.z);
                     }
