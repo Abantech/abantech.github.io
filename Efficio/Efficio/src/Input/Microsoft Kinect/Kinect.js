@@ -3,7 +3,7 @@
     var TrackingType = 'Body';
     var controller;
     var device = "Kinect";
-    var jointHelper;
+    var jointWrapper;
 
     function configure(KinectConfiguration) {
         KinectConfiguration = {
@@ -17,8 +17,9 @@
         Initialize: function (KinectConfiguration) {
 
             // Retrieve Joint Helper
-            require(['Input/Microsoft Kinect/JointHelper'], function (jh) {
-                jointHelper = jh;
+
+            require(['Input/Microsoft Kinect/JointWrapper'], function (jw) {
+                jointWrapper = jw;
             });
 
             // Load Configuration
@@ -26,9 +27,6 @@
 
             // Create Controller
             controller = new WebSocket(KinectConfiguration.Host);
-
-           
-
             // Sends message when controller is connected
             controller.onopen = function ()
             {
@@ -60,12 +58,8 @@
                var skeleton = JSON.parse(frame.data);
                skeleton.Joints.forEach(function (joint)
                {
-                   // Get the Joint Type and Tracking Status
-                   var jointType = jointHelper.GetJointName(joint.JointType);
-                   var jointTracking = jointHelper.GetJointTrackingStatus(joint.TrackingState);
-                   var jointFriendly = { JointType: jointType, TrackingState: jointTracking, Joint: joint };
-
-                   kinectFriendly.push(jointFriendly);
+                   var specialJoint = new jointWrapper.SpecialJoint(joint);
+                   kinectFriendly.push(specialJoint);
                });
 
                // ISMAEL: Consider just extending the joint object. Eliminate the need for object copying.
