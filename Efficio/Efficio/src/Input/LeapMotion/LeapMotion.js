@@ -49,8 +49,8 @@
             controller.connect();
 
             // Add Leap Motion to Device Manager
-            deviceManager.Add(source, controller);
-            deviceManager.Devices[source].IsConnected = function () {
+            deviceManager.Add("LeapMotion", controller);
+            deviceManager.Devices["LeapMotion"].IsConnected = function () {
                 return controller.connected();
             }
         },
