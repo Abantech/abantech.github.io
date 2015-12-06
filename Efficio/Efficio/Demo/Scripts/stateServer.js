@@ -20,7 +20,7 @@ app.get('/updateValues', function (req, res) {
 
         fs.writeFile(__dirname + "/" + "statedata.json", JSON.stringify(values), 'utf8', function (err) {
             var message = err ? err : "Successfully Updated State Data!"
-            res.end(message);
+            res.end();//message);
             return console.log(message);
         });
     });
@@ -30,10 +30,10 @@ app.get('/getAllValues', function (req, response) {
 
     fs.readFile(__dirname + "/" + "statedata.json", 'utf8', function (err, data) {
         var values = JSON.parse(data);
-        //var message =  values["cameraPosition"].x;
         var message = "Camera current position is at x=" + values.cameraPosition.x + ", y=" + values["cameraPosition"].y + ", z= " + values["cameraPosition"].z;
         console.log(message);
         response.writeHead(200, { "Content-Type": "application/json" });
+        response.addHeader("Access-Control-Allow-Origin", "*");
         response.end(JSON.stringify(values));
     });
 });
@@ -81,7 +81,7 @@ app.get('/getValues', function (req, response) {
 })
 
 
-var server = app.listen(8081, function () {
+var server = app.listen(8082, function () {
 
     var host = server.address().address
     var port = server.address().port

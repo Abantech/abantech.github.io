@@ -478,27 +478,46 @@
             var delta = clock.getDelta()
             controls.update(delta);
             renderer.render(scene, camera);
-            //		stats.update();
-            stopAllMovement();
-            /*
-            var t = null;
-            $.getJSON('http://192.168.1.8:8082/GetData', function (data) {
-                alert(data);
-                t = data;
-            });
-            alert(t);
-            
-            $.ajax({
-                type: "GET",
-                dataType: "jsonp",
-                url: "http://192.168.1.8:8082/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
-                success: function (data) {
-                    //alert(data);
-                }
-            });
-            */
-
+            //loadCameraPosition();
         }
+
+        var saveThrottleCounterLimit = 30;
+        var loadThrottleCounterLimit = 30;
+
+        var saveThrottleCounter = 10;
+        var loadThrottleCounter = 10;
+
+        function saveCameraPosition()
+        {
+            if (saveThrottleCounter++ >= saveThrottleCounterLimit)
+            {
+                $.ajax({
+                    type: "GET",
+                    dataType: "jsonp",
+                    url: "http://192.168.1.8:8082/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
+                    success: function (data) {
+                        //alert(data);
+                    }
+                });
+                saveThrottleCounter = 0;
+            }
+        }
+
+        function loadCameraPosition()
+        {
+            if (loadThrottleCounter++ >= loadThrottleCounterLimit)
+            {
+                $.ajax({
+                    url: "http://192.168.1.8:8082/getAllValues.json",
+                    dataType: "jsonp",
+                    success: function (data) {
+                        camera.position.set(data.cameraPosition.x, data.cameraPosition.y, data.cameraPosition.z);
+                    }
+                });
+                loadThrottleCounter = 0;
+            }
+        }
+
 
         function buildWall(gridSize, floorLevel, wall, wallHeight, thickness, material) {
             var startPoint, endPoint, distance, offset, position;
@@ -622,18 +641,22 @@
         var Barcelona = {
             stepForward: function () {
                 camera.translateZ(-0.05);
+                saveCameraPosition();
             },
 
             stepBackward: function () {
                 camera.translateZ(0.05);
+                saveCameraPosition();
             },
 
             stepLeft: function () {
                 camera.translateX(0.05);
+                saveCameraPosition();
             },
 
             stepRight: function () {
                 camera.translateX(-0.05);
+                saveCameraPosition();
             },
 
             lookLeft: function () {
