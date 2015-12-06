@@ -1,4 +1,5 @@
 ﻿define([
+    'postal',
     'Human Input Recognition and Processing/HumanInputRecognitionAndProcessing',
     'Asset Management and Inventory/AssetManager',
     'Constraints Engine/ConstraintsEngine',
@@ -6,11 +7,11 @@
     'InternalScene',
     'Logging/SystemNotificationListener',
     'Input/DeviceManager',
-    'Metrics/Metrics'
+    'Metrics/Metrics',
     //'Sequence Execution and Action Scheduling/CollisionDetectionAndGravitySimulation',
 ],
 
-function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationListener, deviceManager, metrics) {
+function (bus, hirp, ami, constraintsEngine, comm, internalScene, sysNotificationListener, deviceManager, metrics) {
     var Efficio;
 
     function configure(EfficioConfiguration) {
@@ -24,7 +25,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
         Initialize: function (EfficioConfiguration) {
 
             if (typeof Efficio === 'undefined' || Efficio === null) {
-                Efficio = {};
+                Efficio = { MessagingSystem: bus };
             }
 
             if (window && (window.Efficio === null || typeof window.Efficio === 'undefined')) {
@@ -65,13 +66,15 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
                 });
             }
 
-            if (window) {
+            if (window && EfficioConfiguration.Devices.Accelerometer) {
                 // Accelerometer
                 require(['Input/Accelerometer/Browser2'], function (browser) {
                     browser.Initialize(EfficioConfiguration);
                     browser.Start();
                 })
+            }
 
+            if (window && EfficioConfiguration.Devices.Location) {
                 require(['Input/Geolocation/Browser'], function (browser) {
                     browser.Initialize(EfficioConfiguration);
                     browser.Start();
