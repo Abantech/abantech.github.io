@@ -10,5 +10,6 @@
 		'annyang': 'empty:',
 		'gyronorm': 'empty:',
     },
-    optimize: "none"
+	optimize: "none",
+	useStrict: true
 })

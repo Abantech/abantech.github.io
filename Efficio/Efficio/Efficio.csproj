@@ -77,7 +77,13 @@
     <Content Include="Demo\images\water-bump.jpg" />
     <Content Include="Demo\images\water.jpg" />
     <Content Include="Demo\Barcelona.html" />
+    <Content Include="Demo\Orientation3D.html" />
+    <Content Include="Demo\Orientation.html" />
     <Content Include="Demo\Remote.html" />
+    <Content Include="Demo\Scripts\DeviceOrientationControls.js" />
+    <Content Include="Demo\Scripts\OrientationA2FM3D.js" />
+    <Content Include="Demo\Scripts\OrientationEfficioConfiguration.js" />
+    <Content Include="Demo\Scripts\OrientationA2FM.js" />
     <Content Include="Demo\Scripts\BarcelonaA2FMapping.js" />
     <Content Include="Demo\Scripts\BarcelonaEfficioConfiguration.js" />
     <Content Include="Demo\Scripts\EfficioConfigurationRemote.js" />

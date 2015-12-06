@@ -118,11 +118,11 @@
                     LeftHandFlexion
 */
     function SideHandFlexionDetected(hand, data) {
-        var gestureName = side + 'HandFlexion'
+        var gestureName = side + 'HandFlexed'
         if (hand.IsFlexed()) {
             var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-            if (gestureInformation.FireCount > 10) {
+            if (gestureInformation.FireCount > 25) {
                 bus.publish({
                     channel: "Input.Processed.Efficio",
                     topic: gestureName,
@@ -147,11 +147,11 @@
                     LeftHandExtension
 */
     function SideHandExtensionDetected(hand, data) {
-        var gestureName = side + 'HandExtension'
+        var gestureName = side + 'HandExtended'
         if (hand.IsExtended()) {
             var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-            if (gestureInformation.FireCount > 10) {
+            if (gestureInformation.FireCount > 25) {
                 bus.publish({
                     channel: "Input.Processed.Efficio",
                     topic: gestureName,
@@ -230,7 +230,7 @@
                             LeftHandSupenation
         */
     function SideHandSupenation(hand, data) {
-        var gestureName = side + 'HandSupenation'
+        var gestureName = side + 'HandSupine'
         if (hand.IsSupine()) {
             var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
@@ -257,7 +257,7 @@
                             LeftHandPronation
         */
     function SideHandPronation(hand, data) {
-        var gestureName = side + 'HandPronation'
+        var gestureName = side + 'HandProne'
         if (hand.IsProne()) {
             var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
@@ -352,8 +352,9 @@
     }
 
     function Pinch(hand, data) {
-        for (var i = 0; i < hand.fingers.length - 1; i++) {
-            for (var j = i + 1; j < hand.fingers.length; j++) {
+        var fingersCount = hand.fingers.length;
+        for (var i = 0; i < fingersCount - 1; i++) {
+            for (var j = i + 1; j < fingersCount; j++) {
                 var gestureName = side + 'Hand' + fh.GetFingerLabel(i) + fh.GetFingerLabel(j) + 'Pinch';
                 var pinchDistance = fh.DistanceBetweenFingers(hand.fingers[i], hand.fingers[j]);
 
@@ -412,6 +413,9 @@
         if (!oneHandPositionDetector) {
             oneHandPositionDetector = {
                 Name: name,
+                TrackingType: trackingType,
+                Dictionary: dictionary,
+                SubDictionary1: side,
                 Positions: {
                     SideHandDetected: SideHandDetected,
                     SideHandCountFingersExtended: SideHandCountFingersExtended,
@@ -431,7 +435,7 @@
             }
         }
 
-        for(position in oneHandPositionDetector.Positions) {
+        for (var position in oneHandPositionDetector.Positions) {
             oneHandPositionDetector.Positions[position](hand, data);
         }
 

@@ -75,7 +75,7 @@
         }
 
 
-        for (gesture in twoHandsGestureDetector.Gestures) {
+        for (var gesture in twoHandsGestureDetector.Gestures) {
             twoHandsGestureDetector.Gestures[gesture](data);
         }
 

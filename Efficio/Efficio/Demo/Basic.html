@@ -60,6 +60,8 @@
 
                 }
 
+                controls.update();
+
                 renderer.render(scene, camera);
             },
             CreateAndScale: function (data) {
@@ -141,7 +143,6 @@
             scene.add(mesh);
 
             window.addEventListener('resize', onWindowResize, false);
-
         }
 
         function onWindowResize() {

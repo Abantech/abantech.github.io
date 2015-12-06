@@ -2,7 +2,22 @@
 
     function IsFlexed(hand) {
         var hand = hand || this;
-        return FlexionAngle(hand) > hand.FlexedAngle;
+        var middleFingerTip = hand.fingers[2].tipPosition;
+        var palmPosition = hand.palmPosition;
+        var isFlexed = FlexionAngle(hand) >= hand.FlexedAngle;
+
+        var measure = hand.roll() * (180 / Math.PI);
+
+        if (hand.type === 'right') {
+            measure = -measure;
+        }
+
+        if (measure > 90) {
+            return isFlexed && middleFingerTip[1] > palmPosition[1];
+        }
+        else {
+            return isFlexed && middleFingerTip[1] < palmPosition[1];
+        }        
     }
 
     function FlexionAngle(hand) {
@@ -13,7 +28,7 @@
         if (hand.type === 'right') {
             measure = -measure;
 
-            if (measure > 0) {
+            if (measure >= -11) {
                 angleCorrector = hand.direction[0] < 0 ? 1 : -1;
             }
             else {
@@ -21,7 +36,7 @@
             }
         }
         else {
-            if (measure > 0) {
+            if (measure >= -11) {
                 angleCorrector = hand.direction[0] > 0 ? 1 : -1;
             }
             else {
@@ -36,7 +51,22 @@
 
     function IsExtended(hand) {
         var hand = hand || this;
-        return ExtensionAngle(hand) > hand.ExtendedAngle;
+        var middleFingerTip = hand.fingers[2].tipPosition;
+        var palmPosition = hand.palmPosition;
+        var isFlexed = FlexionAngle(hand) >= hand.ExtendedAngle;
+
+        var measure = hand.roll() * (180 / Math.PI);
+
+        if (hand.type === 'right') {
+            measure = -measure;
+        }
+
+        if (measure < 90) {
+            return isFlexed && middleFingerTip[1] > palmPosition[1];
+        }
+        else {
+            return isFlexed && middleFingerTip[1] < palmPosition[1];
+        }
     }
 
     function ExtensionAngle(hand) {
@@ -47,7 +77,7 @@
         if (hand.type === 'right') {
             measure = -measure;
 
-            if (measure > 0) {
+            if (measure >= -11) {
                 angleCorrector = hand.direction[0] > 0 ? 1 : -1;
             }
             else {
@@ -55,7 +85,7 @@
             }
         }
         else {
-            if (measure > 0) {
+            if (measure >= -11) {
                 angleCorrector = hand.direction[0] < 0 ? 1 : -1;
             }
             else {
@@ -140,7 +170,7 @@
 
             // Extension Helpers
             IsExtended: IsExtended,
-            ExtendedAngle: 30,
+            ExtendedAngle: 25,
             ExtensionAngle: ExtensionAngle,
 
             // Supination

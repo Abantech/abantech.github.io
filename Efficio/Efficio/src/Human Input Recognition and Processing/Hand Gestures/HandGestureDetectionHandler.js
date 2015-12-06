@@ -29,10 +29,7 @@
                     });
 
                     // Clear gesture dictionary for one and two hand gestures
-                    ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'OneHandPosition');
-                    ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'OneHandGesture');
-                    ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'TwoHandPositione');
-                    ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'TwoHandGesture');
+                    ActiveGesturesDictionary.DeleteAllBut(trackingType, gestureName);
 
                     // No need for processing any further
                     return;
@@ -44,8 +41,12 @@
 
             // Detects each hand's presence independently
             if (hands.length > 0) {
+                // Clear no hands entry
+                ActiveGesturesDictionary.DeleteEntry(trackingType, 'NoHandsDetected');
+
                 hands.forEach(function (hand) {
                     var gestureName = type + 'HandDetected';
+                    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName)
 
                     // Send Message saying what hand was detected
                     var type = hand.type;
@@ -70,36 +71,16 @@
                 });
             }
 
-            // Check if one hand is present
+            // Check if one hand is present, clear opposite side
             (function OneHandDetected() {
                 if (hands.length === 1) {
                     var hand = hands[0];
-                    var side = hand.type == 'right' ? 'Right' : 'Left'
-                    var gestureName = 'OneHandDetected'
-                    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName)
-
-                    var oppositeHand = side === 'Right' ? 'Left' : 'Right'
+                    var oppositeHand = hand.type === 'right' ? 'Left' : 'Right'
 
                     // Clear other hand gesture dictionary entries
                     ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'OneHandPosition', oppositeHand);
                     ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'OneHandGesture', oppositeHand);
-
-                    // Clear two hand gesture dictionary entries
-                    ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'TwoHandGesture');
-
-                    // Send Message saying that a hand was detected
-                    bus.publish({
-                        channel: channel,
-                        topic: gestureName,
-                        source: source,
-                        data: {
-                            handCount: hands[0],
-                            gestureInformation: gestureInformation
-                        }
-                    });
-                }
-                else {
-                    ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName);
+                    ActiveGesturesDictionary.DeleteEntry(trackingType, oppositeHand + 'HandDetected');
                 }
             })();
 
@@ -126,7 +107,9 @@
                         });
                     }
                     else {
-
+                        ActiveGesturesDictionary.DeleteEntry(trackingType, 'TwoHandDetected');
+                        ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'TwoHandPosition');
+                        ActiveGesturesDictionary.DeleteEntry(trackingType, null, 'TwoHandGesture');
                     }
                 })();
             }
