@@ -6,31 +6,28 @@
         var trackingType = 'Body';
         var side;
 
-        var jointHelper;
-        var wristRight;
-        var wristLeft;
+        var handRight;
+        var handLeft;
 
         data.input.forEach(function (jointFriendly) {
 
             // Get the joints we are using to identify navigation
-            if (jointFriendly.JointType == "WristRight") {
-                wristRight = jointFriendly;
+            if (jointFriendly.JointName == "HandRight") {
+                handRight = jointFriendly;
             }
 
-            if (jointFriendly.JointType == "WristLeft") {
-                wristLeft = jointFriendly;
+            if (jointFriendly.JointName == "HandLeft") {
+                handLeft = jointFriendly;
             }
 
         });
 
-        // only proceed with the checks if the joints are tracked
-        if (wristRight.TrackingState == "Tracked" && wristLeft.TrackingState == "Tracked") {
-            require(['../Input Extensions/Microsoft Kinect/KinectJointExtensions'], function (kje) {
-                jointHelper = kje;
-            });
+        // only proceed with the checks if BOTH joints are tracked
+        if (handRight.IsTracked && handLeft.IsTracked) {
+           
 
             //// Check if Right Wrist is above Left Wrist
-            //if (jointHelper.IsAbove(wristLeft, wristRight)) {
+            //if (handRight.IsAboveOf(handLeft)) {
             //    var gestureName = "RightWristAboveLeftWrist"; 
             //    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
@@ -46,7 +43,7 @@
             //}
 
             //// Check if Right Wrist is below Left Wrist
-            //if (jointHelper.IsBelow(wristLeft, wristRight)) {
+            //if (handRight.IsBelowOf(handLeft)) {
             //    var gestureName = "RightWristBelowLeftWrist";
             //    var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
@@ -62,8 +59,8 @@
             //}
 
             // Check if Right Wrist is left of Left Wrist
-            if (jointHelper.IsLeft(wristLeft, wristRight)) {
-                var gestureName = "RightWristLeftOfLeftWrist";
+            if (handRight.IsLeftOf(handLeft)) {
+                var gestureName = "RighthandLeftOfLeftWrist";
                 var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
                 bus.publish({
@@ -78,8 +75,8 @@
             }
 
             // Check if Right Wrist is right of Left Wrist
-            if (jointHelper.IsRight(wristLeft, wristRight)) {
-                var gestureName = "RightWristRightOfLeftWrist";
+            if (handRight.IsRightOf(handLeft)) {
+                var gestureName = "RighthandRightOfLeftWrist";
                 var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
                 bus.publish({
@@ -94,7 +91,7 @@
             }
 
             // Check if Right Wrist is ahead of Left Wrist
-            if (jointHelper.IsForward(wristLeft, wristRight)) {
+            if (handRight.IsForwardOf(handLeft)) {
                 var gestureName = "RightWristAheadOfLeftWrist";
                 var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
@@ -110,7 +107,7 @@
             }
 
             // Check if Right Wrist is behind of Left Wrist
-            if (jointHelper.IsBehind(wristLeft, wristRight)) {
+            if (handRight.IsBehindOf(handLeft)) {
                 var gestureName = "RightWristBehindLeftWrist";
                 var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
