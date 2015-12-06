@@ -34,7 +34,7 @@
         }
     }
     , {
-        "Topic": "RightWristAcrossBody",
+        "Topic": "RightWristLeftOfLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepLeft",
         FireRestrictions: {
@@ -43,7 +43,7 @@
         }
     },
     {
-        "Topic": "LeftWristAcrossBody",
+        "Topic": "RightWristRightOfLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepRight",
         FireRestrictions: {
@@ -52,7 +52,7 @@
         }
     },
     {
-        "Topic": "LeftWristAboveHead",
+        "Topic": "RightWristBehindLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepBackward",
         FireRestrictions: {
@@ -61,7 +61,7 @@
         }
     },
     {
-        "Topic": "RightWristAboveHead",
+        "Topic": "RightWristAheadOfLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepForward",
         FireRestrictions: {

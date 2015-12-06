@@ -100,6 +100,7 @@
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\Two Hand Gestures\TwoHandPositionDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Hand Gestures\One Hand Gestures\OneHandPositionDetection.js" />
     <Content Include="src\Human Input Recognition and Processing\Input Extensions\LeapMotion\LeapMotionHandExtensions.js" />
+    <Content Include="src\Human Input Recognition and Processing\Input Extensions\Microsoft Kinect\KinectJointExtensions.js" />
     <Content Include="src\Input\Accelerometer\Browser.js" />
     <Content Include="src\Input\Accelerometer\Browser2.js" />
     <Content Include="src\Input\DeviceManager.js" />
