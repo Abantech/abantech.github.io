@@ -9,7 +9,7 @@
             FireAfterXFrames: 7
         }
     }, {
-        Topic: "BothHandsSupine", //To be developed
+        Topic: "BothHandsSupine",
         Source: "Input.Processed.Efficio",
         Action: "stepBackward",
         FireRestrictions: {
@@ -17,13 +17,13 @@
             FireAfterXFrames: 7
         }
     }, {
-        Topic: "RightHandsSupineLeftHandProne",
+        Topic: "RightHandSupineLeftHandProne",
         Source: "Input.Processed.Efficio",
         Action: "stepLeft",
         FireRestrictions: {
             FireOnce: false,
             FireAfterXFrames: 7
-        }
+       }
     }, {
         Topic: "LeftHandSupineRightHandProne",
         Source: "Input.Processed.Efficio",
@@ -32,8 +32,39 @@
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    }
-    , {
+    },  {
+        Topic: "RightHandFlexedAndProne",
+        Source: "Input.Processed.Efficio",
+        Action: "lookDown",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 7
+        }
+    }, {
+        Topic: "RightHandExtendedAndProne",
+        Source: "Input.Processed.Efficio",
+        Action: "lookUp",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 7
+        }
+    }, {
+        Topic: "LeftHandExtendedAndNeutral",
+        Source: "Input.Processed.Efficio",
+        Action: "lookLeft",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 7
+        }
+    }, {
+        Topic: "LeftHandFlexedAndNeutral",
+        Source: "Input.Processed.Efficio",
+        Action: "lookRight",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 7
+        }
+    },  {
         "Topic": "RightWristLeftOfLeftWrist",
         "Source": "Input.Processed.Efficio",
         "Action": "stepLeft",

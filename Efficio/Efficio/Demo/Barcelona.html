@@ -14,6 +14,7 @@
     <script src='Scripts/FirstPersonControls.js'></script>
     <script src='http://js.leapmotion.com/0.2.2/leap.min.js'></script>
     <script src="Scripts/DeviceOrientationControls.js"></script>
+    <script src="https://code.jquery.com/jquery-1.6.2.min.js"></script>
     <script>
         var info, info2, renderer, scene, camera, controls, stats, lookController
 
@@ -479,6 +480,23 @@
             renderer.render(scene, camera);
             //		stats.update();
             stopAllMovement();
+            /*
+            var t = null;
+            $.getJSON('http://192.168.1.8:8082/GetData', function (data) {
+                alert(data);
+                t = data;
+            });
+            alert(t);
+            
+            $.ajax({
+                type: "GET",
+                dataType: "jsonp",
+                url: "http://192.168.1.8:8082/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
+                success: function (data) {
+                    //alert(data);
+                }
+            });
+            */
 
         }
 
@@ -603,23 +621,35 @@
 
         var Barcelona = {
             stepForward: function () {
-                controls.freeze = false;
-                controls.moveForward = true;
+                camera.translateZ(-0.05);
             },
 
             stepBackward: function () {
-                controls.freeze = false;
-                controls.moveBackward = true;
+                camera.translateZ(0.05);
             },
 
             stepLeft: function () {
-                controls.freeze = false;
-                controls.moveLeft = true;
+                camera.translateX(0.05);
             },
 
             stepRight: function () {
-                controls.freeze = false;
-                controls.moveRight = true;
+                camera.translateX(-0.05);
+            },
+
+            lookLeft: function () {
+                camera.rotateY(-0.01);
+            },
+
+            lookRight: function () {
+                camera.rotateY(0.01);
+            },
+
+            lookUp: function () {
+                camera.rotateX(0.01);
+            },
+
+            lookDown: function () {
+                camera.rotateX(-0.01);
             },
 
             stepInDirection: function (forward, backward, left, right) {
