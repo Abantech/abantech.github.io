@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efficio", "Efficio\Efficio.csproj", "{D51C1B31-4CEE-4E27-9C34-8B41FA677900}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KinectBroadcaster", "KinectBroadcaster\KinectBroadcaster.csproj", "{25EFBED2-76B1-48C9-AD49-6924BD156F8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutodeskDemo", "AutodeskDemo\AutodeskDemo.csproj", "{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.James|Any CPU.Build.0 = Release|Any CPU
 		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25EFBED2-76B1-48C9-AD49-6924BD156F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}.Ismael|Any CPU.ActiveCfg = Release|Any CPU
+		{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}.Ismael|Any CPU.Build.0 = Release|Any CPU
+		{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}.James|Any CPU.ActiveCfg = Release|Any CPU
+		{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}.James|Any CPU.Build.0 = Release|Any CPU
+		{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E2D7B1D5-D249-4033-BCC4-7EEC44128FFB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AutodeskDemo</RootNamespace>
+    <AssemblyName>AutodeskDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\logo_header.png" />
+    <Content Include="index.html" />
+    <Content Include="partials\clickConfig.html" />
+    <Content Include="partials\curSelectionSet.html" />
+    <Content Include="partials\dumpDocumentSettings.html" />
+    <Content Include="partials\dumpModelSettings.html" />
+    <Content Include="partials\dumpNavSettings.html" />
+    <Content Include="partials\dumpViewerSettings.html" />
+    <Content Include="partials\explode.html" />
+    <Content Include="partials\getCamera.html" />
+    <Content Include="partials\getObjTree.html" />
+    <Content Include="partials\getViewerState.html" />
+    <Content Include="partials\hideAll_showAll.html" />
+    <Content Include="partials\overrideColor.html" />
+    <Content Include="partials\screenGrab.html" />
+    <Content Include="partials\search.html" />
+    <Content Include="partials\setBackgroundColor.html" />
+    <Content Include="partials\setFocalLength.html" />
+    <Content Include="partials\setFOV.html" />
+    <Content Include="partials\setNavMode.html" />
+    <Content Include="partials\setView.html" />
+    <Content Include="partials\toolbars.html" />
+    <Content Include="partials\viewerPreferences.html" />
+    <Content Include="res\icons\lmvdbg1.png" />
+    <Content Include="res\icons\lmvdbg2.png" />
+    <Content Include="res\icons\lmvdbgGradient.png" />
+    <Content Include="res\icons\lmvdbgSolid.png" />
+    <Content Include="scripts\ActionToFunctionMapping.js" />
+    <Content Include="scripts\DebugUtils.js" />
+    <Content Include="scripts\Efficio.min.js" />
+    <Content Include="scripts\EfficioConfiguration.js" />
+    <Content Include="scripts\libs\jquery\jquery-2.1.1.js" />
+    <Content Include="scripts\libs\jquery\jquery-2.1.1.min.js" />
+    <Content Include="scripts\libs\jscolor\arrow.gif" />
+    <Content Include="scripts\libs\jscolor\cross.gif" />
+    <Content Include="scripts\libs\jscolor\demo.html" />
+    <Content Include="scripts\libs\jscolor\hs.png" />
+    <Content Include="scripts\libs\jscolor\hv.png" />
+    <Content Include="scripts\libs\jscolor\jscolor.js" />
+    <Content Include="scripts\libs\jstree\dist\jstree.js" />
+    <Content Include="scripts\libs\jstree\dist\jstree.min.js" />
+    <Content Include="scripts\libs\jstree\dist\libs\jquery.js" />
+    <Content Include="scripts\libs\jstree\dist\libs\require.js" />
+    <Content Include="scripts\libs\jstree\dist\themes\default\32px.png" />
+    <Content Include="scripts\libs\jstree\dist\themes\default\40px.png" />
+    <Content Include="scripts\libs\jstree\dist\themes\default\style.css" />
+    <Content Include="scripts\libs\jstree\dist\themes\default\style.min.css" />
+    <Content Include="scripts\libs\jstree\dist\themes\default\throbber.gif" />
+    <Content Include="scripts\libs\prism\prism.css" />
+    <Content Include="scripts\libs\prism\prism.js" />
+    <Content Include="scripts\libs\prism\prism.min.js" />
+    <Content Include="scripts\libs\realsense\realsense.js" />
+    <Content Include="scripts\LoadModel.js" />
+    <Content Include="scripts\MyAuthToken.js" />
+    <Content Include="scripts\RequireConfiguration.js" />
+    <Content Include="stylesheets\libs\adsk\style.css" />
+    <Content Include="stylesheets\libs\bootstrap.min.css" />
+    <Content Include="stylesheets\theme.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scripts\libs\jstree\.gitignore" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58323</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:58323/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
