@@ -5,7 +5,7 @@ var fs = require("fs");
 console.log("Starting up Effcio demo app state server...");
 
 app.get('/updateValues', function (req, res) {
-
+    console.log("In updateValues ..");
     var values = {};
     fs.readFile(__dirname + "/" + "statedata.json", 'utf8', function (err, data) {
         values = JSON.parse(data);
@@ -27,7 +27,7 @@ app.get('/updateValues', function (req, res) {
 });
 
 app.get('/getAllValues', function (req, response) {
-
+    console.log("In Get All Values ..");
     fs.readFile(__dirname + "/" + "statedata.json", 'utf8', function (err, data) {
         var values = JSON.parse(data);
         var message = "Camera current position is at x=" + values.cameraPosition.x + ", y=" + values["cameraPosition"].y + ", z= " + values["cameraPosition"].z;

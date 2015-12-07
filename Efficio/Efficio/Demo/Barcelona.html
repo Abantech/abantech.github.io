@@ -494,7 +494,7 @@
                 $.ajax({
                     type: "GET",
                     dataType: "jsonp",
-                    url: "http://192.168.1.8:8082/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
+                    url: "http://192.168.1.213:8082/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
                     success: function (data) {
                         //alert(data);
                     }
@@ -508,9 +508,11 @@
             if (loadThrottleCounter++ >= loadThrottleCounterLimit)
             {
                 $.ajax({
-                    url: "http://192.168.1.8:8082/getAllValues.json",
+                    //type: "POST",
+                    url: "http://192.168.1.213:8082/getAllValues",
                     dataType: "json",
                     success: function (data) {
+                        console.log("Data: " + data);
                         camera.position.set(data.cameraPosition.x, data.cameraPosition.y, data.cameraPosition.z);
                     }
                 });
