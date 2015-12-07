@@ -76,27 +76,27 @@
         Action: "lookRight",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 7
+            FireAfterXFrames: 3
          }
     },
 
     {
-        "Topic": "RightWristLeftOfLeftWrist",
+        "Topic": "LeftWristAboveHead",
         "Source": "Input.Processed.Efficio",
         "Action": "stepLeft",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 3
+            FireAfterXFrames: 1
         }
     },
 
     {
-        "Topic": "RightWristRightOfLeftWrist",
+        "Topic": "RightWristAboveHead",
         "Source": "Input.Processed.Efficio",
         "Action": "stepRight",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 3
+            FireAfterXFrames: 1
         }
     },
 
@@ -106,7 +106,7 @@
         "Action": "stepBackward",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 3
+            FireAfterXFrames: 1
         }
     },
 
@@ -116,7 +116,7 @@
         "Action": "stepForward",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 3
+            FireAfterXFrames: 1
         }
     }
     //,

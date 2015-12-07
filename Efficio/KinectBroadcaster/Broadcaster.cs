@@ -103,6 +103,7 @@ namespace KinectBroadcaster
 
             Console.WriteLine("Starting Server...");
             server = new WebSocketServer("ws://localhost:8181");
+            //server = new WebSocketServer("http://192.168.1.213:8181");
             server.Start(socket =>
             {
                 socket.OnOpen = () =>
