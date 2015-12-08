@@ -133,8 +133,8 @@
                 Dictionary: dictionary,
                 SubDictionary1: side,
                 Positions: {
-                    RightWristAheadOfLeftWrist: RightWristAheadOfLeftWrist,
-                    RightWristBehindOfLeftWrist: RightWristBehindOfLeftWrist,
+                    //RightWristAheadOfLeftWrist: RightWristAheadOfLeftWrist,  // Not In Use for Demo on 12/7/15
+                    //RightWristBehindOfLeftWrist: RightWristBehindOfLeftWrist,
                     RightWristAboveHead: RightWristAboveHead,
                     LeftWristAboveHead: LeftWristAboveHead,
                 }
