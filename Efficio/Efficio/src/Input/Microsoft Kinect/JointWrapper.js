@@ -82,25 +82,11 @@ var acceptableDistanceMaximum = 0.3;
     }
 
     function IsAboveOf(joint) {
-        //if (IsAcceptableDistance2(this.Y, joint.Y)) {
-        //    console.log("Is Above of Acceptable distance + " + DistanceBetweenTwoPositions(this.Y, joint.Y));
-        //    return this.Y > joint.Y;
-        //}
-        //else {          
-        //    return false;
-        //}
         return this.Y > joint.Y;
     }
 
     function IsBelowOf(joint) {
-        //if (IsAcceptableDistance2(this.Y, joint.Y)) {
-        //    console.log("Is Below of Acceptable distance + " + DistanceBetweenTwoPositions(this.Y, joint.Y));
-        //    return this.Y < joint.Y;
-        //}
-        //else {          
-        //    return false;
-        //}
-        return this.Y < joint.Y;
+        return joint.Y > this.Y;
     }
 
     function IsForwardOf(joint) {
@@ -111,7 +97,6 @@ var acceptableDistanceMaximum = 0.3;
         else {
             return false;
         }
-       // return this.Z < joint.Z;
     }
 
     function IsBehindOf(joint) {

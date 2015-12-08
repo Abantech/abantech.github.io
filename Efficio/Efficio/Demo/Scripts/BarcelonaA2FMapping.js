@@ -81,42 +81,74 @@
     },
 
     {
-        "Topic": "LeftWristAboveHead",
-        "Source": "Input.Processed.Efficio",
-        "Action": "stepLeft",
+        Topic: "LeftWristAboveHead",
+        Source: "Input.Processed.Efficio",
+        Action: "stepBackward",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 1
+            FireAfterXFrames: 3
         }
     },
 
     {
-        "Topic": "RightWristAboveHead",
-        "Source": "Input.Processed.Efficio",
-        "Action": "stepRight",
+        Topic: "RightWristAboveHead",
+        Source: "Input.Processed.Efficio",
+        Action: "stepForward",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 1
+            FireAfterXFrames: 3
         }
     },
 
     {
-        "Topic": "RightWristBehindLeftWrist",
-        "Source": "Input.Processed.Efficio",
-        "Action": "stepBackward",
+        Topic: "RightWristBehindLeftWrist",
+        Source: "Input.Processed.Efficio",
+        Action: "stepBackward",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 1
+            FireAfterXFrames: 3
         }
     },
 
     {
-        "Topic": "RightWristAheadOfLeftWrist",
-        "Source": "Input.Processed.Efficio",
-        "Action": "stepForward",
+        Topic: "RightWristAheadOfLeftWrist",
+        Source: "Input.Processed.Efficio",
+        Action: "stepForward",
         FireRestrictions: {
             FireOnce: false,
-            FireAfterXFrames: 1
+            FireAfterXFrames: 3
+        }
+    },
+    
+    {
+        Topic: "Device Orientation",
+        Source: "Input.Raw",
+        Action: function (data) {
+            controls.onDeviceOrientationChangeEvent(data.DeviceOrientation);
+        }
+    }, 
+    {
+        Topic: "Orientation Change",
+        Source: "Input.Raw",
+        Action: function (data) {
+            controls.onScreenOrientationChangeEvent(data.DeviceOrientation);
+        }
+    },
+    {
+        Topic: "Device Orientation",
+        Source: "Input.Raw",
+        Action: function (data) {
+            if (controls) {
+                controls.onDeviceOrientationChangeEvent(data.DeviceOrientation);
+            }
+        }
+    }, {
+        Topic: "Orientation Change",
+        Source: "Input.Raw",
+        Action: function (data) {
+            if (controls) {
+                controls.onScreenOrientationChangeEvent(data.DeviceOrientation);
+            }
         }
     }
     //,
