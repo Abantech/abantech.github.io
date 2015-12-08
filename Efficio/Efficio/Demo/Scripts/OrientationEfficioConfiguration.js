@@ -2,6 +2,7 @@
     Devices: {
         Microphone: false,
         Kinect: false,
-        LeapMotion: false
+        LeapMotion: false,
+        Accelerometer: true
     }
 }
