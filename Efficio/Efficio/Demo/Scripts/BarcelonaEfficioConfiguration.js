@@ -1,9 +1,9 @@
 ﻿var EfficioConfiguration = {
     Devices: {
         Microphone: false,
-        Kinect: {
-            Host: "ws://localhost:8181"
-        },
+        //Kinect: {
+        //    Host: "ws://localhost:8181"
+        //},
         LeapMotion: {
             Port: 6437,
             Host: '192.168.1.8',
@@ -11,5 +11,10 @@
             FrameEventName: 'animationFrame',
             UseAllPlugins: false
         }
-    }
+    },
+    StateServer: 
+        {
+            Host: '192.168.1.8',
+            Port: 8082
+        }
 }

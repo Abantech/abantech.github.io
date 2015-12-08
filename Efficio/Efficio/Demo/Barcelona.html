@@ -494,7 +494,7 @@
                 $.ajax({
                     type: "GET",
                     dataType: "jsonp",
-                    url: "http://192.168.1.213:8082/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
+                    url: "http://" + EfficioConfiguration.StateServer.Host + ":" + EfficioConfiguration.StateServer.port + "/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
                     success: function (data) {
                         //alert(data);
                     }
@@ -509,7 +509,7 @@
             {
                 $.ajax({
                     //type: "POST",
-                    url: "http://192.168.1.213:8082/getAllValues",
+                    url: "http://" + EfficioConfiguration.StateServer.Host + ":" + EfficioConfiguration.StateServer.port + "/getAllValues",
                     dataType: "json",
                     success: function (data) {
                         console.log("Data: " + data);
