@@ -4,6 +4,12 @@ var fs = require("fs");
 
 console.log("Starting up Effcio demo app state server...");
 
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 app.get('/updateValues', function (req, res) {
     console.log("In updateValues ..");
     var values = {};
@@ -30,10 +36,11 @@ app.get('/getAllValues', function (req, response) {
     console.log("In Get All Values ..");
     fs.readFile(__dirname + "/" + "statedata.json", 'utf8', function (err, data) {
         var values = JSON.parse(data);
-        var message = "Camera current position is at x=" + values.cameraPosition.x + ", y=" + values["cameraPosition"].y + ", z= " + values["cameraPosition"].z;
+        var message = "Camera current position is at x=" + values.cameraPosition.x + ", y=" + values["cameraPosition"].y + ", z= " + values
+["cameraPosition"].z;
         console.log(message);
         response.writeHead(200, { "Content-Type": "application/json" });
-        //response.addHeader("Access-Control-Allow-Origin", "*");
+        //response.setHeader("Access-Control-Allow-Origin", "*");
         response.end(JSON.stringify(values));
     });
 });

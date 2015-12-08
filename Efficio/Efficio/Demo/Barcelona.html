@@ -493,8 +493,8 @@
             {
                 $.ajax({
                     type: "GET",
-                    dataType: "jsonp",
-                    url: "http://" + EfficioConfiguration.StateServer.Host + ":" + EfficioConfiguration.StateServer.port + "/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
+                    dataType: "json",
+                    url: "http://" + EfficioConfiguration.StateServer.Host + ":" + EfficioConfiguration.StateServer.Port + "/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
                     success: function (data) {
                         //alert(data);
                     }
@@ -509,7 +509,7 @@
             {
                 $.ajax({
                     //type: "POST",
-                    url: "http://" + EfficioConfiguration.StateServer.Host + ":" + EfficioConfiguration.StateServer.port + "/getAllValues",
+                    url: "http://" + EfficioConfiguration.StateServer.Host + ":" + EfficioConfiguration.StateServer.Port + "/getAllValues",
                     dataType: "json",
                     success: function (data) {
                         console.log("Data: " + data);

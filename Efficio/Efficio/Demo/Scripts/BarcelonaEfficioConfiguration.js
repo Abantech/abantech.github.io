@@ -14,7 +14,7 @@
     },
     StateServer: 
         {
-            Host: '192.168.1.8',
+            Host: 'gregmoffice2.cloudapp.net',
             Port: 8082
         }
 }
