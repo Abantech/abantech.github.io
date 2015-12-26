@@ -166,6 +166,35 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 	};
 
+	this.doLook = function (longitudinal, lateral)
+	{
+	    var lookSpeed = 0.2;
+	    var verticalLookRatio = 1;
+
+	    this.lon += longitudinal * 0.2;
+	    if (this.lookVertical) this.lat -= this.mouseY * lookSpeed * verticalLookRatio;
+
+	    this.lat = Math.max(-85, Math.min(85, this.lat));
+	    this.phi = THREE.Math.degToRad(90 - this.lat);
+
+	    this.theta = THREE.Math.degToRad(this.lon);
+
+	    if (this.constrainVertical) {
+
+	        this.phi = THREE.Math.mapLinear(this.phi, 0, Math.PI, this.verticalMin, this.verticalMax);
+
+	    }
+
+	    var targetPosition = this.target,
+        position = this.object.position;
+
+	    targetPosition.x = position.x + 100 * Math.sin(this.phi) * Math.cos(this.theta);
+	    targetPosition.y = position.y + 100 * Math.cos(this.phi);
+	    targetPosition.z = position.z + 100 * Math.sin(this.phi) * Math.sin(this.theta);
+
+	    this.object.lookAt(targetPosition);
+	}
+
 
 	//this.onMouseDown = function (event) {
 

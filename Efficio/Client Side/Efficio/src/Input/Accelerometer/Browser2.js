@@ -5,7 +5,7 @@
 
     function Initialize(EfficioConfiguration) {
         // Listen for orientation changes
-        window.addEventListener("orientationchange", function () {
+        window.addEventListener("deviceorientation", function (event) {
             if (started) {
                 bus.publish({
                     channel: 'Input.Raw',
@@ -13,7 +13,21 @@
                     source: source,
                     data: {
                         TrackingType: trackingType,
-                        DeviceOrientation: window.orientation
+                        DeviceOrientation: event
+                    }
+                });
+            }
+        }, false);
+
+        window.addEventListener("orientationchange", function () {
+            if (started) {
+                bus.publish({
+                    channel: 'Input.Raw',
+                    topic: 'Orientation Change',
+                    source: source,
+                    data: {
+                        TrackingType: trackingType,
+                        DeviceOrientation: window.orientation || 0
                     }
                 });
             }
@@ -30,4 +44,4 @@
         Start: Start
     }
 
-})
+});

@@ -1,15 +1,20 @@
 ﻿var EfficioConfiguration = {
     Devices: {
         Microphone: false,
-        Kinect: {
-            Host: "ws://localhost:8181"
-        },
+        //Kinect: {
+        //    Host: "ws://localhost:8181"
+        //},
         LeapMotion: {
             Port: 6437,
-            Host: 'localhost',
+            Host: '192.168.1.8',
             EnableGestures: false,
             FrameEventName: 'animationFrame',
             UseAllPlugins: false
         }
-    }
+    },
+    StateServer: 
+        {
+            Host: 'gregmoffice2.cloudapp.net',
+            Port: 8082
+        }
 }

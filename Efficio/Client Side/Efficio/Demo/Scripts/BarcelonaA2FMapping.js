@@ -1,73 +1,167 @@
 ﻿ActionToFunctionMapping = {
     Bridge: Barcelona,
     ActionMappings: [{
-        Topic: "RightHandFlexedAndProne",
+        Topic: "BothHandsProne",
         Source: "Input.Processed.Efficio",
         Action: "stepForward",
         FireRestrictions: {
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    }, {
-        Topic: "RightHandExtendedAndProne",
+    },
+
+    {
+        Topic: "BothHandsSupine",
         Source: "Input.Processed.Efficio",
         Action: "stepBackward",
         FireRestrictions: {
             FireOnce: false,
             FireAfterXFrames: 7
         }
-    }, {
-        Topic: "LeftHandExtendedAndNeutral",
+    },
+
+    {
+        Topic: "RightHandSupineLeftHandProne",
         Source: "Input.Processed.Efficio",
         Action: "stepLeft",
         FireRestrictions: {
             FireOnce: false,
             FireAfterXFrames: 7
-        }
-    }, {
-        Topic: "LeftHandFlexedAndNeutral",
+       }
+    },
+
+    {
+        Topic: "LeftHandSupineRightHandProne",
         Source: "Input.Processed.Efficio",
         Action: "stepRight",
         FireRestrictions: {
             FireOnce: false,
             FireAfterXFrames: 7
         }
+    },
+
+    {
+        Topic: "RightHandFlexedAndProne",
+        Source: "Input.Processed.Efficio",
+        Action: "lookDown",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 7
+        }
+    },
+
+    {
+        Topic: "RightHandExtendedAndProne",
+        Source: "Input.Processed.Efficio",
+        Action: "lookUp",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 7
+        }
+    },
+
+    {
+        Topic: "LeftHandExtendedAndNeutral",
+        Source: "Input.Processed.Efficio",
+        Action: "lookLeft",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 7
+        }
+    },
+
+    {
+        Topic: "RighHandFlexedAndNeutral",
+        Source: "Input.Processed.Efficio",
+        Action: "lookRight",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 3
+         }
+    },
+
+    {
+        Topic: "LeftWristAboveHead",
+        Source: "Input.Processed.Efficio",
+        Action: "stepBackward",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 3
+        }
+    },
+
+    {
+        Topic: "RightWristAboveHead",
+        Source: "Input.Processed.Efficio",
+        Action: "stepForward",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 3
+        }
+    },
+
+    {
+        Topic: "RightWristBehindLeftWrist",
+        Source: "Input.Processed.Efficio",
+        Action: "stepBackward",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 3
+        }
+    },
+
+    {
+        Topic: "RightWristAheadOfLeftWrist",
+        Source: "Input.Processed.Efficio",
+        Action: "stepForward",
+        FireRestrictions: {
+            FireOnce: false,
+            FireAfterXFrames: 3
+        }
+    },
+    
+    {
+        Topic: "Device Orientation",
+        Source: "Input.Raw",
+        Action: function (data) {
+            controls.onDeviceOrientationChangeEvent(data.DeviceOrientation);
+        }
+    }, 
+    {
+        Topic: "Orientation Change",
+        Source: "Input.Raw",
+        Action: function (data) {
+            controls.onScreenOrientationChangeEvent(data.DeviceOrientation);
+        }
+    },
+    {
+        Topic: "Device Orientation",
+        Source: "Input.Raw",
+        Action: function (data) {
+            if (controls) {
+                controls.onDeviceOrientationChangeEvent(data.DeviceOrientation);
+            }
+        }
+    }, {
+        Topic: "Orientation Change",
+        Source: "Input.Raw",
+        Action: function (data) {
+            if (controls) {
+                controls.onScreenOrientationChangeEvent(data.DeviceOrientation);
+            }
+        }
     }
-    , {
-        "Topic": "RightWristAcrossBody",
-        "Source": "Input.Processed.Efficio",
-        "Action": "stepLeft",
-        FireRestrictions: {
-            FireOnce: false,
-            FireAfterXFrames: 3
-        }
-    },
-    {
-        "Topic": "LeftWristAcrossBody",
-        "Source": "Input.Processed.Efficio",
-        "Action": "stepRight",
-        FireRestrictions: {
-            FireOnce: false,
-            FireAfterXFrames: 3
-        }
-    },
-    {
-        "Topic": "LeftWristAboveHead",
-        "Source": "Input.Processed.Efficio",
-        "Action": "stepBackward",
-        FireRestrictions: {
-            FireOnce: false,
-            FireAfterXFrames: 3
-        }
-    },
-    {
-        "Topic": "RightWristAboveHead",
-        "Source": "Input.Processed.Efficio",
-        "Action": "stepForward",
-        FireRestrictions: {
-            FireOnce: false,
-            FireAfterXFrames: 3
-        }
-    }
+    //,
+    //{
+    //    Topic: "Device Orientation",
+    //    Source: "Input.Raw",
+    //    Action: function(data) {
+    //        controller.onDeviceOrientationChangeEvent( {
+    //            gamma: data.DeviceOrientation.gamma,
+    //            beta: data.DeviceOrientation.beta,
+    //            alpha: data.DeviceOrientation.alpha
+    //        } )
+    //    }
+    //}
     ]
 }

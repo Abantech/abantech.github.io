@@ -1,5 +1,4 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<html>
 <head>
     <title></title>
     <meta charset=utf-8>
@@ -10,12 +9,14 @@
     <script src=http://mrdoob.github.com/three.js/build/three.min.js ></script>
     -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r66/three.min.js'></script>
-    <script src=http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js></script>
-    <script src=http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js></script>
+    <script src='http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js'></script>
+    <script src='http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js'></script>
     <script src='Scripts/FirstPersonControls.js'></script>
-    <script src=http://js.leapmotion.com/0.2.2/leap.min.js></script>
+    <script src='http://js.leapmotion.com/0.2.2/leap.min.js'></script>
+    <script src="Scripts/DeviceOrientationControls.js"></script>
+    <script src="https://code.jquery.com/jquery-1.6.2.min.js"></script>
     <script>
-        var info, info2, renderer, scene, camera, controls, stats;
+        var info, info2, renderer, scene, camera, controls, stats, lookController
 
         var globalStartTime = new Date().getTime();
         var movementStopInterval = 3000;
@@ -477,10 +478,48 @@
             var delta = clock.getDelta()
             controls.update(delta);
             renderer.render(scene, camera);
-            //		stats.update();
-            stopAllMovement();
-
+            loadCameraPosition();
         }
+
+        var saveThrottleCounterLimit = 30;
+        var loadThrottleCounterLimit = 30;
+
+        var saveThrottleCounter = 10;
+        var loadThrottleCounter = 10;
+
+        function saveCameraPosition()
+        {
+            if (saveThrottleCounter++ >= saveThrottleCounterLimit)
+            {
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "http://" + EfficioConfiguration.StateServer.Host + ":" + EfficioConfiguration.StateServer.Port + "/updateValues?cameraPosition.x=" + camera.position.x + "&cameraPosition.y=" + camera.position.y + "&cameraPosition.z=" + camera.position.z,
+                    success: function (data) {
+                        //alert(data);
+                    }
+                });
+                saveThrottleCounter = 0;
+            }
+        }
+
+        function loadCameraPosition()
+        {
+            if (loadThrottleCounter++ >= loadThrottleCounterLimit)
+            {
+                $.ajax({
+                    //type: "POST",
+                    url: "http://" + EfficioConfiguration.StateServer.Host + ":" + EfficioConfiguration.StateServer.Port + "/getAllValues",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log("Data: " + data);
+                        camera.position.set(data.cameraPosition.x, data.cameraPosition.y, data.cameraPosition.z);
+                    }
+                });
+                loadThrottleCounter = 0;
+            }
+        }
+
 
         function buildWall(gridSize, floorLevel, wall, wallHeight, thickness, material) {
             var startPoint, endPoint, distance, offset, position;
@@ -603,23 +642,39 @@
 
         var Barcelona = {
             stepForward: function () {
-                controls.freeze = false;
-                controls.moveForward = true;
+                camera.translateZ(-0.05);
+                saveCameraPosition();
             },
 
             stepBackward: function () {
-                controls.freeze = false;
-                controls.moveBackward = true;
+                camera.translateZ(0.05);
+                saveCameraPosition();
             },
 
             stepLeft: function () {
-                controls.freeze = false;
-                controls.moveLeft = true;
+                camera.translateX(0.05);
+                saveCameraPosition();
             },
 
             stepRight: function () {
-                controls.freeze = false;
-                controls.moveRight = true;
+                camera.translateX(-0.05);
+                saveCameraPosition();
+            },
+
+            lookLeft: function () {
+                camera.rotateY(-0.01);
+            },
+
+            lookRight: function () {
+                camera.rotateY(0.01);
+            },
+
+            lookUp: function () {
+                camera.rotateX(0.01);
+            },
+
+            lookDown: function () {
+                camera.rotateX(-0.01);
             },
 
             stepInDirection: function (forward, backward, left, right) {

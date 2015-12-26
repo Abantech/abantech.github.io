@@ -1,82 +1,99 @@
 ﻿define(function () {
     var ActiveGesturesDictionary = {}
 
-    function RetrieveEntry(trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
-        var entry;
+    //function RetrieveEntry(trackingType, gestureName, ...dictionary) { '...' is not supported yet
+    function RetrieveEntry(trackingType, gestureName) {
+        trackingType = trackingType || 'NoTrackingType';
+
+        // Get all subdictionaries; workaround for '...' not being supported
+        var argumentsLength = arguments.length;
+        if (argumentsLength > 2) {
+            var dictionaries = [];
+
+            for (var i = 2; i < argumentsLength; i++) {
+                dictionaries.push(arguments[i]);
+            }
+        }
+
+        if (!gestureName) {
+            console.error('gestureName argument required.');
+        }
 
         if (!ActiveGesturesDictionary[trackingType]) {
             ActiveGesturesDictionary[trackingType] = {};
         }
 
-        if (dictionary) {
-            if (!ActiveGesturesDictionary[trackingType][dictionary]) {
-                ActiveGesturesDictionary[trackingType][dictionary] = {};
-            }
+        var path = ActiveGesturesDictionary[trackingType];
 
-            if (subdictionary1) {
-                if (!ActiveGesturesDictionary[trackingType][dictionary][subdictionary1]) {
-                    ActiveGesturesDictionary[trackingType][dictionary][subdictionary1] = {};
+        if (dictionaries) {
+            var dictLength = dictionaries.length;
+
+            for (var i = 0; i < dictLength; i++) {
+                if (!path[dictionaries[i]]) {
+                    path[dictionaries[i]] = {};
                 }
 
-                if (subdictionary2) {
-                    if (!ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2]) {
-                        ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2] = {};
-                    }
-
-                    entry = ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2][gestureName];
-                } else {
-                    entry = ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][gestureName];
-                }
-            }
-            else {
-                entry = ActiveGesturesDictionary[trackingType][dictionary][gestureName];
-            }
-        }
-        else {
-            if (ActiveGesturesDictionary[trackingType]) {
-                entry = ActiveGesturesDictionary[trackingType][gestureName];
+                path = path[dictionaries[i]];
             }
         }
 
-        return entry;
+        return path[gestureName];
     }
 
-    function AddEntry(entry, trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
+    //function AddEntry(entry, trackingType, gestureName, ...dictionary) { '...' is not supported yet
+    function AddEntry(entry, trackingType, gestureName) {
+        trackingType = trackingType || 'NoTrackingType';
+
+        if (!gestureName) {
+            console.error('gestureName argument required.');
+        }
+
+        // Get all subdictionaries; workaround for '...' not being supported
+        var argumentsLength = arguments.length;
+        if (argumentsLength > 3) {
+            var dictionaries = [];
+
+            for (var i = 3; i < argumentsLength; i++) {
+                dictionaries.push(arguments[i]);
+            }
+        }
+
         if (!ActiveGesturesDictionary[trackingType]) {
             ActiveGesturesDictionary[trackingType] = {};
         }
 
-        if (dictionary) {
-            if (!ActiveGesturesDictionary[trackingType][dictionary]) {
-                ActiveGesturesDictionary[trackingType][dictionary] = {};
-            }
+        var path = ActiveGesturesDictionary[trackingType];
 
-            if (subdictionary1) {
-                if (!ActiveGesturesDictionary[trackingType][dictionary][subdictionary1]) {
-                    ActiveGesturesDictionary[trackingType][dictionary][subdictionary1] = {};
+        if (dictionaries) {
+            var dictLength = dictionaries.length;
+
+            for (var i = 0; i < dictLength; i++) {
+                if (!path[dictionaries[i]]) {
+                    path[dictionaries[i]] = {};
                 }
 
-                if (subdictionary2) {
-                    if (!ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2]) {
-                        ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2] = {};
-                    }
-
-                    ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2][gestureName] = entry;
-                }
-
-                ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][gestureName] = entry;
-            }
-            else {
-                ActiveGesturesDictionary[trackingType][dictionary][gestureName] = entry;
+                path = path[dictionaries[i]];
             }
         }
-        else {
-            ActiveGesturesDictionary[trackingType][gestureName] = entry;
-        }
+
+        path[gestureName] = entry;
     }
 
-    function CreateOrUpdateEntry(trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
-        var entry = RetrieveEntry(trackingType, gestureName, dictionary, subdictionary1, subdictionary2);
+    //function CreateOrUpdateEntry(trackingType, gestureName, ...dictionary) { '...' is not supported yet
+    function CreateOrUpdateEntry(trackingType, gestureName) {
+
+        // Get all subdictionaries; workaround for '...' not being supported
+        var dictionaries = [];
+        var argumentsLength = arguments.length;
+        if (argumentsLength > 2) {
+            for (var i = 2; i < argumentsLength; i++) {
+                dictionaries.push(arguments[i]);
+            }
+        }
+
+        var retrieveVars = [trackingType, gestureName].concat(dictionaries);
+
+        var entry = RetrieveEntry.apply(null, retrieveVars);
 
         if (!entry) {
             entry = {
@@ -94,7 +111,8 @@
                 FirstFire: function () { return this.FireCount === 0 }
             }
 
-            AddEntry(entry, trackingType, gestureName, dictionary, subdictionary1, subdictionary2);
+            var addVars = [entry].concat(retrieveVars);
+            AddEntry.apply(null, addVars);
         }
         else {
             entry.FireCount++;
@@ -103,77 +121,95 @@
         return entry;
     }
 
-    function DeleteEntry(trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
+    //function DeleteEntry(trackingType, gestureName, ...dictionary) { '...' is not supported yet
+    function DeleteEntry(trackingType, gestureName) {
+        trackingType = trackingType || 'NoTrackingType';
         var toDelete;
 
         if (!ActiveGesturesDictionary[trackingType]) {
             return;
         }
 
-        if (dictionary) {
-            if (ActiveGesturesDictionary[trackingType][dictionary]) {
-                if (subdictionary1) {
-                    if (ActiveGesturesDictionary[trackingType][dictionary][subdictionary1]) {
-                        if (subdictionary2) {
-                            if (ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2]) {
-                                toDelete = ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2];
-                            }
-                        }
-                        else {
-                            toDelete = ActiveGesturesDictionary[trackingType][dictionary][subdictionary1];
-                        }
-                    }
+        // Get all subdictionaries; workaround for '...' not being supported
+        var argumentsLength = arguments.length;
+        if (argumentsLength > 2) {
+            var dictionaries = [];
+
+            for (var i = 2; i < argumentsLength; i++) {
+                dictionaries.push(arguments[i]);
+            }
+        }
+
+        var toDelete = ActiveGesturesDictionary;
+
+        if (dictionaries) {
+            var lastEntry;
+            var dictLength = dictionaries.length;
+
+            for (var i = 0; i < dictLength; i++) {
+                if (!toDelete[dictionaries[i]]) {
+                    return;
+                }
+
+                if (!i === dictLength-1) {
+                    toDelete = toDelete[dictionaries[i]];
                 }
                 else {
-                    toDelete = ActiveGesturesDictionary[trackingType][dictionary];
+                    lastEntry = dictionaries[i];
                 }
             }
         }
         else {
-            toDelete = ActiveGesturesDictionary[trackingType];
+            lastEntry = trackingType;
         }
 
         if (gestureName && toDelete) {
-            delete toDelete[gestureName];
+            delete toDelete[lastEntry][gestureName];
         }
         else {
-            delete toDelete;
+            delete toDelete[lastEntry];
         }
     }
 
-    function DeleteAllBut(trackingType, gestureName, dictionary, subdictionary1, subdictionary2) {
-        var toDelete;
+    //function DeleteAllBut(trackingType, gestureName, ...dictionary) { '...' is not supported yet
+    function DeleteAllBut(trackingType, gestureName) {
+        trackingType = trackingType || 'NoTrackingType';
 
         if (!ActiveGesturesDictionary[trackingType]) {
             return;
         }
 
-        if (dictionary) {
-            if (ActiveGesturesDictionary[trackingType][dictionary]) {
-                if (subdictionary1) {
-                    if (ActiveGesturesDictionary[trackingType][dictionary][subdictionary1]) {
-                        if (subdictionary2) {
-                            if (ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2]) {
-                                toDelete = ActiveGesturesDictionary[trackingType][dictionary][subdictionary1][subdictionary2];
-                            }
-                        }
-                        else {
-                            toDelete = ActiveGesturesDictionary[trackingType][dictionary][subdictionary1];
-                        }
-                    }
-                }
-                else {
-                    toDelete = ActiveGesturesDictionary[trackingType][dictionary];
-                }
-            }
-        }
-        else {
-            toDelete = ActiveGesturesDictionary[trackingType];
+        if (!gestureName) {
+            throw Exception('gestureName argument required.');
         }
 
-        for(prop in toDelete){
-            if (prop != gestureName){
-                toDelete[prop] = null;
+        // Get all subdictionaries; workaround for '...' not being supported
+        var argumentsLength = arguments.length;
+        if (argumentsLength > 2) {
+            var dictionaries = [];
+
+            for (var i = 2; i < argumentsLength; i++) {
+                dictionaries.push(arguments[i]);
+            }
+        }
+
+        var toDelete = ActiveGesturesDictionary[trackingType];
+
+        if (dictionaries) {
+            var dictLength = dictionaries.length;
+
+            for (var i = 0; i < dictLength; i++) {
+                if (!toDelete[dictionaries[i]]) {
+                    return;
+                }
+
+                toDelete = toDelete[dictionaries[i]];
+            }
+        }
+
+        for (var prop in toDelete) {
+            if (prop != gestureName) {
+                delete toDelete[prop];
             }
         }
     }
