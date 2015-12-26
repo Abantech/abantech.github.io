@@ -19,7 +19,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
         EfficioConfiguration.Debug = EfficioConfiguration.Debug || false;
         EfficioConfiguration.ActionToFunctionMapping = EfficioConfiguration.ActionToFunctionMapping || { PluginName: 'NO PLUGIN CONFIGURED', ActionMappings: [] }
 
-        Efficio.Configuration = EfficioConfiguration;
+        Efficio.Configuration = EfficioConfiguration; 
     }
 
     function Ready() {
