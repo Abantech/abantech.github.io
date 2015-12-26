@@ -1,4 +1,0 @@
-D:\Dev-Workspace\AbantechProjects\abantech.github.io\TestOrchestrator\obj\Debug\Efficio.njsprojResolveAssemblyReference.cache
-D:\Dev-Workspace\AbantechProjects\abantech.github.io\TestOrchestrator\bin\Microsoft.NodejsTools.WebRole.dll
-C:\Users\James\Source\Repos\abantech.github.io\TestOrchestrator\obj\Debug\Efficio.njsprojResolveAssemblyReference.cache
-C:\Users\James\Source\Repos\abantech.github.io\TestOrchestrator\bin\Microsoft.NodejsTools.WebRole.dll
