@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Beginner Sandbox</title>
+
+    <link href="Styles/style1.css" rel="stylesheet" />
+
+    <!-- BEGIN internal references -->
+    <script src="Libs/THREEJS/three.min.js"></script>
+    <script src="Libs/THREEJS/OrbitControls.js"></script>
+    <script src="Libs/THREEJS/Detector.js"></script>
+
+    <script src="Libs/Leap/leap-0.6.4.min.js"></script>
+    <script src="Libs/Leap/leap-plugins-0.1.10.min.js"></script>
+    <!-- END internal references -->
+
+</head>
+<body>
+    <!-- BEGIN BOILERPLATE CODE -->
+
+    <!-- Creates the scene, groundbox, camera, lights, and the Controller. Also contains the render loop. -->
+    <script src="Scripts/Scene/SceneSetup.js"></script>
+    
+    <!--  This class attaches functions to the transform plugin to re-orient the hands after the camera moves -->
+    <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
+
+    <!-- Simply the leap loop and transform plugin -->
+    <script src="Scripts/LeapLoopSetup-NoHandPlugins.js"></script>
+
+    <!-- Not really sure why James needs here here but I think it's related to LEAPToSceneConverter 
+        needing to be called after the transform plugin is attached ... -->
+    <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
+
+    <!-- A very simple struct that just holds an array of all the actions, THIS is the mechanism that allows our DI to work -->
+    <script src="Scripts/FrameActions.js"></script>
+
+    <!-- Shortcut used specifically for the hand-based actions that are injected (optional secondary DI mechanism) -->
+    <script src="Scripts/HandController.js"></script>
+    
+    <!-- This is to adjust the hand position in the scene; should be made user adjustable later but for now just hard-coded to use -100 y-->
+    <script src="Scripts/HandsPositionAdjustment.js"></script>
+
+    <!-- END BOILERPLATE CODE -->
+
+
+
+    <!-- ---------------------------------------------------------------  -->
+
+    <!-- Below is where we begin to attach stuff -->
+    
+    <!--My rip-off from Theo's Fingerlings -->
+    <script src="Scripts/FrameActions/CustomHand.js"></script>
+
+    <!-- The infamous FadingSpheres -->
+    <script src="Scripts/FadingSpheres.js"></script>
+
+ </body>
+</html>

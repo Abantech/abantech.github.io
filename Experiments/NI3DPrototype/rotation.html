@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+<!DOCTYPE html>
+<!-- saved from url=(0054)http://leapmotion.github.io/leapjs-rigged-hand/?dots=1 -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>NI 3D prototype workspace</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Helvetica;
+        }
+
+        canvas {
+            pointer-events: none;
+        }
+
+        input {
+            cursor: pointer;
+        }
+
+        #connect-leap {
+            bottom: 0;
+            top: auto !important;
+        }
+
+        table, th, td {
+            border: 1px solid #aaa;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td, th {
+            vertical-align: top;
+            padding: 3px;
+        }
+
+        th {
+            color: #555;
+        }
+
+        #view-source {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 10px;
+        }
+    </style>
+
+    <!--<script src="http://code.jquery.com/jquery-2.1.1.js"></script>
+    <script src="http://threejs.org/build/three.js"></script>
+    <script src="http://threejs.org/examples/js/controls/orbitcontrols.js"></script>
+    <script src="http://threejs.org/examples/js/detector.js"></script>
+    <script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+
+    <script src="Libs/Leap/leap-0.6.4.js"></script>
+    <script src="Libs/Leap/leap-plugins-0.1.10.js"></script>
+    <script src="Libs/Leap/leap.rigged-hand-0.1.6.js"></script>-->
+    <!-- BEGIN internal references -->
+    <script src="Libs/THREEJS/three.min.js"></script>
+    <script src="Libs/THREEJS/OrbitControls.js"></script>
+    <script src="Libs/THREEJS/Detector.js"></script>
+    <script src="Libs/THREEJS/stats.min.js"></script>
+
+    <script src="Libs/Leap/leap-0.6.4.min.js"></script>
+    <script src="Libs/Leap/leap-plugins-0.1.10.min.js"></script>
+    <script src="Libs/Leap/leap-plugins-0.1.10-utils.min.js"></script>
+    <script src="Libs/Leap/leap-widgets-0.1.0.min.js"></script>
+    <script src="Libs/Leap/leap.rigged-hand-0.1.6.js"></script>
+    <!-- END internal references -->
+    <script src="http://leapmotion.github.io/leapjs-widgets/src/leap.proximity.js"></script>
+
+    <!-- BEGIN external references  ->-
+    <script src="http://js.leapmotion.com/leap-0.6.4.js"></script>
+    <script src="http://js.leapmotion.com/leap-plugins-0.1.10.js"></script>
+    <script src="http://js.leapmotion.com/leap.rigged-hand-0.1.6.js"></script>
+    !<-- END external references-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+</head>
+<body>
+    <h3>Point and hold index finger (with thumb tucked underhand) at sphere to expand menu, press on each of the boxes to will create a new shape. (clockwise from top left: cube, cylinder, cone, sphere)</h3>
+    <script src="Scripts/Utils/MathHelper.js"></script>
+    <script src="Scripts/Utils/GestureTimer.js"></script>
+    <script src="Scripts/Scene/SceneSetup.js"></script>
+    <script src="Scripts/Scene/LEAPToSceneConverter.js"></script>
+    <script src="Scripts/LeapLoopSetup.js"></script>
+    <script src="Scripts/Scene/LEAPToSceneConverterInitializer.js"></script>
+
+    <script src="Scripts/
+            .js"></script>
+    <script src="Scripts/HandController.js"></script>
+    <script src="Scripts/HandsPositionAdjustment.js"></script>
+
+    <script src="Scripts/FadingSpheres.js"></script>
+    <script src="Scripts/HandBasedActions/PinchLine.js"></script>
+    <script src="Scripts/HandBasedActions/MenuButtons.js"></script>
+
+    <script src="Scripts/HandBasedActions/PinchHandGesture.js"></script>
+    <script src="Scripts/HandBasedActions/PinchToTranslate.js"></script>
+    <script src="Scripts/HandBasedActions/PinchToRotate.js"></script>
+
+    <script src="Scripts/ActionTracking/TranslationAction.js"></script>
+    <script src="Scripts/ActionTracking/CreateAction.js"></script>
+    <script src="Scripts/ActionTracking/RotationAction.js"></script>
+    <script src="Scripts/ActionTracking/ActionManager.js"></script>
+
+    <script>
+        handController.RegisterAction("DrawfadingSpheres", createFadingSpheresAtFingerTips);
+        handController.RegisterAction("DrawPinchLine", drawPinchLine);
+        handController.RegisterAction("ChangeButtonColorOnPress", changeButtonColorOnHoverAndPress);
+        handController.RegisterAction("ExpandMenuSectionsOnHover", expandMenuSectionsOnHover);
+
+
+
+        $(document).keypress(function (event)
+        {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            var keyChar = String.fromCharCode(keycode);
+
+            if (keycode == '13')
+            {
+                var box = new THREE.Mesh(new THREE.BoxGeometry(15, 15, 15), new THREE.MeshPhongMaterial({ wireframe: false }))
+                box.position.set(0, 0, 0);
+
+                box.userData.isAsset = true;
+                window.scene.add(box);
+
+                if (!action)
+                {
+                    action = new CreateAction();
+                    action.Initialize(box);
+
+                    actionManager.ActionPerformed(action);
+
+                    action = null;
+                }
+            }
+
+            if (keyChar === 'u')
+            {
+                actionManager.Undo();
+            }
+
+            if (keyChar === 'r')
+            {
+                actionManager.Redo();
+            }
+        });
+
+        var pinchedObject;
+        var action;
+
+        options.distance = 40;
+
+        registerOnFullGestureEnd(
+            {
+                func: EndTranslatePinchedObject
+            });
+
+        registerOnFullGesture(
+            {
+                func: TranslatePinchedObject
+            });
+
+        registerOnFullGesture(
+            {
+                func: RotatePinchedObject
+            });
+
+        registerOnFullGestureEnd(
+        {
+            func: EndRotatePinchedObject
+        });
+
+        //reg
+        handController.RegisterAction("PinchGesture", pinchGesture);
+
+        //TODO: implement theo's suggestion to keep these on the body and everything else in a full-screen iframe so that these flatland sliders would work
+        createAdjuster("x", -250, 250, -25, function (value) { xTranslation = value });
+        createAdjuster("y", -300, 300, -75, function (value) { yTranslation = value });
+        createAdjuster("z", -1000, 150, -25, function (value) { zTranslation = value });
+    </script>
+</body>
+</html>

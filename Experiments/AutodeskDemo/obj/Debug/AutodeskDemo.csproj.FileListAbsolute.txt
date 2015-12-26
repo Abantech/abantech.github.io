@@ -1,0 +1,8 @@
+C:\Development\Abantech\abantech.github.io\Experiments\AutodeskDemo\bin\AutodeskDemo.dll.config
+C:\Development\Abantech\abantech.github.io\Experiments\AutodeskDemo\bin\AutodeskDemo.dll
+C:\Development\Abantech\abantech.github.io\Experiments\AutodeskDemo\bin\AutodeskDemo.pdb
+C:\Development\Abantech\abantech.github.io\Experiments\AutodeskDemo\bin\Efficio.dll
+C:\Development\Abantech\abantech.github.io\Experiments\AutodeskDemo\bin\Efficio.pdb
+C:\Development\Abantech\abantech.github.io\Experiments\AutodeskDemo\obj\Debug\AutodeskDemo.csprojResolveAssemblyReference.cache
+C:\Development\Abantech\abantech.github.io\Experiments\AutodeskDemo\obj\Debug\AutodeskDemo.dll
+C:\Development\Abantech\abantech.github.io\Experiments\AutodeskDemo\obj\Debug\AutodeskDemo.pdb

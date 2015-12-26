@@ -1,0 +1,2175 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Xtr3D.Net</name>
+    </assembly>
+    <members>
+        <member name="T:Xtr3D.Net.AllFrames.AllFramesFrame">
+            <summary>
+             A frame that contains a pair of synchronized frames of types ColorFrame and DataFrame.
+             The skeleton held by this frame is computed from the image in the ColorFrame object held by this frame.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.FrameBase`2">
+            <summary>
+            A base type, common to all frames
+            </summary>
+            <typeparam name="K">Frame Key type</typeparam>
+            <typeparam name="V">Frame Value type</typeparam>
+        </member>
+        <member name="T:Xtr3D.Net.IFrame`2">
+            <summary>
+            A key/value based frame of data
+            </summary>
+            <typeparam name="K">frame key type</typeparam>
+            <typeparam name="V">frame value type</typeparam>
+        </member>
+        <member name="P:Xtr3D.Net.IFrame`2.FrameKey">
+            <summary>
+            The unique key associated with this IFrame
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IFrame`2.Timestamp">
+            <summary>
+            The monotonically increasing time-stamp in which this IFrame was created
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IFrame`2.Stream">
+            <summary>
+            The IStream that delivered this frame
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.BaseTypes.FrameBase`2._stream">
+            <summary>
+            The stream that spawned the current frame instance
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.FrameBase`2.#ctor(Xtr3D.Net.BaseTypes.StreamBase{`0,`1},`0,System.Int64,Xtr3D.Net.Patterns.DataPool{`0,`1}.Entry)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="stream">The Stream that delivers this frame.</param>
+            <param name="frameKey">The unique key of the frame.</param>
+            <param name="timestamp">The timestamp of the frame.</param>
+            <param name="data">The image data.</param>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.FrameBase`2.Dispose">
+            <summary>
+            Disposes of the object.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.FrameBase`2.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.FrameBase`2.DataEntry">
+            <summary>
+            Accesses the data.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.FrameBase`2.Stream">
+            <summary>
+            The stream that spawned the current frame instance
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.FrameBase`2.FrameKey">
+            <summary>
+            The frame key, this is common to all frames originating to the same sample 
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.FrameBase`2.Timestamp">
+            <summary>
+            The system-time in which the current frame instance was produced
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.AllFrames.AllFramesFrame.FramesReadyEventArgs">
+            <summary>
+            The event arguments for the appearance of an object of this class type.
+            </summary>        
+        </member>
+        <member name="T:Xtr3D.Net.AllFrames.AllFramesReadyEventArgs">
+            <summary>
+            An event that occurs when all data for a specific image is ready.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.FrameReadyEventArgsBase`3">
+            <summary>
+            Base class for classes containing frame event data.
+            </summary>
+            <typeparam name="S">The frame-spawning stream type</typeparam>
+            <typeparam name="K">IFrame Key type</typeparam>
+            <typeparam name="V">IFrame Value type</typeparam>
+        </member>
+        <member name="T:Xtr3D.Net.IFrameReadyEventArgs`2">
+            <summary>
+            A key/value based class containing event data
+            </summary>
+            <typeparam name="K">EventArgs key type</typeparam>
+            <typeparam name="V">EventArgs value type</typeparam>
+        </member>
+        <member name="M:Xtr3D.Net.IFrameReadyEventArgs`2.OpenFrame">
+            <summary>
+            Retrieves the IFrame associated with this IFrameReadyEventArgs
+            </summary>
+            <returns>The IFrame associated with this IFrameReadyEventArgs</returns>
+        </member>
+        <member name="P:Xtr3D.Net.IFrameReadyEventArgs`2.IsValid">
+            <summary>
+            States whether this data-set is to be considered valid
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.FrameReadyEventArgsBase`3.#ctor(`0,`1,System.Int64,System.Boolean)">
+            <summary>
+            Constructs an instance of the FrameReadyEventArgsBase class
+            </summary>
+            <param name="stream">The Stream that delivers this frame.</param>
+            <param name="frameKey">The unique key of the frame.</param>
+            <param name="timestamp">The timestamp of the frame.</param>
+            <param name="isValid">States whether this data-set is to be considered valid. If it's not valid, then this data should not be used.</param>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.FrameReadyEventArgsBase`3.OpenFrame">
+            <summary>
+            Retrieves the IFrame associated with this IFrameReadyEventArgs
+            </summary>
+            <returns>The IFrame associated with this IFrameReadyEventArgs</returns>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.FrameReadyEventArgsBase`3.Stream">
+            <summary>
+            The IStream that delivered the associated IFrame
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.FrameReadyEventArgsBase`3.FrameKey">
+            <summary>
+            The unique key assigned to the associated IFrame
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.FrameReadyEventArgsBase`3.Timestamp">
+            <summary>
+            The monotonically increasing time-stamp in which the associated IFrame was created
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.FrameReadyEventArgsBase`3.IsValid">
+            <summary>
+            States whether this data-set is to be considered valid. If it's not valid, then this data should not be used.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.AllFrames.AllFramesReadyEventArgs.OpenFrame">
+            <summary>
+            Retrieves the IFrame associated with this AllFramesReadyEventArgs
+            </summary>
+            <returns>The IFrame associated with this AllFramesReadyEventArgs</returns>
+        </member>
+        <member name="T:Xtr3D.Net.AllFrames.AllFramesStream">
+            <summary>
+             A stream for receiving an object of type AllFramesFrame.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.StreamBase`2">
+            <summary>
+            StreamBase
+            </summary>
+            <typeparam name="K">frame Key</typeparam>
+            <typeparam name="V">frame value</typeparam>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.InteropSyncBase">
+            <summary>
+            Base class allowing usage of read-write locks.  
+            Should not be used by external users of the SDK
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.InteropSyncBase.EnterReadLock">
+            <summary>
+            Enters a read lock.
+            </summary>
+            <returns>The lock object.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.InteropSyncBase.EnterUpgradeableReadLock">
+            <summary>
+            Enters an upgradeable read lock.
+            </summary>
+            <returns>The lock object.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.InteropSyncBase.EnterWriteLock">
+            <summary>
+            Enters a write lock.
+            </summary>
+            <returns>The lock object.</returns>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.InteropSyncBase.CommonInitializeLock">
+            <summary>
+            Accesses
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.InteropSyncBase.IsDisposed">
+            <summary>
+            Whether the instance has been disposed
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.IStream">
+            <summary>
+            a Stream that can be used in either streaming policies
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.IPollableStream">
+            <summary>
+            a Stream that can be polled
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IPollableStream.IsSignaled">
+            <summary>
+            Indicates whether the current stream produces new data to be polled.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.IPushingStream">
+            <summary>
+            a Stream that publishes frames
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IPushingStream.NextFrameEvent">
+            <summary> Notifies one or more waiting threads that new data is available for consumption </summary>
+        </member>
+        <member name="M:Xtr3D.Net.IStream.Disable">
+            <summary> Conditionally disable this stream </summary>
+        </member>
+        <member name="M:Xtr3D.Net.IStream.Enable">
+            <summary> Conditionally enable this stream </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IStream.IsEnabled">
+            <summary> Return true if this stream is enabled, false otherwise </summary>
+        </member>
+        <member name="T:Xtr3D.Net.IStream`2">
+            <summary>
+            A DataPool based reference-counted stream
+            </summary>
+            <typeparam name="K">Frame key type</typeparam>
+            <typeparam name="V">Frame value type</typeparam>
+        </member>
+        <member name="M:Xtr3D.Net.IStream`2.LockEntry(`0)">
+            <summary>
+            Secures (increases the reference-count of-) the entry matching the specified key
+            </summary>
+            <param name="frameKey">frame key</param>
+            <returns>the locked entry</returns>
+        </member>
+        <member name="M:Xtr3D.Net.IStream`2.UnlockEntry(Xtr3D.Net.Patterns.DataPool{`0,`1}.Entry)">
+            <summary>
+            Dismisses (decreases the reference-count of-) the specified entry
+            </summary>
+            <param name="entry">entry</param>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.StreamBase`2.#ctor(Xtr3D.Net.IGenerator,System.Int32)">
+            <summary>
+            constructor
+            </summary>
+            <param name="main">generator</param>
+            <param name="poolDepth">number of pooled elements</param>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.StreamBase`2.LockEntry(`0)">
+            <summary>
+            Secures (increases the reference-count of-) the entry matching the specified key 
+            </summary>
+            <param name="frameKey">frameKey</param>
+            <returns>the locked entry</returns>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.StreamBase`2.UnlockEntry(Xtr3D.Net.Patterns.DataPool{`0,`1}.Entry)">
+            <summary>
+             Dismisses (decreases the reference-count of-) the specified entry
+            </summary>
+            <param name="entry">entry</param>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.StreamBase`2.Enable">
+            <summary>
+            Enables the stream.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.StreamBase`2.Disable">
+            <summary>
+            Disables the stream.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.StreamBase`2.DataPool">
+            <summary>
+            Accesses the data.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.StreamBase`2.NextFrameEvent">
+            <summary>
+            NextFrame ManualResetEvent
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.StreamBase`2.IsEnabled">
+            <summary>
+            return whether the stream is currently Enabled/Disabled using the Enable/Disable method
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.StreamBase`2.IsSignaled">
+            <summary>
+            Indicates whether the current stream produces new data to be polled.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.AllFrames.AllFramesStream.Enable">
+            <summary>
+            Doesn't do anything.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.AllFrames.AllFramesStream.Disable">
+            <summary>
+            Doesn't do anything.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.DirectImageFeed">
+            <summary>
+             This class lets you inject 640 x 480 RGB frames directly to Extreme Motion SDK
+             Modify configuration file to use external capture source before calling this method
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.DirectImageFeed.IsInternal">
+            <summary>
+            Determines whether internal binding is required for dynamically loaded types. 
+            This may be the case with some Mono distributions.
+            </summary>
+            <returns>true if internal binding is required, false otherwise</returns>
+        </member>
+        <member name="M:Xtr3D.Net.DirectImageFeed.HandleCapturedImage(System.UInt32,System.Byte[])">
+            <summary>
+            injects 640 x 480 RGB frames directly to Extreme Motion SDK
+            </summary>        
+            <param name="timeStampMiliSeconds">Timestamp of the image to be injected to Extreme Motion SDK</param>
+            <param name="capturedImage">640 x 480 RGB frame to inject to Extreme Motion SDK</param>
+        </member>
+        <member name="M:Xtr3D.Net.DirectImageFeed.External_HandleImage(System.UInt32,System.Byte[])">
+             Return Type: XTR3D_ERROR_e
+            uint: timeStampMiliSeconds - timestamp of the image
+            byte: capturedImage - The captured image itself
+        </member>
+        <member name="M:Xtr3D.Net.DirectImageFeed.XTR3D_SDK_SERVICE_HandleImage(System.UInt32,System.Byte[])">
+             Return Type: XTR3D_ERROR_e
+            uint: timeStampMiliSeconds - timestamp of the image
+            byte: capturedImage - The captured image itself
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.InvalidImageFormatException">
+            <summary>
+            Represents an error originating in invalid image format (fourcc code or bits per pixel).
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.InvalidImageFormatException.#ctor(System.String)">
+            <summary>
+            Constructs a new LicenseException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.InvalidImageResolutionException">
+            <summary>
+            Represents an error originating in an invalid image resolution.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.InvalidImageResolutionException.#ctor(System.String)">
+            <summary>
+            Constructs a new LicenseException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.InvalidLicenseException">
+            <summary>
+            Represents an error originating in the invalidity/expiry of the product/trial license.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.InvalidLicenseException.#ctor(System.String)">
+            <summary>
+            Constructs a new LicenseException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.MissingLicenseException">
+            <summary>
+            Represents an error originating in the license file missing.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.MissingLicenseException.#ctor(System.String)">
+            <summary>
+            Constructs a new LicenseException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.ExpiredLicenseException">
+            <summary>
+            Represents an error originating in the license being expired.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.ExpiredLicenseException.#ctor(System.String)">
+            <summary>
+            Constructs a new LicenseException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.NoSuitableCameraException">
+            <summary>
+            Represents an error originating in the manager: a camera with the requested parameters could not be found.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.NoSuitableCameraException.#ctor(System.String)">
+            <summary>
+            Constructs a new NoSuitableCameraException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.NotInitializedException">
+            <summary>
+            Represents an error originating in the manager being not initialized.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.NotInitializedException.#ctor(System.String)">
+            <summary>
+            Constructs a new NotInitializedException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.UnexpectedValueException">
+            <summary>
+            Represents an error originating in the manager receiving an unexpected value.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.UnexpectedValueException.#ctor(System.String)">
+            <summary>
+            Constructs a new UnexpectedValueException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.HelperMethods">
+            <summary>General helper class</summary>
+        </member>
+        <member name="M:Xtr3D.Net.HelperMethods.GetAssemblyVersion">
+            <summary>
+            Returns the System.Version object of this dll
+            </summary>
+            <returns>System.Version or null if there was an error</returns>
+        </member>
+        <member name="T:Xtr3D.Net.IImageStream">
+            <summary>
+            An interface for streams that emit images.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IImageStream.Warnings">
+            <summary>
+            current set of active ImageStreamWarnings. This is not the same set as the IImageFrame.Warnings.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IImageStream.StreamImageInfo">
+            <summary>
+            Accesses the image info.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.ImageStreamBase`2">
+            <summary>
+            A base class for streams that emit images.
+            </summary>
+            <typeparam name="K">The frame key type.</typeparam>
+            <typeparam name="V">The image type.</typeparam>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.ImageStreamBase`2.#ctor(Xtr3D.Net.IGenerator,System.Int32)">
+            <summary>
+            constructor
+            </summary>
+            <param name="main">generator</param>
+            <param name="poolDepth"> pool size</param>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.ImageStreamBase`2.Warnings">
+            <summary>
+            current set of active ImageStreamWarnings. This is not the same set as the IImageFrame.Warnings.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.ImageStreamBase`2.StreamImageInfo">
+            <summary>
+            The image format information for this stream
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ColorImage.ColorImage">
+            <summary>
+            A color data abstraction
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ColorImage.ColorImage.#ctor(System.Int32)">
+            <summary>
+            Initializes a new ColorImage instance
+            </summary>
+            <param name="lengthInBytes">The number of bytes allocated to hold this color image</param>
+        </member>
+        <member name="P:Xtr3D.Net.ColorImage.ColorImage.Image">
+            <summary>
+            Raw data associated with this color image
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ColorImage.ColorImageFrame">
+            <summary>
+            A buffer for color data streamed out of an ExtremeMotion generator. 
+            Also provides access to the dimension and format of the color data.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.ImageFrameBase`2">
+            <summary>
+            A base class for image frames.
+            </summary>
+            <typeparam name="K"> The template type K is for the frame key</typeparam>
+            <typeparam name="V">The template type V is for the image type.</typeparam>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.IImageFrame">
+            <summary>
+            An interface for a frame that contains an image.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.IImageFrame.BitsPerPixel">
+            <summary>
+             The number of bits per pixel in the image.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.IImageFrame.Height">
+            <summary>
+            The height of the image
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.IImageFrame.PixelDataLength">
+            <summary>
+            The number of bytes that the image is stored in. It amount to Width * Height * BitsPerPixel.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.IImageFrame.Width">
+            <summary>
+            The width of the image.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.IImageFrame.Warnings">
+            <summary>
+            ImageWarnings on the current image frame
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.ImageFrameBase`2.#ctor(Xtr3D.Net.ImageInfo,Xtr3D.Net.BaseTypes.StreamBase{`0,`1},`0,System.Int64,Xtr3D.Net.Patterns.DataPool{`0,`1}.Entry,Xtr3D.Net.ImageWarnings)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="imageInfo">An ImageInfo object that contains the dimensions of the frame.</param>
+            <param name="stream">The Stream that delivers this frame.</param>
+            <param name="frameKey">The unique key of the frame.</param>
+            <param name="timestamp">The timestamp of the frame.</param>
+            <param name="data">The image data.</param>
+            <param name="warnings">The warning associated with the frame.</param>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.ImageFrameBase`2.Width">
+            <summary>
+            Width in pixels
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.ImageFrameBase`2.Height">
+            <summary>
+            image height in pixels
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.ImageFrameBase`2.BitsPerPixel">
+            <summary>
+            The image might not be a multiple of eight, therefore we use Bits rather than Bytes
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.ImageFrameBase`2.PixelDataLength">
+            <summary>
+            Width * Height * BitsPerPixel
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.ImageFrameBase`2.Warnings">
+            <summary>
+            ImageWarnings on the current image frame
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ColorImage.ColorImageFrame.BitsPerPixel">
+            <summary>
+            Gets the per-pixel bit count.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ColorImage.ColorImageFrame.PixelDataLength">
+            <summary>
+            Gets the total length of the pixel data buffer.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ColorImage.ColorImageFrame.ColorImage">
+            <summary>
+            The color data associated with this ColorImageFrame instance
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ColorImage.ColorImageFrame.Stream">
+            <summary>
+            The Stream, which contains , amongst other fields, the ImageStreamWarnings 
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ColorImage.ColorImageFrameReadyEventArgs">
+            <summary>
+            The event arguments provided in a an ExtremeMotion Generator.ColorImageFrameReady event when a frame of color data is ready.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ColorImage.ColorImageFrameReadyEventArgs.OpenFrame">
+            <summary>
+            Gets the most recent frame of color data
+            </summary>
+            <returns>A frame of color data in a new ColorImageFrame object, or NULL if the data is no longer available</returns>
+        </member>
+        <member name="T:Xtr3D.Net.ColorImage.ColorImageStream">
+            <summary>
+            Represents a stream of color data, contained in ColorImageFrame objects.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ColorImage.ColorImageStream.Enable">
+            <summary>
+            Overloaded. Method for enabling a generator to stream out color data.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ColorImage.ColorImageStream.Disable">
+            <summary>
+            Overloaded. Method for disabling a generator from streaming out color data.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ImageWarningsParser.GetImageWarnings(Xtr3D.Net.ImageWarnings@,Xtr3D.Net.ImageStreamWarnings@)">
+            <summary>
+            Gets the latest registered image warnings
+            </summary>
+            <param name="imageWarnings">Per-frame warnings</param>
+            <param name="streamWarnings">Frame-sequence warnings</param>
+        </member>
+        <member name="T:Xtr3D.Net.FrameKey">
+            <summary>
+            The unique key assigned internally to each delivered IFrame.
+            This is composed of the unique frame number that is the origin of the data conveyed by this frame and a latent term to enable efficient hashing. 
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.FrameKey.Equals(System.Object)">
+            <summary>
+            Overloaded. Compares two FrameKey objects to see if they contain the same data.
+            </summary>
+            <param name="obj">The second object.</param>
+            <returns>true if the second object contains the same data as this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.FrameKey.Equals(Xtr3D.Net.FrameKey)">
+            <summary>
+            Compares two FrameKey objects for equality (using the FrameKey type).
+            </summary>
+            <param name="frameKey">The second object.</param>
+            <returns>true if the second object contains the same data as this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.FrameKey.GetHashCode">
+            <summary>
+            Gets the hash code for a FrameKey.
+            </summary>
+            <returns>The calculated hash code.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.FrameKey.op_Equality(Xtr3D.Net.FrameKey,Xtr3D.Net.FrameKey)">
+            <summary>
+            Compares two FrameKey objects for equality.
+            </summary>
+            <param name="frameKey1">The first object</param>
+            <param name="frameKey2">The second object</param>
+            <returns>true if the two instances are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.FrameKey.op_Inequality(Xtr3D.Net.FrameKey,Xtr3D.Net.FrameKey)">
+            <summary>
+            Compares two FrameKey objects for inequality.
+            </summary>
+            <param name="frameKey1">The first object</param>
+            <param name="frameKey2">The second object</param>
+            <returns>false if the two instances are equal; otherwise, true.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.FrameKey.ToString">
+            <summary>
+            a String representing the current FrameKey
+            </summary>
+            <returns> a human-readable string that is culture-sensitive </returns>
+        </member>
+        <member name="P:Xtr3D.Net.FrameKey.FrameNumberKey">
+            <summary>
+            The frame serial number
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.FrameKey.Invalid">
+            <summary>
+            Returns an Invalid FrameKey instance
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ImageResolution">
+            <summary>
+            Image Resolutions 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageResolution.Resolution640x480">
+            <summary>Landscape</summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageResolution.Resolution480x640">
+            <summary>Portrait</summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageResolution.Resolution1920x1080">
+            <summary>HD Landscape. Windows only.</summary>
+        </member>
+        <member name="T:Xtr3D.Net.ImageWarnings">
+            <summary>
+            Warnings related to the RGB image
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageWarnings.None">
+            <summary>
+            No warning in the image
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageWarnings.LightLow">
+            <summary>
+            The environmental light is very low and can degrade the performance. The end-user should be asked to increase the light (for example: turn on the lights in a dark room)
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageWarnings.StrongBacklighting">
+            <summary>
+            The image received in the camera is extremely bright and it reduces the details seen on it. It can happen if a strong light-source is pointing directly into the camera.
+            The end-user should be alerted to this and asked to change the camera/light-source location.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageWarnings.TooManyPeople">
+            <summary>
+            There is more than one user in front of the camera during the calibration stage and it is not clear which one should be the main, calibrated, user. 
+            The end-user should be alerted , for example: ask that only one user will be in the middle of camera field-of-view during calibration stage.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Manager.ClientInternalDll">
+            <summary>
+            See XTR3D_SDK_IServiceClient.h
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientInternalDll.XTR3D_SDK_SERVICE_CLIENT_RegisterManaged(Xtr3D.Net.Interop.Manager.Service.ManagedCallbackDelegate,Xtr3D.Net.Interop.Manager.Service.ManagedCallbackDelegate,System.Int32@)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+            lpCallback: XTR3D_ManagedCallback
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientInternalDll.XTR3D_SDK_SERVICE_CLIENT_UnRegister(System.Int32)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientInternalDll.XTR3D_SDK_SERVICE_CLIENT_GetRawImageFrame(System.Int32,Xtr3D.Net.Interop.Types.NativeRawImageFrame@,System.Byte[],System.Int32,System.UInt32@)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+            frame: RawImageFrame*
+            frameSize: int
+            imageData: byte[] 
+            remainingFrames: uint*
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientInternalDll.XTR3D_SDK_SERVICE_CLIENT_GetSkeletonFrame(System.Int32,Xtr3D.Net.Interop.Types.NativeSkeletonFrame@,System.UInt32,System.UInt32@)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+            frame: SkeletonFrame*
+            frameSize: int
+            remainingFrames: uint*
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientInternalDll.XTR3D_SDK_SERVICE_CLIENT_GetLatestWarnings(System.Int64[],System.Int32@)">
+             Return Type: XTR3D_ERROR_e
+            warnings: XTR3D_WARNING_e*
+            warningsCount: int*
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Manager.ClientExternalDll">
+            <summary>
+            See XTR3D_SDK_IServiceClient.h
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientExternalDll.RegisterManaged(Xtr3D.Net.Interop.Manager.Service.ManagedCallbackDelegate,Xtr3D.Net.Interop.Manager.Service.ManagedCallbackDelegate,System.Int32@)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+            lpCallback: XTR3D_ManagedCallback
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientExternalDll.UnRegister(System.Int32)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientExternalDll.GetRawImageFrame(System.Int32,Xtr3D.Net.Interop.Types.NativeRawImageFrame@,System.Byte[],System.Int32,System.UInt32@)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+            frame: RawImageFrame*
+            frameSize: int
+            imageData: byte[]
+            remainingFrames: uint*
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientExternalDll.GetSkeletonFrame(System.Int32,Xtr3D.Net.Interop.Types.NativeSkeletonFrame@,System.UInt32,System.UInt32@)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+            frame: SkeletonFrame*
+            frameSize: int
+            remainingFrames: uint*
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientExternalDll.SetParams(System.String[],System.String[],System.Int32)">
+             Return Type: XTR3D_ERROR_e
+            paramNames: char**
+            paramValues: char**
+            numOfParams: int
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ClientExternalDll.GetLatestWarnings(System.Int64[],System.Int32@)">
+             Return Type: XTR3D_ERROR_e
+            warnings: XTR3D_WARNING_e*
+            warningsCount: int*
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Manager.ServiceInternalDll">
+            <summary>
+            See XTR3D_SDK_IServiceControl.h
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceInternalDll.XTR3D_SDK_SERVICE_Init(Xtr3D.Net.Interop.Types.SImageInfo@,System.Byte[])">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceInternalDll.XTR3D_SDK_SERVICE_Start">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceInternalDll.XTR3D_SDK_SERVICE_Stop">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceInternalDll.XTR3D_SDK_SERVICE_Close">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceInternalDll.XTR3D_SDK_SERVICE_Reset">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceInternalDll.XTR3D_SDK_SERVICE_GetVersion(System.IntPtr,System.Int32)">
+             Return Type: XTR3D_ERROR_e
+            versionBuffer: char*
+            bufferLength: int
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceInternalDll.XTR3D_SDK_SERVICE_SetPowerLineFrequency(Xtr3D.Net.Interop.Types.EPowerLineFrequency)">
+             Return Type: XTR3D_ERROR_e
+            powerLineFrequency: EPowerLineFrequency
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Manager.ServiceExternalDll">
+            <summary>
+            See XTR3D_SDK_IServiceControl.h
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceExternalDll.Init(Xtr3D.Net.Interop.Types.SImageInfo@,System.Byte[])">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceExternalDll.Start">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceExternalDll.Stop">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceExternalDll.Close">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceExternalDll.Reset">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceExternalDll.GetVersion(System.IntPtr,System.Int32)">
+             Return Type: XTR3D_ERROR_e
+            versionBuffer: char*
+            bufferLength: int
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.ServiceExternalDll.SetPowerLineFrequency(Xtr3D.Net.Interop.Types.EPowerLineFrequency)">
+             Return Type: XTR3D_ERROR_e
+            powerLineFrequency: EPowerLineFrequency
+        </member>
+        <member name="T:Xtr3D.Net.ImageInfo">
+            <summary>
+            Contains the basic image information, includes height, width, stride, imageSize bitsPerPixel and FourCC format
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ImageInfo.#ctor">
+            <summary>
+            Default constructor. Initializes the object to RGB888 format, 640X480 resolution.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ImageInfo.#ctor(Xtr3D.Net.ImageResolution,Xtr3D.Net.ImageInfo.ImageFormat)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="resolution">The image resolution in pixels (width X height), can be any ImageResolution member</param>
+            <param name="format">The image format, can be any ImageFormat member</param>
+        </member>
+        <member name="M:Xtr3D.Net.ImageInfo.ResolutionToWidthHeight(Xtr3D.Net.ImageResolution,System.Int32@,System.Int32@)">
+            <summary>
+            Utility method to fill the width and height parameters from the resolution. 
+            </summary>
+            <param name="resolution">input resolution. ImageResolution.Invalud is not supported</param>
+            <param name="width">output width</param>
+            <param name="height">output height</param>
+        </member>
+        <member name="P:Xtr3D.Net.ImageInfo.Format">
+            <summary>
+            Gets the format of the image passed.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ImageInfo.FourCC">
+            <summary>
+            Gets the FourCC uint code of the image.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ImageInfo.Height">
+            <summary>
+            Gets the height of the image.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ImageInfo.Width">
+            <summary>
+            Gets the width of the image.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ImageInfo.Orientation">
+            <summary>
+            Gets the orientation of the image. Relevant only for Android Unity applications.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ImageInfo.Stride">
+            <summary>
+            Gets the stride of the image.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ImageInfo.BitsPerPixel">
+            <summary>
+            Gets the bits per pixel of the image.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.ImageInfo.ImageSize">
+            <summary>
+            Gets the total size of the image, in bytes.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ImageInfo.ImageFormat">
+            <summary>
+            Enumeration of available image formats.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageInfo.ImageFormat.RGB888">
+            <summary>
+            Supported in PC, iOS and Android
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageInfo.ImageFormat.RGBA8888">
+            <summary>
+            Supported in iOS 
+            Can be used to improve RGB drawing in engines which use this format natively in their structures, such as unity.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ExtremeMotion.Data.Joint">
+            <summary>
+            Contains joint data for one skeleton joint, such as the joint type, position, and whether the joint is being tracked
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.Joint.skeletonPoint">
+            <summary>
+            Gets the position of the joint.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.Joint.jointType">
+            <summary>
+            Gets the joint type, which identifies a portion of the skeleton.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.Joint.jointTrackingState">
+            <summary>
+            Gets the tracking state of the joint, which indicates the quality of the joint position that was produced by the skeleton DataStream.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ExtremeMotion.Data.Joint.#ctor(Xtr3D.Net.ExtremeMotion.Interop.Types.JointType,Xtr3D.Net.ExtremeMotion.Data.Point,Xtr3D.Net.ExtremeMotion.Interop.Types.JointTrackingState)">
+            <summary>
+            creates a new joint. 
+            Normally joints are created and filled by the stream, this can be 
+            used by none-friend assemblies for mocking and testing purposes.
+            </summary>
+            <param name="point">point data</param>
+            <param name="jointType">joint type</param>
+            <param name="jointTrackingState">jointTrackingState</param>
+        </member>
+        <member name="T:Xtr3D.Net.ExtremeMotion.Interop.Types.JointTrackingState">
+            <summary>
+            Skeleton joint tracking states. Depending on the data available in the ColorImageStream, the skeleton data stream may produce joints that are fully tracked, inferred, or not tracked.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointTrackingState.NotTracked">
+            <summary>
+            Joint data is not tracked; there is no joint data available.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointTrackingState.Inferred">
+            <summary>
+            Joint data is inferred by calculating it from other tracked joints. Since the data is calculated, confidence in the data is very low.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointTrackingState.Tracked">
+            <summary>
+            Joint data is tracked and available. Since the data is tracked, confidence in the data is very high.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.NativeFrameHeader">
+            <summary>
+            The header that is contained by all frames, holds general information about the frame:
+            type of frame, id, timestamp and the frame's size.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeFrameHeader.type">
+            <summary>
+            The type of frame (1 - Raw Image, 2 - Skeleton, 4 - Warnings, 8 - Gestures).
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeFrameHeader.frameId">
+            <summary>
+            Unique, serial frame id number.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeFrameHeader.timestamp">
+            <summary>
+            The frame's timestamp.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeFrameHeader.size">
+            <summary>
+            The size of the frame. 
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.ImageDescriptor">
+            <summary>
+            Contains all information that is relevant about a raw image:
+            width, height, stride, bitCount, fccFormat and size.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.ImageDescriptor.width">
+            <summary>
+            The width of the image
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.ImageDescriptor.height">
+            <summary>
+            The height of the image
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.ImageDescriptor.stride">
+            <summary>
+            The stride of the image
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.ImageDescriptor.bitCount">
+            <summary>
+            The number of bits per pixel of the image
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.ImageDescriptor.fccFormat">
+            <summary>
+            The fcc format of the image
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.ImageDescriptor.imageSize">
+            <summary>
+            The general size of the image (width * height * bitCount / 8)
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.ImageDescriptor.Orientation">
+            <summary>
+            Device orientation. This property is relevant only for Android Unity applications, 
+            it isn't used here but is needed to make the Struct the same size it is in the C++
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType">
+            <summary>
+            Skeleton joints that make up a tracked skeleton
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.HipCenter">
+            <summary>
+            Center, between hips
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.Spine">
+            <summary>
+            Spine
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.ShoulderCenter">
+            <summary>
+            Center, between shoulders
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.Head">
+            <summary>
+            Head
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.ShoulderLeft">
+            <summary>
+            Left shoulder
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.ElbowLeft">
+            <summary>
+            Left elbow
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.WristLeft">
+            <summary>
+            Left wrist. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.HandLeft">
+            <summary>
+            Left hand
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.ShoulderRight">
+            <summary>
+            Right shoulder
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.ElbowRight">
+            <summary>
+            Right elbow
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.WristRight">
+            <summary>
+            Right wrist. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.HandRight">
+            <summary>
+            Right hand
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.HipLeft">
+            <summary>
+            Left hip. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.KneeLeft">
+            <summary>
+            Left knee. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.AnkleLeft">
+            <summary>
+            Left ankle. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.FootLeft">
+            <summary>
+            Left foot. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.HipRight">
+            <summary>
+            Right hip. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.KneeRight">
+            <summary>
+            Right knee. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.AnkleRight">
+            <summary>
+            Right ankle. Not supported.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Interop.Types.JointType.FootRight">
+            <summary>
+            Right foot. Not supported.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ExtremeMotion.Data.Point">
+             <summary>
+             Contains a 3D position (or point) in skeleton space, as well as a 2D position (or source pixel) in camera space.
+             X,Y,Z: The three dimensional Cartesian coordinate system of the joints is composed of the 3 axes X, Y, and Z. In each frame, the origin of the coordinates system (0, 0, 0) is set to the middle of the line connecting the shoulders. 
+             The coordinate system measurement unit is “user arm length.” A vector of length 1 is equal to the length of the user’s arm.
+            
+             imgCoordNormHorizontal and imgCoordNormVertical: Each point also contains two coordinates which represent the location of the joint in the image.
+             These coordinates are in the range [0-1] and are relative to the width and the height of the image.
+             For example, for an image at the resolution 640x480 imgCoordNormHorizontal = 1 means that the X location of the joint in the image is 639.
+             </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.Point.X">
+            <summary>
+            Gets or sets the x-coordinate of the (x,y,z) position. 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.Point.Y">
+            <summary>
+            Gets or sets the y-coordinate of the (x,y,z) position. 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.Point.Z">
+            <summary>
+            Gets or sets the z-coordinate of the (x,y,z) position.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.Point.ImgCoordNormHorizontal">
+            <summary>
+            Gets or sets the normalized horizontal coordinate of the 2D position.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.Point.ImgCoordNormVertical">
+            <summary>
+            Gets or sets the normalized vertical coordinate of the 2D position.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.ExtremeMotion.Data.Point.Equals(System.Object)">
+            <summary>
+            Overloaded. Compares two Point objects to see if they contain the same data.
+            </summary>
+            <param name="obj">The second object.</param>
+            <returns>true if the second object contains the same data as this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.ExtremeMotion.Data.Point.Equals(Xtr3D.Net.ExtremeMotion.Data.Point)">
+            <summary>
+            Compares two Point objects for equality (using the Point type).
+            </summary>
+            <param name="skeletonPoint">The second object.</param>
+            <returns>true if the second object contains the same data as this instance; otherwise, false.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.ExtremeMotion.Data.Point.GetHashCode">
+            <summary>
+            Gets the hash code for a Point.
+            </summary>
+            <returns>The calculated hash code.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.ExtremeMotion.Data.Point.ToString">
+            <summary>
+            Returns a string representation of the point (currently only its ImgCoordNormHorizontal and ImgCoordNormVertical);
+            </summary>
+            <returns>A string value</returns>
+        </member>
+        <member name="M:Xtr3D.Net.ExtremeMotion.Data.Point.op_Equality(Xtr3D.Net.ExtremeMotion.Data.Point,Xtr3D.Net.ExtremeMotion.Data.Point)">
+            <summary>
+            Compares two Point objects for equality.
+            </summary>
+            <param name="skeletonPoint1">The first object</param>
+            <param name="skeletonPoint2">The second object</param>
+            <returns>true if the two instances are equal; otherwise, false.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.ExtremeMotion.Data.Point.op_Inequality(Xtr3D.Net.ExtremeMotion.Data.Point,Xtr3D.Net.ExtremeMotion.Data.Point)">
+            <summary>
+            Compares two Point objects for inequality.
+            </summary>
+            <param name="skeletonPoint1">The first object</param>
+            <param name="skeletonPoint2">The second object</param>
+            <returns>false if the two instances are equal; otherwise, true.</returns>
+        </member>
+        <member name="T:Xtr3D.Net.ExtremeMotion.Data.TrackingState">
+            <summary>
+            The different states a user skeleton can be found in.
+            The state-machine is: Initializing change to Calibrating, then after user found and calibrated, changes to Tracking.
+            Tracking will change to NotTracking and vice versa when the user exists/re-enter the frame.
+            The only way to return to Calibrating state is to call GeneratorSingleton.Instance.Reset() explicitly.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.TrackingState.Initializing">
+            <summary>
+            Initializing the system. 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.TrackingState.NotTracked">
+            <summary>
+            Do not track anything.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.TrackingState.Calibrating">
+            <summary>
+            Waiting to Calibrate the user using the 'Psi' pose. 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ExtremeMotion.Data.TrackingState.Tracked">
+            <summary>
+            Track joint positions after calibration is complete. 
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.NativeRawImageFrame">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeRawImageFrame.header">
+            <summary>
+            Frame header, contains information about the frame (type, frame id, timestamp, size) 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeRawImageFrame.imageDescriptor">
+            <summary>
+            Holds the information regarding the raw image frame:
+            height, width, stride, bitCount, format, size. 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeRawImageFrame.imageDataPtrDummy">
+            <summary>
+            Place holder to match the native struct.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.SImageInfo">
+            <summary>
+            Contains the basic image information, for the images passed from the native IA, includes height, width, stride, bitsPerPixel and FourCC format
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.SImageInfo.width">
+            <summary>
+            Gets or sets the width of the image passed.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.SImageInfo.height">
+            <summary>
+            Gets or sets the height of the image passed.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.SImageInfo.stride">
+            <summary>
+            Gets or sets the stride of the image passed.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.SImageInfo.bitsPerPixel">
+            <summary>
+            Gets or sets the bits per pixel of the image passed.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.SImageInfo.format">
+            <summary>
+            Gets or sets the FourCC format of the image passed.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.SImageInfo.orientation">
+            <summary>
+            Gets or sets the current orientation of the device (for Android only)
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.NativeSkeleton">
+            <summary>
+            A structure that holds a skeleton as passed from the native code.
+            Contains all the information that was acquired per one frame.
+            Includes the tracking state of the skeleton, its id within the array 
+            of skeletons (which is currently of maximum size 1),
+            the skeleton's proximity to the camera
+            and an array of its joints (positions and tracking states).
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeSkeleton.state">
+            <summary>
+            The state of tracking the skeleton is in (Initializing/NotTracked/Calibrating/Tracked).
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeSkeleton.skeletonId">
+            <summary>
+            The serial number of the skeleton within the skeleton array (currently the array is of maximum size 1). 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeSkeleton.skeletonProximity">
+            <summary>
+            The proximity of the skeleton to the camera.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeSkeleton.joints">
+            <summary>
+            An array of the skeleton's joints.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.NativeSkeletonFrame">
+            <summary>
+            A structure that holds all information regarding detection of skeleton(s) per specific frame.
+            Contains a header with general information about the frame,
+            the number of skeletons it holds (currently the maximum is 1),
+            and an array of skeleton(s). 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeSkeletonFrame.header">
+            <summary>
+            Frame header, contains information about the frame (type, frame id, timestamp, size) 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeSkeletonFrame.numOfSkeletons">
+            <summary>
+            The number of skeletons detected. Maximum is Constants.MAX_SKELETON_ARRAY_SIZE (Currently set to 1).
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeSkeletonFrame.skeletonDataPtrDummy">
+            <summary>
+            Place holder to match the native struct.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.NativeSkeletonFrame.skeletonData">
+            <summary>
+            Array of skeletons that were detected. Maximum is Constants.MAX_SKELETON_ARRAY_SIZE (Currently set to 1).
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.AutoLock">
+            <summary>
+            Enforces a synchronization domain for the current context and all contexts that share the same instance, allowing multiple threads for reading or exclusive access for writing.
+            </summary>
+            <remarks>
+            This was originally designed to provide light-weight, recursion-free support for the synchronization of static "C style" calls where no context can be established.
+            This uses ReaderWriterLockSlim internally, note for FW-related implied implications on fairness and recursion policy.
+            </remarks>
+            <example>
+            // Use a common lock
+            using (AutoLock autoLock = base.EnterUpgradeableReadLock())
+            {
+                // To conditionally write to a protected resource
+                if (true)
+                {
+                    using (autoLock.UpgradeToWrite())
+                    {
+                        // do some synchronized operation
+                    }
+                }   
+            } 
+            </example>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.AutoLock.#ctor(System.Threading.ReaderWriterLockSlim,Xtr3D.Net.Patterns.AutoLock.AutoLockMode)">
+            <summary>
+            Constructs a new AutoLock instance
+            </summary>
+            <param name="readerWriterLock">The lock used to manage access</param>
+            <param name="initialAutoLockMode">The initial AutoLock state, allowed states are AutoLockMode.Read or above</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.AutoLock.UpgradeToWrite">
+            <summary>
+            Upgrades the current AutoLock to the "Write" state.
+            </summary>
+            <remarks>
+            If the current thread does not hold the lock in UpgradeableRead mode, this will throw an InvalidOperationException.
+            </remarks>
+            <returns>A write lock</returns>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.AutoLock.Dispose">
+            <summary>
+            Dispose of the current AutoLock
+            </summary>        
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.AutoLock.AutoLockMode">
+            <summary>
+            AutoLock state
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Patterns.AutoLock.AutoLockMode.None">
+            <summary>
+            Initial non-locking mode
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Patterns.AutoLock.AutoLockMode.Read">
+            <summary>
+            In this state, one or more threads have entered the lock for read access to the protected resource.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Patterns.AutoLock.AutoLockMode.UpgradeableRead">
+            <summary>
+            In this state, one thread has entered the lock for read access with the option to upgrade to write access
+            (that is, in upgradeable mode), and zero or more threads have entered the lock for read access. 
+            No more than one thread at a time can enter the lock with the option to upgrade; additional threads that try 
+            to enter upgradeable mode, and thus their UtoLock construction, are blocked.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Patterns.AutoLock.AutoLockMode.Write">
+            <summary>
+            In this state, one thread has entered the lock for write access to the protected resource. 
+            That thread has exclusive possession of the lock. 
+            Any other thread that tries to enter the lock for any reason will be treated with a InvalidOperationException.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.EnumExtensionMethods">
+            <summary>
+            Extends Enum with required .NET 4.0 and above functionality
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.EnumExtensionMethods.HasFlag``1(``0,``0)">
+            <summary>        
+            Determines whether one or more bit fields are set in the current instance.
+            </summary>
+            <typeparam name="T">The type of the enum.</typeparam>
+            <param name="val">The inspected instance</param>
+            <param name="flag">A flag value</param>
+            <returns>true if the bit field or bit fields that are set in flag are also set in the current instance; otherwise, false.</returns>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.ContextEventHandler`1">
+            <summary>
+            Thread-safe publisher of events arguments
+            </summary>
+            <typeparam name="T">Event type</typeparam>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ContextEventHandler`1.#ctor(Xtr3D.Net.Patterns.ContextEventHandler{`0}.ContextSynchronizationMethod)">
+            <summary>
+            Constructs a ContextEventHandler instance using the synchronization method specified
+            </summary>
+            <param name="method">The synchronization method by which events will be published, Post by default.</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ContextEventHandler`1.AddHandler(System.EventHandler{`0})">
+            <summary>
+            Adds the specified event subscriber
+            </summary>
+            <param name="originalHandler">The EventHandler to be subscribed</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ContextEventHandler`1.RemoveHandler(System.EventHandler{`0})">
+            <summary>
+            Unsubscribe the specified event subscriber
+            </summary>
+            <param name="originalHandler">The EventHandler to be unsubscribed</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ContextEventHandler`1.Invoke(System.Object,`0)">
+            <summary>
+            Dynamically invokes (late-bound) any EventHandlers
+            </summary>
+            <param name="sender">The event publisher</param>
+            <param name="eventArgs">The arguments to pass to the subscriber</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ContextEventHandler`1.Dispose">
+            <summary>
+            Frees all subscriber references and disables this publisher
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.ContextEventHandler`1.HasHandlers">
+            <summary>
+            Whether this ContextEvent has any subscribers
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.ContextEventHandler`1.ContextSynchronizationMethod">
+            <summary>
+            Possible synchronization method for event publication
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Patterns.ContextEventHandler`1.ContextSynchronizationMethod.Send">
+            <summary>
+            Dispatches a synchronous message to a synchronization context.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Patterns.ContextEventHandler`1.ContextSynchronizationMethod.Post">
+            <summary>
+            Dispatches an asynchronous message to a synchronization context.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.DataPool`2">
+            <summary>
+            A generic, reference-counted, thread-safe data pool.
+            </summary>
+            <typeparam name="K">The pooled element key type</typeparam>
+            <typeparam name="V">The pooled element value type</typeparam>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.DataPool`2.#ctor(System.Int32)">
+            <summary>
+            Initializes a new DataPool instance
+            </summary>
+            <param name="length">The number of pooled elements</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.DataPool`2.CheckOutFreeEntryForUpdate">
+            <summary>
+            Secures a pooled element for modification
+            </summary>
+            <returns>A pooled element if one is available or null otherwise</returns>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.DataPool`2.CheckInEntryForUpdate(Xtr3D.Net.Patterns.DataPool{`0,`1}.Entry)">
+            <summary>
+            Check a modified entry back with the pool so it could be locked
+            </summary>
+            <param name="entry">The modified entry</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.DataPool`2.TryLockEntry(`0,Xtr3D.Net.Patterns.DataPool{`0,`1}.Entry@)">
+            <summary>
+            Attempts to lock an appropriate element so it could not be modified until unlocked.
+            </summary>
+            <param name="key">key</param>
+            <param name="entry">The locked pooled element</param>
+            <returns>true if an appropriate element could be obtained, false otherwise</returns>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.DataPool`2.UnlockEntry(Xtr3D.Net.Patterns.DataPool{`0,`1}.Entry)">
+            <summary>
+            Unlocks the specified pooled element
+            </summary>
+            <param name="entry">The locked element</param>        
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.DataPool`2.Entry">
+            <summary>
+            A base class for pooled elements
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.DataPool`2.Entry.Key">
+            <summary>
+            The pooled element key
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.DataPool`2.Entry.Value">
+            <summary>
+            The pooled element value
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.SingletonBase`1">
+            <summary>
+            Provides a base for creating Singletons. To derive from this, the
+            singleton sub classes must have a private constructor.
+            </summary>    
+            <typeparam name="T">The class type to be defined as a singleton.</typeparam>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.SingletonBase`1.#ctor">
+            <summary>
+            A protected constructor which is accessible only to the sub classes.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.SingletonBase`1.Instance">
+            <summary>
+            Gets the singleton instance of this class.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.SingletonBase`1.SingletonFactory">
+            <summary>
+            The singleton class factory to create the singleton instance.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.CameraAbsentException">
+            <summary>
+            Represents an error originating in the absence of a physical camera or driver.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.CameraAbsentException.#ctor(System.String)">
+            <summary>
+            Constructs a new CameraAbsentException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.CameraBusyException">
+            <summary>
+            Represents an error originating in the unavailability of any of the connected physical cameras.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.CameraBusyException.#ctor(System.String)">
+            <summary>
+            Constructs a new CameraBusyException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.Exceptions.GenericEngineErrorException">
+            <summary>
+            Represents an error of an unspecified kind
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Exceptions.GenericEngineErrorException.#ctor(System.String)">
+            <summary>
+            Constructs a new GenericEngineErrorException
+            </summary>
+            <param name="msg">Additional human readable information to be paid forward to the caller</param>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.GeneratorBase">
+            <summary>
+            Base class for implementing the IGenerator interface.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.IGenerator">
+            <summary>
+            An IStreamer source
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.IGenerator.Initialize(Xtr3D.Net.BaseTypes.PlatformType)">
+            <summary>
+            Initializes the generator instance to run on the specified PlatformType.
+            </summary>
+            <param name="platform">PlatformType on which the application is currently running.</param>
+        </member>
+        <member name="M:Xtr3D.Net.IGenerator.Shutdown">
+            <summary>
+            Shuts-down this generator instance, releasing all resources allocated by it. Expected to be called only once,
+            in the end of the application life.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.IGenerator.Start">
+            <summary>
+            Starts this generator instance's IStreamer-s.
+            Throws recoverable errors: CameraAbsentException,CameraBusyException which should be handled by the application
+            (usually by showing a message to the user to connect/free the camera and then call this method again)
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.IGenerator.Stop">
+            <summary>
+            Stops this generator instance's IStreamer-s, releasing any scares resources allocated by it, e.g. a camera.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.IGenerator.Reset">
+            <summary>
+            Resets this generator instance's state to what it was on the return of the original call to Initialize(PlatformType platform).
+            To resume activity you must call Start() after reseting.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IGenerator.IsInitialized">
+            <summary>
+            Whether or not this generator instance is initialized and returns true if it is, or false otherwise.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.IGenerator.ClientID">
+            <summary>
+            Holds the unique ID assigned to this generator instance
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.BaseTypes.GeneratorBase.POLLING_INTERVAL">
+            <summary>
+            The time in milliseconds between polling. 
+            Used only when StreamingPolicy is set to StreamingPolicy.POLL.
+            Was set by trial and error - the current value is the longest interval in which (almost) no frames are lost.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.BaseTypes.GeneratorBase._state">
+            <summary>
+            The state of the generator.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.GeneratorBase.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.GeneratorBase.Init">
+            <summary>
+            This method is called during the call to Initialize. 
+            The current implementation Calls Service.Init(...). override it if you want to call a different method.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.GeneratorBase.Initialize(Xtr3D.Net.BaseTypes.PlatformType)">
+            <summary>
+            Initializes the generator instance to run on the specified PlatformType.
+            </summary>
+            <param name="platformType">PlatformType on which the application is currently running.</param>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.GeneratorBase.Initialize(Xtr3D.Net.BaseTypes.PlatformType,Xtr3D.Net.ImageInfo)">
+            <summary>
+            Initializes the generator instance to run on the specified PlatformType.
+            </summary>
+            <param name="platformType">PlatformType on which the application is currently running.</param>
+            <param name="imageInfo">the expected output RGB image information</param>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.GeneratorBase.Shutdown">
+            <summary>
+            Shuts-down this generator instance, releasing all resources allocated by it. Expected to be called only once,
+            in the end of the application life.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.GeneratorBase.Reset">
+            <summary>
+            Resets this generator instance's state to what it was on the return of the original call to Initialize(PlatformType platform).
+            To resume activity you must call Start() after resetting.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.GeneratorBase.Start">
+            <summary>
+            Starts this generator instance's IStreamer-s.
+            Throws recoverable errors: CameraAbsentException,CameraBusyException which should be handled by the application
+            (usually by showing a message to the user to connect/free the camera and then call this method again)
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.BaseTypes.GeneratorBase.Stop">
+            <summary>
+            Stops this generator instance's IStreamer-s, releasing any scares resources allocated by it, e.g. a camera.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.GeneratorBase.ClientID">
+            <summary>
+            For internal use only.
+            </summary>
+        </member>
+        <member name="E:Xtr3D.Net.BaseTypes.GeneratorBase.ColorImageFrameReady">
+            <summary>
+            Event that fires when a new color frame is available in the ColorImageStream
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.BaseTypes.GeneratorBase.IsInitialized">
+            <summary>
+            return true if the generator was initialized in the past, or Shutdown was explicitly called
+            </summary>
+        </member>
+        <member name="E:Xtr3D.Net.BaseTypes.GeneratorBase.AllFramesReady">
+            <summary>
+            An event handler that is called when all frames are ready for a particular image. See class AllFrameFrame for more details.
+            </summary>
+        </member>
+        <member name="E:Xtr3D.Net.BaseTypes.GeneratorBase.GeneratorStateChanged">
+            <summary>
+            Handler for generator state change events
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.GeneratorBase.GeneratorState">
+            <summary>
+            An enum for the state of a generator.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.Constants">
+            <summary>Constants</summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.Constants.WARNINGS_MAX_COUNT">
+            <summary>
+            The maximum amount of warnings returned from the manager
+            on calling Client.GetLatestWarnings
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.Constants.MAX_WAIT_MILLIS">
+            <summary>
+            The maximal amount of time to wait for any 
+            event, in milliseconds, before declaring 
+            a timeout has occurred.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.Constants.MAX_SKELETON_ARRAY_SIZE">
+            <summary>
+            The maximal number of skeletons that
+            are returned in the type Skeleton
+            skeletons array.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.EPowerLineFrequency">
+            <summary>
+            Supported power-line or Utility frequencies.
+            </summary>
+            <remarks>Using an inappropriate value usually manifests in running horizontal bands on the ColorImageStream feed and may hinder tracking quality</remarks>
+            <remarks>See XTR3D_SDK_Types.h</remarks>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.EPowerLineFrequency.PLF_OFF">
+            <summary>
+            Unspecified power-line frequency
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.EPowerLineFrequency.PLF_50HZ">
+            <summary>
+            50 Hertz (cycles-per-second), common in Europe and the Middle-East.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.Interop.Types.EPowerLineFrequency.PLF_60HZ">
+            <summary>
+            60 Hertz (cycles-per-second), common in parts of the Far-East and North-America.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Manager.Client">
+            <summary>
+            See XTR3D_SDK_IServiceClient.h
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Client.IsInternal">
+            <summary>
+            Determines whether internal binding is required for dynamically loaded types. 
+            This may be the case with some Mono distributions.
+            </summary>
+            <returns>true if internal binding is required, false otherwise</returns>
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Client.UnRegister(System.Int32)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Client.GetRawImageFrame(System.Int32,Xtr3D.Net.Interop.Types.NativeRawImageFrame@,System.Byte[],System.Int32,System.UInt32@)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+            frame: SRawImageFrame*
+            frameSize: int
+            imageData: byte[]
+            remainingFrames: uint*
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Client.GetSkeletonFrame(System.Int32,Xtr3D.Net.Interop.Types.NativeSkeletonFrame@,System.UInt32,System.UInt32@)">
+             Return Type: XTR3D_ERROR_e
+            clientId: int
+            frame: SSkeletonFrame*
+            frameSize: int
+            remainingFrames: uint*
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Client.GetLatestWarnings(System.Int64[],System.Int32@)">
+             Return Type: XTR3D_ERROR_e
+            warnings: XTR3D_WARNING_e*
+            warningsCount: int*
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.ThreadSafeList`1">
+            <summary>
+            A thread safe list.
+            </summary>
+            <typeparam name="T">The list item type.</typeparam>
+        </member>
+        <member name="F:Xtr3D.Net.Patterns.ThreadSafeList`1.INVALID_INDEX">
+            <summary>
+            The index that will be returned if the IndexOf method is called with an item that is not in the list.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.#ctor(System.Object)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="critSec">The lock object.</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Add a range of items.
+            </summary>
+            <param name="collection">The items to add.</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.IndexOf(`0)">
+            <summary>
+            Retrieve the index of an item in the list.
+            </summary>
+            <param name="item">The item.</param>
+            <returns>If the item exists in the list, its index will be returned. Otherwise, the return value is INVALID_INDEX.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.Insert(System.Int32,`0)">
+            <summary>
+            Insert an item at a specific location in the list.
+            </summary>
+            <param name="index">The index where the item should be put</param>
+            <param name="item">The </param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.RemoveAt(System.Int32)">
+            <summary>
+            Remove an item at a location.
+            </summary>
+            <param name="index">The location in the list.</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.Add(`0)">
+            <summary>
+            A method for adding an item to the list.
+            </summary>
+            <param name="item">The item to be added.</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.Clear">
+            <summary>
+            Clears the list.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.Contains(`0)">
+            <summary>
+            Checks whether the list contains a given item.
+            </summary>
+            <param name="item">The item to find.</param>
+            <returns>As above.</returns>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies the contents of the list to an array.
+            </summary>
+            <param name="array">The array to be copied to.</param>
+            <param name="arrayIndex">The starting index of the array where the contents will be copied.</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.CopyTo(`0[])">
+            <summary>
+            Copies the contents of the list to an array.
+            </summary>
+            <param name="array">The array to be copied to.</param>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.ThreadSafeList`1.Remove(`0)">
+            <summary>
+            Removes an item from the list.
+            </summary>
+            <param name="item">The item to be removed.</param>
+            <returns>Whether the item was removed successfully. Will return false if the item was not in the list prior to calling this method.</returns>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.ThreadSafeList`1.Item(System.Int32)">
+            <summary>
+            Accesses an item of the list.
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.ThreadSafeList`1.Count">
+            <summary>
+            Accesses the number of items in the list.
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.ThreadSafeList`1.IsReadOnly">
+            <summary>
+            Checks whether the list is read-only at the moment.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.Tuple`1">
+            <summary>
+            Represents a 1-tuple, or a singleton.
+            </summary>
+            <typeparam name="T1">The underlying type of the single argument</typeparam>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.Tuple`1.Item1">
+            <summary>
+            Constructs a 1-tuple instance
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.Tuple`2">
+            <summary>
+            Represents a 2-tuple, or pair.
+            </summary>
+            <typeparam name="T1">The underlying type of the first argument</typeparam>
+            <typeparam name="T2">The underlying type of the second argument</typeparam>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.Tuple`2.Item2">
+            <summary>
+            Constructs a 2-tuple instance
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.Tuple`3">
+            <summary>
+            Represents a 3-tuple, or triple.
+            </summary>
+            <typeparam name="T1">The underlying type of the first argument</typeparam>
+            <typeparam name="T2">The underlying type of the second argument</typeparam>
+            <typeparam name="T3">The underlying type of the third argument</typeparam>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.Tuple`3.Item3">
+            <summary>
+            Constructs a 3-tuple instance
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.Tuple`4">
+            <summary>
+            Represents a 4-tuple, or quad.
+            </summary>
+            <typeparam name="T1">The underlying type of the first argument</typeparam>
+            <typeparam name="T2">The underlying type of the second argument</typeparam>
+            <typeparam name="T3">The underlying type of the third argument</typeparam>
+            <typeparam name="T4">The underlying type of the fourth argument</typeparam>
+        </member>
+        <member name="P:Xtr3D.Net.Patterns.Tuple`4.Item4">
+            <summary>
+            Constructs a 4-tuple instance
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Patterns.Tuple">
+            <summary>
+            .NET 3.5 Tuple replacement. Provides static methods for creating Tuple objects.
+            This may be sub-optimal if used in comparisons or other boxing inducing operations.
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.Tuple.Create``2(``0,``1)">
+            <summary>
+            Creates a new 2-tuple, or pair.
+            </summary>
+            <typeparam name="T1">The type of the first component of the tuple.</typeparam>
+            <typeparam name="T2">The type of the second component of the tuple.</typeparam>
+            <param name="item1">The value of the first component of the tuple.</param>
+            <param name="item2">The value of the second component of the tuple.</param>
+            <returns>A 2-tuple whose value is (item1, item2).</returns>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.Tuple.Create``3(``0,``1,``2)">
+            <summary>
+            Creates a new 3-tuple, or triple.
+            </summary>
+            <typeparam name="T1">The type of the first component of the tuple.</typeparam>
+            <typeparam name="T2">The type of the second component of the tuple.</typeparam>
+            <typeparam name="T3">The type of the third component of the tuple.</typeparam>
+            <param name="item1">The value of the first component of the tuple.</param>
+            <param name="item2">The value of the second component of the tuple.</param>
+            <param name="item3">The value of the third component of the tuple.</param>
+            <returns>A 3-tuple whose value is (item1, item2, item3).</returns>
+        </member>
+        <member name="M:Xtr3D.Net.Patterns.Tuple.Create``4(``0,``1,``2,``3)">
+            <summary>
+            Creates a new 4-tuple, or quad.
+            </summary>
+            <typeparam name="T1">The type of the first component of the tuple.</typeparam>
+            <typeparam name="T2">The type of the second component of the tuple.</typeparam>
+            <typeparam name="T3">The type of the third component of the tuple.</typeparam>
+            <typeparam name="T4">The type of the fourth component of the tuple.</typeparam>
+            <param name="item1">The value of the first component of the tuple.</param>
+            <param name="item2">The value of the second component of the tuple.</param>
+            <param name="item3">The value of the third component of the tuple.</param>
+            <param name="item4">The value of the fourth component of the tuple.</param>
+            <returns>A 4-tuple whose value is (item1, item2, item3, item4).</returns>
+        </member>
+        <member name="T:Xtr3D.Net.BaseTypes.PlatformType">
+            <summary>
+            The runtime platform the current application is running on. 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.BaseTypes.PlatformType.IOS">
+            <summary>
+            IPad or IPhones
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.BaseTypes.PlatformType.ANDROID">
+            <summary>
+            Android devices
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.BaseTypes.PlatformType.WINDOWS">
+            <summary>
+            Windows devices including win7,8 etc.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.BaseTypes.PlatformType.WINDOWS_STORE">
+            <summary>
+            Windows devices including win7,8 etc.
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.BaseTypes.PlatformType.MAC">
+            <summary>
+            Mac Devices (OSX)
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Manager.Service">
+            <summary>
+            See XTR3D_SDK_IServiceControl.h
+            </summary>
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Service.Init(Xtr3D.Net.Interop.Types.SImageInfo@,System.Byte[])">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Service.Start">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Service.Stop">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Service.Close">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Service.Reset">
+            Return Type: XTR3D_ERROR_e
+        </member>
+        <member name="M:Xtr3D.Net.Interop.Manager.Service.GetVersion(System.IntPtr,System.Int32)">
+             Return Type: XTR3D_ERROR_e
+            versionBuffer: char*
+            bufferLength: int
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.XTR3D_ERROR_e">
+            <summary>
+            See XTR3D_SDK_Types.h
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Interop.Types.XTR3D_WARNING_e">
+            <summary>
+            See XTR3D_SDK_Types.h
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.ImageStreamWarnings">
+            <summary>
+            Warnings which can be seen on the image-stream
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageStreamWarnings.LowFrameRate">
+            <summary>
+            The image frame rate received from the camera is slow 
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.ImageStreamWarnings.EnvironmentChanged">
+            <summary>
+            There was a big environmental change on the image. Can happen if the camera was moved, or the main light source has changed.
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.Properties">
+            <summary>
+            The set of session properties
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.Properties.Platform">
+            <summary>
+            The host-platform type
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.RuntimeProperties">
+            <summary>
+            The single runtime properties instance
+            </summary>
+        </member>
+        <member name="P:Xtr3D.Net.RuntimeProperties.StreamingPolicy">
+            <summary>
+            The streaming policy used during the current session
+            </summary>
+        </member>
+        <member name="T:Xtr3D.Net.StreamingPolicy">
+            <summary>
+            Supported per-session streaming policies
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.StreamingPolicy.PUSH">
+            <summary>
+            Use OS events to push up data from the native layer whenever its available
+            </summary>
+        </member>
+        <member name="F:Xtr3D.Net.StreamingPolicy.POLL">
+            <summary>
+            Poll data from the native layer where the host runtime does not support native to managed callback
+            </summary>
+        </member>
+    </members>
+</doc>
