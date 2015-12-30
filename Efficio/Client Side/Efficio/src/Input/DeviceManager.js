@@ -52,8 +52,13 @@
         Devices.RegisteredDevices[name] = device;
 
         // DEV: Check is for development purposes. Remove for prod
-        if (typeof isConnected === undefined) {
+        if (typeof isConnected === 'undefined' ) {
             throw new Exception('IsConnected method is a required argument.');
+        }
+
+        // DEV: Check is for development purposes. Remove for prod
+        if (typeof isConnected !== 'function') {
+            throw new Exception('IsConnected method is required to be a function.');
         }
 
         // DEV: Check is for development purposes. Remove for prod

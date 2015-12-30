@@ -4,10 +4,20 @@
     var trackingType;
     var useNativeGestures;
 
-    function Initialize(EfficioConfiguration) {
+    function Configure(RealSenseConfiguration) {
+        RealSenseConfiguration ={
+            SenseType: RealSenseConfiguration.SenseType || 'Hands',
+            Gestures: RealSenseConfiguration.Gestures || false
+        }
+
+        return RealSenseConfiguration;
+    }
+
+    function Initialize() {
         // Tells RealSense what to look for
-        trackingType = EfficioConfiguration.Devices.RealSense.SenseType || 'Hands';
-        useNativeGestures = EfficioConfiguration.Devices.RealSense.Gestures || false;
+        RealSenseConfiguration = Configure(Efficio.Devices.ReasSense);
+        trackingType = RealSenseConfiguration.SenseType;
+        useNativeGestures = RealSenseConfiguration.Gestures;
 
         return {
             TrackingType: trackingType,

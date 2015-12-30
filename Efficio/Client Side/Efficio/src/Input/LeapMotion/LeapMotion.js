@@ -35,7 +35,7 @@
             controller.on("gesture", function (gesture) {
                 if (gesture.state == "stop") {
                     bus.publish({
-                        channel: 'Input.Raw',
+                        channel: 'Input.Raw.Human',
                         topic: 'Gesture',
                         source: source,
                         data: {

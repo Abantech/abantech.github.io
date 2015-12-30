@@ -30,7 +30,7 @@
         }
 
         bus.publish({
-            channel: 'Input.Raw',
+            channel: 'Input.Raw.Human',
             topic: 'RealSense',
             source: source,
             data: {

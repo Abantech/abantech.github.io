@@ -15,7 +15,7 @@
     }
 
     return {
-        Initialize: function (KinectConfiguration) {
+        Initialize: function () {
 
             // Retrieve Joint Helper
             require(['Input/Microsoft Kinect/JointHelper'], function (jh) {
@@ -23,6 +23,7 @@
             });
 
             // Load Configuration
+            KinectConfiguration = Efficio.Devce.Kinect;
             KinectConfiguration = configure(KinectConfiguration);
 
             // Create Controller
@@ -97,7 +98,7 @@
 
                 bus.publish
                 ({
-                    channel: 'Input.Raw',
+                    channel: 'Input.Raw.Human',
                     topic: device,
                     source: source,
                     data:

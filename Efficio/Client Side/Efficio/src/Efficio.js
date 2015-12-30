@@ -1,5 +1,5 @@
 ﻿define([
-    'Human Input Recognition and Processing/HumanInputRecognitionAndProcessing',
+    'Input Recognition and Processing/InputRecognitionAndProcessing',
     'Asset Management and Inventory/AssetManager',
     'Constraints Engine/ConstraintsEngine',
     'Command Issuance and Control/CommandIssuanceAndControl',
@@ -89,7 +89,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
 
             Efficio.Metrics = metrics.Initialize();
 
-            Efficio.HumanInputAndGestureRecognition = hirp.Initialize(EfficioConfiguration);
+            Efficio.InputAndGestureRecognition = hirp.Initialize(EfficioConfiguration);
             ami.Initialize();
             constraintsEngine.Initialize();
             comm.Initialize();
@@ -107,7 +107,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
             // JAMES -- I had to change this to get it to work
             if (EfficioConfiguration.Devices.Kinect) {
                 require(['Input/Microsoft Kinect/Kinect'], function (kinect) {
-                    kinect.Initialize(EfficioConfiguration);
+                    kinect.Initialize();
                     kinect.Start();
                 });
             }
@@ -121,14 +121,14 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
 
             if (EfficioConfiguration.Devices.XR3D) {
                 require(['Input/XR3D/XR3D'], function (XR3D) {
-                    XR3D.Initialize(EfficioConfiguration.Devices.XR3D);
+                    XR3D.Initialize();
                     XR3D.Start();
                 });
             }
 
             if (EfficioConfiguration.Devices.RealSense) {
                 require(['Input/Intel/RealSense/RealSense'], function (realsense) {
-                    realsense.Initialize(EfficioConfiguration);
+                    realsense.Initialize();
                     realsense.Start();
                 });
             }
@@ -143,7 +143,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
 
             if (EfficioConfiguration.Devices.Orientation && window) {
                 // Accelerometer
-                require(['Input/Accelerometer/Browser'], function (browser) {
+                require(['Input/Accelerometer/Browser2'], function (browser) {
                     browser.Initialize(EfficioConfiguration);
                     browser.Start();
                 })

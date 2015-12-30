@@ -31,34 +31,39 @@ namespace DeviceBroadcaster
             }
         }
 
-        public Server(Protocol protocol, string address, int port)
+        public Server(Protocol protocol, string address, int port, string endpoint)
         {
-            this.server = new WebSocketServer(GetProtocolAsString(protocol) + "://" + address + ":" + port);
+            this.server = new WebSocketServer(GetProtocolAsString(protocol) + "://" + address + ":" + port + "/" + endpoint);
         }
 
-        public void Start(Action<string> onMessage)
+        public void Start(Action<IWebSocketConnection> config)
         {
-            server.Start(socket =>
+            server.Start(config);
+        }
+
+        public void BroadcastMessage(string message, IEnumerable<IWebSocketConnection> destinations = null)
+        {
+            if (destinations == null)
             {
-                socket.OnOpen = () =>
-                {
-                    this.Clients.Add(socket);
-                };
+                destinations = this.Clients;
+            }
 
-                socket.OnClose = () =>
-                {
-                    this.Clients.Remove(socket);
-                };
-
-                socket.OnMessage = onMessage;
-            });
-        }
-
-        public void BroadcastMessage(string message)
-        {
-            foreach (IWebSocketConnection socket in this.Clients)
+            foreach (IWebSocketConnection socket in destinations)
             {
                 socket.Send(message);
+            }
+        }
+
+        internal void BroadcastMessage(byte[] binary, IEnumerable<IWebSocketConnection> destinations = null)
+        {
+            if (destinations == null)
+            {
+                destinations = this.Clients;
+            }
+
+            foreach (IWebSocketConnection socket in destinations)
+            {
+                socket.Send(binary);
             }
         }
 
@@ -71,5 +76,7 @@ namespace DeviceBroadcaster
 
             server.Dispose();
         }
+
+
     }
 }

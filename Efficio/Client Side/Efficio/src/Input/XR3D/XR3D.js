@@ -12,7 +12,8 @@
         return XR3DConfiguration;
     }
 
-    function Initialize(XR3DConfiguration) {
+    function Initialize() {
+        var XR3DConfiguration = Efficio.Devce.XR3D;
         // Load Configuration
         XR3DConfiguration = configure(XR3DConfiguration);
 
@@ -50,7 +51,7 @@
 
             bus.publish
                ({
-                   channel: 'Input.Raw',
+                   channel: 'Input.Raw.Human',
                    topic: device,
                    source: source,
                    data:

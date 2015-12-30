@@ -40,6 +40,11 @@
       <HintPath>..\packages\Fleck.0.13.0.57\lib\net40\Fleck.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Kinect.2.0.1410.19000\lib\net45\Microsoft.Kinect.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
@@ -53,6 +58,7 @@
       <HintPath>..\packages\websocket-sharp-with-proxy-support.1.9.1\lib\net35-client\websocket-sharp-with-proxy-support.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WindowsBase" />
     <Reference Include="Xtr3D.Net">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Extreme Reality\ExtremeMotionSDK\Win32-Full\bin\Release\Xtr3D.Net.dll</HintPath>
     </Reference>
@@ -61,13 +67,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Devices\Audio\StreamingAudio.cs" />
+    <Compile Include="Devices\Microsoft\Kinect.cs" />
     <Compile Include="Devices\Microsoft\KinectBroadcaster.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Devices\Leap Motion\LeapMotionBroadcaster.cs" />
     <Compile Include="Devices\XR3D\XR3DBroadcaster.cs" />
     <Compile Include="IBroadcaster.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -80,6 +87,9 @@
   </Target>  -->
   <ItemGroup>
     <CopyItems Include="ExternalDependencies\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Target Name="AfterBuild">
     <Message Text="@(CopyItems)" Importance="high" />
