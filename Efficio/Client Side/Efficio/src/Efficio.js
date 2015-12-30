@@ -1,5 +1,5 @@
 ﻿define([
-    'Human Input Recognition and Processing/HumanInputRecognitionAndProcessing',
+    'Input Recognition and Processing/InputRecognitionAndProcessing',
     'Asset Management and Inventory/AssetManager',
     'Constraints Engine/ConstraintsEngine',
     'Command Issuance and Control/CommandIssuanceAndControl',
@@ -89,7 +89,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
 
             Efficio.Metrics = metrics.Initialize();
 
-            Efficio.HumanInputAndGestureRecognition = hirp.Initialize(EfficioConfiguration);
+            Efficio.InputAndGestureRecognition = hirp.Initialize(EfficioConfiguration);
             ami.Initialize();
             constraintsEngine.Initialize();
             comm.Initialize();
@@ -143,7 +143,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
 
             if (EfficioConfiguration.Devices.Orientation && window) {
                 // Accelerometer
-                require(['Input/Accelerometer/Browser'], function (browser) {
+                require(['Input/Accelerometer/Browser2'], function (browser) {
                     browser.Initialize(EfficioConfiguration);
                     browser.Start();
                 })

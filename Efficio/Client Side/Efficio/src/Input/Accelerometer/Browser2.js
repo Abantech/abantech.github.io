@@ -8,7 +8,7 @@
         window.addEventListener("deviceorientation", function (event) {
             if (started) {
                 bus.publish({
-                    channel: 'Input.Raw',
+                    channel: 'Input.Raw.Device',
                     topic: 'Device Orientation',
                     source: source,
                     data: {
@@ -22,7 +22,7 @@
         window.addEventListener("orientationchange", function () {
             if (started) {
                 bus.publish({
-                    channel: 'Input.Raw',
+                    channel: 'Input.Raw.Device',
                     topic: 'Orientation Change',
                     source: source,
                     data: {
@@ -36,7 +36,13 @@
 
     function Start() {
         started = true;
-        deviceManager.Add(source, { started: true });
+        deviceManager.Add(source, {
+            Name: source,
+            Manufacturer: "Unknown"
+        },
+        function () {
+            return true;
+        });
     }
 
     return {

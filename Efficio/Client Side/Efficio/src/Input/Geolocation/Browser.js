@@ -13,7 +13,7 @@
 
     function publishPosition(location) {
         bus.publish({
-            channel: 'Input.Raw',
+            channel: 'Input.Raw.Device',
             topic: 'Location',
             source: source,
             data: {

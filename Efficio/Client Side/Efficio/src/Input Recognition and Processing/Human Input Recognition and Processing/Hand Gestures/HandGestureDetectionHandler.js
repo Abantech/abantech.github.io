@@ -59,12 +59,12 @@
                     });
 
                     // Send data to the one hand position gesture detection libraries
-                    require(['Human Input Recognition and Processing/Hand Gestures/One Hand Gestures/OneHandPositionDetection'], function (ohgd) {
+                    require(['Input Recognition and Processing/Human Input Recognition and Processing/Hand Gestures/One Hand Gestures/OneHandPositionDetection'], function (ohgd) {
                         handGestureDetectionLibrary.OneHandPositionDetector = ohgd.ProcessInput(data, hand, ActiveGesturesDictionary);
                     });
 
                     // Send data to the one hand gesture detection library
-                    require(['Human Input Recognition and Processing/Hand Gestures/One Hand Gestures/OneHandGestureDetection'], function (ohgd) {
+                    require(['Input Recognition and Processing/Human Input Recognition and Processing/Hand Gestures/One Hand Gestures/OneHandGestureDetection'], function (ohgd) {
                         handGestureDetectionLibrary.OneHandGestureDetector = ohgd.ProcessInput(data, hand, ActiveGesturesDictionary);
                     });
                 });
@@ -122,7 +122,7 @@
                         });
 
                         // Send data to the two hand gesture detection library
-                        require(['Human Input Recognition and Processing/Hand Gestures/Two Hand Gestures/TwoHandPositionDetection'], function (thgd) {
+                        require(['Input Recognition and Processing/Human Input Recognition and Processing/Hand Gestures/Two Hand Gestures/TwoHandPositionDetection'], function (thgd) {
                             handGestureDetectionLibrary.TwoHandPositionDetector = thgd.ProcessInput(data, ActiveGesturesDictionary);
                         });
                     }

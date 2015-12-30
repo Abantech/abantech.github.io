@@ -50,12 +50,23 @@ namespace DeviceBroadcaster.Devices.Leap_Motion
 
         private void StartServer()
         {
-            Action<string> onMessage = message =>
+            server.Start(socket =>
             {
-                client.Send(message);
-            };
+                socket.OnOpen = () =>
+                {
+                    server.Clients.Add(socket);
+                };
 
-            server.Start(onMessage);
+                socket.OnClose = () =>
+                {
+                    server.Clients.Remove(socket);
+                };
+
+                socket.OnMessage = message =>
+                {
+                    client.Send(message);
+                };
+            });
         }
 
         private void StartClient()

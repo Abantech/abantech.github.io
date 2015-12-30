@@ -61,12 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Devices\Audio\StreamingAudio.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Devices\Leap Motion\LeapMotionBroadcaster.cs" />
     <Compile Include="Devices\XR3D\XR3DBroadcaster.cs" />
     <Compile Include="IBroadcaster.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -79,6 +79,9 @@
   </Target>  -->
   <ItemGroup>
     <CopyItems Include="ExternalDependencies\*.*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Target Name="AfterBuild">
     <Message Text="@(CopyItems)" Importance="high" />

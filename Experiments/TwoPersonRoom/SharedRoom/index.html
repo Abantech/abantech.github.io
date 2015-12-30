@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="js/ActionToFunctionMapping.js"></script>
+    <script src="js/EfficioConfiguration.js"></script>
+    <script src="js/RequireConfiguration.js"></script>
+    <script src="http://requirejs.org/docs/release/2.1.20/minified/require.js"></script>
+    <script src="js/lib/three.min.js"></script>
+    <script src="js/lib/MTLLoader.js"></script>
+    <script src="js/lib/OBJMTLLoader.js"></script>
+    <script src="js/Scene.js"></script>
+    <script src="js/DeviceOrientationControls.js"></script>
+</head>
+<body>
+    <script>
+        var websocket, firstMessage = true, partnerMesh, partnerMeshLoading = false;
+        var scene, camera, renderer, directionalLight, controls;
+
+        require(['js/Efficio.min'], function (efficio) {
+            init();
+
+
+        });
+
+        function init() {
+
+
+            if (typeof Efficio !== 'undefined') {
+                websocket = CreateWebSocket();
+                CreateScene();
+            }
+            else {
+                window.setTimeout(init, 200);
+            }
+        }
+
+        function CreateWebSocket() {
+            var socket = new WebSocket("ws://173.73.143.56:3002");
+
+            socket.onmessage = function (event) {
+                var message = JSON.parse(event.data);
+
+                if (firstMessage) {
+                    AddCamera(message.FirstInRoom);
+                    socket.send(JSON.stringify({
+                        Topic: 'New Joiner',
+                        Position: camera.position
+                    }))
+                    firstMessage = false;
+                }
+
+                if (message.Topic === 'New Joiner') {
+                    CreateTeamMember(message.Position);
+
+                    socket.send(JSON.stringify({
+                        Topic: 'New Joiner Response',
+                        Position: camera.position
+                    }))
+                }
+
+                if (message.Topic === 'New Joiner Response') {
+                    CreateTeamMember(message.Position);
+                }
+
+                if (message.Topic === 'Partner Updated') {
+                    var qold = message.Quarternion;
+                    var q = new THREE.Quaternion(qold._x, qold._y, qold._z, qold._w);
+                    UpdatePartnerMesh(message.Position, q)
+                }
+
+
+                if (message.Topic === 'Partner Disconnected') {
+                    RemovePartnerMesh();
+                }
+
+                if (message.Topic === 'Location') {
+                    //if (partnerMesh) {
+                    //    oldLat = partnerMesh.userData.Latitude || message.Location.Latitude;
+                    //    oldLong = partnerMesh.userData.Longitude || message.Location.Longitude;
+
+                    //    partnerMesh.userData.Latitude = message.Location.Latitude;
+                    //    partnerMesh.userData.Longitude = message.Location.Longitude;
+
+                    //    var latDif = (oldLat - message.Location.Latitude) * 10 * 10 * 10 * 10 * 10 * 10 * 10;
+                    //    var longDif = (oldLong - message.Location.Longitude) * 10 * 10 * 10 * 10 * 10 * 10 * 10;
+
+                    //    if (Math.abs(latDif) + Math.abs(longDif) > 1) {
+                    //        partnerMesh.position.setX(partnerMesh.position.x - latDif * 2);
+                    //        partnerMesh.position.setZ(partnerMesh.position.z - longDif * 2);
+                    //    }
+                    //}
+                }
+            }
+
+            return socket;
+        }
+
+        function CreateTeamMember(position) {
+            if ((typeof partnerMesh === 'undefined' || partnerMesh === null) && !partnerMeshLoading) {
+                partnerMeshLoading = true;
+                var jsonLoader = new THREE.JSONLoader();
+                //jsonLoader.load("models/android.js", function (geometry, materials) {
+                //    var material = new THREE.MeshFaceMaterial(materials);
+                //    partnerMesh = new THREE.Mesh(geometry, material);
+                //    partnerMesh.position.copy(position);
+                //    partnerMesh.position.setY(position.y - 50);
+                //    partnerMesh.scale.set(10, 10, 10);
+                //    scene.add(partnerMesh);
+                //    partnerMeshLoading = false;
+                //    partnerMesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+                //});
+                var manager = new THREE.LoadingManager();
+                var loader = new THREE.OBJMTLLoader();
+                loader.load('models/iron-man.obj', 'models/iron-man.mtl', function (obj) {
+                    partnerMesh = obj;
+                    partnerMesh.position.copy(position);
+                    partnerMesh.position.setY(position.y);
+                    partnerMesh.scale.set(10, 10, 10);
+                    scene.add(partnerMesh);
+                    partnerMeshLoading = false;
+                    partnerMesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+                });
+            }
+        }
+
+        function UpdatePartnerMesh(position, quaternion) {
+            if (typeof partnerMesh === 'undefined' || partnerMesh === null) {
+                CreateTeamMember(position);
+            }
+            else {
+                partnerMesh.rotation.setFromQuaternion(quaternion);
+                partnerMesh.rotateOnAxis(new THREE.Vector3(0, 1, 0), Math.PI);
+            }
+        }
+
+        function RemovePartnerMesh(position, quaternion) {
+            if (partnerMesh) {
+                scene.remove(partnerMesh);
+                partnerMesh = null
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -97,7 +97,7 @@
 
                 bus.publish
                 ({
-                    channel: 'Input.Raw',
+                    channel: 'Input.Raw.Human',
                     topic: device,
                     source: source,
                     data:
