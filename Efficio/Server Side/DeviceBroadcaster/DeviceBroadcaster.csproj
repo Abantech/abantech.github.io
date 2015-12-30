@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Devices\Microsoft\KinectBroadcaster.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Devices\Leap Motion\LeapMotionBroadcaster.cs" />
     <Compile Include="Devices\XR3D\XR3DBroadcaster.cs" />
