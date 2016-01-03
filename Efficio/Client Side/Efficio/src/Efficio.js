@@ -23,7 +23,9 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
     }
 
     function Ready() {
-        if (CheckReadyConditions() && !readyFired) {
+        var ready = false;
+        ready = CheckReadyConditions();
+        if (ready && !readyFired) {
             readyFired = true;
 
             if (typeof window !== 'undefined' && window != null) {
@@ -42,10 +44,10 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
         }
 
         // Check if DeviceManager Ready
-        ready = ready && Efficio.Configuration.Devices !== null && Efficio.Configuration.Devices.Ready();
+        ready = ready && (Efficio.DeviceManager !== null) && (Efficio.DeviceManager.Ready());
 
         // Check if Metrics Ready
-        ready = ready && Efficio.Metrics !== null && Efficio.Metrics.Ready();
+        ready = ready && (Efficio.Metrics !== null) && (Efficio.Metrics.Ready());
 
         return ready
     }
@@ -93,7 +95,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
             ami.Initialize();
             constraintsEngine.Initialize();
             comm.Initialize();
-            internalScene.Initialize();
+            Efficio.InternalScene = internalScene.Initialize();
             sysNotificationListener.Initialize();
             Efficio.DeviceManager = deviceManager.Initialize();
 

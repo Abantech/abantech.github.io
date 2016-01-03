@@ -1,5 +1,4 @@
 ﻿define(['postal'], function (bus) {
-    var Efficio;
     var Devices = {};
 
     function ConnectedDevices() {
@@ -31,17 +30,21 @@
     function Ready() {
         var deviceConfig = Efficio.Configuration.Devices;
 
-        if (deviceConfig.Count === null) {
+        if (typeof deviceConfig !== 'undefined') {
             var count = 0;
 
             for (var prop in deviceConfig) {
-                count++;
+                if (prop !== 'Count') {
+                    if (deviceConfig[prop]) {
+                        count++;
+                    }
+                }
             }
 
             deviceConfig.Count = count;
         }
 
-        return deviceConfig === Devices.RegisteredDevices.Count;
+        return deviceConfig.Count === Devices.RegisteredDevices.Count;
     }
 
     function Add(name, device, isConnected) {

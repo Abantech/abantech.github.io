@@ -3,6 +3,7 @@
         Initialize: function () {
             var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
             var ARGUMENT_NAMES = /([^\s,]+)/g;
+            var a2fm = Efficio.Configuration.ActionToFunctionMapping || {};
 
             function getParamNames(func) {
                 var fnStr = func.toString().replace(STRIP_COMMENTS, '');
@@ -12,7 +13,7 @@
                 return result;
             }
 
-            ActionToFunctionMapping.ActionMappings.forEach(function (mapping) {
+            a2fm.ActionMappings.forEach(function (mapping) {
                 bus.subscribe({
                     channel: mapping.Source,
                     topic: mapping.Topic,
@@ -20,7 +21,7 @@
                         var func = mapping.Action;
 
                         if (typeof func != 'function') {
-                            func = ActionToFunctionMapping.Bridge[mapping.Action];
+                            func = a2fm.Bridge[mapping.Action];
                         }
 
                         // Get method parameters
