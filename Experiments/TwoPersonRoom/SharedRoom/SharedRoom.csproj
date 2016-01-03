@@ -16,7 +16,7 @@
     <RootNamespace>SharedRoom</RootNamespace>
     <AssemblyName>SharedRoom</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -85,7 +85,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9294</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/SharedRoom</IISUrl>
+          <IISUrl>http://localhost:9294/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,14 +1,13 @@
-﻿using Fleck;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.Kinect;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebSocketSharp;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System;
 
-namespace DeviceBroadcaster.Devices.Audio
+namespace DeviceBroadcaster.Devices.Microsoft
 {
-    class StreamingAudio
+    class KinectBroadcaster : IBroadcaster
     {
         private string GetProtocolAsString(Protocol p) => p == Protocol.ws ? "ws" : "wss";
 
@@ -19,15 +18,34 @@ namespace DeviceBroadcaster.Devices.Audio
         public string HostAddress { get; set; } = "127.0.0.1";
         public int HostPort { get; set; } = 3002;
 
+        // Configuration
+        public bool BroadcastCameraData { get; set; } = false;
+
         public void StartBroadcast()
         {
             CreateSever();
             StartServer();
+
+            var kinect = new Kinect();
+            kinect.DataReceived += this.BroadcastKinectData;
+        }
+
+        private void BroadcastKinectData(object sender, DataReceivedEventArgs e)
+        {
+            if (e.BodyData != null)
+            {
+                server.BroadcastMessage(e.BodyData);
+            }
+
+            if (this.BroadcastCameraData && e.Data != null)
+            {
+                server.BroadcastMessage(e.Data);
+            }
         }
 
         private void CreateSever()
         {
-            server = new Server(this.HostProtocol, this.HostAddress, this.HostPort);
+            server = new Server(this.HostProtocol, this.HostAddress, this.HostPort, "kinect");
         }
 
         private void StartServer()
@@ -46,12 +64,12 @@ namespace DeviceBroadcaster.Devices.Audio
 
                 socket.OnMessage = message =>
                 {
-                    server.BroadcastMessage(message, server.Clients.Where(x => !x.ConnectionInfo.Id.Equals(socket.ConnectionInfo.Id)));
+                    //server.BroadcastMessage(message, server.Clients.Where(x => !x.ConnectionInfo.Id.Equals(socket.ConnectionInfo.Id)));
                 };
 
                 socket.OnBinary = binary =>
                 {
-                    server.BroadcastMessage(binary, server.Clients.Where(x => !x.ConnectionInfo.Id.Equals(socket.ConnectionInfo.Id)));
+                    //server.BroadcastMessage(binary, server.Clients.Where(x => !x.ConnectionInfo.Id.Equals(socket.ConnectionInfo.Id)));
                 };
             });
         }

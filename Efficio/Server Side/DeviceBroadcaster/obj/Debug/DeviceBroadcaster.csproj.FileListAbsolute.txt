@@ -28,3 +28,5 @@ C:\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Fleck.dl
 C:\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\websocket-sharp-with-proxy-support.dll
 C:\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Xtr3D.Net.xml
 C:\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Xtr3D.Net.ExtremeMotion.xml
+C:\Development\Abantech\abantech.github.io\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Microsoft.Kinect.dll
+C:\Development\Abantech\abantech.github.io\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Microsoft.Kinect.xml

@@ -35,7 +35,7 @@ namespace DeviceBroadcaster.Devices.Leap_Motion
 
         private void CreateSever()
         {
-            server = new Server(this.HostProtocol, this.HostAddress, this.HostPort);
+            server = new Server(this.HostProtocol, this.HostAddress, this.HostPort, "leap");
         }
 
         private void CreateClient()

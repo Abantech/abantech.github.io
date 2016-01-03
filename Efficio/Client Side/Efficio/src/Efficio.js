@@ -109,7 +109,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
             // JAMES -- I had to change this to get it to work
             if (EfficioConfiguration.Devices.Kinect) {
                 require(['Input/Microsoft Kinect/Kinect'], function (kinect) {
-                    kinect.Initialize(EfficioConfiguration);
+                    kinect.Initialize();
                     kinect.Start();
                 });
             }
@@ -123,14 +123,14 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
 
             if (EfficioConfiguration.Devices.XR3D) {
                 require(['Input/XR3D/XR3D'], function (XR3D) {
-                    XR3D.Initialize(EfficioConfiguration.Devices.XR3D);
+                    XR3D.Initialize();
                     XR3D.Start();
                 });
             }
 
             if (EfficioConfiguration.Devices.RealSense) {
                 require(['Input/Intel/RealSense/RealSense'], function (realsense) {
-                    realsense.Initialize(EfficioConfiguration);
+                    realsense.Initialize();
                     realsense.Start();
                 });
             }

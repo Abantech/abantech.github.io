@@ -31,9 +31,9 @@ namespace DeviceBroadcaster
             }
         }
 
-        public Server(Protocol protocol, string address, int port)
+        public Server(Protocol protocol, string address, int port, string endpoint)
         {
-            this.server = new WebSocketServer(GetProtocolAsString(protocol) + "://" + address + ":" + port);
+            this.server = new WebSocketServer(GetProtocolAsString(protocol) + "://" + address + ":" + port + "/" + endpoint);
         }
 
         public void Start(Action<IWebSocketConnection> config)
