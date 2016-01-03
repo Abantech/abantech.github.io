@@ -3,9 +3,9 @@
 
     return {
         Initialize: function () {
-        
-        }, 
-    
-        Scene: scene
+            return {
+                Scene: scene
+            }
+        }
     }
 });

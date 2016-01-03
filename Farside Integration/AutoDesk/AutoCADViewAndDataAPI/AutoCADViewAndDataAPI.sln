@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCADViewAndDataAPI", "AutoCADViewAndDataAPI\AutoCADViewAndDataAPI.csproj", "{35988643-C07C-4659-8E74-45324854DD93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoDeskAuthNService", "..\AutoDeskAuthNService\AutoDeskAuthNService.csproj", "{FD38EA36-8E1F-4E62-931E-2307F7DC157E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35988643-C07C-4659-8E74-45324854DD93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35988643-C07C-4659-8E74-45324854DD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35988643-C07C-4659-8E74-45324854DD93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35988643-C07C-4659-8E74-45324854DD93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD38EA36-8E1F-4E62-931E-2307F7DC157E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD38EA36-8E1F-4E62-931E-2307F7DC157E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD38EA36-8E1F-4E62-931E-2307F7DC157E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD38EA36-8E1F-4E62-931E-2307F7DC157E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

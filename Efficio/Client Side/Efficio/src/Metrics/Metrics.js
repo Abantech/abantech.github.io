@@ -2,10 +2,11 @@
     var startTime;
     var framesSinceStart = 0;
     var Metrics = {};
+    var myReq;
 
     function incrementFrames() {
         framesSinceStart++;
-        requestAnimationFrame(incrementFrames);
+        myReq = requestAnimationFrame(incrementFrames);
     }
 
     function AverageFPS() {
@@ -17,7 +18,7 @@
     }
 
     function Ready() {
-        // TODO Check if requestAnimationFrame contains function
+        return myReq != null;
     }
 
     function Initialize() {
