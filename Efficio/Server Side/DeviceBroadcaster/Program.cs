@@ -1,12 +1,5 @@
-﻿using DeviceBroadcaster.Devices.Audio;
-using DeviceBroadcaster.Devices.Leap_Motion;
-using DeviceBroadcaster.Devices.Microsoft;
-using DeviceBroadcaster.Devices.XR3D;
+﻿using DeviceBroadcaster.Devices.Microsoft;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApplication1
 {

@@ -67,7 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Devices\Audio\StreamingAudio.cs" />
     <Compile Include="Devices\Microsoft\Kinect.cs" />
     <Compile Include="Devices\Microsoft\KinectBroadcaster.cs" />
     <Compile Include="Server.cs" />
@@ -89,6 +88,7 @@
     <CopyItems Include="ExternalDependencies\*.*" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Devices\Audio\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <Target Name="AfterBuild">
