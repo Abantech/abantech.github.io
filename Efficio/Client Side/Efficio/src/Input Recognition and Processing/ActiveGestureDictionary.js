@@ -145,13 +145,14 @@
         if (dictionaries) {
             var lastEntry;
             var dictLength = dictionaries.length;
+            toDelete = toDelete[trackingType];
 
             for (var i = 0; i < dictLength; i++) {
                 if (!toDelete[dictionaries[i]]) {
                     return;
                 }
 
-                if (!i === dictLength - 1) {
+                if (!(i === dictLength - 1)) {
                     toDelete = toDelete[dictionaries[i]];
                 }
                 else {

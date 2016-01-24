@@ -28,7 +28,7 @@
             if (window.navigator) {
                 if (navigator.geolocation) {
                     enabled = true;
-                    pollTime = EfficioConfiguration.Devices.Location.Polling * 100 || 3000;
+                    pollTime = EfficioConfiguration.Devices.Location.PollingInterval * 1000 || 3000;
 
                     var device = {
                         Name: 'Location',

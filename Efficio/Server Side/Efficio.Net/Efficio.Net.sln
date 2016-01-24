@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efficio.NetTest", "Efficio.NetTest\Efficio.NetTest.csproj", "{2F2CEA8D-C786-4B2B-A6A5-A1B419389EE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efficio.Net", "Efficio.Net\Efficio.Net.csproj", "{4A7E4431-F802-477E-BA8D-731FD168FDA6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F2CEA8D-C786-4B2B-A6A5-A1B419389EE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F2CEA8D-C786-4B2B-A6A5-A1B419389EE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F2CEA8D-C786-4B2B-A6A5-A1B419389EE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F2CEA8D-C786-4B2B-A6A5-A1B419389EE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A7E4431-F802-477E-BA8D-731FD168FDA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A7E4431-F802-477E-BA8D-731FD168FDA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A7E4431-F802-477E-BA8D-731FD168FDA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A7E4431-F802-477E-BA8D-731FD168FDA6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

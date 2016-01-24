@@ -4,8 +4,9 @@
     var channel = 'Input.Processed.Efficio';
     var trackingType = "Hands";
     var handGestureDetectionLibrary = { Name: name };
+    var ActiveGesturesDictionary = Efficio.InputAndGestureRecognition.ActiveGesturesDictionary;
 
-    function ProcessInput(data, ActiveGesturesDictionary) {
+    function ProcessInput(data) {
         // Check if there is any input and if the input contains hands
         if (data.Hands) {
 
@@ -60,22 +61,23 @@
 
                     // Send data to the one hand position gesture detection libraries
                     require(['Input Recognition and Processing/Human Input Recognition and Processing/Hand Gestures/One Hand Gestures/OneHandPositionDetection'], function (ohgd) {
-                        handGestureDetectionLibrary.OneHandPositionDetector = ohgd.ProcessInput(data, hand, ActiveGesturesDictionary);
+                        handGestureDetectionLibrary.OneHandPositionDetector = ohgd.ProcessInput(data, hand);
                     });
 
                     // Send data to the one hand gesture detection library
                     require(['Input Recognition and Processing/Human Input Recognition and Processing/Hand Gestures/One Hand Gestures/OneHandGestureDetection'], function (ohgd) {
-                        handGestureDetectionLibrary.OneHandGestureDetector = ohgd.ProcessInput(data, hand, ActiveGesturesDictionary);
+                        handGestureDetectionLibrary.OneHandGestureDetector = ohgd.ProcessInput(data, hand);
                     });
                 });
             }
 
             // Check if one hand is present
             (function OneHandDetected() {
+                var gestureName = 'OneHandDetected';
+
                 if (hands.length === 1) {
                     var hand = hands[0];
                     var side = hand.GetSide();
-                    var gestureName = 'OneHandDetected'
                     var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName)
 
                     var oppositeHand = side === 'Right' ? 'Left' : 'Right'
@@ -107,8 +109,9 @@
             // Check if any hand present
             if (hands.length == 2) {
                 (function TwoHandsDetected() {
+                    var gestureName = 'TwoHandDetected'
+
                     if (hands.length === 2) {
-                        var gestureName = 'TwoHandDetected'
                         var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName)
 
                         // Send Message saying that two hands were detected
@@ -123,11 +126,11 @@
 
                         // Send data to the two hand gesture detection library
                         require(['Input Recognition and Processing/Human Input Recognition and Processing/Hand Gestures/Two Hand Gestures/TwoHandPositionDetection'], function (thgd) {
-                            handGestureDetectionLibrary.TwoHandPositionDetector = thgd.ProcessInput(data, ActiveGesturesDictionary);
+                            handGestureDetectionLibrary.TwoHandPositionDetector = thgd.ProcessInput(data);
                         });
                     }
                     else {
-
+                        ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName);
                     }
                 })();
             }
@@ -135,7 +138,6 @@
 
         return handGestureDetectionLibrary;
     }
-
 
     return {
         ProcessInput: ProcessInput

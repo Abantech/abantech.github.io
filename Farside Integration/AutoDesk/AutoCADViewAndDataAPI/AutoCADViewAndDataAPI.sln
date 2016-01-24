@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCADViewAndDataAPI", "Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoDeskAuthNService", "..\AutoDeskAuthNService\AutoDeskAuthNService.csproj", "{FD38EA36-8E1F-4E62-931E-2307F7DC157E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCADEndUser", "..\AutoCADEndUser\AutoCADEndUser.csproj", "{2CDCF563-7D0B-4DD3-A4FD-F9BC7DB8EF40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCADEndUserNoModel", "..\AutoCADEndUserNoModel\AutoCADEndUserNoModel.csproj", "{C2117E1D-59E0-4056-B35C-C301A1BEC3C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{FD38EA36-8E1F-4E62-931E-2307F7DC157E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD38EA36-8E1F-4E62-931E-2307F7DC157E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD38EA36-8E1F-4E62-931E-2307F7DC157E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CDCF563-7D0B-4DD3-A4FD-F9BC7DB8EF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CDCF563-7D0B-4DD3-A4FD-F9BC7DB8EF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CDCF563-7D0B-4DD3-A4FD-F9BC7DB8EF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CDCF563-7D0B-4DD3-A4FD-F9BC7DB8EF40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2117E1D-59E0-4056-B35C-C301A1BEC3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2117E1D-59E0-4056-B35C-C301A1BEC3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2117E1D-59E0-4056-B35C-C301A1BEC3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2117E1D-59E0-4056-B35C-C301A1BEC3C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

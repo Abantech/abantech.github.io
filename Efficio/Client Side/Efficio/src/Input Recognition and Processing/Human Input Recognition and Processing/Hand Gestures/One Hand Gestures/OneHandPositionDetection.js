@@ -1,11 +1,11 @@
-﻿define(['postal'], function (bus) {
+﻿define(['postal', 'Helpers/Math'], function (bus, math) {
     var source = 'Efficio Gesture Grimoire';
     var name = 'One Hand Gesture Detector';
     var dictionary = 'OneHandPosition';
     var trackingType = 'Hands';
     var side;
     var oneHandPositionDetector;
-    var ActiveGesturesDictionary;
+    var ActiveGesturesDictionary = Efficio.InputAndGestureRecognition.ActiveGesturesDictionary;
 
     /*
           Name:           {Side} Hand Detected
@@ -26,9 +26,9 @@
             topic: gestureName,
             source: source,
             data: {
-                input: data,
-                hand: hand,
-                gestureInformation: gestureInformation
+                Input: data,
+                Hand: hand,
+                GestureInformation: gestureInformation
             }
         });
     }
@@ -52,19 +52,40 @@
           Description:    Informs consumer how many fingers fingers are extended and on which hand 
        */
     function SideHandCountFingersExtended(hand, data) {
+        var possibleGestureNames = ['HandZeroFingersExtended', 'HandOneFingersExtended', 'HandTwoFingersExtended', 'HandThreeFingersExtended', 'HandFourFingersExtended', 'HandFiveFingersExtended'];
         var extendedFingerCountLabel = hand.GetExtendedFingersCountLabel();
         var extendedFingersIndicies = hand.GetExtendedFingersIndicies();
+
+        var gestureName = side + 'Hand' + extendedFingerCountLabel + 'FingersExtended';
+
+        // Add gesture to dictionary
+        var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+
+        if (!gestureInformation.StartPosition) {
+            gestureInformation.StartPosition = hand.palmPosition;
+        }
+        else {
+            gestureInformation.EndPosition = hand.palmPosition;
+        }
+
+        // Remove all other possible entries
+        possibleGestureNames.forEach(function (tempGestureName) {
+            if (side + tempGestureName != gestureName) {
+                ActiveGesturesDictionary.DeleteEntry(trackingType, side + tempGestureName, dictionary, side);
+            }
+        })
 
         //TODO: Clear all entries in agd and add new entry
 
         bus.publish({
             channel: "Input.Processed.Efficio",
-            topic: side + 'Hand' + extendedFingerCountLabel + 'FingersExtended',
+            topic: gestureName,
             source: source,
             data: {
-                input: data,
-                hand: hand,
-                extendedFingers: extendedFingersIndicies
+                Input: data,
+                Hand: hand,
+                GestureInformation: gestureInformation,
+                ExtendedFingers: extendedFingersIndicies
             }
         });
     }; // END {Side} Hand {Count} Fingers Extended
@@ -98,10 +119,10 @@
                     topic: gestureName,
                     source: source,
                     data: {
-                        input: data,
-                        hand: hand,
-                        finger: finger.type,
-                        gestureInformation: gestureInformation
+                        Input: data,
+                        Hand: hand,
+                        GestureInformation: gestureInformation,
+                        Finger: finger.type,
                     }
                 });
             }
@@ -128,9 +149,9 @@
                     topic: gestureName,
                     source: source,
                     data: {
-                        input: data,
-                        hand: hand,
-                        gestureInformation: gestureInformation
+                        Input: data,
+                        Hand: hand,
+                        GestureInformation: gestureInformation
                     }
                 });
             }
@@ -157,9 +178,9 @@
                     topic: gestureName,
                     source: source,
                     data: {
-                        input: data,
-                        hand: hand,
-                        gestureInformation: gestureInformation
+                        Input: data,
+                        Hand: hand,
+                        GestureInformation: gestureInformation
                     }
                 });
             }
@@ -185,9 +206,9 @@
                 topic: gestureName,
                 source: source,
                 data: {
-                    input: data,
-                    hand: hand,
-                    gestureInformation: gestureInformation
+                    Input: data,
+                    Hand: hand,
+                    GestureInformation: gestureInformation
                 }
             });
         }
@@ -212,9 +233,9 @@
                 topic: gestureName,
                 source: source,
                 data: {
-                    input: data,
-                    hand: hand,
-                    gestureInformation: gestureInformation
+                    Input: data,
+                    Hand: hand,
+                    GestureInformation: gestureInformation
                 }
             });
         }
@@ -239,9 +260,9 @@
                 topic: gestureName,
                 source: source,
                 data: {
-                    input: data,
-                    hand: hand,
-                    gestureInformation: gestureInformation
+                    Input: data,
+                    Hand: hand,
+                    GestureInformation: gestureInformation
                 }
             });
         }
@@ -266,9 +287,9 @@
                 topic: gestureName,
                 source: source,
                 data: {
-                    input: data,
-                    hand: hand,
-                    gestureInformation: gestureInformation
+                    Input: data,
+                    Hand: hand,
+                    GestureInformation: gestureInformation
                 }
             });
         }
@@ -293,9 +314,9 @@
                 topic: gestureName,
                 source: source,
                 data: {
-                    input: data,
-                    hand: hand,
-                    gestureInformation: gestureInformation
+                    Input: data,
+                    Hand: hand,
+                    GestureInformation: gestureInformation
                 }
             });
         }
@@ -320,9 +341,9 @@
                 topic: gestureName,
                 source: source,
                 data: {
-                    input: data,
-                    hand: hand,
-                    gestureInformation: gestureInformation
+                    Input: data,
+                    Hand: hand,
+                    GestureInformation: gestureInformation
                 }
             });
         }
@@ -344,9 +365,9 @@
             topic: gestureName,
             source: source,
             data: {
-                input: data,
-                hand: hand,
-                gestureInformation: gestureInformation
+                Input: data,
+                Hand: hand,
+                GestureInformation: gestureInformation
             }
         });
     }
@@ -355,21 +376,22 @@
         for (var i = 0; i < hand.fingers.length - 1; i++) {
             for (var j = i + 1; j < hand.fingers.length; j++) {
                 var gestureName = side + 'Hand' + hand.fingers[i].GetFingerLabel() + hand.fingers[j].GetFingerLabel() + 'Pinch';
-                var pinchDistance = hand.fingers[i].DistanceBetweenFingers(hand.fingers[j]);
+                var pinchDistance = hand.fingers[i].DistanceToFinger(hand.fingers[j]);
 
                 if (pinchDistance < 23) {
                     var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+                    gestureInformation.PinchFingersIndicies = [i, j];
+                    gestureInformation.PinchDistance = pinchDistance;
+                    gestureInformation.PinchMidpoint = math.MidpointBetweenTwoPoints(hand.fingers[i].tipPosition, hand.fingers[j].tipPosition)
 
                     bus.publish({
                         channel: "Input.Processed.Efficio",
                         topic: gestureName,
                         source: source,
                         data: {
-                            input: data,
-                            hand: hand,
-                            pinchDistance: pinchDistance,
-                            pinchFingersIndicies: [i, j],
-                            gestureInformation: gestureInformation
+                            Input: data,
+                            Hand: hand,
+                            GestureInformation: gestureInformation
                         }
                     });
                 }
@@ -401,13 +423,11 @@
         }
     };// END ThumbsUp
 
-    function ProcessInput(data, hand, agd) {
+    function ProcessInput(data, hand) {
         // Hand information
         (function HandInformation() {
             side = hand.GetSide();
         })();
-
-        ActiveGesturesDictionary = agd;
 
         if (!oneHandPositionDetector) {
             oneHandPositionDetector = {

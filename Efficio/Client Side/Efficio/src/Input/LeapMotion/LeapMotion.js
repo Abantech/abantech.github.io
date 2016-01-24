@@ -1,5 +1,5 @@
-﻿define(['postal', 'leapjs', 'Input/DeviceManager'], function (bus, Leap, deviceManager) {
-    var source = 'Leap Motion';
+﻿define(['postal', 'leapjs', 'Input/DeviceManager', 'Input/LeapMotion/HelperFunctions'], function (bus, Leap, deviceManager, helper) {
+    var source = 'LeapMotion';
     var trackingType = 'Hands';
     var controller;
 
@@ -51,7 +51,8 @@
             var device = {
                 Name: 'Leap Motion',
                 Manufacturer: 'Leap',
-                Device: controller
+                Device: controller,
+                Helper: helper
             }
 
             // Add Leap Motion to Device Manager
@@ -66,12 +67,13 @@
             controller.loop(function (frame) {
                 if (frame.valid) {
                     bus.publish({
-                        channel: 'Input.Raw',
+                        channel: 'Input.Raw.Human',
                         topic: 'Leap',
                         source: source,
                         data: {
                             TrackingType: trackingType,
-                            Input: frame,
+                            Frame: frame,
+                            Controller: controller,
                             Hands: frame.hands
                         }
                     });

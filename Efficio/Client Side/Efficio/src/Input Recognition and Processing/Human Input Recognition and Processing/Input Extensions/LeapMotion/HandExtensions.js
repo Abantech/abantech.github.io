@@ -1,5 +1,5 @@
 ﻿define(['leapjs', 'Helpers/Math'], function (Leap, math) {
-    var fingerCountLabelsMap = ["Zero", "One", "Two", "Three", "Four", "Five"];
+    var FingerCountLabelsMap = ["Zero", "One", "Two", "Three", "Four", "Five"];
 
     function GetSide(hand) {
         hand = hand || this;
@@ -153,7 +153,7 @@
 
     function GetExtendedFingersCountLabel(hand) {
         hand = hand || this;
-        return hand.fingerCountLabelsMap[GetExtendedFingersCount()];
+        return hand.FingerCountLabelsMap[hand.GetExtendedFingersCount()];
     }
 
     function AreRequisiteFingersExtended(neededFingersArray, hand) {
@@ -210,7 +210,8 @@
             GetExtendedFingersIndicies: GetExtendedFingersIndicies,
             GetExtendedFingersCount: GetExtendedFingersCount,
             GetExtendedFingersCountLabel: GetExtendedFingersCountLabel,
-            AreRequisiteFingersExtended: AreRequisiteFingersExtended
+            AreRequisiteFingersExtended: AreRequisiteFingersExtended,
+            FingerCountLabelsMap: FingerCountLabelsMap
 
         }
 

@@ -47,6 +47,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -67,6 +68,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Device.cs" />
+    <Compile Include="Devices\Microsoft\DataReceivedEventHandler.cs" />
+    <Compile Include="Devices\Microsoft\Interfaces\IAvailabilityChangedEventHandler.cs" />
+    <Compile Include="Devices\Microsoft\Interfaces\IDataReceivedEventHandler.cs" />
     <Compile Include="Devices\Microsoft\Kinect.cs" />
     <Compile Include="Devices\Microsoft\KinectBroadcaster.cs" />
     <Compile Include="Server.cs" />

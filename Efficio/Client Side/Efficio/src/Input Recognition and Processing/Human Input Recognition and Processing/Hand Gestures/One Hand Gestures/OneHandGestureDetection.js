@@ -5,7 +5,7 @@
     var trackingType = 'Hands';
     var side;
     var oneHandGestureDetector;
-    var ActiveGesturesDictionary;
+    var ActiveGesturesDictionary = Efficio.InputAndGestureRecognition.ActiveGesturesDictionary;
 
     function SideHandSwipe(hand, data) {
         var gestureName = side + 'HandSwipe';
@@ -52,9 +52,9 @@
                 topic: gestureName,
                 source: source,
                 data: {
-                    input: data,
-                    hand: hand,
-                    gestureInformation: gestureInformation
+                    Input: data,
+                    Hand: hand,
+                    GestureInformation: gestureInformation
                 }
             });
 
@@ -68,13 +68,12 @@
         }
     }
 
-    function ProcessInput(data, hand, agd) {
+    function ProcessInput(data, hand) {
         // Hand information
         (function HandInformation() {
             side = hand.GetSide();
         })();
 
-        ActiveGesturesDictionary = agd;
 
         if (!oneHandGestureDetector) {
             oneHandGestureDetector = {

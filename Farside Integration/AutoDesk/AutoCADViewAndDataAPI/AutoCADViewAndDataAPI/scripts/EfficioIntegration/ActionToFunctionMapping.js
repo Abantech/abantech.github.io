@@ -1,25 +1,23 @@
 ﻿Test = {
-
+	a: function(data){
+		
+	}
 }
 
 ActionToFunctionMapping = {
-    "Bridge": Test,
+    "Bridge": "Test",
     "ActionMappings": [{
         Topic: "RawOrientationData",
         Source: "Input.Processed.Efficio.Device",
-        Action: function (data) {
-        }
-    }, {
-        Topic: "Location",
-        Source: "Input.Raw.Device",
-        Action: function (data) {
-        }
-    },
-    {
-        Topic: "Orientation Change",
-        Source: "Input.Raw",
-        Action: function () {
-           
-        }
-    }]
+        Action: "a",
+		FireRestrictions: {
+			FireOnce: true,
+			FireAfterXFrames: 10
+		},
+		Arguments: [{
+			Source: "Data",
+			Name: "DataValue",
+			MapTo: "FunctionValue"
+		}]
+	}]
 }

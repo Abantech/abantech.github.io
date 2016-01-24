@@ -6,11 +6,12 @@
     'InternalScene',
     'Logging/SystemNotificationListener',
     'Input/DeviceManager',
-    'Metrics/Metrics'
+    'Metrics/Metrics',
+    'postal'
     //'Sequence Execution and Action Scheduling/CollisionDetectionAndGravitySimulation',
 ],
 
-function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationListener, deviceManager, metrics) {
+function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationListener, deviceManager, metrics, bus) {
     var Efficio;
     var readyFired = false;
 
@@ -19,24 +20,21 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
         EfficioConfiguration.Debug = EfficioConfiguration.Debug || false;
         EfficioConfiguration.ActionToFunctionMapping = EfficioConfiguration.ActionToFunctionMapping || { PluginName: 'NO PLUGIN CONFIGURED', ActionMappings: [] }
 
-        Efficio.Configuration = EfficioConfiguration; 
+        Efficio.Configuration = EfficioConfiguration;
     }
 
-    function Ready() {
+    function Ready(func) {
         var ready = false;
-        ready = CheckReadyConditions();
+        ready = CheckReadyConditions(func);
         if (ready && !readyFired) {
             readyFired = true;
-
-            if (typeof window !== 'undefined' && window != null) {
-                FireReadyEvent();
-            }
+            FireReadyEvent();
         }
 
         return ready;
     }
 
-    function CheckReadyConditions() {
+    function CheckReadyConditions(func) {
         var ready = true;
 
         if (typeof Efficio === 'undefined' || Efficio.Configuration === null) {
@@ -49,28 +47,21 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
         // Check if Metrics Ready
         ready = ready && (Efficio.Metrics !== null) && (Efficio.Metrics.Ready());
 
+        // Check if external app is ready
+        if (typeof func === 'function') {
+            ready = ready && (func());
+        }
+
         return ready
     }
 
     function FireReadyEvent() {
-        var element = document.createElement('div');
-        var event; // The custom event that will be created
-
-        if (document.createEvent) {
-            event = document.createEvent("HTMLEvents");
-            event.initEvent("dataavailable", true, true);
-        } else {
-            event = document.createEventObject();
-            event.eventType = "dataavailable";
-        }
-
-        event.eventName = "Efficio Ready";
-
-        if (document.createEvent) {
-            element.dispatchEvent(event);
-        } else {
-            element.fireEvent("on" + event.eventType, event);
-        }
+        bus.publish({
+            channel: "Efficio",
+            topic: "Ready",
+            data: {
+            }
+        });
     }
 
     return {

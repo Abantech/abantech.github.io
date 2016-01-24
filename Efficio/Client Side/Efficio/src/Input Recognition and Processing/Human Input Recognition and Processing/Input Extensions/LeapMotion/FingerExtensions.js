@@ -1,9 +1,9 @@
-﻿define([], function () {
+﻿define(['leapjs'], function (Leap) {
     var fingerNameLabelMap = ["Thumb", "Index", "Middle", "Ring", "Pinky"];
 
     function GetFingerLabel(finger) {
         finger = finger || this;
-        return fingerNameLabelMap[fingerIndex];
+        return fingerNameLabelMap[finger.type];
     }
 
     function DistanceToFinger(finger1, finger2) {
@@ -28,7 +28,7 @@
         }
 
         for (var property in extensions) {
-            Leap.Hand.prototype[property] = extensions[property];
+            Leap.Finger.prototype[property] = extensions[property];
         }
 
         return extensions;

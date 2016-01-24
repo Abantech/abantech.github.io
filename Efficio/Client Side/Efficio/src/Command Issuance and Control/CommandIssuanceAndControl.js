@@ -13,15 +13,35 @@
                 return result;
             }
 
+            function getBridge(bridge) {
+                if (typeof bridge === 'object') {
+                    return bridge;
+                }
+
+                if (typeof bridge === 'string') {
+                    if (window[bridge] && typeof window[bridge] === 'object') {
+                        return window[bridge]
+                    }
+                }
+
+                throw new Exception('No bridging class is provided');
+            }
+
             a2fm.ActionMappings.forEach(function (mapping) {
                 bus.subscribe({
                     channel: mapping.Source,
                     topic: mapping.Topic,
                     callback: function (data, envelope) {
+                        data.Message = {
+                            Channel: envelope.channel,
+                            Topic: envelope.topic,
+                            Source: envelope.source
+                        }
+
                         var func = mapping.Action;
 
                         if (typeof func != 'function') {
-                            func = a2fm.Bridge[mapping.Action];
+                            func = getBridge(a2fm.Bridge)[mapping.Action];
                         }
 
                         // Get method parameters
@@ -65,13 +85,13 @@
                             var execute = [];
                             var restrictions = mapping.FireRestrictions;
                             if (restrictions.FireOnce) {
-                                if (data.gestureInformation.Fired) {
+                                if (data.GestureInformation.Fired) {
                                     return;
                                 }
                             }
 
                             if (restrictions.FireAfterXFrames) {
-                                if (data.gestureInformation.FireCount < restrictions.FireAfterXFrames) {
+                                if (data.GestureInformation.FireCount < restrictions.FireAfterXFrames) {
                                     return;
                                 }
                             }
@@ -79,8 +99,8 @@
 
                         func.apply(null, args);
 
-                        if (data.gestureInformation) {
-                            data.gestureInformation.Fired = true;
+                        if (data.GestureInformation) {
+                            data.GestureInformation.Fired = true;
                         }
                     }
                 })

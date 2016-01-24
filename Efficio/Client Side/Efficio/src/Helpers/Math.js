@@ -24,15 +24,23 @@ define(function () {
     }
 
     function DistanceBetweenTwoPoints(point1, point2) {
+        if (!Array.isArray(point1)) {
+            point1 = [point1]
+        }
+
+        if (!Array.isArray(point2)) {
+            point2 = [point2]
+        }
+
         var a = {
             x: point1[0],
-            y: point1[1],
+            y: point1[1] || 0,
             z: point1[2] || 0
         }
 
         var b = {
             x: point2[0],
-            y: point2[1],
+            y: point2[1] || 0,
             z: point2[2] || 0
         }
 
@@ -42,7 +50,7 @@ define(function () {
     function MidpointBetweenTwoPoints(point1, point2) {
         var a = {
             x: point1[0],
-            y: point1[1],
+            y: point1[1] || 0,
             z: point1[2] || 0
         }
 

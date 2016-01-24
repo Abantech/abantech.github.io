@@ -1,0 +1,78 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <title>2D/3D Navigation</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+</head>
+<body>
+    <div class="viewer-panel">
+        <div id="viewer3D" class="viewer-box"></div>
+        <div class="draggable">
+            <div class="draggable-nav"></div>
+            <div class="draggable-body"><div id="viewer2D"></div></div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="adsk/style.css" />
+    <script src="adsk/viewer3D.min.js"></script>
+    <script src="scripts/model.js"></script>
+    <script src="scripts/marker.js"></script>
+    <script src="rac.json"></script>
+    <!--EFFICIO Scripts-->
+    <script src="scripts/EfficioIntegration/Configuration/RequireConfiguration.js"></script>
+	<script src="scripts/EfficioIntegration/ExplodeConfiguration.js"></script>
+    <script src="scripts/EfficioIntegration/AutoCADHooks.js"></script>
+    <script src="scripts/EfficioIntegration/ActionToFunctionMapping.js"></script>
+    <script src="scripts/EfficioIntegration/Configuration/EfficioConfiguration.js"></script>
+    <script src="scripts/EfficioIntegration/libs/require.js"></script>
+    <script>
+        var startPosition;
+        var startTarget
+        var endPosition
+        var endTarget
+        var appReady = false;
+        var CadHelper;
+
+        LoadEfficio()
+
+        function LoadEfficio() {
+            if (typeof THREE !== 'undefined') {
+                //startPosition = new THREE.Vector3(1.3378786144487786, -173.6472827527755, 43.798743670623125);
+                //startTarget = new THREE.Vector3(32.199266730988406, -20.571871259540764, -13.058218724829047);
+                startPosition = new THREE.Vector3(1.3378786144487786, -173.6472827527755, 43.798743670623125);
+                startTarget = new THREE.Vector3(32.199266730988406, -20.571871259540764, -13.058218724829047);
+                endPosition = new THREE.Vector3(10.918059264044446, -412.7562526284396, 197.72378494749776);
+                endTarget = new THREE.Vector3(84.95467194545574, 17.784337484968386, 46.38866783103925);
+
+                require(['scripts/EfficioIntegration/libs/Efficio.min.js'], function () {
+                    EfficioLoaded()
+                })
+            }
+            else {
+                setTimeout(LoadEfficio, 200);
+            }
+        }
+
+        function EfficioLoaded() {
+            if (typeof Efficio !== 'undefined' && Efficio.Ready(AutoDeskReady)) {
+            }
+            else {
+                window.setTimeout(EfficioLoaded, 200);
+            }
+        }
+
+        function AutoDeskReady() {
+            var ready = false
+
+            if (typeof viewer3D !== 'undefined' && viewer3D != null && viewer3D.model != null) {
+                ready = true;
+            }
+
+            return ready
+        }
+    </script>
+</body>
+
+</html>

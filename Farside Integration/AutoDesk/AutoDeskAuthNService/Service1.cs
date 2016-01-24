@@ -14,14 +14,18 @@ namespace AutoDeskAuthNService
 
         public string GetAuthToken()
         {
-            if (args.Keys.Count.Equals(0))
-            {
-                args.Add("client_id", id);
-                args.Add("client_secret", secret);
-                args.Add("grant_type", "client_credentials");
-            }
+            //if (args.Keys.Count.Equals(0))
+            //{
+            //    args.Add("client_id", id);
+            //    args.Add("client_secret", secret);
+            //    args.Add("grant_type", "client_credentials");
+            //}
 
-            return GetToken();
+            //return GetToken();
+
+            string token = new HttpClient().GetAsync("http://sleepy-river-3525.herokuapp.com/api/token").Result.Content.ReadAsStringAsync().Result;
+            return token.Replace(Environment.NewLine, string.Empty);
+
         }
 
         private string GetToken()

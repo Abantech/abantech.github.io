@@ -18,12 +18,14 @@ namespace DeviceBroadcaster.Devices.Leap_Motion
         // Host information
         public Protocol HostProtocol { get; set; } = Protocol.ws;
         public string HostAddress { get; set; } = "127.0.0.1";
-        public int HostPort { get; set; } = 8181;
+        public int HostPort { get; set; } = 3003;
 
         // Client Information
         public Protocol ClientProtocol { get; set; } = Protocol.ws;
         public string ClientServerAddress { get; set; } = "localhost";
         public int ClientPort { get; set; } = 6437;
+
+        public string firstMessage = null;
 
         public void StartBroadcast()
         {
@@ -35,7 +37,7 @@ namespace DeviceBroadcaster.Devices.Leap_Motion
 
         private void CreateSever()
         {
-            server = new Server(this.HostProtocol, this.HostAddress, this.HostPort, "leap");
+            server = new Server(this.HostProtocol, this.HostAddress, this.HostPort, "v6.json");
         }
 
         private void CreateClient()
@@ -44,6 +46,11 @@ namespace DeviceBroadcaster.Devices.Leap_Motion
 
             client.OnMessage += (o, e) =>
             {
+                if (firstMessage == null)
+                {
+                    firstMessage = e.Data;
+                }
+
                 server.BroadcastMessage(e.Data);
             };
         }
@@ -55,6 +62,7 @@ namespace DeviceBroadcaster.Devices.Leap_Motion
                 socket.OnOpen = () =>
                 {
                     server.Clients.Add(socket);
+                    socket.Send(firstMessage);
                 };
 
                 socket.OnClose = () =>

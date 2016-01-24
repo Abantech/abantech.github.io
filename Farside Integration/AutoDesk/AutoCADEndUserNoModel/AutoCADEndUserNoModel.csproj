@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\AutoCADViewAndDataAPI\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\AutoCADViewAndDataAPI\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\AutoCADViewAndDataAPI\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\AutoCADViewAndDataAPI\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C2117E1D-59E0-4056-B35C-C301A1BEC3C4}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AutoCADEndUser</RootNamespace>
+    <AssemblyName>AutoCADEndUser</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="adsk\res\locales\cs\allstrings.json" />
+    <Content Include="adsk\res\locales\cs\extractor-Assimp.loc.json" />
+    <Content Include="adsk\res\locales\cs\extractor-ATF.loc.json" />
+    <Content Include="adsk\res\locales\cs\extractor-AutoCAD.loc.json" />
+    <Content Include="adsk\res\locales\cs\extractor-DWF2d.loc.json" />
+    <Content Include="adsk\res\locales\cs\extractor-DWF3d.loc.json" />
+    <Content Include="adsk\res\locales\cs\extractor-Navisworks.loc.json" />
+    <Content Include="adsk\res\locales\cs\extractor-Revit.loc.json" />
+    <Content Include="adsk\res\locales\cs\translationworker.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer-animation.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer-environments.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer-errorMsg.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer-measure.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer-renderOptions.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer-settings.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer-toolbar.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer-viewCube.loc.json" />
+    <Content Include="adsk\res\locales\cs\viewer.loc.json" />
+    <Content Include="adsk\res\locales\de\allstrings.json" />
+    <Content Include="adsk\res\locales\de\extractor-Assimp.loc.json" />
+    <Content Include="adsk\res\locales\de\extractor-ATF.loc.json" />
+    <Content Include="adsk\res\locales\de\extractor-AutoCAD.loc.json" />
+    <Content Include="adsk\res\locales\de\extractor-DWF2d.loc.json" />
+    <Content Include="adsk\res\locales\de\extractor-DWF3d.loc.json" />
+    <Content Include="adsk\res\locales\de\extractor-Navisworks.loc.json" />
+    <Content Include="adsk\res\locales\de\extractor-Revit.loc.json" />
+    <Content Include="adsk\res\locales\de\translationworker.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer-animation.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer-environments.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer-errorMsg.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer-measure.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer-renderOptions.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer-settings.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer-toolbar.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer-viewCube.loc.json" />
+    <Content Include="adsk\res\locales\de\viewer.loc.json" />
+    <Content Include="adsk\res\locales\en\allstrings.json" />
+    <Content Include="adsk\res\locales\en\extractor-Assimp.loc.json" />
+    <Content Include="adsk\res\locales\en\extractor-ATF.loc.json" />
+    <Content Include="adsk\res\locales\en\extractor-AutoCAD.loc.json" />
+    <Content Include="adsk\res\locales\en\extractor-DWF2d.loc.json" />
+    <Content Include="adsk\res\locales\en\extractor-DWF3d.loc.json" />
+    <Content Include="adsk\res\locales\en\extractor-Navisworks.loc.json" />
+    <Content Include="adsk\res\locales\en\extractor-Revit.loc.json" />
+    <Content Include="adsk\res\locales\en\translationworker.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer-animation.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer-environments.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer-errorMsg.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer-measure.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer-renderOptions.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer-settings.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer-toolbar.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer-viewCube.loc.json" />
+    <Content Include="adsk\res\locales\en\viewer.loc.json" />
+    <Content Include="adsk\res\locales\ja\allstrings.json" />
+    <Content Include="adsk\res\locales\ja\extractor-Assimp.loc.json" />
+    <Content Include="adsk\res\locales\ja\extractor-ATF.loc.json" />
+    <Content Include="adsk\res\locales\ja\extractor-AutoCAD.loc.json" />
+    <Content Include="adsk\res\locales\ja\extractor-DWF2d.loc.json" />
+    <Content Include="adsk\res\locales\ja\extractor-DWF3d.loc.json" />
+    <Content Include="adsk\res\locales\ja\extractor-Navisworks.loc.json" />
+    <Content Include="adsk\res\locales\ja\extractor-Revit.loc.json" />
+    <Content Include="adsk\res\locales\ja\translationworker.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer-animation.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer-environments.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer-errorMsg.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer-measure.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer-renderOptions.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer-settings.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer-toolbar.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer-viewCube.loc.json" />
+    <Content Include="adsk\res\locales\ja\viewer.loc.json" />
+    <Content Include="adsk\res\locales\ko\allstrings.json" />
+    <Content Include="adsk\res\locales\ko\extractor-Assimp.loc.json" />
+    <Content Include="adsk\res\locales\ko\extractor-ATF.loc.json" />
+    <Content Include="adsk\res\locales\ko\extractor-AutoCAD.loc.json" />
+    <Content Include="adsk\res\locales\ko\extractor-DWF2d.loc.json" />
+    <Content Include="adsk\res\locales\ko\extractor-DWF3d.loc.json" />
+    <Content Include="adsk\res\locales\ko\extractor-Navisworks.loc.json" />
+    <Content Include="adsk\res\locales\ko\extractor-Revit.loc.json" />
+    <Content Include="adsk\res\locales\ko\translationworker.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer-animation.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer-environments.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer-errorMsg.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer-measure.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer-renderOptions.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer-settings.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer-toolbar.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer-viewCube.loc.json" />
+    <Content Include="adsk\res\locales\ko\viewer.loc.json" />
+    <Content Include="adsk\res\locales\localeTranslation.job" />
+    <Content Include="adsk\res\locales\ru\allstrings.json" />
+    <Content Include="adsk\res\locales\ru\extractor-Assimp.loc.json" />
+    <Content Include="adsk\res\locales\ru\extractor-ATF.loc.json" />
+    <Content Include="adsk\res\locales\ru\extractor-AutoCAD.loc.json" />
+    <Content Include="adsk\res\locales\ru\extractor-DWF2d.loc.json" />
+    <Content Include="adsk\res\locales\ru\extractor-DWF3d.loc.json" />
+    <Content Include="adsk\res\locales\ru\extractor-Navisworks.loc.json" />
+    <Content Include="adsk\res\locales\ru\extractor-Revit.loc.json" />
+    <Content Include="adsk\res\locales\ru\translationworker.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer-animation.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer-environments.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer-errorMsg.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer-measure.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer-renderOptions.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer-settings.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer-toolbar.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer-viewCube.loc.json" />
+    <Content Include="adsk\res\locales\ru\viewer.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\allstrings.json" />
+    <Content Include="adsk\res\locales\zh-Hans\extractor-Assimp.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\extractor-ATF.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\extractor-AutoCAD.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\extractor-DWF2d.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\extractor-DWF3d.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\extractor-Navisworks.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\extractor-Revit.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\translationworker.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer-animation.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer-environments.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer-errorMsg.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer-measure.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer-renderOptions.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer-settings.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer-toolbar.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer-viewCube.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hans\viewer.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\allstrings.json" />
+    <Content Include="adsk\res\locales\zh-Hant\extractor-Assimp.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\extractor-ATF.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\extractor-AutoCAD.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\extractor-DWF2d.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\extractor-DWF3d.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\extractor-Navisworks.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\extractor-Revit.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\translationworker.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer-animation.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer-environments.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer-errorMsg.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer-measure.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer-renderOptions.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer-settings.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer-toolbar.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer-viewCube.loc.json" />
+    <Content Include="adsk\res\locales\zh-Hant\viewer.loc.json" />
+    <Content Include="font\fontello.eot" />
+    <Content Include="font\fontello.ttf" />
+    <Content Include="font\fontello.woff" />
+    <Content Include="rac.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="adsk\jquery-ui.js" />
+    <Content Include="adsk\lmvworker.js" />
+    <Content Include="adsk\lmvworker.min.js" />
+    <Content Include="adsk\res\environments\boardwalk_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\boardwalk_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\CoolLight_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\CoolLight_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\crossroads_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\crossroads_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\DarkSky_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\DarkSky_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\field_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\field_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\glacier_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\glacier_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\GreyRoom_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\GreyRoom_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\GridLight_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\GridLight_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\IDViz_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\IDViz_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\InfinityPool_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\InfinityPool_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\PhotoBooth_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\PhotoBooth_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\Plaza_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\Plaza_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\Reflection_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\Reflection_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\RimHighlights_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\RimHighlights_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\riverbank_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\riverbank_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\seaport_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\seaport_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\SharpHighlights_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\SharpHighlights_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\SnowField_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\SnowField_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\SoftLight_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\SoftLight_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\TranquilityBlue_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\TranquilityBlue_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\environments\WarmLight_irr.logluv.dds" />
+    <Content Include="adsk\res\environments\WarmLight_mipdrop.logluv.dds" />
+    <Content Include="adsk\res\locales\en\VCcross.dds" />
+    <Content Include="adsk\res\locales\en\VCcross.png" />
+    <Content Include="adsk\res\locales\en\VCcrossRGBA8small.dds" />
+    <Content Include="adsk\res\textures\cardinalPoint.png" />
+    <Content Include="adsk\res\textures\centerMarker_X.png" />
+    <Content Include="adsk\res\textures\radial-fade-grid.png" />
+    <Content Include="adsk\res\textures\VCarrows.png" />
+    <Content Include="adsk\res\textures\VCarrowsS0.png" />
+    <Content Include="adsk\res\textures\VCarrowsS1.png" />
+    <Content Include="adsk\res\textures\VCcontext.png" />
+    <Content Include="adsk\res\textures\VCcontextS.png" />
+    <Content Include="adsk\res\textures\VCcross.dds" />
+    <Content Include="adsk\res\textures\VCcross.png" />
+    <Content Include="adsk\res\textures\VCcrossRGBA8.dds" />
+    <Content Include="adsk\res\textures\VCcrossRGBA8small.dds" />
+    <Content Include="adsk\res\textures\VCcrossSmall.png" />
+    <Content Include="adsk\res\textures\VCedge1.png" />
+    <Content Include="adsk\res\textures\VCface1.png" />
+    <Content Include="adsk\res\textures\VCface1s.png" />
+    <Content Include="adsk\res\textures\VCface2.png" />
+    <Content Include="adsk\res\textures\VCface2s.png" />
+    <Content Include="adsk\res\textures\VCface3.png" />
+    <Content Include="adsk\res\textures\VCface3s.png" />
+    <Content Include="adsk\res\textures\VCface4.png" />
+    <Content Include="adsk\res\textures\VCface4s.png" />
+    <Content Include="adsk\res\textures\VCface5.png" />
+    <Content Include="adsk\res\textures\VCface5s.png" />
+    <Content Include="adsk\res\textures\VCface6.png" />
+    <Content Include="adsk\res\textures\VCface6s.png" />
+    <Content Include="adsk\res\textures\VChome.png" />
+    <Content Include="adsk\res\textures\VChomeS.png" />
+    <Content Include="adsk\style.css" />
+    <Content Include="adsk\three.js" />
+    <Content Include="adsk\three.min.js" />
+    <Content Include="adsk\viewer3D.js" />
+    <Content Include="adsk\viewer3D.min.js" />
+    <Content Include="font\fontello.svg" />
+    <Content Include="images\Autodesk-logo.png" />
+    <Content Include="images\favicon.ico" />
+    <Content Include="images\loader.gif" />
+    <Content Include="images\logo_header.png" />
+    <Content Include="index.html" />
+    <Content Include="scripts\debug.js" />
+    <Content Include="scripts\marker.js" />
+    <Content Include="scripts\model.js" />
+    <Content Include="stylesheets\main.css" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>1218</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1218/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

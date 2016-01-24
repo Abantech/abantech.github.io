@@ -1,9 +1,5 @@
-﻿using Microsoft.Kinect;
-using System.IO;
-using System.Linq;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System;
+﻿using System;
+using Microsoft.Kinect;
 
 namespace DeviceBroadcaster.Devices.Microsoft
 {
@@ -21,13 +17,28 @@ namespace DeviceBroadcaster.Devices.Microsoft
         // Configuration
         public bool BroadcastCameraData { get; set; } = false;
 
+        private IDataReceivedEventHandler dataReceivedEventHandler = new DataReceivedEventHandler();
+        private IAvailabilityChangedEventHandler availabilityChangedEventHandler;
+
         public void StartBroadcast()
         {
             CreateSever();
             StartServer();
 
             var kinect = new Kinect();
-            kinect.DataReceived += this.BroadcastKinectData;
+
+            dataReceivedEventHandler.Server = server;
+            availabilityChangedEventHandler.Server = server;
+            
+            kinect.DataReceived += dataReceivedEventHandler.DataReceived;
+            kinect.AvailabilityChange += availabilityChangedEventHandler.AvailabilityChanged;
+
+            kinect.Start();
+        }
+
+        private void AvalailabilityChanged(object arg1, IsAvailableChangedEventArgs arg2)
+        {
+            //TODO send message informing of device change
         }
 
         private void BroadcastKinectData(object sender, DataReceivedEventArgs e)
