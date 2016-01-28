@@ -3,6 +3,7 @@
     'Asset Management and Inventory/AssetManager',
     'Constraints Engine/ConstraintsEngine',
     'Command Issuance and Control/CommandIssuanceAndControl',
+    'Command Issuance and Control/EventManager',
     'InternalScene',
     'Logging/SystemNotificationListener',
     'Input/DeviceManager',
@@ -11,7 +12,7 @@
     //'Sequence Execution and Action Scheduling/CollisionDetectionAndGravitySimulation',
 ],
 
-function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationListener, deviceManager, metrics, bus) {
+function (hirp, ami, constraintsEngine, comm, eventManager, internalScene, sysNotificationListener, deviceManager, metrics, bus) {
     var Efficio;
     var readyFired = false;
 
@@ -88,6 +89,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
             ami.Initialize();
             constraintsEngine.Initialize();
             Efficio.CommandIssuanceAndControl = comm.Initialize();
+            Efficio.EventManager = eventManager.Initialize();
             Efficio.InternalScene = internalScene.Initialize();
             sysNotificationListener.Initialize();
             Efficio.DeviceManager = deviceManager.Initialize();

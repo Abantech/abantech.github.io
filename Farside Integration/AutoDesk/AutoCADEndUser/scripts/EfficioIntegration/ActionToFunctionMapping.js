@@ -29,6 +29,8 @@ ActionToFunctionMapping = {
             });
 
             baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2))
+
+            Efficio.EventManager.RaiseEvent('MyNewEvent', { myData1: 1, myData2: 2 })
         }
     }, {
         Topic: "Leap",
@@ -71,7 +73,14 @@ ActionToFunctionMapping = {
 
             viewer3D.isolate(viewer3D.model.getData().fragments.fragId2dbId[testFragment.Fragment.fragId]);
         }
+    }, {
+        Topic: "MyNewEvent",
+        Source: "Event Manager",
+        Action: function (data) {
+            alert(JSON.stringify(data));
+        }
     },
+
             //{
             //    Topic: "RightHandZeroFingersExtended",
             //    Source: "Input.Processed.Efficio",

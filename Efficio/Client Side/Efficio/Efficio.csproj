@@ -46,6 +46,7 @@
     <Content Include="Efficio.min.js" />
     <Content Include="Output\min\Efficio.min.js" />
     <Content Include="src\Asset Management and Inventory\AssetManager.js" />
+    <Content Include="src\Command Issuance and Control\EventManager.js" />
     <Content Include="src\Input Recognition and Processing\ActiveGestureDictionary.js" />
     <Content Include="src\Input Recognition and Processing\Device Input Recognition and Processing\CustomDeviceLibrary.js" />
     <Content Include="src\Input Recognition and Processing\Device Input Recognition and Processing\DeviceInputRecognitionAndProcessing.js" />
