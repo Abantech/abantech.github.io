@@ -1,6 +1,17 @@
 ﻿define(['postal', 'Asset Management and Inventory/AssetManager'], function (bus, ami) {
+    function Invoke(source, topic, data, reason) {
+        bus.publish({
+            channel: source,
+            topic: topic,
+            source: reason,
+            data: data
+        });
+    }
+
     return {
         Initialize: function () {
+            var caic = { Invoke: Invoke };
+
             var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
             var ARGUMENT_NAMES = /([^\s,]+)/g;
             var a2fm = Efficio.Configuration.ActionToFunctionMapping || {};
@@ -97,6 +108,18 @@
                             }
                         }
 
+                        if (mapping.ExecutionPrerequisite) {
+                            var prereq = mapping.ExecutionPrerequisite;
+
+                            if (typeof mapping.ExecutionPrerequisite != 'function') {
+                                prereq = getBridge(a2fm.Bridge)[mapping.ExecutionPrerequisite];
+                            }
+
+                            if (!prereq()) {
+                                return;
+                            }
+                        }
+
                         func.apply(null, args);
 
                         if (data.GestureInformation) {
@@ -105,6 +128,8 @@
                     }
                 })
             });
+
+            return caic;
         }
     };
 });

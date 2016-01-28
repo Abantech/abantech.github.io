@@ -1,4 +1,11 @@
 <publishData>
+  <publishTarget publishUrl="C:\Users\James\Desktop\AuthnService\">
+    <file relUrl="bin/AutoDeskAuthNService.dll.config" publishTime="01/27/2016 21:25:17" />
+    <file relUrl="bin/AutoDeskAuthNService.dll" publishTime="01/27/2016 21:25:29" />
+    <file relUrl="bin/AutoDeskAuthNService.pdb" publishTime="01/27/2016 21:25:29" />
+    <file relUrl="Web.config" publishTime="01/27/2016 21:25:17" />
+    <file relUrl="AutoDeskAuthNService.AuthNService.svc" publishTime="01/27/2016 21:26:01" />
+  </publishTarget>
   <publishTarget publishUrl="http://localhost:3000/AuthService">
     <file relUrl="bin/AutoDeskAuthNService.dll.config" publishTime="01/02/2016 23:37:41" />
     <file relUrl="bin/AutoDeskAuthNService.dll" publishTime="01/03/2016 20:38:36" />

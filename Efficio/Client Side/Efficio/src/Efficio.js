@@ -23,12 +23,13 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
         Efficio.Configuration = EfficioConfiguration;
     }
 
-    function Ready(func) {
+    function CheckReady(func) {
         var ready = false;
         ready = CheckReadyConditions(func);
         if (ready && !readyFired) {
             readyFired = true;
             FireReadyEvent();
+            Efficio.IsReady = true;
         }
 
         return ready;
@@ -70,7 +71,8 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
             if (typeof Efficio === 'undefined' || Efficio === null) {
                 Efficio = {
                     Started: false,
-                    Ready: Ready
+                    CheckReady: CheckReady,
+                    IsReady: false
                 };
             }
 
@@ -85,7 +87,7 @@ function (hirp, ami, constraintsEngine, comm, internalScene, sysNotificationList
             Efficio.InputAndGestureRecognition = hirp.Initialize(EfficioConfiguration);
             ami.Initialize();
             constraintsEngine.Initialize();
-            comm.Initialize();
+            Efficio.CommandIssuanceAndControl = comm.Initialize();
             Efficio.InternalScene = internalScene.Initialize();
             sysNotificationListener.Initialize();
             Efficio.DeviceManager = deviceManager.Initialize();

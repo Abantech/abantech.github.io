@@ -1,11 +1,8 @@
 ﻿var materialIndex = 0;
 
-function EfficioAutoCADHelper() {
+function EfficioAutoCADHelper(viewer) {
     self = this;
-
-    this.Initialize = function Initialize(viewer) {
-        self.viewer = viewer;
-    }
+    self.viewer = viewer;
 
     this.AssetManagement = {
         CreateAsset: function (mesh, materialName) {
@@ -19,12 +16,12 @@ function EfficioAutoCADHelper() {
             // Add mesh to scene
             self.viewer.impl.scene.add(mesh);
 
-            this.UpdateScene();
+            self.AssetManagement.UpdateScene();
         },
 
         RemoveAsset: function (mesh) {
             self.viewer.impl.scene.remove(mesh);
-            this.UpdateScene();
+            self.AssetManagement.UpdateScene();
         },
 
         GetAssetByID(id) {
@@ -62,11 +59,14 @@ function EfficioAutoCADHelper() {
 
         Descriptor:
             {
-                Position: function (fragProxy) {
-                    fragProxy.updateAnimTransform();
-                    return fragProxy.position
+                Position: function (fragID) {
+                    var mesh = self.viewer.impl.getRenderProxy(self.viewer.model, fragID);
+                    self.viewer.impl.scene.updateMatrixWorld(true);
+                    var position = new THREE.Vector3();
+                    position.getPositionFromMatrix(mesh.matrixWorld);
+                    return position;
                 },
-                
+
                 Scale: function (fragProxy) {
                     fragProxy.updateAnimTransform();
                     return fragProxy.scale;
@@ -91,48 +91,44 @@ function EfficioAutoCADHelper() {
             var fragments = viewer3D.model.getData().fragments;
 
             for (var i = 0; i < fragments.length; i++) {
-                var fragProxy = self.viewer.impl.getFragmentProxy(self.viewer.model, i);
-                var tempPosition = new THREE.Vector3();
-
-                var distance = tempPosition.subVectors(point, self.AssetManagement.Descriptor.Position(fragProxy)).length()
-                //drawMeshData(i, self.viewer);
+                var distance = new THREE.Vector3().subVectors(point, self.AssetManagement.Descriptor.Position(i)).length()
 
                 if (!result.Fragment) {
-                    result.Fragment = fragProxy;
+                    result.Fragment = self.viewer.impl.getFragmentProxy(self.viewer.model, i);
                     result.Distance = distance;
                 }
                 else {
                     if (distance < result.Distance) {
-                        result.Fragment = fragProxy;
+                        result.Fragment = self.viewer.impl.getFragmentProxy(self.viewer.model, i);
                         result.Distance = distance;
                     }
                 }
             }
 
             return result;
-        }
+        },
     }
 
     this.Navigation = {
         Panning: {
             // 2 seems to be a good 'amount'
             PanLeft: function (amount) {
-                this.PanX(-amount);
+                self.Navigation.Panning.PanX(-amount);
             },
 
             // 2 seems to be a good 'amount'
             PanRight: function (amount) {
-                this.PanX(amount);
+                self.Navigation.Panning.PanX(amount);
             },
 
             // 2 seems to be a good 'amount'
             PanUp: function (amount) {
-                this.PanY(amount);
+                self.Navigation.Panning.PanY(amount);
             },
 
             // 2 seems to be a good 'amount'
             PanDown: function (amount) {
-                this.PanY(-amount);
+                self.Navigation.Panning.PanY(-amount);
             },
             PanX: function (amount) {
                 self.viewer.navigation.getCamera().translateX(amount)
@@ -148,12 +144,12 @@ function EfficioAutoCADHelper() {
         Rotation: {
             // .05 seems to be a good 'amount'
             RotateClockwise: function (amount) {
-                this.Rotate(amount);
+                self.Navigation.Rotation.Rotate(amount);
             },
 
             // .05 seems to be a good 'amount'
             RotateCounterClockwise: function (amount) {
-                this.Rotate(-amount);
+                self.Navigation.Rotation.Rotate(-amount);
             },
 
             // .05 seems to be a good 'amount'
@@ -172,11 +168,11 @@ function EfficioAutoCADHelper() {
 
         Zoom: {
             ZoomIn: function (amount) {
-                this.Zoom(-amount);
+                self.Navigation.Zoom.Zoom(-amount);
             },
 
             ZoomOut: function (amount) {
-                this.Zoom(amount)
+                self.Navigation.Zoom.Zoom(amount)
             },
 
             Zoom: function (amount) {
@@ -186,5 +182,89 @@ function EfficioAutoCADHelper() {
                 self.viewer.navigation.dollyFromPoint(amount, target);
             }
         }
+    },
+
+    this.Tools = {
+        Navigation: {
+            // Options: orbit, pan, dolly, worldup, fov
+            SetActiveNavigationTool: function (toolName) {
+                if (!self.viewer.setActiveNavigationTool(toolName)) {
+                    // TODO send error message
+                }
+            },
+
+            GetActiveNavigationTool: function () {
+                return self.viewer.getActiveNavigationTool();
+            }
+        },
+
+        Model: {
+            Model: self.viewer.model,
+
+            SelectObject: function (objectName) {
+                self.viewer.getObjectTree(function (objectTree) {
+                    var obj = FindObject(objectName, objectTree.root)
+
+                    if (obj) {
+                        self.viewer.select(obj.dbId);
+                    }
+                });
+            },
+
+            IsolateObject: function (objectName) {
+                self.viewer.getObjectTree(function (objectTree) {
+                    var obj = FindObject(objectName, objectTree.root)
+
+                    if (obj) {
+                        self.viewer.isolate(obj.dbId);
+                    }
+                });
+            },
+
+            ClearSelection: function () {
+                self.viewer.clearSelection();
+                self.viewer.isolate();
+            },
+
+            GetMinAndMaxCoordinates: function () {
+                // Get Scene mins and maxes
+                var boundingBox = self.viewer.model.getBoundingBox();
+                var maxpt = boundingBox.max;
+                var minpt = boundingBox.min;
+
+                return {
+                    Minimums: [minpt.x, minpt.y, minpt.z],
+                    Maximums: [maxpt.x, maxpt.y, maxpt.z]
+                }
+            }
+        }
     }
 };
+
+function FindObject(objectName, node) {
+    var object = [];
+
+    if (node.children) {
+        object = node.children.filter(function (child) {
+            return child.name.toLowerCase() === objectName.toLowerCase();
+        });
+    }
+
+    if (object.length != 0) {
+        return object[0];
+    }
+
+    if (node.children) {
+        node.children.forEach(function (child) {
+            if (object.length == 0) {
+                var tempObject = FindObject(objectName, child);
+
+                if (tempObject) {
+                    object = tempObject;
+                }
+            }
+        });
+    }
+
+    return object;
+}

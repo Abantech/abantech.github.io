@@ -22,10 +22,15 @@
     <script src="rac.json"></script>
     <!--EFFICIO Scripts-->
     <script src="scripts/EfficioIntegration/Configuration/RequireConfiguration.js"></script>
-	<script src="scripts/EfficioIntegration/ExplodeConfiguration.js"></script>
     <script src="scripts/EfficioIntegration/AutoCADHooks.js"></script>
     <script src="scripts/EfficioIntegration/ActionToFunctionMapping.js"></script>
     <script src="scripts/EfficioIntegration/Configuration/EfficioConfiguration.js"></script>
+    <!--DEMO SCRIPTS - COMMENT OUT TO REMOVE-->
+    <script src="scripts/DemoWalkthrough/DemoAudioCommands.js"></script>
+    <script src="scripts/DemoWalkthrough/DemoA2FM.js"></script>
+    <script src="scripts/EfficioUI/InstructionsPanel.js"></script>
+    <script src="scripts/EfficioUI/VerbalInstructionsPanel.js"></script>
+    <!--END DEMO SCRIPTS-->
     <script src="scripts/EfficioIntegration/libs/require.js"></script>
     <script>
         var startPosition;
@@ -56,7 +61,7 @@
         }
 
         function EfficioLoaded() {
-            if (typeof Efficio !== 'undefined' && Efficio.Ready(AutoDeskReady)) {
+            if (typeof Efficio !== 'undefined' && Efficio.CheckReady(AutoDeskReady)) {
             }
             else {
                 window.setTimeout(EfficioLoaded, 200);

@@ -60,7 +60,7 @@ define(function () {
             z: point2[2] || 0
         }
 
-        return [(b.x - a.x) / 2, (b.y - a.y) / 2, (b.z - a.z) / 2];
+        return [(b.x + a.x) / 2, (b.y + a.y) / 2, (b.z + a.z) / 2];
     }
 
     function Velocity(point1, point2, time) {

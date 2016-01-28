@@ -1,5 +1,5 @@
 ﻿if (typeof THREE === 'object') {
-    define('THREE', function () { return THREE; });
+    define('three', function () { return THREE; });
 }
 
 if (typeof Leap === 'function') {
