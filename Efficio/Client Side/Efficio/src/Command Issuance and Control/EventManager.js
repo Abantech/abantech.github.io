@@ -1,5 +1,5 @@
 ﻿define(['postal'], function (bus) {
-    var source = 'Event Manager'
+    var source = 'Event Manager';
 
     function RaiseEvent(eventName, data) {
         bus.publish({
