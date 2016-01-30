@@ -149,7 +149,7 @@
 		for (var i = 0; i < number; i++) {
 			color = 0xffffff * Math.random();
 			material = new THREE.MeshPhongMaterial( {
-				color: color, 
+				color: color,
 //				ambient: color,
 //				specular: 0xffffff * Math.random(),
 				shininess: 50,
@@ -181,8 +181,8 @@
 	function findIntersections( ) {
 
 		var index = fingerlings[1].finger;
-		
-		
+
+
 		var tip = v( index.tipPosition[0], index.tipPosition[1], index.tipPosition[2] );
 		var pip = v( index.pipPosition[0], index.pipPosition[1], index.pipPosition[2] );
 		var directionVector = tip.sub( pip );
@@ -222,7 +222,7 @@ soundPlus.play();
 			loader = new THREE.JSONLoader();
 			loader.load( fname, function ( geometry, materials ) {
 
-				material = new THREE.MeshFaceMaterial( materials ) 
+				material = new THREE.MeshFaceMaterial( materials )
 				prize = new THREE.Mesh( geometry, material );
 
 				prize.position.set( 0, 100, -5 );
@@ -243,12 +243,12 @@ soundPlus.play();
 
 		frame.hands.forEach( function( hand, id ) {
 
-			var handy = ( handies[id] || ( handies[id] = new Handy()) );    
+			var handy = ( handies[id] || ( handies[id] = new Handy()) );
 			handy.outputData( id, hand );
 
 			hand.fingers.forEach( function( finger, id ) {
 
-				var fingerling = ( fingerlings[id] || ( fingerlings[id] = new Fingerling() ) );  
+				var fingerling = ( fingerlings[id] || ( fingerlings[id] = new Fingerling() ) );
 				fingerling.outputData( id, finger );
 
 			});
@@ -277,7 +277,7 @@ soundPlus.play();
 
 		handy.outputData = function( id, hand  ) {
 
-//			msg.innerHTML = 'Hand id:' + id + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) + 
+//			msg.innerHTML = 'Hand id:' + id + ' x:' + hand.stabilizedPalmPosition[0].toFixed(0) +
 //				' y:' + hand.stabilizedPalmPosition[1].toFixed(0) + ' z:' + hand.stabilizedPalmPosition[2].toFixed(0);
 
 			box.position.set( hand.stabilizedPalmPosition[0], hand.stabilizedPalmPosition[1], hand.stabilizedPalmPosition[2] );
@@ -304,7 +304,7 @@ soundPlus.play();
 		fingerling.outputData = function( id, finger ) {
 
 			msg.innerHTML = 'Finger Method: ' +
-				'finger id:' + id + ' tip x:' + finger.tipPosition[0].toFixed(0) + 
+				'finger id:' + id + ' tip x:' + finger.tipPosition[0].toFixed(0) +
 				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
 			tip.position.set( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2] );
@@ -358,7 +358,7 @@ soundPlus.play();
 		fingerling.outputData = function( id, finger ) {
 
 //			msg.innerHTML = 'Bone Method ~ ' +
-//				'finger tip: ' + id + ' x:' + finger.tipPosition[0].toFixed(0) + 
+//				'finger tip: ' + id + ' x:' + finger.tipPosition[0].toFixed(0) +
 //				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
 //console.log( finger );
@@ -383,7 +383,7 @@ soundPlus.play();
 			}
 
 // Eventually will look at using bone.basis XYZ-axis data; Will it produce more concise code?
-  
+
 			phalanges[3].lookAt( v( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2]  ) );
 			phalanges[2].lookAt( v( finger.dipPosition[0], finger.dipPosition[1], finger.dipPosition[2]  ) );
 			phalanges[1].lookAt( v( finger.pipPosition[0], finger.pipPosition[1], finger.pipPosition[2]  ) );

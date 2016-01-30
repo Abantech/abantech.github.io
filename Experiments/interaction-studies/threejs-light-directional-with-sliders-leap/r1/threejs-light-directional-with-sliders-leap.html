@@ -159,15 +159,16 @@
 		radius = 200;
 		for ( var i = 0; i < number; i++ ) {
 				var geometry = new THREE.BoxGeometry( 15, 100, 30 );
-				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
-				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
+//				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
+//				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
 				var color = 0xffffff * Math.random();
 				var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
 				var mesh = new THREE.Mesh( geometry, material );
 				mesh.castShadow = true;
 				mesh.receiveShadow = true;
-				mesh.position.set( radius * Math.cos( angle * i ) , 50, radius * Math.sin( angle * i )  );
 				mesh.rotation.y = - angle * i;
+				mesh.position.set( radius * Math.cos( angle * i ) , 50, radius * Math.sin( angle * i )  );
+
 				scene.add( mesh );
 
 				helper = new THREE.EdgesHelper( mesh );
@@ -181,15 +182,16 @@
 
 		for ( var i = 0; i < number; i++ ) {
 				var geometry = new THREE.BoxGeometry( 15, 20, 100 );
-				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
-				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
+//				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
+//				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
 				var color = 0xffffff * Math.random();
 				var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
 				var mesh = new THREE.Mesh( geometry, material );
 				mesh.castShadow = true;
 				mesh.receiveShadow = true;
-				mesh.position.set( radius * Math.cos( angle * i ) , 110, radius * Math.sin( angle * i )  );
 				mesh.rotation.y = - angle * i;
+				mesh.position.set( radius * Math.cos( angle * i ) , 110, radius * Math.sin( angle * i )  );
+
 				scene.add( mesh );
 
 				helper = new THREE.EdgesHelper( mesh );
