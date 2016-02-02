@@ -5,6 +5,8 @@ var sphereCreated = false;
 var bothHandsNeutral = false;
 var leapHelper;
 
+var selectedAsset = null;
+
 var baseBoneRotation;
 var armMeshes = [];
 var boneMeshes = [];
@@ -30,7 +32,7 @@ ActionToFunctionMapping = {
 
             baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2))
 
-            Efficio.EventManager.RaiseEvent('MyNewEvent', { myData1: 1, myData2: 2 })
+            //Efficio.EventManager.RaiseEvent('MyNewEvent', { myData1: 1, myData2: 2 })
         }
     }, {
         Topic: "Leap",
@@ -61,26 +63,94 @@ ActionToFunctionMapping = {
                 }
             }
         }
+    },
+    {
+        Topic: "RightHandPronation",
+        Source: "Input.Processed.Efficio",
+        ExecutionPrerequisite: function () {
+            return !(CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly');
+        },
+        Action: function (data) {
+            CadHelper.Tools.Navigation.SetActiveNavigationTool('dolly');
+        }
+    },
+    {
+        Topic: "RightHandPronation",
+        Source: "Input.Processed.Efficio",
+        ExecutionPrerequisite: function () {
+            return CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly';
+        },
+        Action: function (data) {
+            if (data.GestureInformation.EndPosition) {
+                var zoomAmount = 2;
 
-    }, {
+                var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
+
+                changeZ = changeZ > 50 ? 50 : changeZ;
+                changeZ = changeZ < -50 ? -50 : changeZ;
+
+                if (changeZ > 0) {
+                    CadHelper.Navigation.Zoom.ZoomIn(zoomAmount * (changeZ / 50));
+                }
+                else {
+                    CadHelper.Navigation.Zoom.ZoomOut(zoomAmount * ((-1 * changeZ) / 50));
+                }
+            }
+        }
+    },
+    {
         Topic: "RightHandThumbIndexPinch",
         Source: "Input.Processed.Efficio",
+        ExecutionPrerequisite: function () {	
+            return selectedAsset == null;
+        },
         Action: function (data) {
             var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
             var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
 
+            CorrectCoordinates(appAdjustedPinchLocation);
+
             var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
 
-            viewer3D.isolate(viewer3D.model.getData().fragments.fragId2dbId[testFragment.Fragment.fragId]);
+            //selectedAsset = testFragment.Fragment;
+            selectedAsset = CadHelper.AssetManagement.GetFragmentById(10);
         }
-    }, {
-        Topic: "MyNewEvent",
-        Source: "Event Manager",
+    },
+    {
+        Topic: "RightHandThumbIndexPinch",
+        Source: "Input.Processed.Efficio",
+        ExecutionPrerequisite: function () {
+            return selectedAsset != null;
+        },
         Action: function (data) {
-            alert(JSON.stringify(data));
+            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
+
+            CorrectCoordinates(appAdjustedPinchLocation);
+
+            CadHelper.AssetManagement.Transformer.Translate(selectedAsset, appAdjustedPinchLocation);
         }
     },
 
+        // {
+        //    Topic: "RightHandThumbIndexPinch",
+        //    Source: "Input.Processed.Efficio",
+        //    Action: function (data) {
+        //        var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+        //        var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
+
+        //        var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
+
+        //        viewer3D.isolate(viewer3D.model.getData().fragments.fragId2dbId[testFragment.Fragment.fragId]);
+        //    }
+    //},
+     {
+         Topic: "MyNewEvent",
+         Source: "Event Manager",
+         Action: function (data) {
+             alert(JSON.stringify(data));
+         }
+     },
             //{
             //    Topic: "RightHandZeroFingersExtended",
             //    Source: "Input.Processed.Efficio",
@@ -89,7 +159,7 @@ ActionToFunctionMapping = {
             //    },
             //    Action: function (data) {
             //        if (data.GestureInformation.EndPosition) {
-            //            var panAmount = .1;
+            //            var panAmount = 2;
 
             //            var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
 
@@ -114,7 +184,7 @@ ActionToFunctionMapping = {
             //    },
             //    Action: function (data) {
             //        if (data.GestureInformation.EndPosition) {
-            //            var rotateAmount = 1.5;
+            //            var rotateAmount = .1;
 
             //            var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
 
@@ -130,13 +200,37 @@ ActionToFunctionMapping = {
             //        }
             //    }
             //},
+             //{
+             //    Topic: "RightHandZeroFingersExtended",
+             //    Source: "Input.Processed.Efficio",
+             //    ExecutionPrerequisite: function () {
+             //        return CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly';
+             //    },
+             //    Action: function (data) {
+             //        if (data.GestureInformation.EndPosition) {
+             //            var zoomAmount = 2;
+
+             //            var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
+
+             //            changeZ = changeZ > 50 ? 50 : changeZ;
+             //            changeZ = changeZ < -50 ? -50 : changeZ;
+
+             //            if (changeZ > 0) {
+             //                CadHelper.Navigation.Zoom.ZoomIn(zoomAmount * (changeZ / 50));
+             //            }
+             //            else {
+             //                CadHelper.Navigation.Zoom.ZoomOut(zoomAmount * ((-1 * changeZ) / 50));
+             //            }
+             //        }
+             //    }
+             //},
             //{
             //    Topic: "BothHandsNeutral",
             //    Source: "Input.Processed.Efficio",
             //    Action: function (data) {
             //        bothHandsNeutral = true;
 
-            //        var explodeFactor = (data.GestureInformation.DistanceX - 100) / data.Input.Input.interactionBox.width
+            //        var explodeFactor = (data.GestureInformation.DistanceX - 100) / data.Input.Frame.interactionBox.width
             //        if (explodeFactor > 1) {
             //            explodeFactor = 1;
             //        }
@@ -201,6 +295,12 @@ ActionToFunctionMapping = {
         'Isolate *part': function (part) { CadHelper.Tools.Model.IsolateObject(part) },
         'Clear Selection': function () { CadHelper.Tools.Model.ClearSelection(); }
     }
+}
+
+function CorrectCoordinates(position) {
+    position[0] = position[0] + 15;
+    position[1] = position[1] - 30;
+    position[2] = position[2] - 10;
 }
 
 

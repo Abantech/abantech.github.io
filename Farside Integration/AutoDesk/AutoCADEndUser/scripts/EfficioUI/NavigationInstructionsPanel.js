@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////
 AutodeskNamespace("Autodesk.ADN.Viewing.Extension");
 
-Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel = function (viewer, options) {
+Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel = function (viewer, options) {
 
     Autodesk.Viewing.Extension.call(this, viewer, options);
     var _isMinimized = false;
@@ -28,7 +28,7 @@ Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel = function (viewer, optio
 
         _panel.setVisible(true);
 
-        console.log('Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel loaded');
+        console.log('Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel loaded');
         _loaded = true;
         return true;
     }
@@ -41,7 +41,7 @@ Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel = function (viewer, optio
 
         _panel.setVisible(false);
 
-        console.log('Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel unloaded');
+        console.log('Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel unloaded');
         _loaded = false;
         return true;
     }
@@ -98,7 +98,7 @@ Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel = function (viewer, optio
           this,
           parentContainer,
           id,
-          'Verbal Instructions',
+          'Navigation Instructions',
           { shadow: true });
 
         $(_thisPanel.container).addClass('docking-panel');
@@ -108,37 +108,38 @@ Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel = function (viewer, optio
         //
         /////////////////////////////////////////////////////////////
 
-        var micInstructions;
         var navInstructions;
         var anchor = null;
         var anchorID = guid();
+        var micConnected = Efficio.DeviceManager.RegisteredDevices.Microphone && Efficio.DeviceManager.RegisteredDevices.Microphone.IsConnected();
 
-        if (Efficio.DeviceManager.RegisteredDevices.Microphone && Efficio.DeviceManager.RegisteredDevices.Microphone.IsConnected()) {
-            micInstructions = 'T';
+        if (micConnected) {
             navInstructions = 'say or click';
         }
         else {
-            micInstructions = 'Connect a microphone and t';
             navInstructions = 'click';
         }
 
         var html = [
 
           '<div class="instructions"><br/>',
-          'Efficio has a speech recognition engine that allows for control of any application using only your voice.',
+          'Efficio allows for environment-aware NUI navigation.',
           '<br/><br/>',
-          micInstructions + 'ry the following commands:',
-          '<ul>',
-          '<li>Rotate 90 Degrees Clockwise</li>',
-          '<li>Rotate 90 Degrees Counter-clockwise</li>',
-          '<li>Isolate Floors</li>',
-          '<li>Isolate Walls</li>',
-          '<li>Isolate Plumbing Fixtures</li>',
-          '<li>Clear Selection</li>',
-          '</ul>',
-
+          'The gesture for navigation is making a fist like the one pictured below.',
           '<br/><br/>',
-          'To move on to the next part of the demo, ' + navInstructions + ' <a href="#" id="' + anchorID + '">"Try Navigation"</a>',
+          '<img class="displayed" src="images/fist.svg" height="64" width="64">',
+          '<br/>',
+          '<a href="http://www.freepik.com">Designed by Freepik</a>',
+          '<br/><br/>',
+          'While the active navigation tool in AutoCAD is orbit, making this gesture and moving your hand left or right will make the camera orbit around the model.',
+          '<br/><br/>',
+          'While the active navigation tool in AutoCAD is pan, making this gesture and moving your hand left or right will make the camera pan.',
+          '<br/><br/>',
+          'While the active navigation tool in AutoCAD is dolly, making this gesture and moving your hand forward or back will make the camera zoom.',
+          '<br/><br/>',
+          'To change navigation modes, click the icons on the AutoCAD toolbar' + (micConnected ? ' or say "Navigation Orbit", "Navigation Pan", or "Navigation Dolly".' : '.'),
+          '<br/><br/>',
+          //'To move on to the next part of the demo, ' + navInstructions + ' <a href="#" id="' + anchorID + '">"Try Navigation"</a>',
           '</div>'
         ];
 
@@ -249,19 +250,24 @@ Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel = function (viewer, optio
       'div.instructions {',
         'color: #fff;',
         'padding: 10px',
-      '}'
+      '}',
+
+      'img.displayed {',
+      '  display: block;',
+      '  margin-left: auto;',
+      '  margin-right: auto }',
 
     ].join('\n');
 
     $('<style type="text/css">' + css + '</style>').appendTo('head');
 };
 
-Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel.prototype =
+Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel.prototype =
   Object.create(Autodesk.Viewing.Extension.prototype);
 
-Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel.prototype.constructor =
-  Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel;
+Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel.prototype.constructor =
+  Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel;
 
 Autodesk.Viewing.theExtensionManager.registerExtension(
-  'Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel',
-  Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel);
+  'Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel',
+  Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel);

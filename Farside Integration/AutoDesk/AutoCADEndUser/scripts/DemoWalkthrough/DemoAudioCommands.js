@@ -69,7 +69,11 @@
 }
 
 EfficioConfiguration.ActionToFunctionMapping.AudioCommands["Try Navigation"] = function () {
-    alert("Put navigation instructions here");
+    var navBox = CadHelper.viewer.getExtension('Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel');
+    var verbalInstructions = CadHelper.viewer.getExtension('Autodesk.ADN.Viewing.Extension.VerbalInstructionsPanel');
+
+    verbalInstructions.unload();
+    CadHelper.viewer.loadExtension('Autodesk.ADN.Viewing.Extension.NavigationInstructionsPanel');
 }
 
 EfficioConfiguration.ActionToFunctionMapping.AudioCommands["Rotate :degrees degrees :direction"] = function (degrees, direction) {

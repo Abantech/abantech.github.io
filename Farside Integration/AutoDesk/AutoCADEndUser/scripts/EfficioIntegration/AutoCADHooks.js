@@ -24,8 +24,12 @@ function EfficioAutoCADHelper(viewer) {
             self.AssetManagement.UpdateScene();
         },
 
-        GetAssetByID(id) {
+        GetAssetByID: function(id) {
             return self.viewer.impl.scene.getObjectById(id);
+        },
+
+        GetFragmentById: function (id){
+            return self.viewer.impl.getFragmentProxy(self.viewer.model, id)
         },
 
         UpdateScene: function () {
@@ -35,24 +39,26 @@ function EfficioAutoCADHelper(viewer) {
 
         Transformer:
             {
-                Translate: function (flagProxy, vec3) {
-                    flagProxy.getAnimTransform();
-                    flagProxy.position.copy(vec3);
-                    flagProxy.updateAnimTransform();
+                Translate: function (fragProxy, pos) {
+                    vec3 = new THREE.Vector3(pos[0], pos[1], pos[2]);
+                    fragProxy.getAnimTransform();
+                    fragProxy.position.copy(vec3);
+                    fragProxy.updateAnimTransform();
 
                 },
 
-                Scale: function (flagProxy, vec3) {
-                    flagProxy.getAnimTransform();
-                    flagProxy.scale.copy(vec3);
-                    flagProxy.updateAnimTransform();
+                Scale: function (fragProxy, pos) {
+                    vec3 = new THREE.Vector3(pos[0], pos[1], pos[2]);
+                    fragProxy.getAnimTransform();
+                    fragProxy.scale.copy(vec3);
+                    fragProxy.updateAnimTransform();
 
                 },
 
-                Rotate: function (flagProxy, axis, deg) {
-                    flagProxy.getAnimTransform();
-                    flagProxy.quaternion.setFromAxisAngle(axis, THREE.Math.degToRad(deg));
-                    flagProxy.updateAnimTransform();
+                Rotate: function (fragProxy, axis, deg) {
+                    fragProxy.getAnimTransform();
+                    fragProxy.quaternion.setFromAxisAngle(axis, THREE.Math.degToRad(deg));
+                    fragProxy.updateAnimTransform();
 
                 },
             },
@@ -107,6 +113,10 @@ function EfficioAutoCADHelper(viewer) {
 
             return result;
         },
+
+        GetThreeMeshForFragment: function (fragment) {
+            return self.viewer.impl.getRenderProxy(self.Tools.Model.Model, fragment.fragId);
+        }
     }
 
     this.Navigation = {

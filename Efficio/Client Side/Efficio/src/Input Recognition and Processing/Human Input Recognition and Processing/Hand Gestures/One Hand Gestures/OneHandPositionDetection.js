@@ -7,6 +7,8 @@
     var oneHandPositionDetector;
     var ActiveGesturesDictionary = Efficio.InputAndGestureRecognition.ActiveGesturesDictionary;
 
+    //TODO add start and end hands/positions to all gestures
+
     /*
           Name:           {Side} Hand Detected
    
@@ -281,6 +283,16 @@
         var gestureName = side + 'HandPronation'
         if (hand.IsProne()) {
             var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+            
+            if (!gestureInformation.StartPosition) {
+                gestureInformation.StartPosition = hand.palmPosition;
+            }
+
+            if (!gestureInformation.StartHand) {
+                gestureInformation.StartHand = hand;
+            }
+
+            gestureInformation.EndPosition = hand.palmPosition;
 
             bus.publish({
                 channel: "Input.Processed.Efficio",
