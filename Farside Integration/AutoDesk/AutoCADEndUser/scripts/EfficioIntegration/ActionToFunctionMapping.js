@@ -19,7 +19,6 @@ ActionToFunctionMapping = {
         Action: function (data) {
             viewer3D.navigation.setPosition(startPosition);
             viewer3D.navigation.setTarget(startTarget);
-            appReady = true;
 
             CadHelper = new EfficioAutoCADHelper(viewer3D);
             leapHelper = Efficio.DeviceManager.RegisteredDevices.LeapMotion.Helper;
@@ -32,7 +31,7 @@ ActionToFunctionMapping = {
 
             baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2))
 
-            //Efficio.EventManager.RaiseEvent('MyNewEvent', { myData1: 1, myData2: 2 })
+            appReady = true;
         }
     }, {
         Topic: "Leap",
@@ -101,7 +100,7 @@ ActionToFunctionMapping = {
     {
         Topic: "RightHandThumbIndexPinch",
         Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function () {	
+        ExecutionPrerequisite: function () {
             return selectedAsset == null;
         },
         Action: function (data) {
@@ -112,8 +111,8 @@ ActionToFunctionMapping = {
 
             var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
 
-            //selectedAsset = testFragment.Fragment;
-            selectedAsset = CadHelper.AssetManagement.GetFragmentById(10);
+            selectedAsset = testFragment.Fragment;
+            CadHelper.Tools.Model.SelectObjectByFragmentId(viewer3D.model.getData().fragments.fragId2dbId[selectedAsset.fragId]);
         }
     },
     {
@@ -131,6 +130,13 @@ ActionToFunctionMapping = {
             CadHelper.AssetManagement.Transformer.Translate(selectedAsset, appAdjustedPinchLocation);
         }
     },
+         {
+             Topic: "SelectionChanged",
+             Source: "AutoDesk",
+             Action: function (data) {
+
+             }
+         },
 
         // {
         //    Topic: "RightHandThumbIndexPinch",
@@ -143,14 +149,8 @@ ActionToFunctionMapping = {
 
         //        viewer3D.isolate(viewer3D.model.getData().fragments.fragId2dbId[testFragment.Fragment.fragId]);
         //    }
-    //},
-     {
-         Topic: "MyNewEvent",
-         Source: "Event Manager",
-         Action: function (data) {
-             alert(JSON.stringify(data));
-         }
-     },
+        //},
+
             //{
             //    Topic: "RightHandZeroFingersExtended",
             //    Source: "Input.Processed.Efficio",
@@ -291,8 +291,8 @@ ActionToFunctionMapping = {
     AudioCommands: {
         'Create Sphere': function () { CreateSpheres(); },
         'Navigation :tool': function (tool) { CadHelper.Tools.Navigation.SetActiveNavigationTool(tool); },
-        'Select *part': function (part) { CadHelper.Tools.Model.SelectObject(part) },
-        'Isolate *part': function (part) { CadHelper.Tools.Model.IsolateObject(part) },
+        'Select *part': function (part) { CadHelper.Tools.Model.SelectObjectByName(part) },
+        'Isolate *part': function (part) { CadHelper.Tools.Model.IsolateObjectByName(part) },
         'Clear Selection': function () { CadHelper.Tools.Model.ClearSelection(); }
     }
 }

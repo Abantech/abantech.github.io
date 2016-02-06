@@ -4,6 +4,8 @@ function EfficioAutoCADHelper(viewer) {
     self = this;
     self.viewer = viewer;
 
+    RegisterEventsToEfficio();
+
     this.AssetManagement = {
         CreateAsset: function (mesh, materialName) {
             if (!materialName) {
@@ -211,7 +213,7 @@ function EfficioAutoCADHelper(viewer) {
         Model: {
             Model: self.viewer.model,
 
-            SelectObject: function (objectName) {
+            SelectObjectByName: function (objectName) {
                 self.viewer.getObjectTree(function (objectTree) {
                     var obj = FindObject(objectName, objectTree.root)
 
@@ -221,7 +223,11 @@ function EfficioAutoCADHelper(viewer) {
                 });
             },
 
-            IsolateObject: function (objectName) {
+            SelectObjectByFragmentId: function (fragId) {
+                self.viewer.select(viewer3D.model.getData().fragments.fragId2dbId[fragId]);
+            },
+
+            IsolateObjectByName: function (objectName) {
                 self.viewer.getObjectTree(function (objectTree) {
                     var obj = FindObject(objectName, objectTree.root)
 
@@ -229,6 +235,10 @@ function EfficioAutoCADHelper(viewer) {
                         self.viewer.isolate(obj.dbId);
                     }
                 });
+            },
+
+            IsolateObjectByFragmentId: function (fragId) {
+                self.viewer.isolate(viewer3D.model.getData().fragments.fragId2dbId[fragId]);
             },
 
             ClearSelection: function () {
@@ -277,4 +287,110 @@ function FindObject(objectName, node) {
     }
 
     return object;
+}
+
+function RegisterEventsToEfficio() {
+    var source = 'AutoDesk';
+
+    self.viewer.addEventListener(Autodesk.Viewing.ANIMATION_READY_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'AnimationReady', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.CAMERA_CHANGE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'CameraChange', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.CUTPLANES_CHANGE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'CutplanesChange', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.ESCAPE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'Escape', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.EXPLODE_CHANGE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ExplodeChange', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.FULLSCREEN_MODE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'FullscreenMode', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'GeometryLoaded', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.HIDE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'Hide', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.HIGHLIGHT_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'Highlight', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.ISOLATE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'Isolate', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.LAYER_VISIBILITY_CHANGED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'LayerVisibilityChanged', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ModelRootLoaded', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.NAVIGATION_MODE_CHANGED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'NavigationModeChanged', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_CREATED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ObjectTreeCreated', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.OBJECT_TREE_UNAVAILABLE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ObjectTreeUnavailable', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.PROGRESS_UPDATE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ProgressUpdate', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.RENDER_OPTION_CHANGED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'RenderOptionChanged', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.RESET_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'Reset', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'SelectionChanged', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.SHOW_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'Show', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.TOOLBAR_CREATED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ToolbarCreated', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.TOOL_CHANGE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ToolChange', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.VIEWER_RESIZE_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ViewerResize', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.VIEWER_STATE_RESTORED_EVENT, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ViewerStateRestored', { Event: event })
+    });
+
+    self.viewer.addEventListener(Autodesk.Viewing.VIEWER_UNINITIALIZED, function (event) {
+        Efficio.EventManager.RaiseEvent(source, 'ViewerUninitialized', { Event: event })
+    });
+
+
 }

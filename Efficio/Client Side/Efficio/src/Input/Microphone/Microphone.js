@@ -4,33 +4,38 @@
 
     function Initialize(LeapConfiguration) {
 
-        if (typeof ActionToFunctionMapping.AudioCommands != 'undefined') {
-            // Add our commands to annyang
-            annyang.addCommands(ActionToFunctionMapping.AudioCommands);
-        }
-
         var device = {
             Name: 'Microphone',
             Manufacturer: 'Unknown',
             Device: annyang
         }
 
+        if (annyang) {
+            if (typeof ActionToFunctionMapping.AudioCommands != 'undefined') {
+                // Add our commands to annyang
+                annyang.addCommands(ActionToFunctionMapping.AudioCommands);
+            }
+
+            annyang.addCallback('start', function () {
+                connected = true;
+            });
+
+            annyang.addCallback('end', function () {
+                connected = false;
+            });
+        }
+        
         // Add microphone to Device Manager
         deviceManager.Add(source, device, function () {
             return connected;
         });
 
-        annyang.addCallback('start', function () {
-            connected = true;
-        });
-
-        annyang.addCallback('end', function () {
-            connected = false;
-        });
     }
 
     function Start() {
-        annyang.start();
+        if (annyang) {
+            annyang.start();
+        }
     }
 
     return {
