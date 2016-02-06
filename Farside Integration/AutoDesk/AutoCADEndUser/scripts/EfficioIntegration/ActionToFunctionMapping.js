@@ -1,9 +1,11 @@
-﻿Test = {
+Test = {
 }
 
 var sphereCreated = false;
 var bothHandsNeutral = false;
 var leapHelper;
+var isOrbiting = false;
+var isPinching = false;
 
 var selectedAsset = null;
 
@@ -100,10 +102,11 @@ ActionToFunctionMapping = {
     {
         Topic: "RightHandThumbIndexPinch",
         Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function () {
-            return selectedAsset == null;
+        ExecutionPrerequisite: function () {	
+            return selectedAsset == null && !isOrbiting;
         },
         Action: function (data) {
+			
             var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
             var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
 
@@ -122,14 +125,26 @@ ActionToFunctionMapping = {
             return selectedAsset != null;
         },
         Action: function (data) {
+			isPinching = true;
             var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
             var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
 
             CorrectCoordinates(appAdjustedPinchLocation);
 
             CadHelper.AssetManagement.Transformer.Translate(selectedAsset, appAdjustedPinchLocation);
+			setTimeout(function() { isPinching = false }, 200);
         }
     },
+    {
+        Topic: "LeftHandThumbIndexPinch",
+        Source: "Input.Processed.Efficio",
+        ExecutionPrerequisite: function () {
+            return selectedAsset != null;
+        },
+        Action: function (data) {
+            selectedAsset = null;
+        }
+    },	
          {
              Topic: "SelectionChanged",
              Source: "AutoDesk",
@@ -149,57 +164,62 @@ ActionToFunctionMapping = {
 
         //        viewer3D.isolate(viewer3D.model.getData().fragments.fragId2dbId[testFragment.Fragment.fragId]);
         //    }
-        //},
+    //},
+     {
+         Topic: "MyNewEvent",
+         Source: "Event Manager",
+         Action: function (data) {
+             alert(JSON.stringify(data));
+         }
+     },
+	 {
+                Topic: "LeftHandZeroFingersExtended",
+                Source: "Input.Processed.Efficio",
+                Action: function (data) {
+                    if (data.GestureInformation.EndPosition) {
+                        var panAmount = 2;
 
-            //{
-            //    Topic: "RightHandZeroFingersExtended",
-            //    Source: "Input.Processed.Efficio",
-            //    ExecutionPrerequisite: function () {
-            //        return CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'pan';
-            //    },
-            //    Action: function (data) {
-            //        if (data.GestureInformation.EndPosition) {
-            //            var panAmount = 2;
+                        var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
 
-            //            var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
-
-            //            changeX = changeX > 50 ? 50 : changeX;
-            //            changeX = changeX < -50 ? -50 : changeX;
+                        changeX = changeX > 50 ? 50 : changeX;
+                        changeX = changeX < -50 ? -50 : changeX;
 
 
-            //            if (changeX > 0) {
-            //                CadHelper.Navigation.Panning.PanRight(panAmount * (changeX / 50));
-            //            }
-            //            else {
-            //                CadHelper.Navigation.Panning.PanLeft(panAmount * ((-1 * changeX) / 50));
-            //            }
-            //        }
-            //    }
-            //},
-            //{
-            //    Topic: "RightHandZeroFingersExtended",
-            //    Source: "Input.Processed.Efficio",
-            //    ExecutionPrerequisite: function () {
-            //        return CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'orbit';
-            //    },
-            //    Action: function (data) {
-            //        if (data.GestureInformation.EndPosition) {
-            //            var rotateAmount = .1;
+                        if (changeX > 0) {
+                            CadHelper.Navigation.Panning.PanRight(panAmount * (changeX / 50));
+                        }
+                        else {
+                            CadHelper.Navigation.Panning.PanLeft(panAmount * ((-1 * changeX) / 50));
+                        }
+                    }
+                }
+            },
+            {
+                Topic: "RightHandZeroFingersExtended",
+                Source: "Input.Processed.Efficio",
+				ExecutionPrerequisite: function(){
+					return !isPinching;
+				},
+                Action: function (data) {
+                    if (data.GestureInformation.EndPosition) {
+                        isOrbiting = true;
+						var rotateAmount = .1;
 
-            //            var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
+                        var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
 
-            //            changeX = changeX > 50 ? 50 : changeX;
-            //            changeX = changeX < -50 ? -50 : changeX;
+                        changeX = changeX > 50 ? 50 : changeX;
+                        changeX = changeX < -50 ? -50 : changeX;
 
-            //            if (changeX > 0) {
-            //                CadHelper.Navigation.Rotation.RotateClockwise(rotateAmount * (changeX / 50));
-            //            }
-            //            else {
-            //                CadHelper.Navigation.Rotation.RotateCounterClockwise(rotateAmount * ((-1 * changeX) / 50));
-            //            }
-            //        }
-            //    }
-            //},
+                        if (changeX > 0) {
+                            CadHelper.Navigation.Rotation.RotateClockwise(rotateAmount * (changeX / 50));
+                        }
+                        else {
+                            CadHelper.Navigation.Rotation.RotateCounterClockwise(rotateAmount * ((-1 * changeX) / 50));
+                        }
+						setTimeout(function(){ isOrbiting = false}, 200)
+                    }
+                }
+            },
              //{
              //    Topic: "RightHandZeroFingersExtended",
              //    Source: "Input.Processed.Efficio",
