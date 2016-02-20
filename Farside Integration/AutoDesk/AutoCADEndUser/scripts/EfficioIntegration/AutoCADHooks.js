@@ -26,12 +26,8 @@ function EfficioAutoCADHelper(viewer) {
             self.AssetManagement.UpdateScene();
         },
 
-        GetAssetByID: function(id) {
+        GetAssetByID: function (id) {
             return self.viewer.impl.scene.getObjectById(id);
-        },
-
-        GetFragmentById: function (id){
-            return self.viewer.impl.getFragmentProxy(self.viewer.model, id)
         },
 
         UpdateScene: function () {
@@ -72,6 +68,7 @@ function EfficioAutoCADHelper(viewer) {
                     self.viewer.impl.scene.updateMatrixWorld(true);
                     var position = new THREE.Vector3();
                     position.getPositionFromMatrix(mesh.matrixWorld);
+
                     return position;
                 },
 
@@ -214,37 +211,61 @@ function EfficioAutoCADHelper(viewer) {
             Model: self.viewer.model,
 
             SelectObjectByName: function (objectName) {
-                self.viewer.getObjectTree(function (objectTree) {
-                    var obj = FindObject(objectName, objectTree.root)
+                var obj = self.Tools.GetObjectByName(objectName);
 
-                    if (obj) {
-                        self.viewer.select(obj.dbId);
-                    }
-                });
+                if (obj) {
+                    self.viewer.select(obj.dbId);
+                }
             },
 
             SelectObjectByFragmentId: function (fragId) {
-                self.viewer.select(viewer3D.model.getData().fragments.fragId2dbId[fragId]);
+                self.viewer.select(self.viewer.model.getData().fragments.fragId2dbId[fragId]);
             },
 
             IsolateObjectByName: function (objectName) {
-                self.viewer.getObjectTree(function (objectTree) {
-                    var obj = FindObject(objectName, objectTree.root)
+                var obj = self.Tools.GetObjectByName(objectName);
 
-                    if (obj) {
-                        self.viewer.isolate(obj.dbId);
-                    }
-                });
+                if (obj) {
+                    self.viewer.isolate(obj.dbId);
+                }
             },
 
             IsolateObjectByFragmentId: function (fragId) {
-                self.viewer.isolate(viewer3D.model.getData().fragments.fragId2dbId[fragId]);
+                self.viewer.isolate(self.viewer.model.getData().fragments.fragId2dbId[fragId]);
             },
 
             ClearSelection: function () {
                 self.viewer.clearSelection();
                 self.viewer.isolate();
             },
+
+            GetObjectByName: function (objectName) {
+                return FindObject(objectName, self.viewer.getRoot())
+            },
+
+            GetFragmentById: function (id) {
+                return self.viewer.impl.getFragmentProxy(self.viewer.model, id)
+            },
+
+            GetFragmentByName: function (fragmentName) {
+                var obj = self.Tools.GetObjectByName(objectName);
+
+                if (obj) {
+                    return self.Tools.Model.GetFragmentById(obj.fragIds)
+                }
+            },
+
+            GetFragmentNameById: function (fragId) {
+                
+            },
+
+            GetNodeByFragmentId: function(id) {
+            },
+
+            GetNodeByName: function (fragmentName) {
+                return obj = self.Tools.GetObjectByName(fragmentName);
+            },
+
 
             GetMinAndMaxCoordinates: function () {
                 // Get Scene mins and maxes

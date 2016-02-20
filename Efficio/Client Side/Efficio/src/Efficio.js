@@ -73,7 +73,8 @@ function (hirp, ami, constraintsEngine, comm, eventManager, internalScene, sysNo
                 Efficio = {
                     Started: false,
                     CheckReady: CheckReady,
-                    IsReady: false
+                    IsReady: false,
+                    MessagingSystem: bus
                 };
             }
 

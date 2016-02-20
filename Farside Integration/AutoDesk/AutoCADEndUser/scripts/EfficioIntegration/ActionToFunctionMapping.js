@@ -1,4 +1,4 @@
-Test = {
+﻿Test = {
 }
 
 var sphereCreated = false;
@@ -31,7 +31,7 @@ ActionToFunctionMapping = {
                 });
             });
 
-            baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2))
+            baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
 
             appReady = true;
         }
@@ -115,7 +115,7 @@ ActionToFunctionMapping = {
             var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
 
             selectedAsset = testFragment.Fragment;
-            CadHelper.Tools.Model.SelectObjectByFragmentId(viewer3D.model.getData().fragments.fragId2dbId[selectedAsset.fragId]);
+            //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
         }
     },
     {
@@ -166,10 +166,13 @@ ActionToFunctionMapping = {
         //    }
     //},
      {
-         Topic: "MyNewEvent",
-         Source: "Event Manager",
+         Topic: "IndexAndThumbsTouch",
+         Source: "Input.Processed.Efficio",
          Action: function (data) {
-             alert(JSON.stringify(data));
+             window.open(viewer3D.getScreenShot(), '_blank');
+         },
+         FireRestrictions: {
+             FireOnce: true
          }
      },
 	 {

@@ -287,6 +287,7 @@
     <Content Include="rac.json" />
     <Content Include="scripts\DemoWalkthrough\DemoA2FM.js" />
     <Content Include="scripts\DemoWalkthrough\DemoAudioCommands.js" />
+    <Content Include="scripts\EfficioIntegration\IndexAndThumbsTouch.js" />
     <Content Include="scripts\EfficioUI\NavigationInstructionsPanel.js" />
     <Content Include="scripts\EfficioUI\VerbalInstructionsPanel.js" />
     <Content Include="scripts\EfficioUI\InstructionsPanel.js" />

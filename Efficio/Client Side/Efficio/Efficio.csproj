@@ -89,6 +89,7 @@
     <Content Include="src\Logging\SystemNotificationListener.js" />
     <Content Include="src\Metrics\Metrics.js" />
     <Content Include="src\Sequence Execution and Action Scheduling\CollisionDetectionAndGravitySimulation.js" />
+    <Content Include="src\Utils\GuidGenerator.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="libs\" />

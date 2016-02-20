@@ -26,6 +26,15 @@
     <script src="scripts/EfficioIntegration/ActionToFunctionMapping.js"></script>
     <script src="scripts/EfficioIntegration/Configuration/EfficioConfiguration.js"></script>
     <script src="scripts/EfficioIntegration/libs/require.js"></script>
+    <script src="scripts/EfficioIntegration/IndexAndThumbsTouch.js"></script>
+    <!--DEMO SCRIPTS - COMMENT OUT TO REMOVE -->
+        <script src="scripts/DemoWalkthrough/DemoAudioCommands.js"></script>
+        <script src="scripts/DemoWalkthrough/DemoA2FM.js"></script>
+        <script src="scripts/EfficioUI/InstructionsPanel.js"></script>
+        <script src="scripts/EfficioUI/VerbalInstructionsPanel.js"></script>
+        <script src="scripts/EfficioUI/NavigationInstructionsPanel.js"></script>
+    <!--END DEMO SCRIPTS-->
+
     <script>
         var startPosition;
         var startTarget
@@ -38,8 +47,6 @@
 
         function LoadEfficio() {
             if (typeof THREE !== 'undefined') {
-                //startPosition = new THREE.Vector3(1.3378786144487786, -173.6472827527755, 43.798743670623125);
-                //startTarget = new THREE.Vector3(32.199266730988406, -20.571871259540764, -13.058218724829047);
                 startPosition = new THREE.Vector3(1.3378786144487786, -173.6472827527755, 43.798743670623125);
                 startTarget = new THREE.Vector3(32.199266730988406, -20.571871259540764, -13.058218724829047);
                 endPosition = new THREE.Vector3(10.918059264044446, -412.7562526284396, 197.72378494749776);
