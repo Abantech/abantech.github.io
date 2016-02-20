@@ -25,11 +25,11 @@ ActionToFunctionMapping = {
             CadHelper = new EfficioAutoCADHelper(viewer3D);
             leapHelper = Efficio.DeviceManager.RegisteredDevices.LeapMotion.Helper;
 
-            require(['leap-plugins', 'riggedHand'], function () {
-                Efficio.DeviceManager.RegisteredDevices.LeapMotion.Device.use('transform', {
-                    effectiveParent: viewer3D.impl.scene,
-                });
-            });
+            //require(['leap-plugins', 'riggedHand'], function () {
+            //    Efficio.DeviceManager.RegisteredDevices.LeapMotion.Device.use('transform', {
+            //        effectiveParent: viewer3D.impl.scene,
+            //    });
+            //});
 
             baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
 
@@ -59,257 +59,20 @@ ActionToFunctionMapping = {
                         var boneMesh = boneMeshes[countBones] || addMesh(boneMeshes);
                         updateMesh(data.Frame, bone, boneMesh);
 
+
                     }
 
                 }
             }
         }
     },
-    {
-        Topic: "RightHandPronation",
-        Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function () {
-            return !(CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly');
-        },
-        Action: function (data) {
-            CadHelper.Tools.Navigation.SetActiveNavigationTool('dolly');
-        }
-    },
-    {
-        Topic: "RightHandPronation",
-        Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function () {
-            return CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly';
-        },
-        Action: function (data) {
-            if (data.GestureInformation.EndPosition) {
-                var zoomAmount = 2;
-
-                var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
-
-                changeZ = changeZ > 50 ? 50 : changeZ;
-                changeZ = changeZ < -50 ? -50 : changeZ;
-
-                if (changeZ > 0) {
-                    CadHelper.Navigation.Zoom.ZoomIn(zoomAmount * (changeZ / 50));
-                }
-                else {
-                    CadHelper.Navigation.Zoom.ZoomOut(zoomAmount * ((-1 * changeZ) / 50));
-                }
-            }
-        }
-    },
-    {
-        Topic: "RightHandThumbIndexPinch",
-        Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function () {	
-            return selectedAsset == null && !isOrbiting;
-        },
-        Action: function (data) {
-			
-            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
-
-            CorrectCoordinates(appAdjustedPinchLocation);
-
-            var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
-
-            selectedAsset = testFragment.Fragment;
-            //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
-        }
-    },
-    {
-        Topic: "RightHandThumbIndexPinch",
-        Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function () {
-            return selectedAsset != null;
-        },
-        Action: function (data) {
-			isPinching = true;
-            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
-
-            CorrectCoordinates(appAdjustedPinchLocation);
-
-            CadHelper.AssetManagement.Transformer.Translate(selectedAsset, appAdjustedPinchLocation);
-			setTimeout(function() { isPinching = false }, 200);
-        }
-    },
-    {
-        Topic: "LeftHandThumbIndexPinch",
-        Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function () {
-            return selectedAsset != null;
-        },
-        Action: function (data) {
-            selectedAsset = null;
-        }
-    },	
          {
-             Topic: "SelectionChanged",
-             Source: "AutoDesk",
+             Topic: "RightHandAirplane",
+             Source: "Input.Processed.Efficio",
              Action: function (data) {
 
              }
          },
-
-        // {
-        //    Topic: "RightHandThumbIndexPinch",
-        //    Source: "Input.Processed.Efficio",
-        //    Action: function (data) {
-        //        var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-        //        var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
-
-        //        var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
-
-        //        viewer3D.isolate(viewer3D.model.getData().fragments.fragId2dbId[testFragment.Fragment.fragId]);
-        //    }
-    //},
-     {
-         Topic: "IndexAndThumbsTouch",
-         Source: "Input.Processed.Efficio",
-         Action: function (data) {
-             window.open(viewer3D.getScreenShot(), '_blank');
-         },
-         FireRestrictions: {
-             FireOnce: true
-         }
-     },
-	 {
-                Topic: "LeftHandZeroFingersExtended",
-                Source: "Input.Processed.Efficio",
-                Action: function (data) {
-                    if (data.GestureInformation.EndPosition) {
-                        var panAmount = 2;
-
-                        var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
-
-                        changeX = changeX > 50 ? 50 : changeX;
-                        changeX = changeX < -50 ? -50 : changeX;
-
-
-                        if (changeX > 0) {
-                            CadHelper.Navigation.Panning.PanRight(panAmount * (changeX / 50));
-                        }
-                        else {
-                            CadHelper.Navigation.Panning.PanLeft(panAmount * ((-1 * changeX) / 50));
-                        }
-                    }
-                }
-            },
-            {
-                Topic: "RightHandZeroFingersExtended",
-                Source: "Input.Processed.Efficio",
-				ExecutionPrerequisite: function(){
-					return !isPinching;
-				},
-                Action: function (data) {
-                    if (data.GestureInformation.EndPosition) {
-                        isOrbiting = true;
-						var rotateAmount = .1;
-
-                        var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
-
-                        changeX = changeX > 50 ? 50 : changeX;
-                        changeX = changeX < -50 ? -50 : changeX;
-
-                        if (changeX > 0) {
-                            CadHelper.Navigation.Rotation.RotateClockwise(rotateAmount * (changeX / 50));
-                        }
-                        else {
-                            CadHelper.Navigation.Rotation.RotateCounterClockwise(rotateAmount * ((-1 * changeX) / 50));
-                        }
-						setTimeout(function(){ isOrbiting = false}, 200)
-                    }
-                }
-            },
-             //{
-             //    Topic: "RightHandZeroFingersExtended",
-             //    Source: "Input.Processed.Efficio",
-             //    ExecutionPrerequisite: function () {
-             //        return CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly';
-             //    },
-             //    Action: function (data) {
-             //        if (data.GestureInformation.EndPosition) {
-             //            var zoomAmount = 2;
-
-             //            var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
-
-             //            changeZ = changeZ > 50 ? 50 : changeZ;
-             //            changeZ = changeZ < -50 ? -50 : changeZ;
-
-             //            if (changeZ > 0) {
-             //                CadHelper.Navigation.Zoom.ZoomIn(zoomAmount * (changeZ / 50));
-             //            }
-             //            else {
-             //                CadHelper.Navigation.Zoom.ZoomOut(zoomAmount * ((-1 * changeZ) / 50));
-             //            }
-             //        }
-             //    }
-             //},
-            //{
-            //    Topic: "BothHandsNeutral",
-            //    Source: "Input.Processed.Efficio",
-            //    Action: function (data) {
-            //        bothHandsNeutral = true;
-
-            //        var explodeFactor = (data.GestureInformation.DistanceX - 100) / data.Input.Frame.interactionBox.width
-            //        if (explodeFactor > 1) {
-            //            explodeFactor = 1;
-            //        }
-
-            //        viewer3D.explode(explodeFactor);
-
-            //        setTimeout(function () {
-            //            bothHandsNeutral = false;
-            //        }, 200)
-            //    },
-            //    FireRestrictions: {
-            //        FireAfterXFrames: 15
-            //    }
-            //},
-            //{
-            //    Topic: "RightHandUlnarDeviation",
-            //    Source: "Input.Processed.Efficio",
-            //    Action: function (data) {
-            //        if (!bothHandsNeutral) {
-            //            //CadHelper.Navigation.Rotation.RotateClockwise(.05);
-            //            var test = CadHelper.AssetManagement.GetAssetByID(myMesh.id);
-            //            test.translateX(10);
-            //            CadHelper.AssetManagement.UpdateScene();
-            //        }
-            //    }
-            //},
-            //{
-            //    Topic: "RightHandRadialDeviation",
-            //    Source: "Input.Processed.Efficio",
-            //    Action: function (data) {
-            //        if (!bothHandsNeutral) {
-            //            //CadHelper.Navigation.Rotation.RotateCounterClockwise(.05);
-            //            var test = CadHelper.AssetManagement.GetAssetByID(myMesh.id);
-            //            test.translateX(-10);
-            //            CadHelper.AssetManagement.UpdateScene();
-            //        }
-            //    }
-            //},
-            //{
-            //    Topic: "LeftHandUlnarDeviation",
-            //    Source: "Input.Processed.Efficio",
-            //    Action: function (data) {
-            //        if (!bothHandsNeutral) {
-            //            CadHelper.Navigation.Zoom.ZoomIn(2);
-            //        }
-            //    }
-            //},
-            //{
-            //    Topic: "LeftHandRadialDeviation",
-            //    Source: "Input.Processed.Efficio",
-            //    Action: function (data) {
-            //        if (!bothHandsNeutral) {
-            //            CadHelper.Navigation.Zoom.ZoomOut(2);
-            //        }
-            //    }
-            //}
     ],
     AudioCommands: {
         'Create Sphere': function () { CreateSpheres(); },
@@ -325,8 +88,6 @@ function CorrectCoordinates(position) {
     position[1] = position[1] - 30;
     position[2] = position[2] - 10;
 }
-
-
 
 function CreateSpheres() {
     //create material red

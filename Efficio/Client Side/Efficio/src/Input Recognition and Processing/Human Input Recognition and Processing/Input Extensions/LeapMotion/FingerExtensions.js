@@ -21,10 +21,35 @@
         return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) + (z2 - z1) * (z2 - z1))
     }
 
+    function AngleToFinger(finger1, useRadians) {
+        var finger2 = this;
+
+        var finger0Vector = new THREE.Vector3(finger1.tipPosition[0], finger1.tipPosition[1], finger1.tipPosition[2]);
+        var finger1Vector = new THREE.Vector3(finger2.tipPosition[0], finger2.tipPosition[1], finger2.tipPosition[2]);
+
+        var a = finger1.length;
+        var b = finger2.length;
+        var c = finger0Vector.distanceTo(finger1Vector);
+
+        var numerator = (a * a) + (b * b) - (c * c);
+        var denominator = (2 * a * b)
+
+        var angle = Math.acos(numerator / denominator);
+
+        if (useRadians) {
+            return angle;
+        }
+
+        return THREE.Math.radToDeg(angle);
+    }
+
+
+
     function ExtendClasses() {
         var extensions = {
             GetFingerLabel: GetFingerLabel,
-            DistanceToFinger: DistanceToFinger
+            DistanceToFinger: DistanceToFinger,
+            AngleToFinger: AngleToFinger
         }
 
         for (var property in extensions) {

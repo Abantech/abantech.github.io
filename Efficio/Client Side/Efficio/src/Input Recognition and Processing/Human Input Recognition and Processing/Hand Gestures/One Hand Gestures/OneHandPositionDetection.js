@@ -435,6 +435,45 @@
         }
     };// END ThumbsUp
 
+    function Airplane(hand, data){
+        var gestureName = side + "HandAirplane";
+        var fingerAdjacencyAngleThreshold = 30;
+
+        // All fingers extended
+        var handIsAirplane = hand.AreRequisiteFingersExtended([0, 1, 2, 3, 4]);
+
+        // Index and middle touching
+        handIsAirplane = handIsAirplane && hand.indexFinger.AngleToFinger(hand.middleFinger) < fingerAdjacencyAngleThreshold;
+
+        // Middle and ring touching
+        handIsAirplane = handIsAirplane && hand.middleFinger.AngleToFinger(hand.ringFinger) < fingerAdjacencyAngleThreshold;
+
+        // Thumb and index separated
+        handIsAirplane = handIsAirplane && hand.thumb.AngleToFinger(hand.indexFinger) > fingerAdjacencyAngleThreshold;
+
+        // Ring and pinky separated
+        handIsAirplane = handIsAirplane && hand.ringFinger.AngleToFinger(hand.pinky) > fingerAdjacencyAngleThreshold;
+
+
+        if (handIsAirplane) {
+            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+
+            bus.publish({
+                channel: "Input.Processed.Efficio",
+                topic: gestureName,
+                source: source,
+                data: {
+                    input: data,
+                    hand: hand,
+                    GestureInformation: gestureInformation
+                }
+            });
+        }
+        else {
+            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+        }
+    }
+
     function ProcessInput(data, hand) {
         // Hand information
         (function HandInformation() {
@@ -458,7 +497,8 @@
                     SideHandNeutral: SideHandNeutral,
                     SideHandFlexAndRotation: SideHandFlexAndRotation,
                     Pinch: Pinch,
-                    ThumbsUp: ThumbsUp
+                    ThumbsUp: ThumbsUp,
+                    Airplane: Airplane
                 }
             }
         }
