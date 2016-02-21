@@ -1,12 +1,33 @@
-
 var viewModels = [
-{ id: "racsimple", label: "Revit House", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTE2LTIxLTIwLTEzLW1hdHZ6ZW05MmJjdW9xNnJlZ2R0Y2RudXYyd2svcmFjX2Jhc2ljX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
-{ id: "racadvanced", label: "Revit School", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTI5LTIxLTEwLTQzLXdxbWpzN3FyZXN0dGtxYXV3NGdxa3phanZoZG8vcmFjX2FkdmFuY2VkX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
-{ id: "crland", label: "Costa Rica Land", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL0hJR1VJVE8lMjAyMS0xMC0xMCUyMGRlZmluaXRpdm8uZHdn" },
-{ id: "cowcatcher", label: "Cow Catcher", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL0NvdyUyMENhdGNoZXIuaXB0" },
-{ id: "wheel", label: "Wheel", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL1doZWVsLmlwdA" }
+{ id: "racsimple", label: "Revit House", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTE2LTIxLTIwLTEzLW1hdHZ6ZW05MmJjdW9xNnJlZ2R0Y2RudXYyd2svcmFjX2Jhc2ljX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
+{ id: "racadvanced", label: "Revit School", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTI5LTIxLTEwLTQzLXdxbWpzN3FyZXN0dGtxYXV3NGdxa3phanZoZG8vcmFjX2FkdmFuY2VkX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
+{ id: "crland", label: "Costa Rica Land", authService: "//localhost:3000/AuthService/AutoDeskAuthNService.Service1.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL0hJR1VJVE8lMjAyMS0xMC0xMCUyMGRlZmluaXRpdm8uZHdn" },
+{ id: "cowcatcher", label: "Cow Catcher", authService: "//localhost:3000/AuthService/AutoDeskAuthNService.Service1.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL0NvdyUyMENhdGNoZXIuaXB0" },
+{ id: "wheel", label: "Wheel", authService: "//localhost:3000/AuthService/AutoDeskAuthNService.Service1.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL1doZWVsLmlwdA" }
 ];
+
+var querystring = window.location.search;
 var currentModel = 0;
+
+if (querystring !== "") {
+    var params = {}, queries, temp, i, l;
+    querystring = querystring.substring(1, querystring.length);
+
+    // Split into key/value pairs
+    queries = querystring.split("&amp;");
+
+    // Convert the array of strings into an object
+    for (i = 0, l = queries.length; i < l; i++) {
+        temp = queries[i].split('=');
+        params[temp[0]] = temp[1];
+    }
+
+    if (params["model"]) {
+        currentModel = params["model"];
+    }
+}
+
+var authServiceUrl = viewModels[currentModel].authService;
 
 var viewer3D;
 var viewer2D;
@@ -24,7 +45,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "GET",
-            url: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken",
+            url: authServiceUrl,
             async: false,
             success: function (data) {
                 data = JSON.parse(data);
