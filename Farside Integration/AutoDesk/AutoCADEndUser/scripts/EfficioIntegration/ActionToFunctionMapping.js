@@ -66,13 +66,29 @@ ActionToFunctionMapping = {
             }
         }
     },
-         {
-             Topic: "RightHandAirplane",
-             Source: "Input.Processed.Efficio",
-             Action: function (data) {
+    {
+        Topic: "RightHandAirplane",
+        Source: "Input.Processed.Efficio",
+        Action: function (data) {
 
-             }
-         },
+        }
+    },
+    {
+        Topic: "RightHandThumbIndexPinch",
+        Source: "Input.Processed.Efficio",
+        Action: function (data) {
+            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
+
+            CorrectCoordinates(appAdjustedPinchLocation);
+
+            var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
+
+            selectedAsset = testFragment.Fragment;
+            CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
+            CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
+        }
+    }
     ],
     AudioCommands: {
         'Create Sphere': function () { CreateSpheres(); },
