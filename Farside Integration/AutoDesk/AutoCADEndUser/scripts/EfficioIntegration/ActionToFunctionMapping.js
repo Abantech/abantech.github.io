@@ -69,8 +69,43 @@ ActionToFunctionMapping = {
     {
         Topic: "RightHandAirplane",
         Source: "Input.Processed.Efficio",
-        Action: function (data) {
+        ExecutionPrerequisite: function ()
+        {
+            return !( CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly' );
+        },
+        Action: function ( data )
+        {
+            CadHelper.Tools.Navigation.SetActiveNavigationTool( 'dolly' );
+        }
+    },
+    {
+        Topic: "RightHandAirplane",
+        Source: "Input.Processed.Efficio",
+        ExecutionPrerequisite: function () {
+            return CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly';
+        },
+        Action: function ( data )
+        {
+            console.log( "AIRPLANE MODE DETECTED!" )
 
+            if ( data.GestureInformation.EndPosition )
+            {
+                var zoomAmount = 2;
+
+                var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
+
+                changeZ = changeZ > 50 ? 50 : changeZ;
+                changeZ = changeZ < -50 ? -50 : changeZ;
+
+                if ( changeZ > 0 )
+                {
+                    CadHelper.Navigation.Zoom.ZoomIn( zoomAmount * ( changeZ / 50 ) );
+                }
+                else
+                {
+                    CadHelper.Navigation.Zoom.ZoomOut( zoomAmount * ( ( -1 * changeZ ) / 50 ) );
+                }
+            }
         }
     },
     {
