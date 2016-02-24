@@ -1,6 +1,6 @@
 ﻿EfficioConfiguration = {
     Devices: {
-        Microphone: true,
+        Microphone: false,
         Kinect: false,
         LeapMotion: true,
         RealSense: false,
