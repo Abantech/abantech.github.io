@@ -3,7 +3,8 @@ var viewModels = [
 { id: "racadvanced", label: "Revit School", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTI5LTIxLTEwLTQzLXdxbWpzN3FyZXN0dGtxYXV3NGdxa3phanZoZG8vcmFjX2FkdmFuY2VkX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
 { id: "crland", label: "Costa Rica Land", authService: "//localhost:3000/AuthService/AutoDeskAuthNService.Service1.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL0hJR1VJVE8lMjAyMS0xMC0xMCUyMGRlZmluaXRpdm8uZHdn" },
 { id: "cowcatcher", label: "Cow Catcher", authService: "//localhost:3000/AuthService/AutoDeskAuthNService.Service1.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL0NvdyUyMENhdGNoZXIuaXB0" },
-{ id: "wheel", label: "Wheel", authService: "//localhost:3000/AuthService/AutoDeskAuthNService.Service1.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL1doZWVsLmlwdA" }
+{ id: "wheel", label: "Wheel", authService: "//localhost:3000/AuthService/AutoDeskAuthNService.Service1.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL1doZWVsLmlwdA" },
+{ id: "Greghouse", label: "Greghouse", authService: "//localhost:3000/AuthService/AutoDeskAuthNService.Service1.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL1NpbXBsZUhvdXNlLmRhZQ" }
 ];
 
 var querystring = window.location.search;
