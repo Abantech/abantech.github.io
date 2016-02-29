@@ -69,28 +69,14 @@ ActionToFunctionMapping = {
     {
         Topic: "RightHandAirplane",
         Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function ()
-        {
-            return !( CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly' );
-        },
         Action: function ( data )
         {
-            CadHelper.Tools.Navigation.SetActiveNavigationTool( 'dolly' );
-        }
-    },
-    {
-        Topic: "RightHandAirplane",
-        Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function () {
-            return CadHelper.Tools.Navigation.GetActiveNavigationTool() === 'dolly';
-        },
-        Action: function ( data )
-        {
-            console.log( "AIRPLANE MODE DETECTED!" )
+            //console.log( "AIRPLANE MODE DETECTED!" )
 
             if ( data.GestureInformation.EndPosition )
             {
-                var zoomAmount = 2;
+				//Zooming functions
+                var zoomAmount = 1;
 
                 var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
 
@@ -105,12 +91,32 @@ ActionToFunctionMapping = {
                 {
                     CadHelper.Navigation.Zoom.ZoomOut( zoomAmount * ( ( -1 * changeZ ) / 50 ) );
                 }
-            }
+
+				//Panning functions
+				var panAmount = 0.5;
+
+				var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
+
+				changeX = changeX > 50 ? 50 : changeX;
+				changeX = changeX < -50 ? -50 : changeX;
+
+				if (changeX > 0) 
+				{
+					CadHelper.Navigation.Panning.PanRight(panAmount * (changeX / 50));
+				}
+				else 
+				{
+					CadHelper.Navigation.Panning.PanLeft(panAmount * ((-1 * changeX) / 50));
+				}
+			}
         }
     },
-    {
+	{
         Topic: "RightHandThumbIndexPinch",
         Source: "Input.Processed.Efficio",
+		ExecutionPrerequisite: function () {	
+            return selectedAsset == null && !isOrbiting;
+        },		
         Action: function (data) {
             var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
             var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
@@ -120,8 +126,33 @@ ActionToFunctionMapping = {
             var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
 
             selectedAsset = testFragment.Fragment;
-            CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
-            CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
+            //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
+            //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
+			isPinching = true;
+        }
+    },	
+    {
+        Topic: "RightHandThumbIndexPinch",
+        Source: "Input.Processed.Efficio",
+		ExecutionPrerequisite: function () {	
+            return selectedAsset != null// && isPinching;
+        },		
+        Action: function (data) {
+			var axis = data.GestureInformation.axis;
+			var degree = data.GestureInformation.degree;
+            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
+
+            //CorrectCoordinates(appAdjustedPinchLocation);
+
+            //var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
+
+            //selectedAsset = testFragment.Fragment;
+            //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
+            //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
+			CadHelper.AssetManagement.Transformer.Rotate(selectedAsset, axis, degree);
+            CadHelper.AssetManagement.Transformer.Translate(selectedAsset, appAdjustedPinchLocation);
+			setTimeout(function() { isPinching = false; }, 200);
         }
     }
     ],
