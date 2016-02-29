@@ -13,6 +13,9 @@ var baseBoneRotation;
 var armMeshes = [];
 var boneMeshes = [];
 
+var phalanges;
+var knuckles;
+
 ActionToFunctionMapping = {
     "Bridge": Test,
     "ActionMappings": [{
@@ -31,6 +34,8 @@ ActionToFunctionMapping = {
             //    });
             //});
 
+
+
             baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
 
             appReady = true;
@@ -48,8 +53,9 @@ ActionToFunctionMapping = {
                 }
             }
 
-            for (var hand of data.Hands) {
 
+            for ( var hand of data.Hands )
+            {
                 for (var finger of hand.fingers) {
 
                     for (var bone of finger.bones) {
@@ -58,10 +64,7 @@ ActionToFunctionMapping = {
 
                         var boneMesh = boneMeshes[countBones] || addMesh(boneMeshes);
                         updateMesh(data.Frame, bone, boneMesh);
-
-
                     }
-
                 }
             }
         }
@@ -230,6 +233,88 @@ function addMesh(meshes) {
 
     return mesh;
 
+}
+
+function initHands()
+{
+    phalanges = new THREE.Object3D();
+    knuckles = new THREE.Object3D();
+
+    phalanges.scale.x = knuckles.scale.x = 1;
+    phalanges.scale.y = knuckles.scale.y = 1;
+    phalanges.scale.z = knuckles.scale.z = 1;
+
+    for ( var i = 0; i < 38; i++ )
+    {
+        geometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
+        mesh = new THREE.Mesh( geometry, material );
+        mesh.castShadow = true
+        mesh.receiveShadow = true;
+        mesh.visible = false;
+        phalanges.add( mesh );
+
+        var geometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
+        var mesh = new THREE.Mesh( geometry, material );
+        mesh.castShadow = true
+        mesh.receiveShadow = true;
+        mesh.visible = false;
+        knuckles.add( mesh );
+    }
+}
+
+function updateHand(frame)
+{
+    var count = 0;
+
+    for ( var i = 0; i < frame.hands.length; i++ )
+    {
+        var hand = frame.hands[i];
+
+        for ( var j = 0; j < hand.fingers.length; j++ )
+        {
+            var f = hand.fingers[j];
+            updateFinger( count++, f.distal, f.carpPosition, 0.3 );
+            updateFinger( count++, f.medial, f.dipPosition, 0.325 );
+            updateFinger( count++, f.proximal, f.pipPosition, 0.35 );
+            updateFinger( count++, f.metacarpal, f.mcpPosition, 0.375 );
+        }
+
+    }
+
+    for ( var i = 0; i < frame.pointables.length; i++ )
+    {
+        var k = knuckles.children[count++];
+        k.position.fromArray( frame.pointables[i].tipPosition );
+        k.visible = true;
+    }
+
+    for ( var i = count; i < 38; i++ )
+    {
+        phalanges.children[i].visible = false;
+        knuckles.children[i].visible = false;
+    }
+}
+
+function updateFinger( count, bone, position, scale )
+{
+    if (bone.finger.GetFingerLabel() != "Thumb")
+    { // thumbs have no metacarpals
+
+        var p = phalanges.children[count];
+        p.position.fromArray( bone.center() );
+        p.scale.y = bone.length;
+        p.scale.set( scale * bone.width, bone.length, scale * bone.width );
+
+        var d = bone.direction();
+        p.quaternion.setFromUnitVectors( axis, v( d[0], d[1], d[2] ) );
+        p.visible = true;
+    }
+
+    var k = knuckles.children[count];
+    var s = 1.15 * scale * bone.width;
+    k.position.fromArray( position );
+    k.scale.set( s, s, s );
+    k.visible = true;
 }
 
 function updateMesh(frame, bone, mesh) {
