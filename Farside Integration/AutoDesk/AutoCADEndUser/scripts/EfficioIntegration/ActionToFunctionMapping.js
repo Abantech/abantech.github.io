@@ -34,8 +34,14 @@ ActionToFunctionMapping = {
             //    });
             //});
 
+            /*
+            var material = new THREE.MeshPhongMaterial();
+            material.color = new THREE.Color( 1, 1, 1 );
+            material.transparent = true;
+            material.opacity = 0.7;
 
-
+            initHands(material, 1.1, 1);
+            */
             baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
 
             appReady = true;
@@ -48,12 +54,27 @@ ActionToFunctionMapping = {
             var countArms = 0;
 
             if (data.Controller.frame(1).hands.length > 0) {
-                while (boneMeshes.length > 0) {
+               
+                while ( boneMeshes.length > 0 )
+                {
                     CadHelper.AssetManagement.RemoveAsset(boneMeshes.pop());
                 }
+                 /*
+                while (phalanges.children.length > 0)
+                {
+                    CadHelper.AssetManagement.RemoveAsset( phalanges.children.pop() );
+                }
+
+                while ( knuckles.children.length > 0 )
+                {
+                    CadHelper.AssetManagement.RemoveAsset( knuckles.children.pop() );
+                }
+                */
             }
 
+            //updateHand( data.Frame );
 
+            
             for ( var hand of data.Hands )
             {
                 for (var finger of hand.fingers) {
@@ -67,6 +88,7 @@ ActionToFunctionMapping = {
                     }
                 }
             }
+            
         }
     },
     {
@@ -235,7 +257,7 @@ function addMesh(meshes) {
 
 }
 
-function initHands()
+function initHands(material, sizePhal, sizeKnuck)
 {
     phalanges = new THREE.Object3D();
     knuckles = new THREE.Object3D();
@@ -246,15 +268,15 @@ function initHands()
 
     for ( var i = 0; i < 38; i++ )
     {
-        geometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
-        mesh = new THREE.Mesh( geometry, material );
+        var geometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
+        var mesh = new THREE.Mesh( geometry, material );
         mesh.castShadow = true
         mesh.receiveShadow = true;
         mesh.visible = false;
         phalanges.add( mesh );
 
-        var geometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
-        var mesh = new THREE.Mesh( geometry, material );
+        geometry = new THREE.SphereGeometry(sizeKnuck, 20, 10 );
+        mesh = new THREE.Mesh( geometry, material );
         mesh.castShadow = true
         mesh.receiveShadow = true;
         mesh.visible = false;
@@ -264,6 +286,9 @@ function initHands()
 
 function updateHand(frame)
 {
+    if ( !appReady )
+        return;
+
     var count = 0;
 
     for ( var i = 0; i < frame.hands.length; i++ )
@@ -283,9 +308,13 @@ function updateHand(frame)
 
     for ( var i = 0; i < frame.pointables.length; i++ )
     {
-        var k = knuckles.children[count++];
-        k.position.fromArray( frame.pointables[i].tipPosition );
-        k.visible = true;
+        var currentCount = count++;
+        if ( currentCount < knuckles.children.length )
+        {
+            var k = knuckles.children[count++];
+            k.position.fromArray( frame.pointables[i].tipPosition );
+            k.visible = true;
+        }
     }
 
     for ( var i = count; i < 38; i++ )
@@ -306,15 +335,21 @@ function updateFinger( count, bone, position, scale )
         p.scale.set( scale * bone.width, bone.length, scale * bone.width );
 
         var d = bone.direction();
-        p.quaternion.setFromUnitVectors( axis, v( d[0], d[1], d[2] ) );
+        p.quaternion.setFromUnitVectors( new THREE.Vector3(0,1,0), new THREE.Vector3( d[0], d[1], d[2] ) );
         p.visible = true;
+        CadHelper.AssetManagement.CreateAsset( p );
     }
 
-    var k = knuckles.children[count];
-    var s = 1.15 * scale * bone.width;
-    k.position.fromArray( position );
-    k.scale.set( s, s, s );
-    k.visible = true;
+    if ( count < knuckles.children.length )
+    {
+        var k = knuckles.children[count];
+        var s = 1.15 * scale * bone.width;
+        k.position.fromArray( position );
+        k.scale.set( s, s, s );
+        k.visible = true;
+
+        CadHelper.AssetManagement.CreateAsset( k );
+    }
 }
 
 function updateMesh(frame, bone, mesh) {
