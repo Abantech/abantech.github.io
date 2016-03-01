@@ -112,7 +112,7 @@ Autodesk.ADN.Viewing.Extension.InstructionsPanel = function (viewer, options) {
         var navInstructions;
         var anchorID = guid();
 
-        if (Efficio.DeviceManager.RegisteredDevices.Microphone.IsConnected()) {
+        if (!(typeof Efficio.DeviceManager.RegisteredDevices.Microphone === "undefined") && Efficio.DeviceManager.RegisteredDevices.Microphone.IsConnected()) {
             micInstructions = 'Efficio has detected that you have a microphone connected!' +
                 '<br/><br/>' +
                 'You can reopen these instructions at any time by saying "Open Instructions"';
