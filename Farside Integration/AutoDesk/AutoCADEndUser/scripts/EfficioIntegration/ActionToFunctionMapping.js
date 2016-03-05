@@ -14,8 +14,25 @@ var armMeshes = [];
 var boneMeshes = [];
 
 var hands, hand;
-var phalanges;
-var knuckles;
+var boneMaterial;
+var phalanges = {};
+var knuckles = {};
+var sizeKnuck = 1;
+var sizePhal = 0.8;
+
+function GetBoneMaterial()
+{
+    if ( typeof ( boneMaterial ) == "undefined" )
+    {
+        var material = new THREE.MeshPhongMaterial();
+        material.color = new THREE.Color( 1, 1, 1 );
+        material.transparent = true;
+        material.opacity = 0.7;
+        boneMaterial = material;
+    }
+
+    return boneMaterial;
+}
 
 ActionToFunctionMapping = {
     "Bridge": Test,
@@ -34,15 +51,7 @@ ActionToFunctionMapping = {
             //        effectiveParent: viewer3D.impl.scene,
             //    });
             //});
-
-            
-            var material = new THREE.MeshPhongMaterial();
-            material.color = new THREE.Color( 1, 1, 1 );
-            material.transparent = true;
-            material.opacity = 0.7;
-
-            updateHands(material);
-            
+ 
             baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
 
             appReady = true;
@@ -55,79 +64,29 @@ ActionToFunctionMapping = {
             var countArms = 0;
 
             if (data.Controller.frame(1).hands.length > 0) {
-               
-                /*
-                while ( boneMeshes.length > 0 )
-                {
-                    CadHelper.AssetManagement.RemoveAsset(boneMeshes.pop());
-                }
-                */
 
-                if ( typeof ( phalanges.children ) != "undefined" )
+                for ( p in phalanges )
                 {
-                    while ( phalanges.children.length > 0 )
-                    {
-                        CadHelper.AssetManagement.RemoveAsset( phalanges.children.pop() );
-                    }
+                    CadHelper.AssetManagement.RemoveAsset( phalanges[p] );
+                    delete phalanges[p]
                 }
 
-                if ( typeof ( knuckles.children ) != "undefined" )
+                for ( k in knuckles )
                 {
-                    while ( knuckles.children.length > 0 )
-                    {
-                        CadHelper.AssetManagement.RemoveAsset( knuckles.children.pop() );
-                    }
+                    CadHelper.AssetManagement.RemoveAsset( knuckles[k] );
+                    delete knuckles[k]
                 }
             }
 
-            //updateHand( data.Frame );
-
-            /*
             for ( var hand of data.Hands )
             {
-                for (var finger of hand.fingers) {
-
-                    for (var bone of finger.bones) {
-
-                        if (countBones++ === 0) { continue; }
-
-                        var boneMesh = boneMeshes[countBones] || addMesh(boneMeshes);
-                        updateMesh(data.Frame, bone, boneMesh);
-                    }
+                for ( var finger of hand.fingers ) {
+                    updatePhalange( data.Frame, finger.distal, finger.carpPosition, 0.3 )
+                    updatePhalange( data.Frame, finger.medial, finger.dipPosition, 0.325 )
+                    updatePhalange( data.Frame, finger.proximal, finger.pipPosition, 0.35 )
+                    updatePhalange( data.Frame, finger.metacarpal, finger.mcpPosition, 0.375 )
                 }
-            }
-            */
-
-            var count = 0;
-
-            for ( var i = 0; i < data.Frame.hands.length; i++ )
-            {
-
-                hands = data.Frame.hands;
-                hand = hands[i];
-
-                for ( var j = 0; j < hand.fingers.length; j++ )
-                {
-
-                    var f = hand.fingers[j];
-
-                    updateFinger( count++, f.distal, f.carpPosition, 0.3 );
-                    updateFinger( count++, f.medial, f.dipPosition, 0.325 );
-                    updateFinger( count++, f.proximal, f.pipPosition, 0.35 );
-                    updateFinger( count++, f.metacarpal, f.mcpPosition, 0.375 );
-                }
-
-            }
-
-            for ( var i = count; i < 38; i++ )
-            {
-                if ( typeof ( phalanges) != "undefined" && typeof ( phalanges.children ) != "undefined" && phalanges.children.length > i)
-                    phalanges.children[i].visible = false;
-                if ( typeof ( knuckles ) != "undefined" && typeof ( knuckles.children ) != "undefined" && knuckles.children.length > i )
-                    knuckles.children[i].visible = false;
-
-            }
-            
+            }       
         }
     },
     {
@@ -293,92 +252,81 @@ function addMesh(meshes) {
     meshes.push(mesh);
 
     return mesh;
-
 }
 
-function initHands(material, sizePhal, sizeKnuck)
+function getPhalange(bone)
 {
-    phalanges = new THREE.Object3D();
-    knuckles = new THREE.Object3D();
+    var boneName = GetBoneName( bone );
+    var phalangeMesh;
 
-    phalanges.scale.x = knuckles.scale.x = 1;
-    phalanges.scale.y = knuckles.scale.y = 1;
-    phalanges.scale.z = knuckles.scale.z = 1;
-
-    for ( var i = 0; i < 38; i++ )
+    if ( boneName in phalanges )
     {
-        var geometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
-        var mesh = new THREE.Mesh( geometry, material );
-        mesh.castShadow = true
-        mesh.receiveShadow = true;
-        mesh.visible = false;
-        phalanges.add( mesh );
-
-        geometry = new THREE.SphereGeometry(sizeKnuck, 20, 10 );
-        mesh = new THREE.Mesh( geometry, material );
-        mesh.castShadow = true
-        mesh.receiveShadow = true;
-        mesh.visible = false;
-        knuckles.add( mesh );
+        phalange = phalanges[boneName]
     }
-}
-
-function updateHands(material)
-{
-    if ( !appReady )
-        return;
-
-    var sizeKnuck = 1;
-    var sizePhal = 1;
-
-    phalanges = new THREE.Object3D();
-    knuckles = new THREE.Object3D();
-
-    for ( var i = 0; i < 38; i++ )
+    else
     {
         var phalangeGeometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
-        var phalangeMesh = new THREE.Mesh( phalangeGeometry, material );
-        phalangeMesh.visible = false;
-        phalanges.add( phalangeMesh );
-
-        var knuckleGeometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
-        var knuckleMesh = new THREE.Mesh( knuckleGeometry, material );
-        knuckleMesh.visible = false;
-        knuckles.add( knuckleMesh );
+        var phalangeMesh = new THREE.Mesh( phalangeGeometry, GetBoneMaterial() );
+        phalanges[boneName] = phalangeMesh;
     }
 
-    return { phalanges, knuckles };
+    phalangeMesh.visible = false;
+
+    return phalangeMesh;
 }
 
-function updateFinger( count, bone, position, scale )
+function getKnuckle(bone)
 {
-    if ( !appReady )
-        return;
+    var boneName = GetBoneName( bone );
+    var knuckleMesh;
 
-    if (bone.finger.GetFingerLabel() != "Thumb")
-    { // thumbs have no metacarpals
-
-        var p = phalanges.children[count];
-        p.position.fromArray( bone.center() );
-        p.scale.y = bone.length;
-        p.scale.set( scale * bone.width, bone.length, scale * bone.width );
-
-        var d = bone.direction();
-        p.quaternion.setFromUnitVectors( new THREE.Vector3(0,1,0), new THREE.Vector3( d[0], d[1], d[2] ) );
-        p.visible = true;
-        CadHelper.AssetManagement.CreateAsset( p );
-    }
-
-    if ( count < knuckles.children.length )
+    if ( boneName in knuckles )
     {
-        var k = knuckles.children[count];
-        var s = 1.15 * scale * bone.width;
-        k.position.fromArray( position );
-        k.scale.set( s, s, s );
-        k.visible = true;
-
-        CadHelper.AssetManagement.CreateAsset( k );
+        knuckle = knuckles[boneName]
     }
+    else
+    {
+        var knuckleGeometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
+        var knuckleMesh = new THREE.Mesh( knuckleGeometry, GetBoneMaterial());
+        knuckles[boneName] = knuckleMesh;
+    }
+
+    knuckleMesh.visible = false;
+
+    return knuckleMesh;
+}
+
+function GetBoneName(bone)
+{
+    var handType = bone.finger.frame.hands.find( function ( h ) { return h.id === bone.finger.handId; } ).type;
+    return handType + "hand-" + bone.finger.GetFingerLabel() + "-" + bone.type;
+}
+
+function updatePhalange( frame, bone, position, scale)
+{
+    var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+
+    if ( !( bone.type == 0 && bone.length == 0 ) )
+    {
+        var phalange = getPhalange( bone );
+        
+        var normalizedCenter = leapHelper.MapPointToAppCoordinates( frame, bone.center(), minsAndMaxes.Minimums, minsAndMaxes.Maximums );
+
+        phalange.position.fromArray( normalizedCenter );
+        phalange.scale.y = bone.length;
+        phalange.scale.set( scale * bone.width, bone.length, scale * bone.width );
+        var d = bone.direction();
+        phalange.quaternion.setFromUnitVectors( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( d[0], d[1], d[2] ) );
+        phalange.visible = true;
+        CadHelper.AssetManagement.CreateAsset( phalange );
+    }
+
+    var knuckle = getKnuckle( bone )
+    var s = 1.15 * scale * bone.width;
+    knuckle.position.fromArray( leapHelper.MapPointToAppCoordinates( frame, position, minsAndMaxes.Minimums, minsAndMaxes.Maximums ) );
+    knuckle.scale.set( s, s, s );
+    knuckle.visible = true;
+    CadHelper.AssetManagement.CreateAsset( knuckle );
 }
 
 function updateMesh(frame, bone, mesh) {
