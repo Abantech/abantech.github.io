@@ -20,20 +20,6 @@ var knuckles = {};
 var sizeKnuck = 1;
 var sizePhal = 0.8;
 
-function GetBoneMaterial()
-{
-    if ( typeof ( boneMaterial ) == "undefined" )
-    {
-        var material = new THREE.MeshPhongMaterial();
-        material.color = new THREE.Color( 1, 1, 1 );
-        material.transparent = true;
-        material.opacity = 0.7;
-        boneMaterial = material;
-    }
-
-    return boneMaterial;
-}
-
 ActionToFunctionMapping = {
     "Bridge": Test,
     "ActionMappings": [{
@@ -63,28 +49,41 @@ ActionToFunctionMapping = {
             var countBones = 0;
             var countArms = 0;
 
-            if (data.Controller.frame(1).hands.length > 0) {
-
-                for ( p in phalanges )
-                {
-                    CadHelper.AssetManagement.RemoveAsset( phalanges[p] );
-                    delete phalanges[p]
-                }
-
-                for ( k in knuckles )
-                {
-                    CadHelper.AssetManagement.RemoveAsset( knuckles[k] );
-                    delete knuckles[k]
-                }
+            if ( isHandPresent( data.Controller.frame( 1 ).hands, "right" ) && !isHandPresent( data.Hands, "right" ) )
+            {
+                RemoveHandAssets( "right" );
             }
+
+            if ( isHandPresent( data.Controller.frame( 1 ).hands, "left" ) && !isHandPresent( data.Hands, "left" ) )
+            {
+                RemoveHandAssets( "left" );
+            }
+
+            //if (data.Controller.frame(1).hands.length > 0 && data.Hands.length == 0) {
+
+            //    console.log("Removing hand assets...")
+            //    for ( p in phalanges )
+            //    {
+            //        CadHelper.AssetManagement.RemoveAsset( phalanges[p] );
+            //        delete phalanges[p]
+            //    }
+            //    phalanges = {};
+                
+            //    for ( k in knuckles )
+            //    {
+            //        CadHelper.AssetManagement.RemoveAsset( knuckles[k] );
+            //        delete knuckles[k]
+            //    }
+            //    knuckles = {};
+            //}
 
             for ( var hand of data.Hands )
             {
                 for ( var finger of hand.fingers ) {
-                    updatePhalange( data.Frame, finger.distal, finger.carpPosition, 0.3 )
-                    updatePhalange( data.Frame, finger.medial, finger.dipPosition, 0.325 )
-                    updatePhalange( data.Frame, finger.proximal, finger.pipPosition, 0.35 )
-                    updatePhalange( data.Frame, finger.metacarpal, finger.mcpPosition, 0.375 )
+                    updateFinger( data.Frame, finger.distal, finger.carpPosition, 0.3 )
+                    updateFinger( data.Frame, finger.medial, finger.dipPosition, 0.325 )
+                    updateFinger( data.Frame, finger.proximal, finger.pipPosition, 0.35 )
+                    updateFinger( data.Frame, finger.metacarpal, finger.mcpPosition, 0.375 )
                 }
             }       
         }
@@ -254,55 +253,24 @@ function addMesh(meshes) {
     return mesh;
 }
 
-function getPhalange(bone)
+function updateMesh( frame, bone, mesh )
 {
-    var boneName = GetBoneName( bone );
-    var phalangeMesh;
+    var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
 
-    if ( boneName in phalanges )
-    {
-        phalange = phalanges[boneName]
-    }
-    else
-    {
-        var phalangeGeometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
-        var phalangeMesh = new THREE.Mesh( phalangeGeometry, GetBoneMaterial() );
-        phalanges[boneName] = phalangeMesh;
-    }
+    // Get Scene Point
+    var normalizedCenter = leapHelper.MapPointToAppCoordinates( frame, bone.center(), minsAndMaxes.Minimums, minsAndMaxes.Maximums );
 
-    phalangeMesh.visible = false;
+    mesh.position.fromArray( normalizedCenter );
+    mesh.setRotationFromMatrix(( new THREE.Matrix4 ).fromArray( bone.matrix() ) );
+    mesh.quaternion.multiply( baseBoneRotation );
+    mesh.scale.set( bone.width / 8, bone.width / 8, bone.length / 4 );
 
-    return phalangeMesh;
+    CadHelper.AssetManagement.CreateAsset( mesh );
 }
 
-function getKnuckle(bone)
-{
-    var boneName = GetBoneName( bone );
-    var knuckleMesh;
+//Gregs New Code below
 
-    if ( boneName in knuckles )
-    {
-        knuckle = knuckles[boneName]
-    }
-    else
-    {
-        var knuckleGeometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
-        var knuckleMesh = new THREE.Mesh( knuckleGeometry, GetBoneMaterial());
-        knuckles[boneName] = knuckleMesh;
-    }
-
-    knuckleMesh.visible = false;
-
-    return knuckleMesh;
-}
-
-function GetBoneName(bone)
-{
-    var handType = bone.finger.frame.hands.find( function ( h ) { return h.id === bone.finger.handId; } ).type;
-    return handType + "hand-" + bone.finger.GetFingerLabel() + "-" + bone.type;
-}
-
-function updatePhalange( frame, bone, position, scale)
+function updateFinger( frame, bone, position, scale)
 {
     var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
 
@@ -310,6 +278,9 @@ function updatePhalange( frame, bone, position, scale)
     {
         var phalange = getPhalange( bone );
         
+        if ( CadHelper.AssetManagement.GetAssetByID( phalange.id ) == null )
+            CadHelper.AssetManagement.CreateAsset( phalange );
+
         var normalizedCenter = leapHelper.MapPointToAppCoordinates( frame, bone.center(), minsAndMaxes.Minimums, minsAndMaxes.Maximums );
 
         phalange.position.fromArray( normalizedCenter );
@@ -318,27 +289,113 @@ function updatePhalange( frame, bone, position, scale)
         var d = bone.direction();
         phalange.quaternion.setFromUnitVectors( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( d[0], d[1], d[2] ) );
         phalange.visible = true;
-        CadHelper.AssetManagement.CreateAsset( phalange );
+        //CadHelper.AssetManagement.Transformer.Translate( phalange , phalange.position)
+        //CadHelper.AssetManagement.CreateAsset( phalange );
     }
 
     var knuckle = getKnuckle( bone )
+    if ( CadHelper.AssetManagement.GetAssetByID( knuckle.id ) == null )
+        CadHelper.AssetManagement.CreateAsset( knuckle );
+
     var s = 1.15 * scale * bone.width;
     knuckle.position.fromArray( leapHelper.MapPointToAppCoordinates( frame, position, minsAndMaxes.Minimums, minsAndMaxes.Maximums ) );
     knuckle.scale.set( s, s, s );
     knuckle.visible = true;
-    CadHelper.AssetManagement.CreateAsset( knuckle );
+    //CadHelper.AssetManagement.CreateAsset( knuckle );
 }
 
-function updateMesh(frame, bone, mesh) {
-    var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+function GetBoneMaterial()
+{
+    if ( typeof ( boneMaterial ) == "undefined" )
+    {
+        var material = new THREE.MeshPhongMaterial();
+        material.color = new THREE.Color( 1, 1, 1 );
+        material.transparent = true;
+        material.opacity = 0.7;
+        boneMaterial = material;
+    }
 
-    // Get Scene Point
-    var normalizedCenter = leapHelper.MapPointToAppCoordinates(frame, bone.center(), minsAndMaxes.Minimums, minsAndMaxes.Maximums);
-
-    mesh.position.fromArray(normalizedCenter);
-    mesh.setRotationFromMatrix((new THREE.Matrix4).fromArray(bone.matrix()));
-    mesh.quaternion.multiply(baseBoneRotation);
-    mesh.scale.set(bone.width / 8, bone.width / 8, bone.length / 4);
-
-    CadHelper.AssetManagement.CreateAsset(mesh);
+    return boneMaterial;
 }
+
+function isHandPresent( handsArray, handType )
+{
+    return handsArray.find( function ( h ) { return h.type === handType; } ) != null;
+}
+
+function getPhalange( bone )
+{
+    var boneName = GetBoneName( bone );
+    var phalangeMesh;
+
+    if ( boneName in phalanges )
+    {
+        phalangeMesh = phalanges[boneName]
+    }
+    else
+    {
+        var phalangeGeometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
+        phalangeMesh = new THREE.Mesh( phalangeGeometry, GetBoneMaterial() );
+        phalanges[boneName] = phalangeMesh;
+    }
+
+    //phalangeMesh.visible = false;
+
+    return phalangeMesh;
+}
+
+function getKnuckle( bone )
+{
+    var boneName = GetBoneName( bone );
+    var knuckleMesh;
+
+    if ( boneName in knuckles )
+    {
+        knuckleMesh = knuckles[boneName]
+    }
+    else
+    {
+        var knuckleGeometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
+        knuckleMesh = new THREE.Mesh( knuckleGeometry, GetBoneMaterial() );
+        knuckles[boneName] = knuckleMesh;
+    }
+
+    //knuckleMesh.visible = false;
+
+    return knuckleMesh;
+}
+
+function GetBoneName( bone )
+{
+    var handType = bone.finger.frame.hands.find( function ( h ) { return h.id === bone.finger.handId; } ).type;
+    return handType + "hand-" + bone.finger.GetFingerLabel() + "-" + bone.type;
+}
+
+function RemoveHandAssets( handType )
+{
+    console.log( "Removing " + handType + " hand assets..." )
+    var phalagesRemoved = 0;
+    for ( p in phalanges )
+    {
+        if ( p.startsWith( handType ) )
+        {
+            phalagesRemoved++;
+            CadHelper.AssetManagement.RemoveAsset( phalanges[p] );
+            delete phalanges[p]
+        }
+    }
+    console.log( "Removed " + phalagesRemoved + " phalanges from " + handType + " hand" );
+
+    var knucklesRemoved = 0;
+    for ( k in knuckles )
+    {
+        if ( k.startsWith( handType ) )
+        {
+            knucklesRemoved++;
+            CadHelper.AssetManagement.RemoveAsset( knuckles[k] );
+            delete knuckles[k]
+        }
+    }
+    console.log( "Removed " + knucklesRemoved + " knuckles from " + handType + " hand" );
+}
+
