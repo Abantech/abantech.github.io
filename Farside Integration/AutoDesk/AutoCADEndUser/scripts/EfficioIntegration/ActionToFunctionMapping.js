@@ -20,16 +20,20 @@ var knuckles = {};
 var sizeKnuck = 1;
 var sizePhal = 0.8;
 
+var leftHandMesh;
+var rightHandMesh;
+
 ActionToFunctionMapping = {
     "Bridge": Test,
     "ActionMappings": [{
         Topic: "Ready",
         Source: "Efficio",
-        Action: function (data) {
-            viewer3D.navigation.setPosition(startPosition);
-            viewer3D.navigation.setTarget(startTarget);
+        Action: function ( data )
+        {
+            viewer3D.navigation.setPosition( startPosition );
+            viewer3D.navigation.setTarget( startTarget );
 
-            CadHelper = new EfficioAutoCADHelper(viewer3D);
+            CadHelper = new EfficioAutoCADHelper( viewer3D );
             leapHelper = Efficio.DeviceManager.RegisteredDevices.LeapMotion.Helper;
 
             //require(['leap-plugins', 'riggedHand'], function () {
@@ -37,55 +41,40 @@ ActionToFunctionMapping = {
             //        effectiveParent: viewer3D.impl.scene,
             //    });
             //});
- 
-            baseBoneRotation = (new THREE.Quaternion).setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
+
+            baseBoneRotation = ( new THREE.Quaternion ).setFromEuler( new THREE.Euler( 0, 0, Math.PI / 2 ) );
 
             appReady = true;
         }
     }, {
         Topic: "Leap",
         Source: "Input.Raw.Human",
-        Action: function (data) {
-            var countBones = 0;
-            var countArms = 0;
+        Action: function ( data )
+        {
 
-            if ( isHandPresent( data.Controller.frame( 1 ).hands, "right" ) && !isHandPresent( data.Hands, "right" ) )
-            {
-                RemoveHandAssets( "right" );
-            }
 
-            if ( isHandPresent( data.Controller.frame( 1 ).hands, "left" ) && !isHandPresent( data.Hands, "left" ) )
-            {
-                RemoveHandAssets( "left" );
-            }
+            if ( !( typeof ( rightHandMesh ) === "undefined" ) )
+                removeMeshes( rightHandMesh );
+            //CadHelper.AssetManagement.RemoveAsset( rightHandMesh );
+            if ( !( typeof ( leftHandMesh ) === "undefined" ) )
+                removeMeshes( leftHandMesh );
+            //CadHelper.AssetManagement.RemoveAsset( leftHandMesh );
 
-            //if (data.Controller.frame(1).hands.length > 0 && data.Hands.length == 0) {
-
-            //    console.log("Removing hand assets...")
-            //    for ( p in phalanges )
-            //    {
-            //        CadHelper.AssetManagement.RemoveAsset( phalanges[p] );
-            //        delete phalanges[p]
-            //    }
-            //    phalanges = {};
-                
-            //    for ( k in knuckles )
-            //    {
-            //        CadHelper.AssetManagement.RemoveAsset( knuckles[k] );
-            //        delete knuckles[k]
-            //    }
-            //    knuckles = {};
-            //}
+            var material = new THREE.MeshNormalMaterial();
+            var materialLine = new THREE.LineBasicMaterial( { color: 0x000000 } );
+            var knuckleGeo = new THREE.SphereGeometry( 5 );
 
             for ( var hand of data.Hands )
             {
-                for ( var finger of hand.fingers ) {
-                    updateFinger( data.Frame, finger.distal, finger.carpPosition, 0.3 )
-                    updateFinger( data.Frame, finger.medial, finger.dipPosition, 0.325 )
-                    updateFinger( data.Frame, finger.proximal, finger.pipPosition, 0.35 )
-                    updateFinger( data.Frame, finger.metacarpal, finger.mcpPosition, 0.375 )
-                }
-            }       
+                if ( hand.type == "left" )
+                    leftHandMesh = new THREE.Object3D();
+                else
+                    rightHandMesh = new THREE.Object3D();
+
+                createMeshFromHand( hand, knuckleGeo, material, materialLine, hand.type == "left" ? leftHandMesh : rightHandMesh );
+            //CadHelper.AssetManagement.CreateAsset( hand.type == "left" ? leftHandMesh : rightHandMesh );
+                createMeshes( hand.type == "left" ? leftHandMesh : rightHandMesh );
+            }
         }
     },
     {
@@ -97,7 +86,7 @@ ActionToFunctionMapping = {
 
             if ( data.GestureInformation.EndPosition )
             {
-				//Zooming functions
+                //Zooming functions
                 var zoomAmount = 1;
 
                 var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
@@ -114,56 +103,60 @@ ActionToFunctionMapping = {
                     CadHelper.Navigation.Zoom.ZoomOut( zoomAmount * ( ( -1 * changeZ ) / 50 ) );
                 }
 
-				//Panning functions
-				var panAmount = 0.5;
+                //Panning functions
+                var panAmount = 0.5;
 
-				var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
+                var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
 
-				changeX = changeX > 50 ? 50 : changeX;
-				changeX = changeX < -50 ? -50 : changeX;
+                changeX = changeX > 50 ? 50 : changeX;
+                changeX = changeX < -50 ? -50 : changeX;
 
-				if (changeX > 0) 
-				{
-					CadHelper.Navigation.Panning.PanRight(panAmount * (changeX / 50));
-				}
-				else 
-				{
-					CadHelper.Navigation.Panning.PanLeft(panAmount * ((-1 * changeX) / 50));
-				}
-			}
+                if ( changeX > 0 )
+                {
+                    CadHelper.Navigation.Panning.PanRight( panAmount * ( changeX / 50 ) );
+                }
+                else
+                {
+                    CadHelper.Navigation.Panning.PanLeft( panAmount * ( ( -1 * changeX ) / 50 ) );
+                }
+            }
         }
     },
 	{
-        Topic: "RightHandThumbIndexPinch",
-        Source: "Input.Processed.Efficio",
-		ExecutionPrerequisite: function () {	
-            return selectedAsset == null && !isOrbiting;
-        },		
-        Action: function (data) {
-            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
+	    Topic: "RightHandThumbIndexPinch",
+	    Source: "Input.Processed.Efficio",
+	    ExecutionPrerequisite: function ()
+	    {
+	        return selectedAsset == null && !isOrbiting;
+	    },
+	    Action: function ( data )
+	    {
+	        var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+	        var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates( data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums );
 
-            CorrectCoordinates(appAdjustedPinchLocation);
+	        CorrectCoordinates( appAdjustedPinchLocation );
 
-            var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
+	        var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint( appAdjustedPinchLocation );
 
-            selectedAsset = testFragment.Fragment;
-            //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
-            //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
-			isPinching = true;
-        }
-    },	
+	        selectedAsset = testFragment.Fragment;
+	        //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
+	        //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
+	        isPinching = true;
+	    }
+	},
     {
         Topic: "RightHandThumbIndexPinch",
         Source: "Input.Processed.Efficio",
-		ExecutionPrerequisite: function () {	
+        ExecutionPrerequisite: function ()
+        {
             return selectedAsset != null// && isPinching;
-        },		
-        Action: function (data) {
-			var axis = data.GestureInformation.axis;
-			var degree = data.GestureInformation.degree;
+        },
+        Action: function ( data )
+        {
+            var axis = data.GestureInformation.axis;
+            var degree = data.GestureInformation.degree;
             var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates(data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
+            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates( data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums );
 
             //CorrectCoordinates(appAdjustedPinchLocation);
 
@@ -172,32 +165,34 @@ ActionToFunctionMapping = {
             //selectedAsset = testFragment.Fragment;
             //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
             //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
-			CadHelper.AssetManagement.Transformer.Rotate(selectedAsset, axis, degree);
-            CadHelper.AssetManagement.Transformer.Translate(selectedAsset, appAdjustedPinchLocation);
-			setTimeout(function() { isPinching = false; }, 200);
+            CadHelper.AssetManagement.Transformer.Rotate( selectedAsset, axis, degree );
+            CadHelper.AssetManagement.Transformer.Translate( selectedAsset, appAdjustedPinchLocation );
+            setTimeout( function () { isPinching = false; }, 200 );
         }
     }
     ],
     AudioCommands: {
         'Create Sphere': function () { CreateSpheres(); },
-        'Navigation :tool': function (tool) { CadHelper.Tools.Navigation.SetActiveNavigationTool(tool); },
-        'Select *part': function (part) { CadHelper.Tools.Model.SelectObjectByName(part) },
-        'Isolate *part': function (part) { CadHelper.Tools.Model.IsolateObjectByName(part) },
+        'Navigation :tool': function ( tool ) { CadHelper.Tools.Navigation.SetActiveNavigationTool( tool ); },
+        'Select *part': function ( part ) { CadHelper.Tools.Model.SelectObjectByName( part ) },
+        'Isolate *part': function ( part ) { CadHelper.Tools.Model.IsolateObjectByName( part ) },
         'Clear Selection': function () { CadHelper.Tools.Model.ClearSelection(); }
     }
 }
 
-function CorrectCoordinates(position) {
+function CorrectCoordinates( position )
+{
     position[0] = position[0] + 15;
     position[1] = position[1] - 30;
     position[2] = position[2] - 10;
 }
 
-function CreateSpheres() {
+function CreateSpheres()
+{
     //create material red
     var material_red =
         new THREE.MeshPhongMaterial(
-                  { color: 0xff0000 });
+                  { color: 0xff0000 } );
 
     //get bounding box of the model
     var boundingBox =
@@ -211,44 +206,63 @@ function CreateSpheres() {
 
     //set a nice radius in the model size
     var niceRadius =
-               Math.pow((xdiff * xdiff +
+               Math.pow(( xdiff * xdiff +
                          ydiff * ydiff +
-                         zdiff * zdiff), 0.5) / 10;
+                         zdiff * zdiff ), 0.5 ) / 10;
 
     //createsphere1 and place it at max point of boundingBox
     var sphere_maxpt =
          new THREE.Mesh(
                 new THREE.SphereGeometry(
-                          niceRadius, 20),
-                material_red);
-    sphere_maxpt.position.set(maxpt.x,
+                          niceRadius, 20 ),
+                material_red );
+    sphere_maxpt.position.set( maxpt.x,
                               maxpt.y,
-                              maxpt.z);
+                              maxpt.z );
 
     myMesh = sphere_maxpt;
 
-    CadHelper.AssetManagement.CreateAsset(sphere_maxpt);
+    CadHelper.AssetManagement.CreateAsset( sphere_maxpt );
 }
 
-function MoveCameraByPercentage(explodeFactor) {
-    viewer3D.navigation.setPosition(GetIntermeditatePoints(startPosition, endPosition, explodeFactor));
-    viewer3D.navigation.setTarget(GetIntermeditatePoints(startTarget, endTarget, explodeFactor));
+function MoveCameraByPercentage( explodeFactor )
+{
+    viewer3D.navigation.setPosition( GetIntermeditatePoints( startPosition, endPosition, explodeFactor ) );
+    viewer3D.navigation.setTarget( GetIntermeditatePoints( startTarget, endTarget, explodeFactor ) );
 }
 
-function GetIntermeditatePoints(start, end, factor) {
-    var x = start.x + ((end.x - start.x) * factor);
-    var y = start.y + ((end.y - start.y) * factor);
-    var z = start.z + ((end.z - start.z) * factor);
+function GetIntermeditatePoints( start, end, factor )
+{
+    var x = start.x + ( ( end.x - start.x ) * factor );
+    var y = start.y + ( ( end.y - start.y ) * factor );
+    var z = start.z + ( ( end.z - start.z ) * factor );
 
-    return new THREE.Vector3(x, y, z);
+    return new THREE.Vector3( x, y, z );
 }
 
-function addMesh(meshes) {
+function createMeshes( parentObject )
+{
+    for ( var mesh of parentObject.children )
+		CadHelper.AssetManagement.CreateAsset( mesh );
+}
 
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
+function removeMeshes( parentObject )
+{
+    for ( var mesh of parentObject.children )
+    {
+        console.log( "Removing mesh with ID " + mesh.id )
+        CadHelper.AssetManagement.RemoveAsset( mesh );
+    }
+
+}
+
+function addMesh( meshes )
+{
+
+    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
     var material = new THREE.MeshNormalMaterial();
-    var mesh = new THREE.Mesh(geometry, material);
-    meshes.push(mesh);
+    var mesh = new THREE.Mesh( geometry, material );
+    meshes.push( mesh );
 
     return mesh;
 }
@@ -268,134 +282,26 @@ function updateMesh( frame, bone, mesh )
     CadHelper.AssetManagement.CreateAsset( mesh );
 }
 
-//Gregs New Code below
-
-function updateFinger( frame, bone, position, scale)
+function createMeshFromHand( theHand, knuckleGeometry, knuckleMaterial, lineMaterial, fullHandMesh )
 {
-    var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-
-    if ( !( bone.type == 0 && bone.length == 0 ) )
+    for ( var j = 0; j < theHand.fingers.length; j++ )
     {
-        var phalange = getPhalange( bone );
-        
-        if ( CadHelper.AssetManagement.GetAssetByID( phalange.id ) == null )
-            CadHelper.AssetManagement.CreateAsset( phalange );
+        var finger = theHand.fingers[j];
+        var positions = finger.positions;
 
-        var normalizedCenter = leapHelper.MapPointToAppCoordinates( frame, bone.center(), minsAndMaxes.Minimums, minsAndMaxes.Maximums );
+        var geometryLine = new THREE.Geometry();
+        var vertices = geometryLine.vertices;
 
-        phalange.position.fromArray( normalizedCenter );
-        phalange.scale.y = bone.length;
-        phalange.scale.set( scale * bone.width, bone.length, scale * bone.width );
-        var d = bone.direction();
-        phalange.quaternion.setFromUnitVectors( new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( d[0], d[1], d[2] ) );
-        phalange.visible = true;
-        //CadHelper.AssetManagement.Transformer.Translate( phalange , phalange.position)
-        //CadHelper.AssetManagement.CreateAsset( phalange );
-    }
-
-    var knuckle = getKnuckle( bone )
-    if ( CadHelper.AssetManagement.GetAssetByID( knuckle.id ) == null )
-        CadHelper.AssetManagement.CreateAsset( knuckle );
-
-    var s = 1.15 * scale * bone.width;
-    knuckle.position.fromArray( leapHelper.MapPointToAppCoordinates( frame, position, minsAndMaxes.Minimums, minsAndMaxes.Maximums ) );
-    knuckle.scale.set( s, s, s );
-    knuckle.visible = true;
-    //CadHelper.AssetManagement.CreateAsset( knuckle );
-}
-
-function GetBoneMaterial()
-{
-    if ( typeof ( boneMaterial ) == "undefined" )
-    {
-        var material = new THREE.MeshPhongMaterial();
-        material.color = new THREE.Color( 1, 1, 1 );
-        material.transparent = true;
-        material.opacity = 0.7;
-        boneMaterial = material;
-    }
-
-    return boneMaterial;
-}
-
-function isHandPresent( handsArray, handType )
-{
-    return handsArray.find( function ( h ) { return h.type === handType; } ) != null;
-}
-
-function getPhalange( bone )
-{
-    var boneName = GetBoneName( bone );
-    var phalangeMesh;
-
-    if ( boneName in phalanges )
-    {
-        phalangeMesh = phalanges[boneName]
-    }
-    else
-    {
-        var phalangeGeometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
-        phalangeMesh = new THREE.Mesh( phalangeGeometry, GetBoneMaterial() );
-        phalanges[boneName] = phalangeMesh;
-    }
-
-    //phalangeMesh.visible = false;
-
-    return phalangeMesh;
-}
-
-function getKnuckle( bone )
-{
-    var boneName = GetBoneName( bone );
-    var knuckleMesh;
-
-    if ( boneName in knuckles )
-    {
-        knuckleMesh = knuckles[boneName]
-    }
-    else
-    {
-        var knuckleGeometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
-        knuckleMesh = new THREE.Mesh( knuckleGeometry, GetBoneMaterial() );
-        knuckles[boneName] = knuckleMesh;
-    }
-
-    //knuckleMesh.visible = false;
-
-    return knuckleMesh;
-}
-
-function GetBoneName( bone )
-{
-    var handType = bone.finger.frame.hands.find( function ( h ) { return h.id === bone.finger.handId; } ).type;
-    return handType + "hand-" + bone.finger.GetFingerLabel() + "-" + bone.type;
-}
-
-function RemoveHandAssets( handType )
-{
-    console.log( "Removing " + handType + " hand assets..." )
-    var phalagesRemoved = 0;
-    for ( p in phalanges )
-    {
-        if ( p.startsWith( handType ) )
+        for ( var k = 0; k < positions.length; k++ )
         {
-            phalagesRemoved++;
-            CadHelper.AssetManagement.RemoveAsset( phalanges[p] );
-            delete phalanges[p]
-        }
-    }
-    console.log( "Removed " + phalagesRemoved + " phalanges from " + handType + " hand" );
+            var vertex = new THREE.Vector3().fromArray( positions[k] );
+            vertices.push( vertex );
 
-    var knucklesRemoved = 0;
-    for ( k in knuckles )
-    {
-        if ( k.startsWith( handType ) )
-        {
-            knucklesRemoved++;
-            CadHelper.AssetManagement.RemoveAsset( knuckles[k] );
-            delete knuckles[k]
+            var mesh = new THREE.Mesh( knuckleGeometry, knuckleMaterial );
+            mesh.position.copy( vertex );
+            fullHandMesh.add( mesh );
         }
+
+        fullHandMesh.add( new THREE.Line( geometryLine, lineMaterial ) );
     }
-    console.log( "Removed " + knucklesRemoved + " knuckles from " + handType + " hand" );
 }
-
