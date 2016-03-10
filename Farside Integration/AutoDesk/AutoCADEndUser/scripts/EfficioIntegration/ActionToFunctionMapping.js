@@ -58,21 +58,19 @@ ActionToFunctionMapping = {
             //CadHelper.AssetManagement.RemoveAsset( rightHandMesh );
             if ( !( typeof ( leftHandMesh ) === "undefined" ) )
                 removeMeshes( leftHandMesh );
-            //CadHelper.AssetManagement.RemoveAsset( leftHandMesh );
 
             var material = new THREE.MeshNormalMaterial();
             var materialLine = new THREE.LineBasicMaterial( { color: 0x000000 } );
-            var knuckleGeo = new THREE.SphereGeometry( 5 );
+            var knuckleGeo = new THREE.SphereGeometry( 2, 16, 32 );
 
             for ( var hand of data.Hands )
             {
                 if ( hand.type == "left" )
-                    leftHandMesh = new THREE.Object3D();
+                    leftHandMesh = []//new THREE.Object3D();
                 else
-                    rightHandMesh = new THREE.Object3D();
+                    rightHandMesh = []//new THREE.Object3D();
 
-                createMeshFromHand( hand, knuckleGeo, material, materialLine, hand.type == "left" ? leftHandMesh : rightHandMesh );
-            //CadHelper.AssetManagement.CreateAsset( hand.type == "left" ? leftHandMesh : rightHandMesh );
+                createMeshFromHand( hand, data.Frame, knuckleGeo, material, materialLine, hand.type == "left" ? leftHandMesh : rightHandMesh );
                 createMeshes( hand.type == "left" ? leftHandMesh : rightHandMesh );
             }
         }
@@ -242,13 +240,13 @@ function GetIntermeditatePoints( start, end, factor )
 
 function createMeshes( parentObject )
 {
-    for ( var mesh of parentObject.children )
+    for ( let mesh of parentObject )
 		CadHelper.AssetManagement.CreateAsset( mesh );
 }
 
 function removeMeshes( parentObject )
 {
-    for ( var mesh of parentObject.children )
+    while ( mesh = parentObject.pop() )
     {
         console.log( "Removing mesh with ID " + mesh.id )
         CadHelper.AssetManagement.RemoveAsset( mesh );
@@ -282,8 +280,10 @@ function updateMesh( frame, bone, mesh )
     CadHelper.AssetManagement.CreateAsset( mesh );
 }
 
-function createMeshFromHand( theHand, knuckleGeometry, knuckleMaterial, lineMaterial, fullHandMesh )
+function createMeshFromHand( theHand, frame, knuckleGeometry, knuckleMaterial, lineMaterial, fullHandMesh )
 {
+    var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+
     for ( var j = 0; j < theHand.fingers.length; j++ )
     {
         var finger = theHand.fingers[j];
@@ -294,14 +294,16 @@ function createMeshFromHand( theHand, knuckleGeometry, knuckleMaterial, lineMate
 
         for ( var k = 0; k < positions.length; k++ )
         {
-            var vertex = new THREE.Vector3().fromArray( positions[k] );
+            var adjustedPosition = leapHelper.MapPointToAppCoordinates( frame, positions[k], minsAndMaxes.Minimums, minsAndMaxes.Maximums );
+            CorrectCoordinates( adjustedPosition );
+            var vertex = new THREE.Vector3().fromArray( adjustedPosition );
             vertices.push( vertex );
 
             var mesh = new THREE.Mesh( knuckleGeometry, knuckleMaterial );
             mesh.position.copy( vertex );
-            fullHandMesh.add( mesh );
+            fullHandMesh.push( mesh );
         }
 
-        fullHandMesh.add( new THREE.Line( geometryLine, lineMaterial ) );
+        fullHandMesh.push( new THREE.Line( geometryLine, lineMaterial ) );
     }
 }
