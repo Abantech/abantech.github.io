@@ -22,6 +22,17 @@ var sizePhal = 0.8;
 
 var leftHandMesh;
 var rightHandMesh;
+var minsAndMaxes;
+
+var vectorAdjustmentFunction = function ( frame )//, inputVector)
+{
+    return function ( inputVector )
+    {
+        var adjustedPosition = leapHelper.MapPointToAppCoordinates( frame, inputVector, GetMinsAndMaxes().Minimums, GetMinsAndMaxes().Maximums );
+        CorrectCoordinates( adjustedPosition );
+        return new THREE.Vector3().fromArray( adjustedPosition );
+    }
+}
 
 ActionToFunctionMapping = {
     "Bridge": Test,
@@ -51,17 +62,20 @@ ActionToFunctionMapping = {
         Source: "Input.Raw.Human",
         Action: function ( data )
         {
-
-
             if ( !( typeof ( rightHandMesh ) === "undefined" ) )
                 removeMeshes( rightHandMesh );
             //CadHelper.AssetManagement.RemoveAsset( rightHandMesh );
             if ( !( typeof ( leftHandMesh ) === "undefined" ) )
                 removeMeshes( leftHandMesh );
 
-            var material = new THREE.MeshNormalMaterial();
-            var materialLine = new THREE.LineBasicMaterial( { color: 0x000000 } );
-            var knuckleGeo = new THREE.SphereGeometry( 2, 16, 32 );
+            var lineMat = new THREE.LineBasicMaterial( { color: 0x000000 } );
+            var skinMat = new THREE.MeshPhongMaterial( { color: 0xA28857 } );
+
+            var knuckleGeo = new THREE.SphereGeometry( 4.5, 16, 24 );
+            var boneGeo = new THREE.CylinderGeometry( 3.7, 3.7, 1, 24);
+            boneGeo.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+
+            var vectorAdjuster = vectorAdjustmentFunction( data.Frame );
 
             for ( var hand of data.Hands )
             {
@@ -70,7 +84,8 @@ ActionToFunctionMapping = {
                 else
                     rightHandMesh = []//new THREE.Object3D();
 
-                createMeshFromHand( hand, data.Frame, knuckleGeo, material, materialLine, hand.type == "left" ? leftHandMesh : rightHandMesh );
+                //createLineMeshFromHand( hand, vectorAdjuster, knuckleGeo, skinMat, lineMat, hand.type == "left" ? leftHandMesh : rightHandMesh );
+                createBoneMeshFromHand( hand, vectorAdjuster, knuckleGeo, skinMat, boneGeo, skinMat, hand.type == "left" ? leftHandMesh : rightHandMesh )
                 createMeshes( hand.type == "left" ? leftHandMesh : rightHandMesh );
             }
         }
@@ -240,7 +255,7 @@ function GetIntermeditatePoints( start, end, factor )
 
 function createMeshes( parentObject )
 {
-    for ( let mesh of parentObject )
+    for ( var mesh of parentObject )
 		CadHelper.AssetManagement.CreateAsset( mesh );
 }
 
@@ -280,7 +295,7 @@ function updateMesh( frame, bone, mesh )
     CadHelper.AssetManagement.CreateAsset( mesh );
 }
 
-function createMeshFromHand( theHand, frame, knuckleGeometry, knuckleMaterial, lineMaterial, fullHandMesh )
+function createLineMeshFromHand( theHand, vectorAdjuster, knuckleGeometry, knuckleMaterial, lineMaterial, fullHandMesh )
 {
     var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
 
@@ -294,9 +309,7 @@ function createMeshFromHand( theHand, frame, knuckleGeometry, knuckleMaterial, l
 
         for ( var k = 0; k < positions.length; k++ )
         {
-            var adjustedPosition = leapHelper.MapPointToAppCoordinates( frame, positions[k], minsAndMaxes.Minimums, minsAndMaxes.Maximums );
-            CorrectCoordinates( adjustedPosition );
-            var vertex = new THREE.Vector3().fromArray( adjustedPosition );
+            var vertex = vectorAdjuster(positions[k]);
             vertices.push( vertex );
 
             var mesh = new THREE.Mesh( knuckleGeometry, knuckleMaterial );
@@ -307,3 +320,47 @@ function createMeshFromHand( theHand, frame, knuckleGeometry, knuckleMaterial, l
         fullHandMesh.push( new THREE.Line( geometryLine, lineMaterial ) );
     }
 }
+
+function createBoneMeshFromHand( theHand, vectorAdjuster, knuckleGeometry, knuckleMaterial, boneGeometry, boneMaterial, fullHandMesh )
+{
+    for ( var j = 0; j < theHand.fingers.length; j++ )
+    {
+        var finger = theHand.fingers[j];
+        var positions = finger.positions;
+
+        var geometryLine = new THREE.Geometry();
+        var vertices = geometryLine.vertices;
+
+        for (var k = 0; k < 5; k++ )
+        {
+            var vertex = vectorAdjuster(positions[k]);
+
+            var mesh = new THREE.Mesh( knuckleGeometry, knuckleMaterial );
+            mesh.position.copy( vertex );
+            fullHandMesh.push( mesh );
+
+            if ( k < 4 )
+            {
+                var next = vectorAdjuster(positions[k + 1] );
+                var d = vertex.distanceTo( next );
+
+                mesh = new THREE.Mesh( boneGeometry, boneMaterial );
+                mesh.scale.set( 1, 1, d || 1 );
+                mesh.position.lerpVectors( vertex, next, 0.5 );
+                mesh.lookAt( vertex );
+
+                fullHandMesh.push( mesh );
+
+            }
+        }
+    }
+}
+
+function GetMinsAndMaxes()
+{
+    if (typeof(minsAndMaxes) === "undefined")
+        minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+
+    return minsAndMaxes;
+}
+
