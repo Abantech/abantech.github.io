@@ -28,10 +28,16 @@ var vectorAdjustmentFunction = function ( frame )//, inputVector)
 {
     return function ( inputVector )
     {
-        var adjustedPosition = leapHelper.MapPointToAppCoordinates( frame, inputVector, GetMinsAndMaxes().Minimums, GetMinsAndMaxes().Maximums );
-        CorrectCoordinates( adjustedPosition );
-        return new THREE.Vector3().fromArray( adjustedPosition );
+        return GetAppAdjustedVector( inputVector, frame )
     }
+}
+
+function GetAppAdjustedVector(inputVector, frame)
+{
+    var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+    var adjustedPosition = leapHelper.MapPointToAppCoordinates( frame, inputVector, minsAndMaxes.Minimums, minsAndMaxes.Maximums );
+    CorrectCoordinates( adjustedPosition );
+    return new THREE.Vector3().fromArray( adjustedPosition );
 }
 
 ActionToFunctionMapping = {
@@ -135,51 +141,54 @@ ActionToFunctionMapping = {
             }
         }
     },
-	{
-	    Topic: "RightHandThumbIndexPinch",
-	    Source: "Input.Processed.Efficio",
-	    ExecutionPrerequisite: function ()
-	    {
-	        return selectedAsset == null && !isOrbiting;
-	    },
-	    Action: function ( data )
-	    {
-	        var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-	        var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates( data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums );
-
-	        CorrectCoordinates( appAdjustedPinchLocation );
-
-	        var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint( appAdjustedPinchLocation );
-
-	        selectedAsset = testFragment.Fragment;
-	        //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
-	        //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
-	        isPinching = true;
-	    }
-	},
+	////{
+	////    Topic: "RightHandThumbIndexPinch",
+	////    Source: "Input.Processed.Efficio",
+	////    ExecutionPrerequisite: function ()
+	////    {
+	////        return selectedAsset == null && !isOrbiting;
+	////    },
+	////    Action: function ( data )
+	////    {
+	////        var appAdjustedPinchLocation = GetAppAdjustedVector( data.GestureInformation.PinchMidpoint, data.Frame );
+	////        var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint( appAdjustedPinchLocation );
+	////        selectedAsset = testFragment.Fragment;
+	////        isPinching = true;
+	////    }
+	////},
     {
         Topic: "RightHandThumbIndexPinch",
         Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function ()
-        {
-            return selectedAsset != null// && isPinching;
-        },
         Action: function ( data )
         {
-            var axis = data.GestureInformation.axis;
-            var degree = data.GestureInformation.degree;
-            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates( data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums );
+            var appAdjustedPinchLocation;
 
-            //CorrectCoordinates(appAdjustedPinchLocation);
+            //Do not allow asset selection to occur during orbiting, that would be too confusing
+            if (!isOrbiting ){
+                appAdjustedPinchLocation = GetAppAdjustedVector( data.GestureInformation.PinchMidpoint, data.Hand.frame );
 
-            //var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
+                if (selectedAsset == null)
+                {
+                    var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint( appAdjustedPinchLocation );
+                    selectedAsset = testFragment.Fragment;
+                    //selectedAsset = CadHelper.AssetManagement.GetFragmentById( 10 ) // test this is the "roof"
+                    //console.log("ASSIGNING SELECTED ASSET!")
+                }
 
-            //selectedAsset = testFragment.Fragment;
-            //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
-            //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
-            CadHelper.AssetManagement.Transformer.Rotate( selectedAsset, axis, degree );
-            CadHelper.AssetManagement.Transformer.Translate( selectedAsset, appAdjustedPinchLocation );
+                isPinching = true;
+            }
+
+            if ( isPinching && selectedAsset != null ){
+                if ( typeof ( appAdjustedPinchLocation ) === 'undefined' )
+                    appAdjustedPinchLocation = GetAppAdjustedVector( data.GestureInformation.PinchMidpoint, data.Hand.frame );
+
+                var axis = data.GestureInformation.axis;
+                var degree = data.GestureInformation.degree;
+                
+                //CadHelper.AssetManagement.Transformer.Rotate( selectedAsset, axis, degree );
+                CadHelper.AssetManagement.Transformer.Translate( selectedAsset, appAdjustedPinchLocation );
+            }
+
             setTimeout( function () { isPinching = false; }, 200 );
         }
     }
@@ -263,7 +272,7 @@ function removeMeshes( parentObject )
 {
     while ( mesh = parentObject.pop() )
     {
-        console.log( "Removing mesh with ID " + mesh.id )
+        //console.log( "Removing mesh with ID " + mesh.id )
         CadHelper.AssetManagement.RemoveAsset( mesh );
     }
 
