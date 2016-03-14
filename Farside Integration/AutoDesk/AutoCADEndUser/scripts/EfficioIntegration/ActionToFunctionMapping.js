@@ -85,51 +85,51 @@ ActionToFunctionMapping = {
             }
         }
     },
-    {
-        Topic: "RightHandAirplane",
-        Source: "Input.Processed.Efficio",
-        Action: function ( data )
         {
-            //console.log( "AIRPLANE MODE DETECTED!" )
-
-            if ( data.GestureInformation.EndPosition )
+            Topic: "RightHandAirplane",
+            Source: "Input.Processed.Efficio",
+            Action: function ( data )
             {
-                //Zooming functions
-                var zoomAmount = 1;
+                //console.log( "AIRPLANE MODE DETECTED!" )
 
-                var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
-
-                changeZ = changeZ > 50 ? 50 : changeZ;
-                changeZ = changeZ < -50 ? -50 : changeZ;
-
-                if ( changeZ > 0 )
+                if ( data.GestureInformation.EndPosition )
                 {
-                    CadHelper.Navigation.Zoom.ZoomIn( zoomAmount * ( changeZ / 50 ) );
-                }
-                else
-                {
-                    CadHelper.Navigation.Zoom.ZoomOut( zoomAmount * ( ( -1 * changeZ ) / 50 ) );
-                }
+                    //Zooming functions
+                    var zoomAmount = 1;
 
-                //Panning functions
-                var panAmount = 0.5;
+                    var changeZ = data.GestureInformation.StartPosition[2] - data.GestureInformation.EndPosition[2];
 
-                var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
+                    changeZ = changeZ > 50 ? 50 : changeZ;
+                    changeZ = changeZ < -50 ? -50 : changeZ;
 
-                changeX = changeX > 50 ? 50 : changeX;
-                changeX = changeX < -50 ? -50 : changeX;
+                    if ( changeZ > 0 )
+                    {
+                        CadHelper.Navigation.Zoom.ZoomIn( zoomAmount * ( changeZ / 50 ) );
+                    }
+                    else
+                    {
+                        CadHelper.Navigation.Zoom.ZoomOut( zoomAmount * ( ( -1 * changeZ ) / 50 ) );
+                    }
 
-                if ( changeX > 0 )
-                {
-                    CadHelper.Navigation.Panning.PanRight( panAmount * ( changeX / 50 ) );
-                }
-                else
-                {
-                    CadHelper.Navigation.Panning.PanLeft( panAmount * ( ( -1 * changeX ) / 50 ) );
+                    //Panning functions
+                    var panAmount = 0.5;
+
+                    var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
+
+                    changeX = changeX > 50 ? 50 : changeX;
+                    changeX = changeX < -50 ? -50 : changeX;
+
+                    if ( changeX > 0 )
+                    {
+                        CadHelper.Navigation.Panning.PanRight( panAmount * ( changeX / 50 ) );
+                    }
+                    else
+                    {
+                        CadHelper.Navigation.Panning.PanLeft( panAmount * ( ( -1 * changeX ) / 50 ) );
+                    }
                 }
             }
-        }
-    },
+        },
     {
         Topic: "RightHandThumbIndexPinch",
         Source: "Input.Processed.Efficio",
@@ -139,7 +139,12 @@ ActionToFunctionMapping = {
         },
         Action: function ( data )
         {
-            var appAdjustedPinchLocation = GetAppAdjustedVector( data.GestureInformation.PinchMidpoint, data.Input.Frame );
+
+            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates( data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums );
+
+            CorrectCoordinates( appAdjustedPinchLocation );
+
             var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint( appAdjustedPinchLocation );
 
             //selectedAsset = testFragment.Fragment;
@@ -156,7 +161,10 @@ ActionToFunctionMapping = {
         Action: function ( data )
         {
             isPinching = true;
-            var appAdjustedPinchLocation = GetAppAdjustedVector( data.GestureInformation.PinchMidpoint, data.Input.Frame )
+            var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
+            var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates( data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums );
+
+            CorrectCoordinates( appAdjustedPinchLocation );
 
             CadHelper.AssetManagement.Transformer.Translate( selectedAsset, appAdjustedPinchLocation );
             setTimeout( function () { isPinching = false }, 200 );
@@ -221,37 +229,37 @@ ActionToFunctionMapping = {
 	         }
 	     }
 	 },
-    {
-        Topic: "RightHandZeroFingersExtended",
-        Source: "Input.Processed.Efficio",
-        ExecutionPrerequisite: function ()
-        {
-            return !isPinching;
-        },
-        Action: function ( data )
-        {
-            if ( data.GestureInformation.EndPosition )
             {
-                isOrbiting = true;
-                var rotateAmount = .1;
-
-                var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
-
-                changeX = changeX > 50 ? 50 : changeX;
-                changeX = changeX < -50 ? -50 : changeX;
-
-                if ( changeX > 0 )
+                Topic: "RightHandZeroFingersExtended",
+                Source: "Input.Processed.Efficio",
+                ExecutionPrerequisite: function ()
                 {
-                    CadHelper.Navigation.Rotation.RotateClockwise( rotateAmount * ( changeX / 50 ) );
-                }
-                else
+                    return !isPinching;
+                },
+                Action: function ( data )
                 {
-                    CadHelper.Navigation.Rotation.RotateCounterClockwise( rotateAmount * ( ( -1 * changeX ) / 50 ) );
+                    if ( data.GestureInformation.EndPosition )
+                    {
+                        isOrbiting = true;
+                        var rotateAmount = .1;
+
+                        var changeX = data.GestureInformation.StartPosition[0] - data.GestureInformation.EndPosition[0];
+
+                        changeX = changeX > 50 ? 50 : changeX;
+                        changeX = changeX < -50 ? -50 : changeX;
+
+                        if ( changeX > 0 )
+                        {
+                            CadHelper.Navigation.Rotation.RotateClockwise( rotateAmount * ( changeX / 50 ) );
+                        }
+                        else
+                        {
+                            CadHelper.Navigation.Rotation.RotateCounterClockwise( rotateAmount * ( ( -1 * changeX ) / 50 ) );
+                        }
+                        setTimeout( function () { isOrbiting = false }, 200 )
+                    }
                 }
-                setTimeout( function () { isOrbiting = false }, 200 )
-            }
-        }
-    },
+            },
              //{
              //    Topic: "RightHandZeroFingersExtended",
              //    Source: "Input.Processed.Efficio",
