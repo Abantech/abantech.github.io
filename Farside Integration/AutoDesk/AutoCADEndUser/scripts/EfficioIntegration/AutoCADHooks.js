@@ -31,6 +31,11 @@ function EfficioAutoCADHelper(viewer) {
             return self.viewer.impl.scene.getObjectById(id);
         },
 
+        GetFragmentById: function ( id )
+        {
+            return self.viewer.impl.getFragmentProxy( self.viewer.model, id )
+        },
+
         UpdateScene: function () {
             // Update the viewer       
             self.viewer.impl.invalidate(true);
