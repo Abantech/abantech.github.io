@@ -16,40 +16,24 @@ ThreeDRoomPlugin = {
         
     },
 
-    CameraUpdate: function (data) {
-        if (controls) {
+    CameraUpdate: function ( data )
+    {
+        if ( controls )
+        {
             controls.onDeviceOrientationChangeEvent( data.Input.DeviceOrientation );
-            if ( typeof ( targetBall ) === "undefinded" )
+
+            var message = "DEFINED";
+            if ( typeof ( targetBall ) === "undefined" )
             {
-                document.getElementById( "info" ).innerHTML = "Camera is " + typeof ( camera ) === "undefined" ? "NOT defined" : "DEFINED")
-/*
-                //document.getElementById( "info" ).innerHTML = "You have seen me " + counter++ + " times"
-                rayCenter.x = 0;
-                rayCenter.y = 0;
-                raycaster.setFromCamera( rayCenter, camera );
-                raycaster.far = 5000;
-                var intersects = raycaster.intersectObjects( scene.children );
-                var intersectedObjectsCount = intersects.length;
-                //document.getElementById( "info" ).innerHTML = intersectedObjectsCount > 0 ? "Nothing intersected" : "INTERSECTED " + intersectedObjectsCount + " OBJECTS"
-                for ( var i = 0; i < intersectedObjectsCount; i++ )
-                {
-                    document.getElementById( "info" ).innerHTML = "Intersected object with ID " + intersects[i].object.id;
-                    if ( intersects[i].object.isAsset )
-                    {
-                        targetBallDistance = intersects[i].distance;
-                        intersects[i].object.material.color.set( 0xff0000 );
-*/
-                        var geometry = new THREE.SphereGeometry(5, 32, 32);
-                        var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
-                        targetBall = new THREE.Mesh( geometry, material );
-                        camera.add( targetBall );
-/*
-                    }
-                }
-*/
+                var geo = new THREE.SphereGeometry( 5, 32, 32 );
+                var mat = new THREE.MeshNormalMaterial();
+                targetBall = new THREE.Mesh( geo, mat );
+                camera.add( targetBall );
+                targetBall.position = new THREE.Vector3( 0, 0, targetBallDistance );
             }
 
-            targetBall.position = new THREE.Vector3( 0, 0, targetBallDistance );
+            //var message = typeof(camera) === "undefined" ? "NOT defined" : "DEFINED";
+            document.getElementById( "info" ).innerHTML = "You have VALIDATED camera " + message + " " + counter++ + " times"
         }
         //document.getElementById( "info" ).innerHTML = "You have seen me " + counter++ + " times"
     },
