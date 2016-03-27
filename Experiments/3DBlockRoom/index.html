@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <!-- Efficio Code -->
+    <script src="scripts/lib/three.min.js"></script>
+    <script src="scripts/ThreeDRoomPlugin.js"></script>
+    <script src="scripts/Efficio/Configuration/ActionToFunctionMapping.js"></script>
+    <script src="scripts/Efficio/Configuration/EfficioConfiguration.js"></script>
+    <script src="scripts/Efficio/Configuration/RequireConfiguration.js"></script>
+    <script src="scripts/Efficio/lib/require.js"></script>
+    <p id="info">HELLOW</p>
+    <script>
+        LoadEfficio()
+
+        function LoadEfficio() {
+            if (typeof THREE !== 'undefined') {
+                require(['scripts/Efficio/lib/Efficio.min.js'], function () {
+                    EfficioLoaded()
+                })
+            }
+            else {
+                setTimeout(LoadEfficio, 200);
+            }
+        }
+
+        function EfficioLoaded() {
+            if (typeof Efficio !== 'undefined' && Efficio.CheckReady()) {
+            }
+            else {
+                window.setTimeout(EfficioLoaded, 200);
+            }
+        }
+    </script>
+
+    <!-- Scene Code -->
+    <script src="scripts/Scene.js"></script>
+    <script src="scripts/lib/DeviceOrientationControls.js"></script>
+    <script src="scripts/lib/StereoEffect.js"></script>
+
+</body>
+</html>
