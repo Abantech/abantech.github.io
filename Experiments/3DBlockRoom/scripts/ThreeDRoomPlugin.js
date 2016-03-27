@@ -10,7 +10,6 @@ var selectedCube;
 ThreeDRoomPlugin = {
     Ready: function (data) {
         CreateScene();
-        //document.getElementById( "info" ).innerHTML = "You have seen me " + counter++ + " times"
     },
 
     DrawHands: function (data) {
@@ -23,7 +22,6 @@ ThreeDRoomPlugin = {
         {
             controls.onDeviceOrientationChangeEvent( data.Input.DeviceOrientation );
 
-            var message = "DEFINED";
             if ( typeof ( targetBall ) === "undefined" )
             {
                 var geo = new THREE.SphereGeometry( 5, 32, 32 );
@@ -55,11 +53,9 @@ ThreeDRoomPlugin = {
             else
             {
                 selectedCube.position.copy( targetBall.position );
-            }
-            //var message = typeof(camera) === "undefined" ? "NOT defined" : "DEFINED";
-            document.getElementById( "info" ).innerHTML = "You have VALIDATED camera " + message + " " + counter++ + " times"
+                document.getElementById( "info" ).innerHTML = "Current position of targetted cube is (" + selectedCube.position.x + ", " + selectedCube.position.y + ", " + selectedCube.position.z + ")"
+            } 
         }
-        //document.getElementById( "info" ).innerHTML = "You have seen me " + counter++ + " times"
     },
 
     SceneRotate: function (data) {
