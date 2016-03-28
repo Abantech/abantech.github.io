@@ -4,7 +4,7 @@
         Kinect: false,
         LeapMotion: {
             Host: '192.168.1.2',
-            OptimizeHMD: false
+            OptimizeHMD: true
         },
         RealSense: false,
         XR3D: false,
