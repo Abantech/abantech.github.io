@@ -3,7 +3,7 @@
         Microphone: false,
         Kinect: false,
         LeapMotion: {
-            Host: '192.168.1.2',
+            Host: 'localhost',
             OptimizeHMD: true
         },
         RealSense: false,
