@@ -20,5 +20,10 @@
         Topic: "Orientation Change",
         Source: "Input.Raw.Device",
         Action: "SceneRotate"
+    },
+    {
+        Topic: "RightHandThumbIndexPinch",
+        Source: "Input.Processed.Efficio",
+        Action: "CreateMovingBlock"
     }]
 }

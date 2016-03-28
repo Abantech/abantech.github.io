@@ -1,19 +1,30 @@
 ﻿var now;
 var fps = 0;
-var rayCenter = new THREE.Vector2();
-var raycaster = new THREE.Raycaster();
-var counter = 0;
-var targetBall;
-var targetBallDistance = 10;
-var selectedCube;
+var pinchMeshes = [];
+var pinchMesh;
 
 ThreeDRoomPlugin = {
-    Ready: function (data) {
+    Ready: function ( data )
+    {
         CreateScene();
+        //require(["scripts/lib/leap.transform"], function() {
+        //    Efficio.DeviceManager.ConnectedDevices().LeapMotion.Device.use('transform', {
+
+        //        // This matrix flips the x, y, and z axis, scales to meters, and offsets the hands by -8cm.
+        //        vr: true,
+
+        //        // This causes the camera's matrix transforms (position, rotation, scale) to be applied to the hands themselves
+        //        // The parent of the bones remain the scene, allowing the data to remain in easy-to-work-with world space.
+        //        // (As the hands will usually interact with multiple objects in the scene.)
+        //        effectiveParent: camera,
+        //    });
+        //})
+
     },
 
-    DrawHands: function (data) {
-        
+    DrawHands: function ( data )
+    {
+        DrawHands( data.Hands );
     },
 
     CameraUpdate: function ( data )
@@ -21,44 +32,65 @@ ThreeDRoomPlugin = {
         if ( controls )
         {
             controls.onDeviceOrientationChangeEvent( data.Input.DeviceOrientation );
-
-            if ( typeof ( targetBall ) === "undefined" )
-            {
-                var geo = new THREE.SphereGeometry( 5, 32, 32 );
-                var mat = new THREE.MeshNormalMaterial();
-                targetBall = new THREE.Mesh( geo, mat );
-                camera.add( targetBall );
-                targetBall.position = new THREE.Vector3( 0, 0, targetBallDistance );
-            }
-
-            if ( typeof ( selectedCube ) === "undefined" )
-            {
-                rayCenter.x = 0;
-                rayCenter.y = 0;
-                raycaster.setFromCamera( rayCenter, camera );
-                raycaster.far = 5000;
-                var intersects = raycaster.intersectObjects( scene.children );
-                var intersectedObjectsCount = intersects.length;
-                for ( var i = 0; i < intersectedObjectsCount; i++ )
-                {
-                    document.getElementById( "info" ).innerHTML = "Intersected object with ID " + intersects[i].object.id;
-                    if ( intersects[i].object.isAsset )
-                    {
-                        intersects[i].object.material.color.set( 0xff0000 );
-                        selectedCube = intersects[i].object;
-                    }
-                    //document.getElementById( "info" ).innerHTML = intersectedObjectsCount > 0 ? "Nothing intersected" : "INTERSECTED " + intersectedObjectsCount + " OBJECTS"
-                }
-            }
-            else
-            {
-                selectedCube.position.copy( targetBall.position );
-                document.getElementById( "info" ).innerHTML = "Current position of targetted cube is (" + selectedCube.position.x + ", " + selectedCube.position.y + ", " + selectedCube.position.z + ")"
-            } 
         }
     },
 
-    SceneRotate: function (data) {
+    SceneRotate: function ( data )
+    {
         controls.onScreenOrientationChangeEvent();
+    },
+
+    CreateMovingBlock: function ( data )
+    {
+        var pinchLocation = new THREE.Vector3();
+        pinchLocation.fromArray( data.GestureInformation.PinchMidpoint );
+
+        var correctedPinchLocation = LeapToSceneCoordinates( pinchLocation );
+
+        //var closeEnoughMeshes = [];
+        //var closestMesh;
+
+        //pinchMeshes.forEach(function (mesh) {
+        //    if (correctedPinchLocation.distanceTo(mesh.position) < 100) {
+        //        closeEnoughMeshes.push(mesh);
+        //    }
+        //});
+
+        //closeEnoughMeshes.forEach(function (mesh) {
+        //    if (!closestMesh || correctedPinchLocation.distanceTo(mesh) < correctedPinchLocation.distanceTo(closestMesh)) {
+        //        closestMesh = mesh;
+        //    }
+        //});
+
+        //if (!closestMesh) {
+        //    var geometry = new THREE.BoxGeometry(50, 50, 50);
+        //    var material = new THREE.MeshNormalMaterial();
+        //    closestMesh = new THREE.Mesh(geometry, material);
+        //    closestMesh.position.copy(correctedPinchLocation);
+        //    closestMesh.quaternion.copy(camera.quaternion);
+        //    pinchMesh.push(closestMesh);
+
+        //    scene.add(closestMesh);
+        //}
+
+        //closestMesh.position.copy(correctedPinchLocation);
+        //closestMesh.quaternion.copy(camera.quaternion);
+
+        if ( !pinchMesh )
+        {
+            var geometry = new THREE.BoxGeometry( 50, 50, 50 );
+            var material = new THREE.MeshNormalMaterial();
+            pinchMesh = new THREE.Mesh( geometry, material );
+            pinchMesh.position.copy( correctedPinchLocation );
+            pinchMesh.quaternion.copy( camera.quaternion );
+
+            scene.add( pinchMesh );
+        }
+
+        if ( correctedPinchLocation.distanceTo( pinchMesh.position ) < 100 )
+        {
+            pinchMesh.position.copy( correctedPinchLocation );
+            pinchMesh.quaternion.copy( camera.quaternion );
+        }
     }
 }

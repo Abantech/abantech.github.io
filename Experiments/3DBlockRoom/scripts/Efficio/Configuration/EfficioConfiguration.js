@@ -3,7 +3,8 @@
         Microphone: false,
         Kinect: false,
         LeapMotion: {
-            UseFirebase: true
+            Host: '192.168.1.2',
+            OptimizeHMD: false
         },
         RealSense: false,
         XR3D: false,

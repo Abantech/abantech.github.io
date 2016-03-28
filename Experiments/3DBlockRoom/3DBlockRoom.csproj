@@ -49,7 +49,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -59,8 +58,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="resources\local-libs\lodash.min.js" />
     <Content Include="scripts\Efficio\lib\Efficio.min.js" />
+    <Content Include="scripts\HandDraw1.js" />
     <Content Include="scripts\lib\DeviceOrientationControls.js" />
+    <Content Include="scripts\lib\ImprovedNoise.js" />
+    <Content Include="resources\local-libs\postal.min.js" />
+    <Content Include="scripts\lib\StereoEffect.js" />
     <Content Include="scripts\lib\three.min.js" />
     <Content Include="scripts\Scene.js" />
     <Content Include="scripts\ThreeDRoomPlugin.js" />
@@ -73,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -106,7 +111,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63949/</IISUrl>
+          <IISUrl>http://localhost:58511/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
