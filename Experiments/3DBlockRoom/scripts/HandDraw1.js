@@ -26,7 +26,7 @@ function DrawHands( hands )
         var countBones = 0;
         var countArms = 0;
 
-        //camera.rotateY( .001 );
+        camera.rotateY( .02 );
 
         scene.remove( handHolder );
         handHolder = new THREE.Object3D();
@@ -57,20 +57,6 @@ function DrawHands( hands )
             var newHandMesh = createBoneMeshFromHand( hand, LeapToSceneCoordinates, knuckleGeo, knuckleMat, boneGeo, boneMat, hand.type == "left" ? leftHand : rightHand );
 
             handHolder.add( newHandMesh);
-
-            
-            //createMeshes( hand.type == "left" ? leftHand : rightHand );
-
-            //for ( var finger of hand.fingers ) {
-
-            //    for ( var bone of finger.bones ) {
-
-            //        if ( countBones++ === 0 ) { continue; }
-
-            //        var boneMesh = boneMeshes[countBones] || addMesh( boneMeshes );
-            //        updateMesh( bone, boneMesh );
-            //    }
-            //}
         }
 
         scene.add( handHolder );
