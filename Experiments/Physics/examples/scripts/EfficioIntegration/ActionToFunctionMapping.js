@@ -70,17 +70,22 @@ ActionToFunctionMapping = {
                 removeMeshes( leftHandMesh );
 			*/
 			
-            var lineMat = new THREE.LineBasicMaterial( { color: 0x000000 } );
-            var skinMat = new THREE.MeshPhongMaterial( { color: 0xA28857 } );
-
-            var knuckleGeo = new THREE.SphereGeometry( 4.5, 16, 24 );
-            var boneGeo = new THREE.CylinderGeometry( 3.7, 3.7, 1, 24 );
-            boneGeo.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
-
             var vectorAdjuster = function ( inputVector )
             {
                 return GetAppAdjustedVector( inputVector, data.Frame );
             }
+			
+			if (leftHandVisual.isInitialized)
+			{
+				removeMeshes(leftHandVisual.handMeshArray);
+				leftHandVisual.clearAll();
+			}
+			
+			if (rightHandVisual.isInitialized)
+			{
+				removeMeshes(rightHandVisual.handMeshArray);
+				rightHandVisual.clearAll();
+			}
 
             for ( var hand of data.Hands )
             {

@@ -10,8 +10,8 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/TrackballControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=http://chandlerprall.github.io/Physijs/physi.js ></script>
+<script src=http://js.leapmotion.com/leap-0.6.3.js ></script>
 <script src="../handVisualHelper.js"></script>
-<script src="http://js.leapmotion.com/leap-0.6.4.js"></script>
 
 <script>
 // From: https://github.com/chandlerprall/Physijs
@@ -313,6 +313,14 @@ console.log( intersected.name );
 	var leftHandVisual = new HandVisualizer(false);
 	var rightHandVisual = new HandVisualizer(false);
 	
+	function initForVR() 
+	{
+		leftHandVisual.vectorAdjuster = function(positionArray) { return new THREE.Vector3((-1*positionArray[0]), positionArray[1], positionArray[2]);}
+		rightHandVisual.vectorAdjuster = function(positionArray) { return new THREE.Vector3((-1*positionArray[0]), positionArray[1], positionArray[2]);}
+		console.log("INITIALIZED FOR VR MODE");
+	}
+	
+	initForVR();
 	/*
 	var skinMat = new THREE.MeshPhongMaterial( { color: 0xA28857 } );
 	var lineMat = new THREE.LineBasicMaterial({color: 0xffffff});
@@ -328,30 +336,18 @@ console.log( intersected.name );
 	}
 	*/
 	
-	function createCylinderBoneBetweenJoints(boneGeometry, boneMaterial, prevJoint, nextJoint)
-	{
-		var d = prevJoint.distanceTo( nextJoint );
-		var boneMesh = new THREE.Mesh( boneGeometry, boneMaterial );
-		boneMesh.scale.set( 1, 1, d || 1 );
-		boneMesh.position.lerpVectors( prevJoint, nextJoint, 0.5 );
-		boneMesh.lookAt( prevJoint );
-		return boneMesh;
-	}
-	
-	function createLineBetweenJoints(lineMaterial, prevJoint, nextJoint)
-	{
-		var lineGeo = new THREE.Geometry();
-		lineGeo.vertices.push(prevJoint, nextJoint);
-		var boneLine = new THREE.Line( lineGeo, lineMat);
-		return boneLine;
-	}
-	
 	loop.animate = function( frame ) {
 
 		if (leftHandVisual.isInitialized)
 		{
 			removeMeshes(leftHandVisual.handMeshArray);
 			leftHandVisual.clearAll();
+		}
+		
+		if (rightHandVisual.isInitialized)
+		{
+			removeMeshes(rightHandVisual.handMeshArray);
+			rightHandVisual.clearAll();
 		}
 
 		frame.hands.forEach( function( hand, id ) 
@@ -410,41 +406,10 @@ console.log( intersected.name );
 
 	};
 	
-	function createBoneMeshFromHand( theHand, vectorAdjuster, knuckleGeometry, knuckleMaterial, boneCreationFunction, fullHandMesh )
-	{
-		for ( var j = 0; j < theHand.fingers.length; j++ )
-		{
-			var finger = theHand.fingers[j];
-			var positions = finger.positions;
-
-			var geometryLine = new THREE.Geometry();
-			var vertices = geometryLine.vertices;
-
-			for ( var k = 0; k < 5; k++ )
-			{
-				var vertex = vectorAdjuster( positions[k] );
-
-				var mesh = new THREE.Mesh( knuckleGeometry, knuckleMaterial );
-				mesh.position.copy( vertex );
-				fullHandMesh.push( mesh );
-				
-				if ( k < 4 )
-				{	
-					var next = vectorAdjuster( positions[k + 1] );
-					var bone = boneCreationFunction(vertex, next);
-					fullHandMesh.push(bone);
-				}
-			}
-		}
-	}
-	
 	function createMeshes( parentObject )
 	{
 		for ( var mesh of parentObject )
-		{
 			scene.add(mesh);
-		}
-		//console.log("Added mesh!");
 		//CadHelper.AssetManagement.CreateAsset( mesh );
 	}
 
