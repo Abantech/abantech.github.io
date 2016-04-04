@@ -23,7 +23,7 @@ var createLineBetweenJoints = function(prevJoint, nextJoint)
 	return boneLine;
 }
 
-function HandVisualizer(useCylinderBones)
+function HandVisualizer(boneType)
 {
 	this.skinMaterial = new THREE.MeshPhongMaterial( { color: 0xA28857 } );
 	this.lineMaterial = new THREE.LineBasicMaterial({color: 0xffffff});
@@ -32,9 +32,12 @@ function HandVisualizer(useCylinderBones)
 	this.boneGeometry = new THREE.CylinderGeometry( 3.7, 3.7, 1, 24 );
 	this.vectorAdjuster = function(positionArray) { return new THREE.Vector3().fromArray(positionArray);}
 
+	this.boneTyoe = boneType;
+	this.useBones = (boneType == "cylinders" || boneType == "lines");
+	
 	this.boneCreationFunction = function(prevJoint, nextJoint)
 	{
-		if (this.useCylinderBones)
+		if (this.boneTyoe == "cylinders")
 		{
 			var d = prevJoint.distanceTo( nextJoint );
 			var boneMesh = new THREE.Mesh(this.boneGeometry, this.skinMaterial);
@@ -43,7 +46,7 @@ function HandVisualizer(useCylinderBones)
 			boneMesh.lookAt( prevJoint );
 			return boneMesh;
 		}
-		else
+		else if (this.boneTyoe == "lines")
 		{
 			var lineGeo = new THREE.Geometry();
 			lineGeo.vertices.push(prevJoint, nextJoint);
@@ -80,14 +83,17 @@ function HandVisualizer(useCylinderBones)
 				this.knuckles.push(knuckle);
 				this.handMeshArray.push( knuckle );
 				
-				if ( k < 4 )
-				{	
-					var next = this.vectorAdjuster( positions[k + 1] );
-					var bone = this.boneCreationFunction(vertex, next);
-					bone.prevKunckle = knuckle;
-					bone.nextKnuckleIndex = this.knuckles.length;
-					this.bones.push(bone);
-					this.handMeshArray.push(bone);
+				if (this.useBones)
+				{
+					if ( k < 4 )
+					{	
+						var next = this.vectorAdjuster( positions[k + 1] );
+						var bone = this.boneCreationFunction(vertex, next);
+						bone.prevKunckle = knuckle;
+						bone.nextKnuckleIndex = this.knuckles.length;
+						this.bones.push(bone);
+						this.handMeshArray.push(bone);
+					}
 				}
 			}
 		}
@@ -113,32 +119,34 @@ function HandVisualizer(useCylinderBones)
 			}
 		}
 		
-		
-		if (!this.useCylinderBones)
+		if (this.useBones)
 		{
-			for (var i = 0; i < this.bones.length; i++)
+			if (this.boneType == "lines")
 			{
-				var currentBone = this.bones[i];
-				var prevKunckle = this.bones[i].prevKunckle;
-				
-				this.bones[i].geometry.vertices[0].x = prevKunckle.position.x;
-				this.bones[i].geometry.vertices[0].y = prevKunckle.position.y;
-				this.bones[i].geometry.vertices[0].z = prevKunckle.position.z;
-				
-				
-				if (!(typeof(this.knuckles[currentBone.nextKnuckleIndex]) === 'undefined'))
+				for (var i = 0; i < this.bones.length; i++)
 				{
-					var nextKnuckle = this.knuckles[currentBone.nextKnuckleIndex];
-					this.bones[i].geometry.vertices[1].x = nextKnuckle.position.x;
-					this.bones[i].geometry.vertices[1].y = nextKnuckle.position.y;
-					this.bones[i].geometry.vertices[1].z = nextKnuckle.position.z;
+					var currentBone = this.bones[i];
+					var prevKunckle = this.bones[i].prevKunckle;
+					
+					this.bones[i].geometry.vertices[0].x = prevKunckle.position.x;
+					this.bones[i].geometry.vertices[0].y = prevKunckle.position.y;
+					this.bones[i].geometry.vertices[0].z = prevKunckle.position.z;
+					
+					
+					if (!(typeof(this.knuckles[currentBone.nextKnuckleIndex]) === 'undefined'))
+					{
+						var nextKnuckle = this.knuckles[currentBone.nextKnuckleIndex];
+						this.bones[i].geometry.vertices[1].x = nextKnuckle.position.x;
+						this.bones[i].geometry.vertices[1].y = nextKnuckle.position.y;
+						this.bones[i].geometry.vertices[1].z = nextKnuckle.position.z;
+					}
+					else
+					{
+						console.log("ERROR - No next knuckle for a certain bone");
+					}
+					
+					this.bones[i].geometry.verticesNeedUpdate = true;
 				}
-				else
-				{
-					console.log("ERROR - No next knuckle for a certain bone");
-				}
-				
-				this.bones[i].geometry.verticesNeedUpdate = true;
 			}
 		}
 		

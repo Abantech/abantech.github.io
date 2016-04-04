@@ -76,11 +76,9 @@
 		controls = new THREE.TrackballControls( camera, renderer.domElement );
 
 		scene = new Physijs.Scene( { reportsize: 50, fixedTimeStep: 1 / 60 } );   // defaults
-//<<<<<<< HEAD
-		scene.setGravity( new THREE.Vector3( 0, -30.0, 0 ));
-//=======
+
 		scene.setGravity( new THREE.Vector3( 0, -15.0, 0 ));
-//>>>>>>> origin/master
+
 		scene.addEventListener( 'update', function() {
 			scene.simulate( undefined, 1 );
 		} );
@@ -100,21 +98,21 @@
 		light.shadowCameraNear = 500;
 		light.shadowCameraFar = 1200;
 
-// can help stop appearance of gridlines in objects with opacity < 1
+	// can help stop appearance of gridlines in objects with opacity < 1
 		light.shadowBias = -0.0002; // default 0 ~ distance fron corners?
 		light.shadowDarkness = 0.3; // default 0.5
 		light.shadowMapWidth = 2048;  // default 512
 		light.shadowMapHeight = 2048;
 
 		light.castShadow = true;
-//		light.shadowCameraVisible = true;
+	//		light.shadowCameraVisible = true;
 		scene.add( light );
 
 		light = new THREE.PointLight( 0xffffff, 0.5 );
 		light.position = camera.position;
 		camera.add( light );
 		
-// Table
+		// Table
 
 		var friction = 1; // high friction
 		var restitution = 0; // low restitution
@@ -124,7 +122,6 @@
 			new THREE.MeshLambertMaterial({ color: 0xff0000, ambient: 0x888888 }),
 			friction,
 			restitution
-
 		);
 		
 		// Table
@@ -214,20 +211,9 @@
 
 		}
 
-//console.log( index );
-//console.log( raycaster, intersects );
+	//console.log( index );
+	//console.log( raycaster, intersects );
 
-		points++;
-
-		if ( points < 100 ) {
-
-			msg.innerHTML = 'You now have ' + points + ' points'
-
-		} else {
-
-			msg.innerHTML = '<h1>Bingo! You win!</h1>';
-
-		}
 
 	}
 	
@@ -310,8 +296,8 @@ console.log( intersected.name );
 
 	}
 
-	var leftHandVisual = new HandVisualizer(false);
-	var rightHandVisual = new HandVisualizer(false);
+	var leftHandVisual = new HandVisualizer("lines");
+	var rightHandVisual = new HandVisualizer("lines");
 	
 	function initForVR() 
 	{
