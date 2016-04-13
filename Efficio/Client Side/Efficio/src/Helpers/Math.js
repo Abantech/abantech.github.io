@@ -23,44 +23,12 @@ define(function () {
         return Math.acos(axb / (vector1Length * vector2Length)) * (180 / Math.PI)
     }
 
-    function DistanceBetweenTwoPoints(point1, point2) {
-        if (!Array.isArray(point1)) {
-            point1 = [point1]
-        }
-
-        if (!Array.isArray(point2)) {
-            point2 = [point2]
-        }
-
-        var a = {
-            x: point1[0],
-            y: point1[1] || 0,
-            z: point1[2] || 0
-        }
-
-        var b = {
-            x: point2[0],
-            y: point2[1] || 0,
-            z: point2[2] || 0
-        }
-
+    function DistanceBetweenTwoPoints(a, b) {
         return Math.sqrt((b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y) + (b.z - a.z) * (b.z - a.z))
     }
 
-    function MidpointBetweenTwoPoints(point1, point2) {
-        var a = {
-            x: point1[0],
-            y: point1[1] || 0,
-            z: point1[2] || 0
-        }
-
-        var b = {
-            x: point2[0],
-            y: point2[1],
-            z: point2[2] || 0
-        }
-
-        return [(b.x + a.x) / 2, (b.y + a.y) / 2, (b.z + a.z) / 2];
+    function MidpointBetweenTwoPoints(a, b) {
+         return [(b.x + a.x) / 2, (b.y + a.y) / 2, (b.z + a.z) / 2];
     }
 
     function Velocity(point1, point2, time) {

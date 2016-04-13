@@ -288,9 +288,11 @@
     <Content Include="scripts\DemoWalkthrough\DemoA2FM.js" />
     <Content Include="scripts\DemoWalkthrough\DemoAudioCommands.js" />
     <Content Include="scripts\EfficioIntegration\IndexAndThumbsTouch.js" />
+    <Content Include="scripts\EfficioIntegration\libs\Efficio.min - Copy.js" />
     <Content Include="scripts\EfficioUI\NavigationInstructionsPanel.js" />
     <Content Include="scripts\EfficioUI\VerbalInstructionsPanel.js" />
     <Content Include="scripts\EfficioUI\InstructionsPanel.js" />
+    <Content Include="scripts\libs\realsense.js" />
     <Content Include="stylesheets\flow.css" />
     <Content Include="stylesheets\gallery-base-theme.css" />
     <Content Include="stylesheets\gallery-theme.css" />
@@ -314,9 +316,7 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\FileDeploy.pubxml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="scripts\libs\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

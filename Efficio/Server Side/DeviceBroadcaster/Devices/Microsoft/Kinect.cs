@@ -1,5 +1,7 @@
 ﻿using Microsoft.Kinect;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace DeviceBroadcaster.Devices.Microsoft
 {
@@ -16,11 +18,26 @@ namespace DeviceBroadcaster.Devices.Microsoft
             // set IsAvailableChanged event notifier
             this.kinectSensor.IsAvailableChanged += this.Sensor_IsAvailableChanged;
         }
-
         public void Start()
         {
             // open the sensor
+            var reader = this.kinectSensor.BodyFrameSource.OpenReader();
+            reader.FrameArrived += Reader_FrameArrived;
+
             this.kinectSensor.Open();
+
+            while (this.kinectSensor.IsOpen)
+            {
+
+            }
+        }
+
+        private void Reader_FrameArrived(object sender, BodyFrameArrivedEventArgs e)
+        {
+            // get total number of bodies from BodyFrameSource
+            var bodies = new Body[this.kinectSensor.BodyFrameSource.BodyCount];
+            e.FrameReference.AcquireFrame().GetAndRefreshBodyData(bodies);
+            List<Body> bodiesList = new List<Body>();
         }
 
         public Action<object, DataReceivedEventArgs> DataReceived { get; internal set; }

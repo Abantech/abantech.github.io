@@ -2,11 +2,11 @@
     Devices: {
         Microphone: false,
         Kinect: false,
-        LeapMotion: true,
-        RealSense: false,
+        LeapMotion: false,
+        RealSense: true,
         XR3D: false,
         Location: false,
-        Orientation: true
+        Orientation: false
     },
 
     ActionToFunctionMapping: ActionToFunctionMapping

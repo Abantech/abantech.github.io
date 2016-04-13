@@ -15,7 +15,7 @@
 
     function Initialize() {
         // Tells RealSense what to look for
-        RealSenseConfiguration = Configure(Efficio.Devices.ReasSense);
+        RealSenseConfiguration = Configure(Efficio.Configuration.Devices.RealSense);
         trackingType = RealSenseConfiguration.SenseType;
         useNativeGestures = RealSenseConfiguration.Gestures;
 

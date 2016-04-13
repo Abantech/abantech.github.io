@@ -1,4 +1,4 @@
-﻿define(['postal', 'Input/DeviceManager'], function (bus, deviceManager) {
+﻿define(['postal', 'Input/DeviceManager', 'Input/Intel/RealSense/Sense Type/Hands/HelperFunctions'], function (bus, deviceManager, helper) {
     var source = 'Intel RealSense';
     var trackingType = 'Hands';
     var useNativeGestures = false;
@@ -101,10 +101,11 @@
             var device = {
                 Name: 'RealSense',
                 Manufacturer: 'Intel',
-                Device: handModule
+                Device: handModule,
+                Helper: helper
             }
 
-            // Add Leap Motion to Device Manager
+            // Add RealSense to Device Manager
             deviceManager.Add(source, device, function () {
                 return connected;
             });

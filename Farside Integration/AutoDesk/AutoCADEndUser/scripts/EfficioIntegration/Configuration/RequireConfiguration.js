@@ -15,7 +15,7 @@
         gyronorm: 'https://cdn.rawgit.com/dorukeker/gyronorm.js/master/dist/gyronorm.complete.min',
         promise: 'https://www.promisejs.org/polyfills/promise-6.1.0',
         autobahn: 'https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min',
-        realsense: 'scripts/libs/realsense/realsense',
+        realsense: 'scripts/libs/realsense',
         'leap-plugins': '//js.leapmotion.com/leap-plugins-0.1.11',
         'riggedHand': '//js.leapmotion.com/leap.rigged-hand-0.1.7'
     },

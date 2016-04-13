@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="build\build.js" />
+    <Content Include="build\intro.js" />
+    <Content Include="build\outro.js" />
+    <Content Include="build\r.js" />
     <Content Include="Efficio.min.js" />
     <Content Include="Output\min\Efficio.min.js" />
     <Content Include="src\Asset Management and Inventory\AssetManager.js" />
@@ -70,6 +74,7 @@
     <Content Include="src\Input\Intel\RealSense\Sense Type\Hands\Extensions\Alerts.js" />
     <Content Include="src\Input\Intel\RealSense\RealSense.js" />
     <Content Include="src\Input\Intel\RealSense\Sense Type\Hands\HandTracking.js" />
+    <Content Include="src\Input\Intel\RealSense\Sense Type\Hands\HelperFunctions.js" />
     <Content Include="src\Input\LeapMotion\HelperFunctions.js" />
     <Content Include="src\Input\Microsoft Kinect\JointHelper.js" />
     <Content Include="src\Input\Microsoft Kinect\Kinect.js" />
@@ -111,12 +116,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <PropertyGroup Condition="'$(Configuration)' == 'James'">
-    <Java8Home>C:\Program Files (x86)\Java\jre1.8.0_66\bin\</Java8Home>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Ismael'">
-    <Java8Home>C:\Program Files\Java\jre1.8.0_66\bin\</Java8Home>
-  </PropertyGroup>
   <PropertyGroup>
     <MinDir>..\..\..\bin</MinDir>
   </PropertyGroup>
@@ -130,7 +129,7 @@
   </Target>
   <Target Name="Minify">
     <Message Text="Minifying Js Files" Importance="high" />
-    <Exec Command="&quot;$(Java8Home)jjs.exe&quot;  -scripting build\r.js -- -o build\build.js" />
+    <Exec Command="&quot;$(JAVA_HOME)\jjs.exe&quot;  -scripting build\r.js -- -o build\build.js" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

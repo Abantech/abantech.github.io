@@ -14,7 +14,8 @@ function EfficioAutoCADHelper(viewer) {
                 materialIndex++;
             }
 
-            self.viewer.impl.matman().addMaterial(materialName, mesh.material, true);
+            if (mesh.hasOwnProperty("material"))
+                self.viewer.impl.matman().addMaterial(materialName, mesh.material, true);
 
             // Add mesh to scene
             self.viewer.impl.scene.add(mesh);

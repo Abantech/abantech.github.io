@@ -18,7 +18,6 @@ namespace DeviceBroadcaster.Devices.Microsoft
         public bool BroadcastCameraData { get; set; } = false;
 
         private IDataReceivedEventHandler dataReceivedEventHandler = new DataReceivedEventHandler();
-        private IAvailabilityChangedEventHandler availabilityChangedEventHandler;
 
         public void StartBroadcast()
         {
@@ -28,10 +27,8 @@ namespace DeviceBroadcaster.Devices.Microsoft
             var kinect = new Kinect();
 
             dataReceivedEventHandler.Server = server;
-            availabilityChangedEventHandler.Server = server;
             
             kinect.DataReceived += dataReceivedEventHandler.DataReceived;
-            kinect.AvailabilityChange += availabilityChangedEventHandler.AvailabilityChanged;
 
             kinect.Start();
         }

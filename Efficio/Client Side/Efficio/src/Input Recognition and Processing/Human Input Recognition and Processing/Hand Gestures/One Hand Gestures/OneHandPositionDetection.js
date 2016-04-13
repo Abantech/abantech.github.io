@@ -109,11 +109,12 @@
    Description:    Informs consumer which fingers are extended and on which hand 
 */
     function SideHandFingerDetected(hand, data) {
-        hand.fingers.forEach(function (finger) {
+        var fingers = hand.Fingers();
+        fingers.forEach(function (finger) {
             var fingerName = finger.GetFingerLabel();
             var gestureName = side + 'Hand' + fingerName + 'FingerExtended'
 
-            if (finger.extended) {
+            if (finger.IsExtended()) {
                 var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
                 bus.publish({
@@ -385,16 +386,17 @@
     }
 
     function Pinch(hand, data) {
-        for (var i = 0; i < hand.fingers.length - 1; i++) {
-            for (var j = i + 1; j < hand.fingers.length; j++) {
-                var gestureName = side + 'Hand' + hand.fingers[i].GetFingerLabel() + hand.fingers[j].GetFingerLabel() + 'Pinch';
-                var pinchDistance = hand.fingers[i].DistanceToFinger(hand.fingers[j]);
+        var fingers = hand.Fingers();
+        for (var i = 0; i < fingers.length - 1; i++) {
+            for (var j = i + 1; j < fingers.length; j++) {
+                var gestureName = side + 'Hand' + fingers[i].GetFingerLabel() + fingers[j].GetFingerLabel() + 'Pinch';
+                var pinchDistance = fingers[i].DistanceToFinger(fingers[j]);
 
                 if (pinchDistance < 23) {
                     var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
                     gestureInformation.PinchFingersIndicies = [i, j];
                     gestureInformation.PinchDistance = pinchDistance;
-                    gestureInformation.PinchMidpoint = math.MidpointBetweenTwoPoints(hand.fingers[i].tipPosition, hand.fingers[j].tipPosition)
+                    gestureInformation.PinchMidpoint = math.MidpointBetweenTwoPoints(fingers[i].TipPosition(), fingers[j].TipPosition())
 
                     bus.publish({
                         channel: "Input.Processed.Efficio",
@@ -435,44 +437,44 @@
         }
     };// END ThumbsUp
 
-    function Airplane(hand, data){
-        var gestureName = side + "HandAirplane";
-        var fingerAdjacencyAngleThreshold = 30;
+    //function Airplane(hand, data){
+    //    var gestureName = side + "HandAirplane";
+    //    var fingerAdjacencyAngleThreshold = 30;
 
-        // All fingers extended
-        var handIsAirplane = hand.AreRequisiteFingersExtended([0, 1, 2, 3, 4]);
+    //    // All fingers extended
+    //    var handIsAirplane = hand.AreRequisiteFingersExtended([0, 1, 2, 3, 4]);
 
-        // Index and middle touching
-        handIsAirplane = handIsAirplane && hand.indexFinger.AngleToFinger(hand.middleFinger) < fingerAdjacencyAngleThreshold;
+    //    // Index and middle touching
+    //    handIsAirplane = handIsAirplane && hand.indexFinger.AngleToFinger(hand.middleFinger) < fingerAdjacencyAngleThreshold;
 
-        // Middle and ring touching
-        handIsAirplane = handIsAirplane && hand.middleFinger.AngleToFinger(hand.ringFinger) < fingerAdjacencyAngleThreshold;
+    //    // Middle and ring touching
+    //    handIsAirplane = handIsAirplane && hand.middleFinger.AngleToFinger(hand.ringFinger) < fingerAdjacencyAngleThreshold;
 
-        // Thumb and index separated
-        handIsAirplane = handIsAirplane && hand.thumb.AngleToFinger(hand.indexFinger) > fingerAdjacencyAngleThreshold;
+    //    // Thumb and index separated
+    //    handIsAirplane = handIsAirplane && hand.thumb.AngleToFinger(hand.indexFinger) > fingerAdjacencyAngleThreshold;
 
-        // Ring and pinky separated
-        handIsAirplane = handIsAirplane && hand.ringFinger.AngleToFinger(hand.pinky) > fingerAdjacencyAngleThreshold;
+    //    // Ring and pinky separated
+    //    handIsAirplane = handIsAirplane && hand.ringFinger.AngleToFinger(hand.pinky) > fingerAdjacencyAngleThreshold;
 
 
-        if (handIsAirplane) {
-            var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
+    //    if (handIsAirplane) {
+    //        var gestureInformation = ActiveGesturesDictionary.CreateOrUpdateEntry(trackingType, gestureName, dictionary, side);
 
-            bus.publish({
-                channel: "Input.Processed.Efficio",
-                topic: gestureName,
-                source: source,
-                data: {
-                    input: data,
-                    hand: hand,
-                    GestureInformation: gestureInformation
-                }
-            });
-        }
-        else {
-            ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
-        }
-    }
+    //        bus.publish({
+    //            channel: "Input.Processed.Efficio",
+    //            topic: gestureName,
+    //            source: source,
+    //            data: {
+    //                input: data,
+    //                hand: hand,
+    //                GestureInformation: gestureInformation
+    //            }
+    //        });
+    //    }
+    //    else {
+    //        ActiveGesturesDictionary.DeleteEntry(trackingType, gestureName, dictionary, side);
+    //    }
+    //}
 
     function ProcessInput(data, hand) {
         // Hand information
@@ -498,7 +500,7 @@
                     SideHandFlexAndRotation: SideHandFlexAndRotation,
                     Pinch: Pinch,
                     ThumbsUp: ThumbsUp,
-                    Airplane: Airplane
+                    //Airplane: Airplane
                 }
             }
         }

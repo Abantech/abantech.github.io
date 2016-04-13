@@ -30,3 +30,15 @@ C:\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Xtr3D.Ne
 C:\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Xtr3D.Net.ExtremeMotion.xml
 C:\Development\Abantech\abantech.github.io\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Microsoft.Kinect.dll
 C:\Development\Abantech\abantech.github.io\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Microsoft.Kinect.xml
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\DeviceBroadcaster.exe.config
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\obj\Debug\DeviceBroadcaster.exe
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\obj\Debug\DeviceBroadcaster.pdb
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\DeviceBroadcaster.exe
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\DeviceBroadcaster.pdb
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Fleck.dll
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Microsoft.Kinect.dll
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\websocket-sharp-with-proxy-support.dll
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Microsoft.Kinect.xml
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Xtr3D.Net.xml
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\bin\Debug\Xtr3D.Net.ExtremeMotion.xml
+C:\Users\JS141\Documents\Development\Abantech\Efficio\Server Side\DeviceBroadcaster\obj\Debug\DeviceBroadcaster.csprojResolveAssemblyReference.cache

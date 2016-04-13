@@ -1,18 +1,28 @@
 ﻿define([
     'Input Recognition and Processing/InputRecognitionAndProcessing',
-    'Asset Management and Inventory/AssetManager',
-    'Constraints Engine/ConstraintsEngine',
+    //'Asset Management and Inventory/AssetManager',
+    //'Constraints Engine/ConstraintsEngine',
     'Command Issuance and Control/CommandIssuanceAndControl',
     'Command Issuance and Control/EventManager',
-    'InternalScene',
-    'Logging/SystemNotificationListener',
+    //'InternalScene',
+    //'Logging/SystemNotificationListener',
     'Input/DeviceManager',
-    'Metrics/Metrics',
+    //'Metrics/Metrics',
     'postal'
     //'Sequence Execution and Action Scheduling/CollisionDetectionAndGravitySimulation',
 ],
 
-function (hirp, ami, constraintsEngine, comm, eventManager, internalScene, sysNotificationListener, deviceManager, metrics, bus) {
+function (
+    hirp,
+    //ami,
+    //constraintsEngine,
+    comm,
+    eventManager,
+    //internalScene,
+    //sysNotificationListener,
+    deviceManager,
+    //metrics,
+    bus) {
     var Efficio;
     var readyFired = false;
 
@@ -47,7 +57,7 @@ function (hirp, ami, constraintsEngine, comm, eventManager, internalScene, sysNo
         ready = ready && (Efficio.DeviceManager !== null) && (Efficio.DeviceManager.Ready());
 
         // Check if Metrics Ready
-        ready = ready && (Efficio.Metrics !== null) && (Efficio.Metrics.Ready());
+        // ready = ready && (Efficio.Metrics !== null) && (Efficio.Metrics.Ready());
 
         // Check if external app is ready
         if (typeof func === 'function') {
@@ -84,15 +94,15 @@ function (hirp, ami, constraintsEngine, comm, eventManager, internalScene, sysNo
 
             Configure(EfficioConfiguration);
 
-            Efficio.Metrics = metrics.Initialize();
+            //Efficio.Metrics = metrics.Initialize();
 
             Efficio.InputAndGestureRecognition = hirp.Initialize(EfficioConfiguration);
-            ami.Initialize();
-            constraintsEngine.Initialize();
+            //ami.Initialize();
+            //constraintsEngine.Initialize();
             Efficio.CommandIssuanceAndControl = comm.Initialize();
             Efficio.EventManager = eventManager.Initialize();
-            Efficio.InternalScene = internalScene.Initialize();
-            sysNotificationListener.Initialize();
+            //Efficio.InternalScene = internalScene.Initialize();
+            //sysNotificationListener.Initialize();
             Efficio.DeviceManager = deviceManager.Initialize();
 
             if (EfficioConfiguration.Devices.LeapMotion) {
@@ -102,27 +112,26 @@ function (hirp, ami, constraintsEngine, comm, eventManager, internalScene, sysNo
                 });
             }
 
-            // JAMES -- I had to change this to get it to work
-            if (EfficioConfiguration.Devices.Kinect) {
-                require(['Input/Microsoft Kinect/Kinect'], function (kinect) {
-                    kinect.Initialize();
-                    kinect.Start();
-                });
-            }
+            //if (EfficioConfiguration.Devices.Kinect) {
+            //    require(['Input/Microsoft Kinect/Kinect'], function (kinect) {
+            //        kinect.Initialize();
+            //        kinect.Start();
+            //    });
+            //}
 
-            if (EfficioConfiguration.Devices.Microphone) {
-                require(['Input/Microphone/Microphone'], function (microphone) {
-                    microphone.Intitialize();
-                    microphone.Start();
-                });
-            }
+            //if (EfficioConfiguration.Devices.Microphone) {
+            //    require(['Input/Microphone/Microphone'], function (microphone) {
+            //        microphone.Intitialize();
+            //        microphone.Start();
+            //    });
+            //}
 
-            if (EfficioConfiguration.Devices.XR3D) {
-                require(['Input/XR3D/XR3D'], function (XR3D) {
-                    XR3D.Initialize();
-                    XR3D.Start();
-                });
-            }
+            //if (EfficioConfiguration.Devices.XR3D) {
+            //    require(['Input/XR3D/XR3D'], function (XR3D) {
+            //        XR3D.Initialize();
+            //        XR3D.Start();
+            //    });
+            //}
 
             if (EfficioConfiguration.Devices.RealSense) {
                 require(['Input/Intel/RealSense/RealSense'], function (realsense) {
@@ -131,25 +140,25 @@ function (hirp, ami, constraintsEngine, comm, eventManager, internalScene, sysNo
                 });
             }
 
-            if (EfficioConfiguration.Devices.Location && window) {
-                // Geolocation
-                require(['Input/Geolocation/Browser'], function (browser) {
-                    browser.Initialize(EfficioConfiguration);
-                    browser.Start();
-                })
-            }
+            //if (EfficioConfiguration.Devices.Location && window) {
+            //    // Geolocation
+            //    require(['Input/Geolocation/Browser'], function (browser) {
+            //        browser.Initialize(EfficioConfiguration);
+            //        browser.Start();
+            //    })
+            //}
 
-            if (EfficioConfiguration.Devices.Orientation && window) {
-                // Accelerometer
-                require(['Input/Accelerometer/Browser2'], function (browser) {
-                    browser.Initialize(EfficioConfiguration);
-                    browser.Start();
-                })
-            }
+            //if (EfficioConfiguration.Devices.Orientation && window) {
+            //    // Accelerometer
+            //    require(['Input/Accelerometer/Browser2'], function (browser) {
+            //        browser.Initialize(EfficioConfiguration);
+            //        browser.Start();
+            //    })
+            //}
         },
         Start: function () {
             Efficio.Started = true;
-            metrics.Start();
+            //metrics.Start();
         }
     }
 });

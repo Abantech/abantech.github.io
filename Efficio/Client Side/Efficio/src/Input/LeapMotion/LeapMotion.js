@@ -10,7 +10,8 @@
             Port: LeapConfiguration.Port || 6437,
             EnableGestures: LeapConfiguration.EnableGestures || false,
             FrameEventName: LeapConfiguration.FrameEventName || 'animationFrame',
-            UseAllPlugins: LeapConfiguration.UseAllPlugins || false
+            UseAllPlugins: LeapConfiguration.UseAllPlugins || false,
+            OptimizeHMD: LeapConfiguration.OptimizeHMD || false,
         }
 
         return LeapConfiguration;
@@ -28,7 +29,8 @@
                 port: LeapConfiguration.Port,
                 enableGestures: LeapConfiguration.EnableGestures,
                 frameEventName: LeapConfiguration.FrameEventName,
-                useAllPlugins: LeapConfiguration.UseAllPlugins
+                useAllPlugins: LeapConfiguration.UseAllPlugins,
+                optimizeHMD: LeapConfiguration.OptimizeHMD
             });
 
             // Register Leap Motion's native gesture recognition

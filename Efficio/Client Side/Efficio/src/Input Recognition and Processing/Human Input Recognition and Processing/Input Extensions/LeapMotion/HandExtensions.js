@@ -135,7 +135,7 @@
     function GetExtendedFingers(hand) {
         hand = hand || this;
         return hand.fingers.filter(function (finger) {
-            return finger.extended;
+            return finger.IsExtended();
         });
     }
 
@@ -163,6 +163,11 @@
         return extendedFingers.filter(function (finger) {
             return neededFingersArray.indexOf(finger) != -1
         }).length === neededFingersArray.length && extendedFingers.length === neededFingersArray.length;
+    }
+
+    function Fingers(hand) {
+        hand = hand || this;
+        return hand.fingers;
     }
 
     function ExtendClasses() {
@@ -211,7 +216,8 @@
             GetExtendedFingersCount: GetExtendedFingersCount,
             GetExtendedFingersCountLabel: GetExtendedFingersCountLabel,
             AreRequisiteFingersExtended: AreRequisiteFingersExtended,
-            FingerCountLabelsMap: FingerCountLabelsMap
+            FingerCountLabelsMap: FingerCountLabelsMap,
+            Fingers: Fingers
 
         }
 
