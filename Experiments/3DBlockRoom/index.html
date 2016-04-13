@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            color: #192034;
+            font-family: Monospace;
+            font-size: 13px;
+            text-align: center;
+            background-color: #192034;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        #info {
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            padding: 5px;
+        }
+
+        a {
+            color: #192034;
+        }
+    </style>
+</head>
+<body>
+    <!-- Efficio Code -->
+    <script src="scripts/lib/three.min.js"></script>
+    <script src="scripts/ThreeDRoomPlugin.js"></script>
+    <script src="scripts/Efficio/Configuration/ActionToFunctionMapping.js"></script>
+    <script src="scripts/Efficio/Configuration/EfficioConfiguration.js"></script>
+    <script src="scripts/Efficio/Configuration/RequireConfiguration.js"></script>
+    <script src="scripts/Efficio/lib/require.js"></script>
+
+    <script>
+        LoadEfficio()
+
+        function LoadEfficio() {
+            if (typeof THREE !== 'undefined') {
+                require(['scripts/Efficio/lib/Efficio.min.js'], function () {
+                    EfficioLoaded()
+                })
+            }
+            else {
+                setTimeout(LoadEfficio, 200);
+            }
+        }
+
+        function EfficioLoaded() {
+            if (typeof Efficio !== 'undefined' && Efficio.CheckReady()) {
+            }
+            else {
+                window.setTimeout(EfficioLoaded, 200);
+            }
+        }
+    </script>
+
+    <!-- Scene Code -->
+    <script src="scripts/Scene.js"></script>
+    <script src="scripts/lib/DeviceOrientationControls.js"></script>
+    <script src="scripts/lib/StereoEffect.js"></script>
+    <script src="scripts/lib/ImprovedNoise.js"></script>
+    <script src="scripts/HandDraw1.js"></script>
+    <!--<audio loop preload="auto">
+        <source src="resources/windy.mp3" type="audio/mpeg">
+    </audio>-->
+</body>
+</html>
