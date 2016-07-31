@@ -229,6 +229,14 @@ function EfficioAutoCADHelper(viewer) {
                 self.viewer.select(self.viewer.model.getData().fragments.fragId2dbId[fragId]);
             },
 
+            GetFragmentIdFromDbId(dbId){
+                var it = self.viewer.model.getData().instanceTree;
+       
+                it.enumNodeFragments(dbId, function(fragId) {
+                    console.log(fragId);
+                }, false);
+            },
+
             IsolateObjectByName: function (objectName) {
                 var obj = self.Tools.GetObjectByName(objectName);
 
@@ -238,7 +246,11 @@ function EfficioAutoCADHelper(viewer) {
             },
 
             IsolateObjectByFragmentId: function (fragId) {
-                self.viewer.isolate(self.viewer.model.getData().fragments.fragId2dbId[fragId]);
+                self.Tools.Model.IsolateObjectByObjectId(self.viewer.model.getData().fragments.fragId2dbId[fragId]);
+            },
+
+            IsolateObjectByObjectId: function (id){
+                self.viewer.isolate(id);
             },
 
             ClearSelection: function () {

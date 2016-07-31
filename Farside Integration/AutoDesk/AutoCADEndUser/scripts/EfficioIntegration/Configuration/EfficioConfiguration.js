@@ -2,8 +2,8 @@
     Devices: {
         Microphone: false,
         Kinect: false,
-        LeapMotion: false,
-        RealSense: true,
+        LeapMotion: true,
+        RealSense: false,
         XR3D: false,
         Location: false,
         Orientation: false

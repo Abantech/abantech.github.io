@@ -1,6 +1,6 @@
 var viewModels = [
-//{ id: "racsimple", label: "Revit House", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTE2LTIxLTIwLTEzLW1hdHZ6ZW05MmJjdW9xNnJlZ2R0Y2RudXYyd2svcmFjX2Jhc2ljX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
-//{ id: "racadvanced", label: "Revit School", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTI5LTIxLTEwLTQzLXdxbWpzN3FyZXN0dGtxYXV3NGdxa3phanZoZG8vcmFjX2FkdmFuY2VkX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
+{ id: "racsimple", label: "Revit House", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTE2LTIxLTIwLTEzLW1hdHZ6ZW05MmJjdW9xNnJlZ2R0Y2RudXYyd2svcmFjX2Jhc2ljX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
+{ id: "racadvanced", label: "Revit School", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE1LTA3LTI5LTIxLTEwLTQzLXdxbWpzN3FyZXN0dGtxYXV3NGdxa3phanZoZG8vcmFjX2FkdmFuY2VkX3NhbXBsZV9wcm9qZWN0LnJ2dA==" },
 { id: "crland", label: "Costa Rica Land", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL0hJR1VJVE8lMjAyMS0xMC0xMCUyMGRlZmluaXRpdm8uZHdn" },
 { id: "cowcatcher", label: "Cow Catcher", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL0NvdyUyMENhdGNoZXIuaXB0" },
 { id: "wheel", label: "Wheel", authService: "//abantech-demo.cloudapp.net/AuthenticationService/AutoDeskAuthNService.AuthNService.svc/GetAuthToken", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWJhbnRlY2hkZW1vbW9kZWxzL1doZWVsLmlwdA" },
@@ -8,7 +8,7 @@ var viewModels = [
 ];
 
 var querystring = window.location.search;
-var currentModel = 3;
+var currentModel = 0;
 
 if (querystring !== "") {
     var params = {}, queries, temp, i, l;

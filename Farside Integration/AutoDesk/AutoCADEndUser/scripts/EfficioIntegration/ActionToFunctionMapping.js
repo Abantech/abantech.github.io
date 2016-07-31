@@ -3,20 +3,19 @@
 
 var handHolder;
 
-var sphereCreated = false;
-var bothHandsNeutral = false;
-var leapHelper;
-var realSenseHelper;
+// Helpers
+var deviceHelper;
+var isLeap;
+
+// Object Status
 var isOrbiting = false;
 var isPinching = false;
 
+// Asset Status
 var selectedAsset = null;
 
 var baseBoneRotation;
-var armMeshes = [];
-var boneMeshes = [];
 
-var hands, hand;
 var boneMaterial;
 var phalanges = {};
 var knuckles = {};
@@ -26,15 +25,6 @@ var sizePhal = 0.8;
 var leftHandMesh;
 var rightHandMesh;
 var minsAndMaxes;
-
-var vectorAdjustmentFunction = function (frame)//, inputVector)
-{
-    return function (inputVector) {
-        var adjustedPosition = leapHelper.MapPointToAppCoordinates(frame, inputVector, GetMinsAndMaxes().Minimums, GetMinsAndMaxes().Maximums);
-        CorrectCoordinates(adjustedPosition);
-        return new THREE.Vector3().fromArray(adjustedPosition);
-    }
-}
 
 ActionToFunctionMapping = {
     "Bridge": Test,
@@ -46,14 +36,16 @@ ActionToFunctionMapping = {
             viewer3D.navigation.setTarget(startTarget);
 
             CadHelper = new EfficioAutoCADHelper(viewer3D);
-            //leapHelper = Efficio.DeviceManager.RegisteredDevices.LeapMotion.Helper;
-            realSenseHelper = Efficio.DeviceManager.RegisteredDevices['Intel RealSense'].Helper
+            minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
 
-            //require(['leap-plugins', 'riggedHand'], function () {
-            //    Efficio.DeviceManager.RegisteredDevices.LeapMotion.Device.use('transform', {
-            //        effectiveParent: viewer3D.impl.scene,
-            //    });
-            //});
+            isLeap = Efficio.Configuration.Devices.LeapMotion;
+
+            if (isLeap) {
+                deviceHelper = Efficio.DeviceManager.RegisteredDevices.LeapMotion.Helper;
+            }
+            else {
+                deviceHelper = Efficio.DeviceManager.RegisteredDevices['Intel RealSense'].Helper;
+            }
 
             minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
 
@@ -61,86 +53,18 @@ ActionToFunctionMapping = {
 
             appReady = true;
         }
-    }, {
-        Topic: "RightHandThumbIndexPinch",
-        Source: "Input.Processed.Efficio",
-        Action: function (data) {
-            //alert("Pinch")
-        }
     },
 	{
 	    Topic: "Leap",
 	    Source: "Input.Raw.Human",
 	    Action: function (data) {
-	        if (!(typeof (rightHandMesh) === "undefined"))
-	            removeMeshes(rightHandMesh);
-	        //CadHelper.AssetManagement.RemoveAsset( rightHandMesh );
-	        if (!(typeof (leftHandMesh) === "undefined"))
-	            removeMeshes(leftHandMesh);
-
-	        var lineMat = new THREE.LineBasicMaterial({ color: 0x000000 });
-	        var skinMat = new THREE.MeshPhongMaterial({ color: 0xA28857 });
-
-	        var knuckleGeo = new THREE.SphereGeometry(4.5, 16, 24);
-	        var boneGeo = new THREE.CylinderGeometry(3.7, 3.7, 1, 24);
-	        boneGeo.applyMatrix(new THREE.Matrix4().makeRotationX(0.5 * Math.PI));
-
-	        var vectorAdjuster = vectorAdjustmentFunction(data.Frame);
-
-	        for (var hand of data.Hands)
-	        {
-	            if (hand.type == "left")
-	                leftHandMesh = []//new THREE.Object3D();
-	            else
-	                rightHandMesh = []//new THREE.Object3D();
-
-	        //createLineMeshFromHand( hand, vectorAdjuster, knuckleGeo, skinMat, lineMat, hand.type == "left" ? leftHandMesh : rightHandMesh );
-	            createBoneMeshFromHand(hand, vectorAdjuster, knuckleGeo, skinMat, boneGeo, skinMat, hand.type == "left" ? leftHandMesh : rightHandMesh)
-	            createMeshes(hand.type == "left" ? leftHandMesh : rightHandMesh);
-	        }
+	        DrawHand(data.Hands, data.Frame);
 	    }
 	}, {
 	    Topic: "RealSense",
 	    Source: "Input.Raw.Human",
 	    Action: function (data) {
-	        if (data.Hands.length == 0) {
-	            if (handHolder) {
-	                CadHelper.AssetManagement.RemoveAsset(handHolder);
-	                handHolder = null;
-	            }
-	        }
-	        else {
-	            if (handHolder) {
-	                CadHelper.AssetManagement.RemoveAsset(handHolder);
-	            }
-
-	            handHolder = new THREE.Object3D();
-
-	            var lineMat = new THREE.LineBasicMaterial({ color: 0x000000 });
-	            var knuckleMaterial = new THREE.MeshBasicMaterial({ color: 0xA28857 });
-
-	            var knuckleGeometry = new THREE.SphereGeometry(4.5, 16, 24);
-	            var boneGeo = new THREE.CylinderGeometry(3.7, 3.7, 1, 24);
-	            boneGeo.applyMatrix(new THREE.Matrix4().makeRotationX(0.5 * Math.PI));
-
-	            var vectorAdjuster = vectorAdjustmentFunction(data.Frame);
-
-	            for (var hand of data.Hands)
-	            {
-	                for(var joint of hand.Joints()) {
-	                    var scenePoint = realSenseHelper.MapPointToAppCoordinates(null, joint.positionWorld, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
-	                    var mesh = new THREE.Mesh(knuckleGeometry, knuckleMaterial);
-
-	                    var vertex = new THREE.Vector3().fromArray(scenePoint);
-	                    vertex.x = -vertex.x;
-
-	                    mesh.position.copy(vertex);
-	                    handHolder.add(mesh);
-	                }
-	            }
-
-	            CadHelper.AssetManagement.CreateAsset(handHolder);
-	        }
+	        DrawHand(data.Hands);
 	    }
 	}, {
 	    Topic: "RightHandThumbIndexPinch",
@@ -149,13 +73,12 @@ ActionToFunctionMapping = {
 	        return selectedAsset == null && !isOrbiting;
 	    },
 	    Action: function (data) {
-	        var appAdjustedPinchLocation = realSenseHelper.MapPointToAppCoordinates(null, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
-	        appAdjustedPinchLocation.x = -appAdjustedPinchLocation.x;
+	        var appAdjustedPinchLocation = AdjustCoordinatesForPinch(data);
 
 	        var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
 
 	        //selectedAsset = testFragment.Fragment;
-	        selectedAsset = viewer3D.impl.getFragmentProxy(viewer3D.model, 2194)
+	        selectedAsset = viewer3D.impl.getFragmentProxy(viewer3D.model, 10)
 	        //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
 	        //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
 	        isPinching = true;
@@ -168,12 +91,7 @@ ActionToFunctionMapping = {
             return selectedAsset != null// && isPinching;
         },
         Action: function (data) {
-            //var axis = data.GestureInformation.axis;
-            //var degree = data.GestureInformation.degree;
-            //var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-            //var appAdjustedPinchLocation = leapHelper.MapPointToAppCoordinates( data.Input.Frame, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums );
-            var appAdjustedPinchLocation = realSenseHelper.MapPointToAppCoordinates(null, data.GestureInformation.PinchMidpoint, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
-            appAdjustedPinchLocation.x = -appAdjustedPinchLocation.x;
+            var appAdjustedPinchLocation = AdjustCoordinatesForPinch(data);
 
             ////CorrectCoordinates(appAdjustedPinchLocation);
 
@@ -183,56 +101,84 @@ ActionToFunctionMapping = {
         }
     }
     ],
-    AudioCommands: {
-        'Create Sphere': function () { CreateSpheres(); },
-        'Navigation :tool': function (tool) { CadHelper.Tools.Navigation.SetActiveNavigationTool(tool); },
-        'Select *part': function (part) { CadHelper.Tools.Model.SelectObjectByName(part) },
-        'Isolate *part': function (part) { CadHelper.Tools.Model.IsolateObjectByName(part) },
-        'Clear Selection': function () { CadHelper.Tools.Model.ClearSelection(); }
+}
+
+function DrawHand(hands, frame) {
+    if (!(typeof (rightHandMesh) === "undefined"))
+        removeMeshes(rightHandMesh);
+    if (!(typeof (leftHandMesh) === "undefined"))
+        removeMeshes(leftHandMesh);
+
+    var lineMat = new THREE.LineBasicMaterial({ color: 0x000000 });
+    var skinMat = new THREE.MeshPhongMaterial({ color: 0xA28857 });
+
+    var knuckleGeo = new THREE.SphereGeometry(4.5, 16, 24);
+    var boneGeo = new THREE.CylinderGeometry(3.7, 3.7, 1, 24);
+    boneGeo.applyMatrix(new THREE.Matrix4().makeRotationX(0.5 * Math.PI));
+
+    for (var hand of hands) {
+        var side = hand.GetSide();
+        if (side === "Left") {
+            leftHandMesh = []
+        }
+        else {
+            rightHandMesh = []
+        }
+
+        createBoneMeshFromHand(hand, knuckleGeo, skinMat, boneGeo, skinMat, side == "Left" ? leftHandMesh : rightHandMesh, frame)
+        createMeshes(side === "Left" ? leftHandMesh : rightHandMesh);
     }
+
+    //for (var hand of hands)
+    //{
+    //    for(var joint of hand.Joints()) {
+    //        var scenePoint = AdjustCoordinatesForScene(joint.positionWorld);
+    //        var mesh = new THREE.Mesh(knuckleGeometry, knuckleMaterial);
+
+    //        var vertex = new THREE.Vector3().fromArray(scenePoint);
+
+    //        mesh.position.copy(vertex);
+    //        handHolder.add(mesh);
+    //    }
+    //}
 }
 
-function CorrectCoordinates(position) {
-    position[0] = position[0] + 15;
-    position[1] = position[1] - 30;
-    position[2] = position[2] - 10;
+function AdjustCoordinatesForPinch(data) {
+    var frame = null;
+
+    if (isLeap) {
+        frame = data.Input.Frame;
+    }
+
+    var appAdjustedPinchLocation = AdjustCoordinatesForScene(data.GestureInformation.PinchMidpoint, frame);
+
+    return appAdjustedPinchLocation;
 }
 
-function CreateSpheres() {
-    //create material red
-    var material_red =
-        new THREE.MeshPhongMaterial(
-                  { color: 0xff0000 });
+function AdjustCoordinatesForScene(positionArray, frame) {
+    var appAdjustedLocation = deviceHelper.MapPointToAppCoordinates(frame, positionArray, minsAndMaxes.Minimums, minsAndMaxes.Maximums);
 
-    //get bounding box of the model
-    var boundingBox =
-        viewer3D.model.getBoundingBox();
-    var maxpt = boundingBox.max;
-    var minpt = boundingBox.min;
+    if (!isLeap) {
+        appAdjustedLocation[0] = -appAdjustedLocation[0];
+    }
+    else {
+        var tempZ = appAdjustedLocation[2];
+        appAdjustedLocation[2] = appAdjustedLocation[1];
+        appAdjustedLocation[1] = -tempZ;
+    }
 
-    var xdiff = maxpt.x - minpt.x;
-    var ydiff = maxpt.y - minpt.y;
-    var zdiff = maxpt.z - minpt.z;
+    if (isLeap) {
+        appAdjustedLocation[0] += 15;
+        appAdjustedLocation[1] += -30;
+        appAdjustedLocation[2] += -10;
+    }
+    else {
+        appAdjustedLocation[0] += 0;
+        appAdjustedLocation[1] += -30;
+        appAdjustedLocation[2] += 15;
+    }
 
-    //set a nice radius in the model size
-    var niceRadius =
-               Math.pow((xdiff * xdiff +
-                         ydiff * ydiff +
-                         zdiff * zdiff), 0.5) / 10;
-
-    //createsphere1 and place it at max point of boundingBox
-    var sphere_maxpt =
-         new THREE.Mesh(
-                new THREE.SphereGeometry(
-                          niceRadius, 20),
-                material_red);
-    sphere_maxpt.position.set(maxpt.x,
-                              maxpt.y,
-                              maxpt.z);
-
-    myMesh = sphere_maxpt;
-
-    CadHelper.AssetManagement.CreateAsset(sphere_maxpt);
+    return appAdjustedLocation;
 }
 
 function MoveCameraByPercentage(explodeFactor) {
@@ -255,14 +201,11 @@ function createMeshes(parentObject) {
 
 function removeMeshes(parentObject) {
     while (mesh = parentObject.pop()) {
-        console.log("Removing mesh with ID " + mesh.id)
         CadHelper.AssetManagement.RemoveAsset(mesh);
     }
-
 }
 
 function addMesh(meshes) {
-
     var geometry = new THREE.BoxGeometry(1, 1, 1);
     var material = new THREE.MeshNormalMaterial();
     var mesh = new THREE.Mesh(geometry, material);
@@ -285,48 +228,32 @@ function updateMesh(frame, bone, mesh) {
     CadHelper.AssetManagement.CreateAsset(mesh);
 }
 
-function createLineMeshFromHand(theHand, vectorAdjuster, knuckleGeometry, knuckleMaterial, lineMaterial, fullHandMesh) {
-    var minsAndMaxes = CadHelper.Tools.Model.GetMinAndMaxCoordinates();
-
-    for (var j = 0; j < theHand.fingers.length; j++) {
-        var finger = theHand.fingers[j];
-        var positions = finger.positions;
-
-        var geometryLine = new THREE.Geometry();
-        var vertices = geometryLine.vertices;
-
-        for (var k = 0; k < positions.length; k++) {
-            var vertex = vectorAdjuster(positions[k]);
-            vertices.push(vertex);
-
-            var mesh = new THREE.Mesh(knuckleGeometry, knuckleMaterial);
-            mesh.position.copy(vertex);
-            fullHandMesh.push(mesh);
-        }
-
-        fullHandMesh.push(new THREE.Line(geometryLine, lineMaterial));
-    }
-}
-
-function createBoneMeshFromHand(theHand, vectorAdjuster, knuckleGeometry, knuckleMaterial, boneGeometry, boneMaterial, fullHandMesh) {
+function createBoneMeshFromHand(theHand, knuckleGeometry, knuckleMaterial, boneGeometry, boneMaterial, fullHandMesh, frame) {
     var fingers = theHand.Fingers();
 
     for (var j = 0; j < fingers.length; j++) {
+
+        var positions = null;
         var finger = fingers[j];
-        var positions = finger.positions;
+
+        if (isLeap) {
+            positions = GetFingerPositionsForLeap(finger);
+        } else {
+            positions = GetFingerPositionsForRealSense(theHand, finger);
+        }
 
         var geometryLine = new THREE.Geometry();
         var vertices = geometryLine.vertices;
 
         for (var k = 0; k < 5; k++) {
-            var vertex = vectorAdjuster(positions[k]);
+            var vertex = new THREE.Vector3().fromArray(AdjustCoordinatesForScene(positions[k], frame));
 
             var mesh = new THREE.Mesh(knuckleGeometry, knuckleMaterial);
             mesh.position.copy(vertex);
             fullHandMesh.push(mesh);
 
             if (k < 4) {
-                var next = vectorAdjuster(positions[k + 1]);
+                var next = new THREE.Vector3().fromArray(AdjustCoordinatesForScene(positions[k + 1], frame));
                 var d = vertex.distanceTo(next);
 
                 mesh = new THREE.Mesh(boneGeometry, boneMaterial);
@@ -339,6 +266,60 @@ function createBoneMeshFromHand(theHand, vectorAdjuster, knuckleGeometry, knuckl
             }
         }
     }
+}
+
+function GetFingerPositionsForLeap(finger) {
+    return finger.positions;
+}
+
+function GetFingerPositionsForRealSense(hand, finger) {
+    var positions = [];
+
+    switch (finger.tipJoint) {
+        case 5: {
+            positions[0] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_THUMB_TIP].positionWorld;
+            positions[1] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_THUMB_JT2].positionWorld;
+            positions[2] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_THUMB_JT1].positionWorld;
+            positions[3] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_THUMB_BASE].positionWorld
+            break;
+        }
+        case 9: {
+            positions[0] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_INDEX_TIP].positionWorld;
+            positions[1] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_INDEX_JT2].positionWorld;
+            positions[2] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_INDEX_JT1].positionWorld;
+            positions[3] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_INDEX_BASE].positionWorld
+            break;
+        }
+        case 13: {
+            positions[0] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_MIDDLE_TIP].positionWorld;
+            positions[1] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_MIDDLE_JT2].positionWorld;
+            positions[2] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_MIDDLE_JT1].positionWorld;
+            positions[3] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_MIDDLE_BASE].positionWorld
+            break;
+        }
+        case 17: {
+            positions[0] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_RING_TIP].positionWorld;
+            positions[1] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_RING_JT2].positionWorld;
+            positions[2] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_RING_JT1].positionWorld;
+            positions[3] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_RING_BASE].positionWorld
+            break;
+        }
+        case 21: {
+            positions[0] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_PINKY_TIP].positionWorld;
+            positions[1] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_PINKY_JT2].positionWorld;
+            positions[2] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_PINKY_JT1].positionWorld;
+            positions[3] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_PINKY_BASE].positionWorld
+            break;
+        }
+    }
+
+    positions[4] = hand.trackedJoints[intel.realsense.hand.JointType.JOINT_CENTER].positionWorld
+
+    positions = positions.map(function (vector) {
+        return [vector.x * 1000, vector.y * 1000, vector.z * 1000];
+    });
+
+    return positions;
 }
 
 function GetMinsAndMaxes() {
