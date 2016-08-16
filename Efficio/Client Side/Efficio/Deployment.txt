@@ -1,0 +1,74 @@
+Deployment
+
+1) Reference Efficio library and dependencies
+
+2) Edit Action to function mapping
+
+The Action-to-function mapping (henceforth reffered to as A2FM) is a way to instruct the Efficio engine to execute a particular function when a particular action is performed. This is done by creating an ActionToFunctionMapping object. For example, if you wish to create an alert when the user pinches with their right hand using the thumb and index finger, the following A2FM object can be made:
+
+var ActionToFunctionMapping = {
+	ActionMappings:[{
+		Topic: "RightHandThumbIndexPinch",
+        	Source: "Input.Processed.Efficio",
+        	Action: function (data) {
+            	alert("Pinch Detected!");
+        	}
+	}]
+}
+
+A full list of the possible actions to which a user can subscribe can be found here.  Note that the ActionMappings property is an array of actions, indicating that therelationship of actions and functions are many-to-many. More than one action can invoke a particular function and more than one function can be invoked  by a particular action.
+
+Finally, to control whether or not an action should be executed, the A2FM exposes a ExecutionPrerequisites. ExecutionPrerequisites control whether or not a particular function is invoked by a particular action. It should be a function that returns a boolean indicating whether or not to call the registered action. Below is the same pinch example, but the alert will only fire if the current minutes is even.
+
+var ActionToFunctionMapping = {
+	ActionMappings:[{
+		Topic: "RightHandThumbIndexPinch",
+        	Source: "Input.Processed.Efficio",
+        	ExecutionPrerequisite: function () {
+			var date = new Date();
+            		return date.getMinutes() % 2 === 0;
+        	},
+        	Action: function (data) {
+            		alert("Pinch Detected in even minute!");
+        	}
+	}]
+}
+
+Once you are done creating your A2FM, make sure to include it in the html page you wish to enable under the Efficio references.
+
+3) Create Efficio Configuration
+
+Within the EFfficio configuration, the developer indicates which device(s) the application intends to use. Currently, the Efficio engine supports the following devices at the following levels:
+	LeapMotion:	Raw data + Gestures
+	RealSense:	Raw data + Limited Gestures
+	Microphone:	Preset commands
+	Accelerometer:	Device Orientation
+	Geolocation:	Latitude and Longitude coordinates
+
+To use the devices, fill out the following configuration:
+EfficioConfiguration = {
+    Devices: {
+        LeapMotion: false,
+        RealSense: false,
+        Microphone: false,
+	Orientation: false
+	Location: false,	
+    }
+}
+
+Set the device(s) that you wish to use to 'true'.  Finally, set the EfficioConfiguration.ActionToFunctionMapping property to the ActionToFunctionMapping object that you created in step 2. The final configuration should look like this:
+
+EfficioConfiguration = {
+    Devices: {
+        LeapMotion: false,
+        RealSense: false,
+        Microphone: false,
+	Orientation: false
+	Location: false,	
+    },
+
+    ActionToFunctionMapping: ActionToFunctionMapping
+}
+
+
+

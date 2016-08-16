@@ -90,32 +90,64 @@ There are only 4 steps to deploying the Efficio engine on an existing JavaScript
 
 	To use the devices, fill out the following configuration:
 	
-	```JavaScript
-	EfficioConfiguration = {
-  		Devices: {
-  			LeapMotion: false,
-  			RealSense: false,
-  			Microphone: false,
-  			Orientation: false,
-  			Location: false,	
-  		}
-	}
+	```javascript
+		EfficioConfiguration = {
+  			Devices: {
+  				LeapMotion: false,
+  				RealSense: false,
+  				Microphone: false,
+  				Orientation: false,
+  				Location: false,
+			}
+		}
 	```
 
 	Set the device(s) that you wish to use to 'true'.  Finally, set the EfficioConfiguration.ActionToFunctionMapping property to the ActionToFunctionMapping object that you created in step 2. The final configuration should look like this:
 
 	```javascript
 	EfficioConfiguration = {
-    		Devices: {
-        		LeapMotion: false,
-        		RealSense: false,
-	        	Microphone: false,
+    	Devices: {
+       		LeapMotion: false,
+       		RealSense: false,
+	       	Microphone: false,
 			Orientation: false
 			Location: false,	
 	   	},
 
-    		ActionToFunctionMapping: ActionToFunctionMapping
+    	ActionToFunctionMapping: ActionToFunctionMapping
 	}
 	```
 
 4. Load and Start Efficio.
+
+	To load Efficio, use the require framework to load the JavaScript library.
+
+	```javascript
+	require(['scripts/EfficioIntegration/libs/Efficio.min.js'], function () {
+		EfficioLoaded();
+    })
+	```
+
+	Next, create a function called EfficioLoaded() that will handle when the Efficio library has been loaded.
+
+	```javascript
+	function EfficioLoaded() {
+		if (!(typeof Efficio !== 'undefined' && Efficio.CheckReady())){
+			 window.setTimeout(EfficioLoaded, 200);
+        }
+	}
+	```
+
+	Finally, if there is any additional checks that you must perform to confirm that your application is fully loaded, the Efficio.CheckReady() function accepts a function that returns a boolean to know whether or not the whole application is ready.
+
+	```javascript
+	var OtherReadyFunction = function (){
+		// Checks if application is ready and returns a true or false
+		return true;
+	}
+	function EfficioLoaded() {
+		if (typeof Efficio === 'undefined' || !Efficio.CheckReady(OtherReadyFunction)){
+			 window.setTimeout(EfficioLoaded, 200);
+        }
+	}
+	```
