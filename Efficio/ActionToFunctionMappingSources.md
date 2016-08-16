@@ -4,11 +4,11 @@ The Action to Function Mapping is how the Efficio engine knows which functions t
 
 Table of Contents
 -----------------
-1. [How To Subscribe](#How-To-Subscribe)
-1. [Audio Commands](#Audio-Commands)
-1. [Efficio Events](#Efficio-Events)
-1. [Raw Sensor Data](#Raw-Sensor-Data)
-1. [Single Hand Positions](#Single-Hand-Positions)
+1. [How To Subscribe](#how-to-subscribe)
+1. [Audio Commands](#audio-commands)
+1. [Efficio Events](#efficio-events)
+1. [Raw Sensor Data](#raw-sensor-data)
+1. [Single Hand Positions](#single-hand-positions)
 
 
 ##How to Subscribe
