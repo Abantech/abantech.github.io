@@ -1,0 +1,56 @@
+Accelerometer
+-----------------------------------------------------------------------
+Channel:	Input.Raw.Device
+Topic:		Device Orientation
+Data:
+	TrackingType:		'Orientation'
+	GestureInformation:	Raw sensor data
+
+Channel:	Input.Raw.Device
+Topic:		Orientation Change
+Data:
+	TrackingType:		'Orientation'
+	GestureInformation:	Raw sensor data
+
+
+Geolocation
+-----------------------------------------------------------------------
+Channel:	Input.Raw.Device
+Topic:		Location
+Data:
+	TrackingType:		'Location'
+	GestureInformation:	Raw sensor data
+
+
+Intel RealSense
+-----------------------------------------------------------------------
+Channel:	Input.Raw.Human
+Topic:		RealSense
+Data:
+	TrackingType:	'Hands'
+	Input:		All data from the sensor
+	Hands:		Hand data from the sensor
+
+
+Leap Motion
+-----------------------------------------------------------------------
+Channel:	Input.Raw.Human
+Topic:		Leap
+Data:
+	TrackingType:	'Hands'
+	Frame:		Contains the Leap Motion frame object. More information can be found here.
+	Controller:	Contains the Leap Motion controller object. More information can be found here.
+	Hands:		Contains the Leap Motion hands object. More information can be found here.
+
+
+Microsoft Kinect
+-----------------------------------------------------------------------
+Channel:	Input.Raw.Human
+Topic:		Kinect
+Data:
+	TrackingType:	'Body'
+	input:		Friendly representation of the Kinect data
+
+
+
+	

@@ -1,0 +1,139 @@
+Channel:	Input.Processed.Efficio
+
+
+Topic:		[Side]HandDetected
+Description:	Fires when a hand is detected in the frame. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftHandDetected' and 'RightHandDetected'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		[Side]Hand[Count]FingersExtended
+Description:	Fires each frame that has a hand, indicating how many fingers are extended. [Side] can have values of either 'Left' or 'Right'. [Count] can have values of 'Zero', 'One', 'Two', 'Three', 'Four', or 'Five', generating a total of 12 combinations of [Side] and [Count]. Below is a list of all the possible combinations:
+RightHandZeroFingersExtended
+RightHandOneFingersExtended
+RightHandTwoFingersExtended
+RightHandThreeFingersExtended
+RightHandFourFingersExtended
+RightHandFiveFingersExtended
+LeftHandZeroFingersExtended
+LeftHandOneFingersExtended
+LeftHandTwoFingersExtended
+LeftHandThreeFingersExtended
+LeftHandFourFingersExtended
+LeftHandFiveFingersExtended
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+		ExtededFingers:		An array of the indicies of the extended fingers, where 0 indicates 'Thumb', 1 indicates 'Index', 2 indicates 'Middle', 3 indicates 'Ring', 4 indicates 'Pinky'.
+
+
+Topic:		[Side]Hand[Finger]Extended
+Description:	Fires each frame that has a hand, indicating how which fingers are extended. [Side] can have values of either 'Left' or 'Right'. [Finger] can have values of 'Thumb', 'Index', 'Middle', 'Ring', or 'Pinky', generating a total of 10 combinations of [Side] and [Finger]. Below is a list of all the possible combinations. Note that more than one of these can be fired each frame.
+RightHandThumbFingerExtended
+RightHandIndexFingerExtended
+RightHandMiddleFingerExtended
+RightHandRingFingerExtended
+RightHandPinkyFingerExtended
+LeftHandThumbFingerExtended
+LeftHandIndexFingerExtended
+LeftHandMiddleFingerExtended
+LeftHandRingFingerExtended
+LeftHandPinkyFingerExtended
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+		Finger:			The name of the extended finger
+
+
+Topic:		[Side]HandFlexion
+Description:	Fires when the indicated hand is flexed. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftHandFlexion' and 'RightHandFlexion'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		[Side]HandExtension
+Description:	Fires when the indicated hand is extended. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftHandExtension' and 'RightHandExtension'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		[Side]HandRadialDeviation
+Description:	Fires when the indicated hand is deviated radialy. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftHandRadialDeviation' and 'RightHandRadialDeviation'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		[Side]HandUlnarDeviation
+Description:	Fires when the indicated hand is deviated toward the Ulna. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftHandUlnarDeviation' and 'RightHandUlnarDeviation'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		[Side]HandSupenation
+Description:	Fires when the indicated hand is supine. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftHandSupenation' and 'RightHandSupenation'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		[Side]HandPronation
+Description:	Fires when the indicated hand is prone. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftHandPronation' and 'RightHandPronation'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		[Side]HandNeutral
+Description:	Fires when the indicated hand is neither prone nor supine. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftHandNeutral' and 'RightHandNeutral'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+Topic:		[Side]Hand[Finger1][Finger2]Pinch
+Description:	Fires when a pinch is detected by two fingers on the same hand. [Side] can have values of either 'Left' or 'Right'. Finger1 can have the values of 'Thumb', 'Index', 'Middle', or 'Ring'. Finger2 can have values of 'Index', 'Middle', 'Ring', or 'Pinky'. The following are all the possible events that can be fired:
+RightHandThumbIndexPinch
+RightHandThumbMiddlePinch
+RightHandThumbRingPinch
+RightHandThumbPinkyPinch
+RightHandIndexMiddlePinch
+RightHandIndexRingPinch
+RightHandIndexPinkyPinch
+RightHandMiddleRingPinch
+RightHandMiddlePinkyPinch
+RightHandRingPinkyPinch
+LeftHandThumbIndexPinch
+LeftHandThumbMiddlePinch
+LeftHandThumbRingPinch
+LeftHandThumbPinkyPinch
+LeftHandIndexMiddlePinch
+LeftHandIndexRingPinch
+LeftHandIndexPinkyPinch
+LeftHandMiddleRingPinch
+LeftHandMiddlePinkyPinch
+LeftHandRingPinkyPinch
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+Topic:		[Side]ThumbsUp
+Description:	Fires when the hand is neutral and the thumb is the only extended finger. [Side] can have values of either 'Left' or 'Right', generating two events: 'LeftThumbsUp' and 'RightThumbsUp'.
+Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture

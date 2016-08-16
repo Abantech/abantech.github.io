@@ -1,0 +1,22 @@
+Topic:		BothHandsNeutral
+Dscription:	Fired when both hands are in a neutral position.
+Data:		
+		Input:			The full sensor data
+		Hands:			The hands for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		BothHandsPronation
+Dscription:	Fired when both hands are in a prone position.
+Data:		
+		Input:			The full sensor data
+		Hands:			The hands for which the position was detected
+		GestureInformation:	Additional information for the gesture
+
+
+Topic:		BothHandsPronation
+Dscription:	Fired when both hands are in a prone position.
+Data:		
+		Input:			The full sensor data
+		Hands:			The hands for which the position was detected
+		GestureInformation:	Additional information for the gesture
