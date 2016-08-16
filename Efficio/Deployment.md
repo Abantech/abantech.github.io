@@ -39,7 +39,7 @@ There are only 4 steps to deploying the Efficio engine on an existing JavaScript
 
 	Finally, to control whether or not an action should be executed, the A2FM exposes a ExecutionPrerequisites. ExecutionPrerequisites control whether or not a particular function is invoked by a particular action. It should be a function that returns a boolean indicating whether or not to call the registered action. Below is the same pinch example, but the alert will only fire if the current minutes is even.
 
-  	```javascript
+	```javascript
   	var ActionToFunctionMapping = {
   		ActionMappings:[{
 		Topic: "RightHandThumbIndexPinch",
@@ -57,7 +57,7 @@ There are only 4 steps to deploying the Efficio engine on an existing JavaScript
 	
 	Once you are done creating your A2FM, make sure to include it in the html page you wish to enable under the Efficio references.
 
-3) Create Efficio Configuration.
+3. Create Efficio Configuration.
 
 	Within the EFfficio configuration, the developer indicates which device(s) the application intends to use. Currently, the Efficio engine supports the following devices at the following levels:
   
@@ -118,12 +118,4 @@ There are only 4 steps to deploying the Efficio engine on an existing JavaScript
 	}
 	```
 
-4. Load and Start Efficio
-
-	Add the followin
-require(['scripts/EfficioIntegration/libs/Efficio.min.js'], function () {
-                    EfficioLoaded()
-                })
-
-
-
+4. Load and Start Efficio.
