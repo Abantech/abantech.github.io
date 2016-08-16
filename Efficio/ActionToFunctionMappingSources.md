@@ -9,6 +9,7 @@ Table of Contents
 1. [Efficio Events](#efficio-events)
 1. [Raw Sensor Data](#raw-sensor-data)
 1. [Single Hand Positions](#single-hand-positions)
+1. [Two Hand Positions](#two-hand-positions)
 
 
 ##How to Subscribe
@@ -107,7 +108,7 @@ The Efficio engine will also have internal events to which the developer can sub
 
 ```javascript
 {
-	Source: "Efficio
+	Source: "Efficio"
 	Topic: "Ready"
 	Action: function(){
 	}
@@ -163,4 +164,239 @@ The Efficio engine will also have internal events to which the developer can sub
 
 ##Single Hand Positions
 
-1. 
+1. [Side]HandDetected
+
+	Fires when a hand is detected in the frame. [Side] can have values of either 'Left' or 'Right', generating two events: 
+	* LeftHandDetected
+	* RightHandDetected
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandDetected
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]Hand[Count]FingersExtended
+
+	Fires each frame that has a hand, indicating how many fingers are extended. [Side] can have values of either 'Left' or 'Right'. [Count] can have values of 'Zero', 'One', 'Two', 'Three', 'Four', or 'Five', generating a total of 12 combinations of [Side] and [Count]. Below is a list of all the possible combinations:
+	* RightHandZeroFingersExtended
+	* RightHandOneFingersExtended
+	* RightHandTwoFingersExtended
+	* RightHandThreeFingersExtended
+	* RightHandFourFingersExtended
+	* RightHandFiveFingersExtended
+	* LeftHandZeroFingersExtended
+	* LeftHandOneFingersExtended
+	* LeftHandTwoFingersExtended
+	* LeftHandThreeFingersExtended
+	* LeftHandFourFingersExtended
+	* LeftHandFiveFingersExtended
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]Hand[Count]FingersExtended
+	Data:
+		Input:			The full sensor data
+		Hand:			The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+		ExtededFingers:		An array of the indicies of the extended fingers, where:
+								0 indicates 'Thumb', 
+								1 indicates 'Index', 
+								2 indicates 'Middle', 
+								3 indicates 'Ring',
+								and 4 indicates 'Pinky'
+	</pre>
+
+1. [Side]Hand[Finger]Extended
+	
+	Fires each frame that has a hand, indicating how which fingers are extended. [Side] can have values of either 'Left' or 'Right'. [Finger] can have values of 'Thumb', 'Index', 'Middle', 'Ring', or 'Pinky', generating a total of 10 combinations of [Side] and [Finger]. Below is a list of all the possible combinations. Note that more than one of these can be fired each frame.
+	* RightHandThumbFingerExtended
+	* RightHandIndexFingerExtended
+	* RightHandMiddleFingerExtended
+	* RightHandRingFingerExtended
+	* RightHandPinkyFingerExtended
+	* LeftHandThumbFingerExtended
+	* LeftHandIndexFingerExtended
+	* LeftHandMiddleFingerExtended
+	* LeftHandRingFingerExtended
+	* LeftHandPinkyFingerExtended
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]Hand[Finger]Extended
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+		Finger:		The name of the extended finger
+	</pre>
+
+1. [Side]HandFlexion
+
+	Fires when the indicated hand is flexed. [Side] can have values of either 'Left' or 'Right', generating two events: 
+	* LeftHandFlexion
+	* RightHandFlexion
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandFlexion
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]HandExtension
+
+	Fires when the indicated hand is extended. [Side] can have values of either 'Left' or 'Right', generating two events:
+	* LeftHandExtension
+	* RightHandExtension
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandExtension
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]HandRadialDeviation
+
+	Fires when the indicated hand is deviated radialy. [Side] can have values of either 'Left' or 'Right', generating two events:
+	* LeftHandRadialDeviation
+	* RightHandRadialDeviation
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandRadialDeviation
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]HandUlnarDeviation
+
+	Fires when the indicated hand is deviated toward the Ulna. [Side] can have values of either 'Left' or 'Right', generating two events:
+	* LeftHandUlnarDeviation
+	* RightHandUlnarDeviation
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandUlnarDeviation
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]HandSupenation
+
+	Fires when the indicated hand is supine. [Side] can have values of either 'Left' or 'Right', generating two events:
+	* LeftHandSupenation
+	* RightHandSupenation
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandSupenation
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]HandPronation
+
+	Fires when the indicated hand is prone. [Side] can have values of either 'Left' or 'Right', generating two events:
+	* LeftHandPronation
+	* RightHandPronation
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandPronation
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]HandNeutral
+
+	Fires when the indicated hand is neither prone nor supine. [Side] can have values of either 'Left' or 'Right', generating two events:
+	* LeftHandNeutral
+	* RightHandNeutral
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandNeutral
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]Hand[Finger1][Finger2]Pinch
+
+	Fires when a pinch is detected by two fingers on the same hand. [Side] can have values of either 'Left' or 'Right'. Finger1 can have the values of 'Thumb', 'Index', 'Middle', or 'Ring'. Finger2 can have values of 'Index', 'Middle', 'Ring', or 'Pinky'. The following are all the possible events that can be fired:
+	* RightHandThumbIndexPinch
+	* RightHandThumbMiddlePinch
+	* RightHandThumbRingPinch
+	* RightHandThumbPinkyPinch
+	* RightHandIndexMiddlePinch
+	* RightHandIndexRingPinch
+	* RightHandIndexPinkyPinch
+	* RightHandMiddleRingPinch
+	* RightHandMiddlePinkyPinch
+	* RightHandRingPinkyPinch
+	* LeftHandThumbIndexPinch
+	* LeftHandThumbMiddlePinch
+	* LeftHandThumbRingPinch
+	* LeftHandThumbPinkyPinch
+	* LeftHandIndexMiddlePinch
+	* LeftHandIndexRingPinch
+	* LeftHandIndexPinkyPinch
+	* LeftHandMiddleRingPinch
+	* LeftHandMiddlePinkyPinch
+	* LeftHandRingPinkyPinch
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]HandNeutral
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. [Side]ThumbsUp
+
+	Fires when the hand is neutral and the thumb is the only extended finger. [Side] can have values of either 'Left' or 'Right', generating two events:
+	* LeftThumbsUp
+	* RightThumbsUp
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	[Side]ThumbsUp
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+##Two Hand Positions
+
+1. BothHandsNeutral
+
+	Fired when both hands are in a neutral position.
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	BothHandsNeutral
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
+
+1. BothHandsPronation
+
+	Fired when both hands are in a prone position.
+	<pre>
+	Source:	Input.Processed.Efficio
+	Topic:	BothHandsPronation
+	Data:
+		Input:	The full sensor data
+		Hand:	The hand for which the position was detected
+		GestureInformation:	Additional information for the gesture
+	</pre>
