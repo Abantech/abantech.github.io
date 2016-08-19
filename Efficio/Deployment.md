@@ -1,7 +1,7 @@
 Efficio Engine v0.0.0.1
 =======================
 
-The Efficio Engine is a Human Computer Interaction (HCI) device processor aimed at device abstraction, input interpretation, and signal fusion designed for rapid development. Our aim is to achieve the lofty goal of Efficio Engine:
+The Efficio Engine is a [Human Computer Interaction]( https://en.wikipedia.org/wiki/Human%E2%80%93computer_interaction ) (HCI) device processor aimed at device abstraction, input interpretation, and signal fusion designed for rapid development. Our aim is to achieve the lofty goal of Efficio Engine:
 >Any device, any appication, any platform in no time!
 
 This project is our first attempt at achieving this goal. It exists as much as a means of discovery for ourselves as it is a tool for others.
