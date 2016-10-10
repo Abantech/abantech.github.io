@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<script src='http://jeromeetienne.github.io/threex.text/examples/vendor/three.js/build/three-min.js'></script>
+<script src='http://jeromeetienne.github.io/threex.text/threex.text.js'></script>
+<script src="http://jeromeetienne.github.io/threex.text/fonts/droid/droid_serif_bold.typeface.js"></script>
+<body style='margin: 0px; background-color: #bbbbbb; overflow: hidden;'><script>
+	var renderer	= new THREE.WebGLRenderer();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	var onRenderFcts= [];
+	var scene	= new THREE.Scene();
+	var camera	= new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
+	camera.position.z = 3;
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		add a text								//
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	var mesh1	= new THREEx.Text('This')
+	mesh1.scale.multiplyScalar(1/2)
+	mesh1.position.y	= +0.6
+	scene.add(mesh1)
+	var mesh2	= new THREEx.Text('is')
+	mesh2.scale.multiplyScalar(1/2)
+	scene.add(mesh2)
+	var mesh3	= new THREEx.Text('GREAT!')
+	mesh3.scale.multiplyScalar(1/2)
+	mesh3.position.y	= -0.6
+	scene.add(mesh3)
+	
+	var fullText = "I see this and I start thinking about how we can use this to represent/show ideas and even data that cannot be easily described by words in an email. For example, I was trying to draw up for my father-in-law a rail-system we need to build in the house. It would have been so much easier to visualize in 3D. But then there's the problem of authoring the 3D object(s) themselves that, unfortunately leads us right back (full-circle) to the original Abantech idea (a-la VRPaint). I guess my counter-question is - how do we make it easy to create the visualizations (and animations). Do we use pre-canned message writers like this one? I feel a more dynamic method would provde the neecessary versatility, but that of course is more difficult to build. Bye for now...";
+	
+	var textArray = fullText.split(" ");
+	//////////////////////////////////////////////////////////////////////////////////
+	//		Camera Controls							//
+	//////////////////////////////////////////////////////////////////////////////////
+	var mouse	= {x : 0, y : 0}
+
+	onRenderFcts.push(function(delta, now){
+		camera.position.x += (mouse.x*5 - camera.position.x) * (delta*3)
+		camera.position.y += (mouse.y*5 - camera.position.y) * (delta*3)
+		camera.lookAt( scene.position )
+	})
+
+
+	//////////////////////////////////////////////////////////////////////////////////
+	//		render the scene						//
+	//////////////////////////////////////////////////////////////////////////////////
+	onRenderFcts.push(function(){
+		renderer.render( scene, camera );		
+	})
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		loop runner							//
+	//////////////////////////////////////////////////////////////////////////////////
+	var lastTimeMsec= null
+	var spinCounter = 0;
+	var textChangeCounter = -1;
+	requestAnimationFrame(function animate(nowMsec){
+		// keep looping
+		requestAnimationFrame( animate );
+		// measure time
+		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+		lastTimeMsec	= nowMsec
+		
+		if (spinCounter < 300)
+		{
+			rotateObject(mesh1, 0,0.3,0);
+			rotateObject(mesh2, 0,0.3,0);
+			rotateObject(mesh3, 0,0.3,0);
+			spinCounter++;
+		}
+		else
+		{
+			spinCounter = 0;
+			textChangeCounter = textChangeCounter + 9;
+			//foreach()
+			
+			if (textArray.length > textChangeCounter)
+			{
+				updateText(textArray[textChangeCounter-8] + " " + textArray[textChangeCounter-7] + " " + textArray[textChangeCounter-6], 
+				textArray[textChangeCounter-5] + " " + textArray[textChangeCounter-4] + " " + textArray[textChangeCounter-3],
+				textArray[textChangeCounter-2] + " " + textArray[textChangeCounter-1] + " " + textArray[textChangeCounter]);
+			}
+			else
+			{
+				textChangeCounter = -1;
+			}
+		}
+		
+		// call each update function
+		onRenderFcts.forEach(function(onRenderFct){
+			onRenderFct(deltaMsec/1000, nowMsec/1000)
+		})
+	})
+	
+	function rotateObject(object,degreeX=0, degreeY=0, degreeZ=0){
+
+   degreeX = (degreeX * Math.PI)/180;
+   degreeY = (degreeY * Math.PI)/180;
+   degreeZ = (degreeZ * Math.PI)/180;
+
+   object.rotateX(degreeX);
+   object.rotateY(degreeY);
+   object.rotateZ(degreeZ);
+}
+
+function updateText(line1Text, line2Text, line3Text)
+{
+	scene.remove(mesh1);
+	scene.remove(mesh2);
+	scene.remove(mesh3);
+	
+	if (line1Text)
+	{
+		mesh1	= new THREEx.Text(line1Text)
+		mesh1.scale.multiplyScalar(1/4)
+		mesh1.position.y	= +0.6
+		scene.add(mesh1)
+	}
+	
+	if (line2Text)
+	{
+		mesh2	= new THREEx.Text(line2Text)
+		mesh2.scale.multiplyScalar(1/4)
+		scene.add(mesh2)
+	}
+	
+	if (line3Text)
+	{
+		mesh3	= new THREEx.Text(line3Text)
+		mesh3.scale.multiplyScalar(1/4)
+		mesh3.position.y	= -0.6
+		scene.add(mesh3)
+	}
+}
+
+</script></body>
