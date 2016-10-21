@@ -80,7 +80,7 @@ _Not all of it makes sense or is believable. For example:_
 
 ## Change Log
 
-### 2016-10-21
+### 2016-10-21 ~ Theo Armour
 
 * First commit
 

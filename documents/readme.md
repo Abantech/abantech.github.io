@@ -18,7 +18,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## Change Log
 
-### 
+### 2016-10-21 ~ Theo Armour
 
 * First commit
 * Add Read Me
