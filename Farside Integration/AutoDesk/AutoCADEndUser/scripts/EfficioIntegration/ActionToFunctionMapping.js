@@ -28,6 +28,12 @@ var minsAndMaxes;
 
 ActionToFunctionMapping = {
     "Bridge": Test,
+	AudioCommands: {
+        'Pan Left': function () 
+		{ 
+			CadHelper.Navigation.PanLeft(-10); 
+		},
+    },
     "ActionMappings": [{
         Topic: "Ready",
         Source: "Efficio",
@@ -67,7 +73,7 @@ ActionToFunctionMapping = {
 	        DrawHand(data.Hands);
 	    }
 	}, {
-	    Topic: "RightHandThumbIndexPinch",
+	    Topic: "LeftHandThumbIndexPinch",
 	    Source: "Input.Processed.Efficio",
 	    ExecutionPrerequisite: function () {
 	        return selectedAsset == null && !isOrbiting;
@@ -77,15 +83,16 @@ ActionToFunctionMapping = {
 
 	        var testFragment = CadHelper.AssetManagement.GetClosestFragmentToPoint(appAdjustedPinchLocation);
 
-	        //selectedAsset = testFragment.Fragment;
-	        selectedAsset = viewer3D.impl.getFragmentProxy(viewer3D.model, 10)
+	        selectedAsset = testFragment.Fragment;
+			if(currentModel == 0)
+				selectedAsset = viewer3D.impl.getFragmentProxy(viewer3D.model, 10);
 	        //CadHelper.Tools.Model.IsolateObjectByFragmentId(selectedAsset.fragId);
 	        //CadHelper.Tools.Model.AddAxisToFragment(selectedAsset);
 	        isPinching = true;
 	    }
 	},
     {
-        Topic: "RightHandThumbIndexPinch",
+        Topic: "LeftHandThumbIndexPinch",
         Source: "Input.Processed.Efficio",
         ExecutionPrerequisite: function () {
             return selectedAsset != null// && isPinching;
@@ -174,7 +181,7 @@ function AdjustCoordinatesForScene(positionArray, frame) {
     }
     else {
         appAdjustedLocation[0] += 0;
-        appAdjustedLocation[1] += -30;
+        appAdjustedLocation[1] += 10;
         appAdjustedLocation[2] += 15;
     }
 

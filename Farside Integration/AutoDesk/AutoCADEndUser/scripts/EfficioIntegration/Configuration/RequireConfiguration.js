@@ -11,7 +11,7 @@
         postal: 'https://cdn.rawgit.com/postaljs/postal.js/master/lib/postal.min',
         three: 'http://threejs.org/build/three.min',
         leapjs: 'https://cdn.rawgit.com/leapmotion/leapjs/master/leap-0.6.4.min',
-        annyang: 'https://cdn.rawgit.com/TalAter/annyang/master/annyang',
+        annyang: 'https://cdnjs.cloudflare.com/ajax/libs/annyang/2.4.0/annyang.min.js',
         gyronorm: 'https://cdn.rawgit.com/dorukeker/gyronorm.js/master/dist/gyronorm.complete.min',
         promise: 'https://www.promisejs.org/polyfills/promise-6.1.0',
         autobahn: 'https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min',
