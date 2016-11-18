@@ -1,0 +1,106 @@
+
+</html>
+<head>
+<title>Test Cube</title>
+<style>canvas { width: 100%; height: 100% }</style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js"></script>
+<script>
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 1, 10000);
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+var geometry = new THREE.BoxGeometry(700, 700, 700);
+//var material = new THREE.MeshBasicMaterial({color: 0xfffff, wireframe: false});
+
+for ( var i = 0; i < geometry.faces.length; i ++ ) {
+    geometry.faces[ i ].color.setHex( Math.random() * 0xffffff );
+}
+var material = new THREE.MeshBasicMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors } );
+var cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
+camera.position.z = 1000;        
+var lastTimeFlip = new Date();
+var lastFlipType = false;
+
+var flipRight = function(ammount)
+{
+	cube.rotation.y += ammount;
+}
+
+var flipLeft = function(ammount)
+{
+	cube.rotation.y -= ammount;
+}
+
+var flipUp = function(ammount)
+{
+	cube.rotation.x += ammount;
+}
+
+var flipDown = function(ammount)
+{
+	cube.rotation.x -= ammount;
+}
+
+var lastMoveCompelete = true;
+var currentFunction = flipRight;
+var ammountTrunedToDate = 0;
+var totalAmmountToTurn = 1.5709;
+var ammountPerTurn = totalAmmountToTurn/60;
+
+function render() {
+requestAnimationFrame(render);
+
+if (lastMoveCompelete)
+{
+	if (SecondsSinceTime(lastTimeFlip) >= 2)
+	{
+		lastMoveCompelete = false;
+		
+		if (lastFlipType)
+		{
+			currentFunction = flipRight;
+		}
+		else
+		{
+			currentFunction = flipUp;
+		}
+		lastFlipType = !lastFlipType;
+	}
+}
+else
+{	
+	currentFunction(ammountPerTurn);
+	ammountTrunedToDate += ammountPerTurn;
+	if (ammountTrunedToDate >= totalAmmountToTurn)
+	{
+		lastMoveCompelete =  true;
+		ammountTrunedToDate = 0;
+		lastTimeFlip = new Date();
+	}
+}
+//cube.rotation.x += 0.01;
+//cube.rotation.y += 0.001;
+renderer.render(scene, camera);
+};
+render();
+
+function rotateCubeByIncrement(functionToExecute, moveIncrement)
+{
+	functionToExecute(functionToExecute, moveIncrement)
+}
+
+function SecondsSinceTime(prevDate)
+{
+	var timeNow = new Date().getTime();
+	var timeDiff = timeNow - prevDate.getTime();
+	var diffInSeconds = Math.abs(timeDiff / 1000);
+
+	return diffInSeconds;
+}
+</script>
+</body>
+</html>
