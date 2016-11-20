@@ -5,7 +5,7 @@
   "DefaultBackdropURL": "https://pbs.twimg.com/profile_images/633688586055913472/3l5HYPgb.jpg",
   "Slides": [
     {
-      "Location": "http://people.sc.fsu.edu/~jburkardt/data/obj/airboat.obj",
+      "Location": "http://abantech.net/demo/werewolf.obj",
       "Is3D": true,
       "Format": "obj"
     },
