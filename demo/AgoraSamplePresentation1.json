@@ -7,7 +7,13 @@
     {
       "Location": "http://abantech.net/demo/subwoofer_obj.obj",
       "Is3D": true,
-      "Format": "obj"
+      "Format": "obj",
+       "DependentResources" : [
+         {
+           "Location": "http://abantech.net/demo/subwoofer_obj.mtl",
+           "Format": "mtl"
+         }
+       ]
     },
     {
       "Location": "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xlp1/v/t1.0-9/14581352_10154609936018114_6059038639917180539_n.jpg?oh=18558ec53c96ae8584671fbf2b0d21bc&oe=58949572&__gda__=1486197036_a46cd8eac5af7d8539f376412ca9c6d3",
