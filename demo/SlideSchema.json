@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "Name": {
+      "type": "string"
+    },
+    "Version": {
+      "type": "string"
+    },
+    "RoomID": {
+      "type": "string"
+    },
+    "DefaultBackdropURL": {
+      "type": "string"
+    },
+    "Slides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Location": {
+            "type": "string"
+          },
+          "Is3D": {
+            "type": "boolean"
+          },
+          "Format": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Location",
+          "Is3D",
+          "Format"
+        ]
+      }
+    }
+  },
+  "required": [
+    "Name",
+    "Version",
+    "RoomID",
+    "DefaultBackdropURL",
+    "Slides"
+  ]
+}
