@@ -5,19 +5,14 @@
   "DefaultBackdropURL": "https://pbs.twimg.com/profile_images/633688586055913472/3l5HYPgb.jpg",
   "Slides": [
     {
-	  "Name" : "Test Ball",
-      "Location": "http://abantech.net/demo/capsule.obj",
+      "Location": "http://abantech.net/demo/subwoofer_obj.obj",
+      "Is3D": true,
       "Format": "obj",
        "DependentResources" : [
-        {
-          "Location": "http://abantech.net/demo/capsule.mtl",
-          "Format": "mtl"
-        },
-		{
-			"Location":	"http://abantech.net/demo/capsule0.jpg",
-			"Format":	"jpeg",
-			"Purpose":	"map_Kd"
-		}
+         {
+           "Location": "http://abantech.net/demo/subwoofer_obj.mtl",
+           "Format": "mtl"
+         }
        ]
     },
     {
