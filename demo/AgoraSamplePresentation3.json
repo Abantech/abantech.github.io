@@ -1,0 +1,34 @@
+{
+  "Name": "Demo Presentation",
+  "Version": "1.2.3.4",
+  "RoomID": "DoorNumber1",
+  "DefaultBackdropURL": "https://pbs.twimg.com/profile_images/633688586055913472/3l5HYPgb.jpg",
+  "Slides": [
+    {
+	  "Name" : "Test Ball",
+      "Location": "http://abantech.net/demo/capsule.obj",
+      "Format": "obj",
+       "DependentResources" : [
+        {
+          "Location": "http://abantech.net/demo/capsule.mtl",
+          "Format": "mtl"
+        },
+		{
+			"Location":	"http://abantech.net/demo/capsule0.jpg",
+			"Format":	"jpeg",
+			"Purpose":	"map_Kd"
+		}
+       ]
+    },
+    {
+      "Location": "https://fbcdn-sphotos-c-a.akamaihd.net/hphotos-ak-xlp1/v/t1.0-9/14581352_10154609936018114_6059038639917180539_n.jpg?oh=18558ec53c96ae8584671fbf2b0d21bc&oe=58949572&__gda__=1486197036_a46cd8eac5af7d8539f376412ca9c6d3",
+      "Is3D": false,
+      "Format": "jpeg"
+    },
+    {
+      "Location": "https://scontent-grt2-1.xx.fbcdn.net/v/t1.0-9/14233253_10154539235186248_1735680161014161748_n.jpg?oh=2013a0c295f6e0162f1f425f6c23f4d8&oe=58898751",
+      "Is3D": false,
+      "Format": "jpeg"
+    }
+  ]
+}
