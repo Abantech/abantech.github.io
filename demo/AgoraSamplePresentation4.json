@@ -5,19 +5,19 @@
   "DefaultBackdropURL": "https://pbs.twimg.com/profile_images/633688586055913472/3l5HYPgb.jpg",
   "Slides": [
     {
-	  "Name" : "Test Ball",
-      "Location": "http://abantech.net/demo/capsule.obj",
+	  "Name" : "Robot Arm",
+      "Location": "http://agoravr.com/test_model/RobotArm.obj",
       "Format": "obj",
        "DependentResources" : [
         {
-          "Location": "http://abantech.net/demo/capsule.mtl",
+          "Location": "http://agoravr.com/test_model/RobotArm.mtl",
           "Format": "mtl"
         },
-		{
-			"Location":	"http://abantech.net/demo/capsule0.jpg",
-			"Format":	"jpeg",
-			"Purpose":	"map_Kd"
-		}
+	{
+	  "Location":	"http://agoravr.com/test_model/RobotArm_bump.jpg",
+	  "Format":	"jpeg",
+	  "Purpose":	"map_Bump"
+	}
        ]
     },
     {
