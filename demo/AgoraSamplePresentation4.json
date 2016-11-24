@@ -17,6 +17,16 @@
 	  "Location":	"http://agoravr.com/test_model/RobotArm_bump.jpg",
 	  "Format":	"jpeg",
 	  "Purpose":	"map_Bump"
+	},
+	{
+	  "Location":	"http://agoravr.com/test_model/RobotArm_diffuse.jpg",
+	  "Format":	"jpeg",
+	  "Purpose":	"map_Kd"
+	},
+	{
+	  "Location":	"http://agoravr.com/test_model/RobotArm_specular.jpg",
+	  "Format":	"jpeg",
+	  "Purpose":	"map_Ks"
 	}
        ]
     },
