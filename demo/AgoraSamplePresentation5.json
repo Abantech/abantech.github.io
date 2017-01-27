@@ -1,0 +1,60 @@
+{
+  "Name": "Demo Presentation",
+  "Version": "1.2.3.4",
+  "RoomID": "DoorNumber1",
+  "DefaultBackdropURL": "http://agoravr.com/images/logo-top.png",
+  "Slides": [
+    {
+	  "Name" : "Robot Arm",
+      "Location": "http://agoravr.com/test_model/RobotArm.obj",
+      "Format": "obj",
+       "DependentResources" : [
+        {
+          "Location": "http://agoravr.com/test_model/RobotArm.mtl",
+          "Format": "mtl"
+        },
+	{
+	  "Location":	"http://agoravr.com/test_model/RobotArm_bump.jpg",
+	  "Format":	"jpeg",
+	  "Purpose":	"map_Bump"
+	},
+	{
+	  "Location":	"http://agoravr.com/test_model/RobotArm_diffuse.jpg",
+	  "Format":	"jpeg",
+	  "Purpose":	"map_Kd"
+	},
+	{
+	  "Location":	"http://agoravr.com/test_model/RobotArm_specular.jpg",
+	  "Format":	"jpeg",
+	  "Purpose":	"map_Ks"
+	}
+       ]
+    },
+    {
+      "Location": "http://agoravr.com/images/jasonG.jpg",
+      "Is3D": false,
+      "Format": "jpeg"
+    },
+    {
+      "Name" : "Test Ball",
+      "Location": "http://abantech.net/demo/capsule.obj",
+      "Format": "obj",
+       "DependentResources" : [
+        {
+          "Location": "http://abantech.net/demo/capsule.mtl",
+          "Format": "mtl"
+        },
+	{
+		"Location":	"http://abantech.net/demo/capsule0.jpg",
+		"Format":	"jpeg",
+		"Purpose":	"map_Kd"
+	}
+       ]
+    },	  
+    {
+      "Location": "http://agoravr.com/images/MatthiasM.jpg",
+      "Is3D": false,
+      "Format": "jpeg"
+    }
+  ]
+}
