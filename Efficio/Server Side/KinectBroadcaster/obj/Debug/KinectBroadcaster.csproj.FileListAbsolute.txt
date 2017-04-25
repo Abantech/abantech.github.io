@@ -1,1 +1,0 @@
-C:\Development\Abantech\abantech.github.io\Efficio\KinectBroadcaster\obj\Debug\KinectBroadcaster.csprojResolveAssemblyReference.cache

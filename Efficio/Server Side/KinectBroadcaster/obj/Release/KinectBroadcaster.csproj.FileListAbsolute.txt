@@ -1,6 +1,0 @@
-C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\bin\Release\KinectBroadcaster.exe.config
-C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\bin\Release\KinectBroadcaster.exe
-C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\bin\Release\KinectBroadcaster.pdb
-C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\bin\Release\Fleck.dll
-C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\obj\Release\KinectBroadcaster.exe
-C:\Users\Mastermind\Abantech\abantech.github.io\Efficio\KinectBroadcaster\obj\Release\KinectBroadcaster.pdb
